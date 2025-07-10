@@ -1,0 +1,15 @@
+https://clinicaltables.nlm.nih.gov/apidoc/icd10cm/v3/doc.html
+https://www.aapc.com/icd-10/codes/
+https://www.icd10data.com/Convert
+https://github.com/AtlasCUMC/ICD10-ICD9-codes-conversion?tab=readme-ov-file
+https://web.archive.org/web/20061129021417/http://www.nzhis.govt.nz/documentation/mapping/mappingfiles.html
+https://es.wikipedia.org/wiki/CIE-10
+https://www.eciemaps.sanidad.gob.es/browser/index_9_mc
+https://www.eciemaps.sanidad.gob.es/browser/metabuscador
+https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
+https://github.com/AtlasCUMC/ICD10-ICD9-codes-conversion
+https://github.com/bhanratt/ICD9CMtoICD10CM
+https://github.com/ClancyClark/ICD9to10mapping?tab=readme-ov-file
+https://www.cms.gov/medicare/coding-billing/icd-10-codes
+https://github.com/inigoflores/ds-codigos-postales
+https://huggingface.co/datasets/dmartingarcia/cie-10/raw/main/cie10-es-diagnoses.csv
