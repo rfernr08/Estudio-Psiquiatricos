@@ -12,7 +12,7 @@ df = pl.read_csv(dataset, separator="|")
 # Leer el diccionario de conversión
 dicc = pl.read_csv(diccionario, separator="|", truncate_ragged_lines=True)
 
-CACHE_FILE = "cache_diag.json"
+CACHE_FILE = "cache_icd10.json"
     
 def api_diag(codigo: str, cache: dict) -> str:
     """
@@ -72,7 +72,7 @@ for diag in diagnosticos_unicos:
     if not res.is_empty():
         termino_es = res[0]['Description']
         icd9 = res[0]['ICD9']
-        termino_in = api_diag(diag, cache)
+        termino_in = api_diag(diag, cache) # Importante
         embedding = model.encode(termino_in, convert_to_tensor=True)
     else:
         termino_es = None

@@ -41,19 +41,5 @@ diagnosticos_unicos = sorted(set([d for d in diagnosticos if d != ""]))
 # Guarda el resultado en un CSV
 pd.DataFrame({"diagnostico": diagnosticos_unicos}).to_csv("lista_diagnosticos_unicos.csv", index=False)
 
-"""
-diagnosticos_unicos = (
-    pl.concat(
-        [diagnosticos_unidos[col].drop_nulls().str.split(",") for col in diagnosticos_unidos.columns]
-    )
-    .arr.strip_chars()
-    .explode()
-    .unique()
-    .sort()
-    .to_list()
-)
-
-pl.DataFrame({"diagnostico": diagnosticos_unicos}).write_csv("lista_diagnosticos_unicos.csv")
-"""
 
 

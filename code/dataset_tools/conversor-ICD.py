@@ -415,34 +415,3 @@ if __name__ == "__main__":
     )
 
     diagnosticos_finales.write_excel("Prueba_Conversion_ICD.xlsx")
-    
-"""
-Mision: 
-X-Recorer cada fila del csv y identificar cuales estan escritas en ICD-9 y cuales en ICD-10.
-X-Si un codigo ICD-9 le faltan letras al final, rellenar con ceros hasta completar 5 caracteres o encontrar un codigo apropiado.
-X-Casos de codigo como 298.8 que encuentran codigo, pero 295 que es un caso general y habria que añadir ceros hasta encontrar un codigo apropiado.
-X-Si se detecta codigos sin letra al inicio,considerar esa linea entera como ICD-9,por si econtramos algun codigo ICD-9 que contengan letras como V o E.
-Crear 2 nuevas columnas al final del dataset, con el nombre en ingles del diagnostico psicotico y el resumen de los demas diagnosticos psicoticos.
-Al añadir las descripciones, cuidado con que se junta el diagnostica final con el conjunto Dx,que a la vez contiene varios codigos separados por [].
-Guardar el dataset modificado en un nuevo archivo Excel.
-
-Usar una API para buscar las descripciones para el conunto Dx, si no se encuentra en el csv de respaldo.
-
-def procesar_diagnosticos(fila: int, lista_psq, version_icd_9: bool = True) -> None:
-    diagnosticos = diagnosticos_unidos[fila][diag_colms]
-    print(f"Fila {fila} diagnosticos: {diagnosticos}")
-    if version_icd_9:
-        codigos_icd10 = []
-        for codigo in diagnosticos:
-            if isinstance(codigo, str) and codigo is not "null":
-                codigo = codigo.strip()
-                codigo_icd10 = buscar_codigo_icd9(codigo)
-                if codigo_icd10:
-                    codigos_icd10.append(codigo_icd10)
-                else:
-                    print(f"Advertencia: No se encontró mapeo ICD-10 para el código ICD-9 '{codigo}' en la fila {fila}.")
-        
-        lista_psq.append(", ".join(filter(None, codigos_icd10)))
-    else:
-        lista_psq.append(diagnosticos)
-"""
