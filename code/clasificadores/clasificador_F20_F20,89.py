@@ -4,7 +4,7 @@ import numpy as np
 import time
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 from xgboost import XGBClassifier
@@ -42,6 +42,11 @@ def catboost_tree(X, y, n_estimators=100):
     clf.fit(X, y)
     return clf
 
+def gradient_boosting_tree(X, y, n_estimators=100):
+    clf = GradientBoostingClassifier(n_estimators=n_estimators, random_state=seed)
+    clf.fit(X, y)
+    return clf
+
 dataset =  "recursos/otros/diagnosticos_F20_F20.89.csv"
 df = pl.read_csv(dataset, separator="|")
 
@@ -66,9 +71,11 @@ print(f"First 5 rows of y:\n{y.head()}")
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=seed)
 
+n_estimators = 100
+
 print("=== Random Forest Classifier ===")
 
-clf = random_tree(X_train, y_train, n_estimators=100)
+clf = random_tree(X_train, y_train, n_estimators=n_estimators)
 y_pred = clf.predict(X_test)
 print(classification_report(y_test, y_pred))
 
@@ -80,23 +87,27 @@ print(classification_report(y_test, y_pred))
 
 print("=== XGBoost Classifier ===")
 
-clf = xgboost_tree(X_train, y_train, n_estimators=100)
+clf = xgboost_tree(X_train, y_train, n_estimators=n_estimators)
 y_pred = clf.predict(X_test)
 print(classification_report(y_test, y_pred))
 
 print("=== CatBoost Classifier ===")
 
-clf = catboost_tree(X_train, y_train, n_estimators=100)
+clf = catboost_tree(X_train, y_train, n_estimators=n_estimators)
 y_pred = clf.predict(X_test)
 print(classification_report(y_test, y_pred))
 
 print("=== LightGBM Classifier ===")
 
-clf = lightgbm_tree(X_train, y_train, n_estimators=100)
+clf = lightgbm_tree(X_train, y_train, n_estimators=n_estimators)
 y_pred = clf.predict(X_test)
 print(classification_report(y_test, y_pred))
 
+print("=== Gradient Boosting Classifier ===")
 
+clf = gradient_boosting_tree(X_train, y_train, n_estimators=n_estimators)
+y_pred = clf.predict(X_test)
+print(classification_report(y_test, y_pred))
 
 
 

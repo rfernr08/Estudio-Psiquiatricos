@@ -1,0 +1,3 @@
+Probar clasifiacodes con texto en vez de codigos
+Probar modelos BERT
+Sacar no solo la curva ROC, sino accuracy, f1-score etc...
