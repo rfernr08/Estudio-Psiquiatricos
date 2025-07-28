@@ -1,0 +1,49 @@
+🏆 Mejores resultados por F1:
+                                     modelo  learning_rate  batch_size  \
+10  dccuchile/bert-base-spanish-wwm-uncased        0.00003          16   
+9   dccuchile/bert-base-spanish-wwm-uncased        0.00002          32   
+8   dccuchile/bert-base-spanish-wwm-uncased        0.00002          16   
+18    dccuchile/bert-base-spanish-wwm-cased        0.00003          16   
+16    dccuchile/bert-base-spanish-wwm-cased        0.00002          16   
+5              bert-base-multilingual-cased        0.00005          32   
+19    dccuchile/bert-base-spanish-wwm-cased        0.00003          32   
+14  dccuchile/bert-base-spanish-wwm-uncased        0.00001          32   
+2              bert-base-multilingual-cased        0.00003          16   
+21    dccuchile/bert-base-spanish-wwm-cased        0.00005          32   
+
+    epochs  accuracy        f1  precision    recall  
+10       4    0.8225  0.678733   0.765306  0.609756  
+9        5    0.8025  0.651982   0.711538  0.601626  
+8        5    0.8100  0.648148   0.752688  0.569106  
+18       4    0.8075  0.631579   0.767442  0.536585  
+16       5    0.8025  0.622010   0.755814  0.528455  
+5        3    0.7675  0.617284   0.625000  0.609756  
+19       4    0.7875  0.615385   0.693878  0.552846  
+14       5    0.7500  0.612403   0.585185  0.642276  
+2        4    0.7875  0.604651   0.706522  0.528455  
+21       3    0.7950  0.601942   0.746988  0.504065  
+
+📊 Mejores modelos por score combinado (f1 + recall):
+                                     modelo  learning_rate  batch_size  \
+10  dccuchile/bert-base-spanish-wwm-uncased        0.00003          16   
+9   dccuchile/bert-base-spanish-wwm-uncased        0.00002          32   
+14  dccuchile/bert-base-spanish-wwm-uncased        0.00001          32   
+8   dccuchile/bert-base-spanish-wwm-uncased        0.00002          16   
+5              bert-base-multilingual-cased        0.00005          32   
+18    dccuchile/bert-base-spanish-wwm-cased        0.00003          16   
+19    dccuchile/bert-base-spanish-wwm-cased        0.00003          32   
+16    dccuchile/bert-base-spanish-wwm-cased        0.00002          16   
+2              bert-base-multilingual-cased        0.00003          16   
+17    dccuchile/bert-base-spanish-wwm-cased        0.00002          32   
+
+    epochs  accuracy        f1  precision    recall     score  
+10       4    0.8225  0.678733   0.765306  0.609756  0.651142  
+9        5    0.8025  0.651982   0.711538  0.601626  0.631840  
+14       5    0.7500  0.612403   0.585185  0.642276  0.624352  
+8        5    0.8100  0.648148   0.752688  0.569106  0.616531  
+5        3    0.7675  0.617284   0.625000  0.609756  0.614273  
+18       4    0.8075  0.631579   0.767442  0.536585  0.593582  
+19       4    0.7875  0.615385   0.693878  0.552846  0.590369  
+16       5    0.8025  0.622010   0.755814  0.528455  0.584588  
+2        4    0.7875  0.604651   0.706522  0.528455  0.574173  
+17       5    0.7850  0.601852   0.698925  0.528455  0.572493 
