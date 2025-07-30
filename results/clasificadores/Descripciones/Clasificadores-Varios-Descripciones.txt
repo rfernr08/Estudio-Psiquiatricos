@@ -1,0 +1,59 @@
+=== Random Forest Classifier ===
+              precision    recall  f1-score   support
+
+           0       0.56      0.33      0.41       198
+           1       0.73      0.87      0.79       402
+
+    accuracy                           0.69       600
+   macro avg       0.64      0.60      0.60       600
+weighted avg       0.67      0.69      0.67       600
+
+=== Decision Tree Classifier ===
+              precision    recall  f1-score   support
+
+           0       0.61      0.11      0.19       198
+           1       0.69      0.97      0.80       402
+
+    accuracy                           0.68       600
+   macro avg       0.65      0.54      0.50       600
+weighted avg       0.66      0.68      0.60       600
+
+=== XGBoost Classifier ===
+              precision    recall  f1-score   support
+
+           0       0.57      0.46      0.51       198
+           1       0.76      0.83      0.79       402
+
+    accuracy                           0.71       600
+   macro avg       0.66      0.65      0.65       600
+weighted avg       0.70      0.71      0.70       600
+
+=== CatBoost Classifier ===
+              precision    recall  f1-score   support
+
+           0       0.61      0.17      0.26       198
+           1       0.70      0.95      0.80       402
+
+    accuracy                           0.69       600
+   macro avg       0.65      0.56      0.53       600
+weighted avg       0.67      0.69      0.62       600
+
+=== LightGBM Classifier ===
+              precision    recall  f1-score   support
+
+           0       0.45      0.54      0.49       198
+           1       0.75      0.68      0.71       402
+
+    accuracy                           0.63       600
+   macro avg       0.60      0.61      0.60       600
+weighted avg       0.65      0.63      0.64       600
+
+=== Gradient Boosting Classifier ===
+              precision    recall  f1-score   support
+
+           0       0.63      0.20      0.31       198
+           1       0.71      0.94      0.81       402
+
+    accuracy                           0.70       600
+   macro avg       0.67      0.57      0.56       600
+weighted avg       0.68      0.70      0.64       600

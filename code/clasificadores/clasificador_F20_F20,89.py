@@ -47,7 +47,7 @@ def gradient_boosting_tree(X, y, n_estimators=100):
     clf.fit(X, y)
     return clf
 
-dataset =  "recursos/otros/diagnosticos_F20_F20.89.csv"
+dataset =  "recursos/otros/BERT/diagnosticos_F20_F20.89_sin_dups_limpio.csv"
 df = pl.read_csv(dataset, separator="|")
 
 seed = int(time.time_ns() % (2**32))
@@ -63,7 +63,7 @@ for col in X.columns:
     X[col] = le.fit_transform(X[col].astype(str))
 
 y = df.select(
-    pl.col("DIAG PSQ").str.contains("F20.89").cast(pl.Int32).alias("target")
+    (pl.col("DIAG PSQ") == "F20").cast(pl.Int32).alias("target")
 ).to_pandas()["target"]
 
 print(f"First 5 rows of X:\n{X.head()}")

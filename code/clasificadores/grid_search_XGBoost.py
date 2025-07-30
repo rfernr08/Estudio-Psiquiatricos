@@ -8,7 +8,7 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 from xgboost import XGBClassifier
 
-dataset =  "recursos/otros/diagnosticos_F20_F20.89.csv"
+dataset =  "recursos/otros/BERT/diagnosticos_F20_F20.89_con_descripcion_sin_dups_limpio.csv"
 df = pl.read_csv(dataset, separator="|")
 
 seed = int(time.time_ns() % (2**32))
@@ -24,7 +24,7 @@ for col in X.columns:
     X[col] = le.fit_transform(X[col].astype(str))
 
 y = df.select(
-    pl.col("DIAG PSQ").str.contains("F20.89").cast(pl.Int32).alias("target")
+    pl.col("DIAG PSQ").str.contains("Otros tipos de esquizofrenia").cast(pl.Int32).alias("target")
 ).to_pandas()["target"]
 
 

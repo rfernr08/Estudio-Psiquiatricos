@@ -8,7 +8,7 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 
-dataset =  "recursos/otros/diagnosticos_F20_F20.89.csv"
+dataset =  "recursos/otros/BERT/diagnosticos_F20_F20.89_sin_dups_limpio.csv"
 df = pl.read_csv(dataset, separator="|")
 
 seed = int(time.time_ns() % (2**32))
