@@ -11,7 +11,7 @@ from sklearn.metrics import roc_curve, roc_auc_score, classification_report, con
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-dataset =  "recursos/otros/diagnosticos_F20_F20.89_con_descripcion.csv"
+dataset =  "recursos/otros/BERT/diagnosticos_F20_F20.89_combinados.csv"
 df = pl.read_csv(dataset, separator="|")
 
 seed = int(time.time_ns() % (2**32))
@@ -27,7 +27,7 @@ for col in X.columns:
     X[col] = le.fit_transform(X[col].astype(str))
 
 y = df.select(
-    pl.col("DIAG PSQ").str.contains("Otros tipos de esquizofrenia").cast(pl.Int32).alias("target")
+    pl.col("DIAG PSQ").str.contains("F20.89").cast(pl.Int32).alias("target")
 ).to_pandas()["target"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=seed)
@@ -37,11 +37,11 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 best_model_xgb = XGBClassifier(
     n_estimators=300,
     learning_rate=0.05,
-    max_depth=9,
-    subsample=0.7,
-    colsample_bytree=0.7,
+    max_depth=6,
+    subsample=1,
+    colsample_bytree=0.8,
     min_child_weight=1,
-    gamma=0.5,
+    gamma=0.1,
     scale_pos_weight=2,
     use_label_encoder=False,
     eval_metric='logloss',
@@ -102,11 +102,11 @@ plt.show(block=False)
 
 
 best_model_gb = GradientBoostingClassifier(
-    n_estimators=300,
+    n_estimators=200,
     learning_rate=0.1,
-    max_depth=3,
-    min_samples_split=5,
-    min_samples_leaf=1,
+    max_depth=5,
+    min_samples_split=10,
+    min_samples_leaf=2,
     subsample=1.0,
     max_features=None,
     random_state=seed
