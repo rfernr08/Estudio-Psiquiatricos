@@ -1,0 +1,9 @@
+Fitting 5 folds for each of 2592 candidates, totalling 12960 fits
+Mejores parámetros RandomForest: {'bootstrap': True, 'class_weight': 'balanced', 'criterion': 'gini', 'max_depth': 20, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 300}
+(alba) raul@elportatiloceanico:~/Workspace/ALBA/Estudio-Psiquiatricos$ python -u "/home/raul/Workspace/ALBA/Estudio-Psiquiatricos/code/clasificadores/grid_search_RandomForest.py"
+Fitting 5 folds for each of 2592 candidates, totalling 12960 fits
+python -u "/home/raul/Workspace/ALBA/Estudio-Psiquiatricos/code/clasificadores/grid_search_RandomForest.py"
+Mejores parámetros RandomForest: {'bootstrap': True, 'class_weight': 'balanced_subsample', 'criterion': 'entropy', 'max_depth': 30, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100}
+(alba) raul@elportatiloceanico:~/Workspace/ALBA/Estudio-Psiquiatricos$ python -u "/home/raul/Workspace/ALBA/Estudio-Psiquiatricos/code/clasificadores/grid_search_RandomForest.py"
+Fitting 5 folds for each of 2592 candidates, totalling 12960 fits
+Mejores parámetros RandomForest: {'bootstrap': True, 'class_weight': 'balanced', 'criterion': 'gini', 'max_depth': 30, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 300}
