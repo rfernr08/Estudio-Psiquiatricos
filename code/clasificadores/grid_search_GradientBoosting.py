@@ -48,7 +48,7 @@ grid_xgb = GridSearchCV(GradientBoostingClassifier(random_state=seed),
                         verbose=1)
 
 grid_xgb.fit(X_train, y_train)
-print("Mejores parámetros XGB:", grid_xgb.best_params_)
+print("Mejores parámetros Gradient:", grid_xgb.best_params_)
 
 """
 Fitting 5 folds for each of 2187 candidates, totalling 10935 fits
