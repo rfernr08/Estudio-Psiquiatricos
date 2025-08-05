@@ -251,10 +251,6 @@ plt.tight_layout()
 plt.savefig("results/comparacion_modelos.png")
 plt.show(block=False)
 
-# Guardar resultados en CSV
-# ...existing code...
-
-# Guardar resultados en CSV
 comparison_df.to_csv("results/comparacion_metricas_modelos.csv", index=False, sep="|")
 
 print("\n=== Resumen Final ===")
