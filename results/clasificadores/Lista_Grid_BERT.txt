@@ -1,8 +1,0 @@
-0-8-16-24{"learning_rate": 2e-5, "batch_size": 16, "epochs": 5, "weight_decay": 0.01, "warmup_ratio": 0.1},
-1-9-17-25{"learning_rate": 2e-5, "batch_size": 32, "epochs": 5, "weight_decay": 0.01, "warmup_ratio": 0.1},
-2-10-18-26{"learning_rate": 3e-5, "batch_size": 16, "epochs": 4, "weight_decay": 0.001, "warmup_ratio": 0.0},
-3-11-19-27{"learning_rate": 3e-5, "batch_size": 32, "epochs": 4, "weight_decay": 0.001, "warmup_ratio": 0.1},
-4-12-20-28{"learning_rate": 3e-5, "batch_size": 64, "epochs": 4, "weight_decay": 0.001, "warmup_ratio": 0.1},
-5-13-21-29{"learning_rate": 5e-5, "batch_size": 32, "epochs": 3, "weight_decay": 0.0, "warmup_ratio": 0.0},
-6-14-22-30{"learning_rate": 1e-5, "batch_size": 32, "epochs": 5, "weight_decay": 0.01, "warmup_ratio": 0.1},
-7-15-23-31{"learning_rate": 1e-5, "batch_size": 64, "epochs": 5, "weight_decay": 0.01, "warmup_ratio": 0.1},
