@@ -12,7 +12,7 @@ from sklearn.metrics import roc_curve, roc_auc_score, classification_report, con
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-dataset =  "recursos/otros/BERT/diagnosticos_F20_F20.89_con_descripcion_sin_dups_limpio.csv"
+dataset =  "TFG/dataset/diagnosticos_binarios_combinados.csv"
 df = pl.read_csv(dataset, separator="|")
 
 seed = int(time.time_ns() % (2**32))
@@ -28,11 +28,11 @@ for col in X.columns:
     X[col] = le.fit_transform(X[col].astype(str))
 
 y = df.select(
-    pl.col("DIAG PSQ").str.contains("Otros tipos de esquizofrenia").cast(pl.Int32).alias("target")
+    pl.col("DIAG PSQ").str.contains("F20.89").cast(pl.Int32).alias("target")
 ).to_pandas()["target"]
 
 # Cargar parámetros desde JSON
-with open(r"code/verificar/params.json", "r") as f:
+with open(r"TFG/dataset/best_params.json", "r") as f:
     all_params = json.load(f)
 
 # Seleccionar el dataset que estás usando
