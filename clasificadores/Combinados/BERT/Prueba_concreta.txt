@@ -1,0 +1,41 @@
+🏆 Mejores resultados por F1:
+                                    modelo  learning_rate  batch_size  epochs  \
+6    dccuchile/bert-base-spanish-wwm-cased        0.00003          16       4   
+3  dccuchile/bert-base-spanish-wwm-uncased        0.00003          32       4   
+0  dccuchile/bert-base-spanish-wwm-uncased        0.00002          16       5   
+4    dccuchile/bert-base-spanish-wwm-cased        0.00002          16       5   
+2  dccuchile/bert-base-spanish-wwm-uncased        0.00003          16       4   
+1  dccuchile/bert-base-spanish-wwm-uncased        0.00002          32       5   
+5    dccuchile/bert-base-spanish-wwm-cased        0.00002          32       5   
+7    dccuchile/bert-base-spanish-wwm-cased        0.00003          32       4   
+
+   accuracy        f1  precision    recall  
+6    0.8125  0.647887   0.766667  0.560976  
+3    0.8075  0.641860   0.750000  0.560976  
+0    0.7975  0.640000   0.705882  0.585366  
+4    0.8150  0.626263   0.826667  0.504065  
+2    0.7825  0.609865   0.680000  0.552846  
+1    0.7725  0.595556   0.656863  0.544715  
+5    0.7675  0.593886   0.641509  0.552846  
+7    0.7850  0.578431   0.728395  0.479675  
+
+📊 Mejores modelos por score combinado (f1 + recall):
+                                    modelo  learning_rate  batch_size  epochs  \
+0  dccuchile/bert-base-spanish-wwm-uncased        0.00002          16       5   
+6    dccuchile/bert-base-spanish-wwm-cased        0.00003          16       4   
+3  dccuchile/bert-base-spanish-wwm-uncased        0.00003          32       4   
+2  dccuchile/bert-base-spanish-wwm-uncased        0.00003          16       4   
+5    dccuchile/bert-base-spanish-wwm-cased        0.00002          32       5   
+4    dccuchile/bert-base-spanish-wwm-cased        0.00002          16       5   
+1  dccuchile/bert-base-spanish-wwm-uncased        0.00002          32       5   
+7    dccuchile/bert-base-spanish-wwm-cased        0.00003          32       4   
+
+   accuracy        f1  precision    recall     score  
+0    0.7975  0.640000   0.705882  0.585366  0.618146  
+6    0.8125  0.647887   0.766667  0.560976  0.613123  
+3    0.8075  0.641860   0.750000  0.560976  0.609507  
+2    0.7825  0.609865   0.680000  0.552846  0.587057  
+5    0.7675  0.593886   0.641509  0.552846  0.577470  
+4    0.8150  0.626263   0.826667  0.504065  0.577384  
+1    0.7725  0.595556   0.656863  0.544715  0.575220  
+7    0.7850  0.578431   0.728395  0.479675  0.538929  

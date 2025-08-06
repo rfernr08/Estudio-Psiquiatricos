@@ -1,0 +1,26 @@
+{
+  "codigos": {
+    "model_name": "dccuchile/bert-base-spanish-wwm-cased",
+    "learning_rate": 2e-5,
+    "batch_size": 16,
+    "epochs": 5,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1
+  },
+  "descripciones": {
+    "model_name": "dccuchile/bert-base-spanish-wwm-uncased",
+    "learning_rate": 5e-5,
+    "batch_size": 32,
+    "epochs": 3,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1
+  },
+  "combinado": {
+    "model_name": "dccuchile/bert-base-spanish-wwm-cased",
+    "learning_rate": 3e-5,
+    "batch_size": 16,
+    "epochs": 4,
+    "weight_decay": 0.001,
+    "warmup_ratio": 0.1
+  }
+}
