@@ -7,11 +7,14 @@ from pyvis.network import Network
 import tempfile
 import os
 import dotenv
+from engine import neo4j_evidence, bert_predict, final_llm_response, analyze_user_input, build_bert_input
 
 # -------------------------
 # CONFIGURACIÓN INICIAL
 # -------------------------
-st.set_page_config(page_title="Asistente Clínico - Esquizofrenia", layout="wide")
+st.set_page_config(
+    page_title="Asistente Clínico - Esquizofrenia", 
+    layout="wide")
 
 # -------------------------
 # Conexión Neo4j
@@ -101,13 +104,38 @@ def visualize_patient_graph(pid):
 # Funciones BERT
 # -------------------------
 
-def bert_predict(text: str):
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
-    with torch.no_grad():
-        logits = model(**inputs).logits
-    probs = torch.softmax(logits, dim=-1).numpy()[0]
-    pred_class = int(np.argmax(probs))
-    return pred_class, probs
+def clinical_pipeline(text: str):
+    """
+    PIPELINE COMPLETA
+    """
+    # 1️⃣ BERT
+    analysis = analyze_user_input(text)
+
+    st.markdown("### 🔬 Texto normalizado")
+    st.code(analysis)
+
+    bert_input = build_bert_input(analysis["clinical_items"])
+    st.markdown("### 📝 Entrada BERT")
+    st.code(bert_input)
+
+    pred, probs = bert_predict(bert_input)
+
+    st.markdown("### 📊 Probabilidades")
+    st.json(probs)
+
+    evidence = neo4j_evidence(pred)
+
+    st.markdown("### 🕸️ Evidencia Neo4j")
+    st.json(evidence)
+
+    final_response = final_llm_response(
+        original_text=text,
+        bert_probs=probs,
+        graph_evidence=evidence,
+        user_question=analysis["user_question"],
+    )
+
+    return final_response    
 
 # -------------------------
 # Diagnóstico simulado por embeddings
@@ -178,13 +206,22 @@ with col2:
     st.subheader("💬 Módulo BERT — Clasificación de Texto Clínico")
     user_input = st.text_area("Escribe una nota o síntoma para clasificar:")
 
-    if st.button("Clasificar con BERT"):
-        pred, probs = bert_predict(user_input)
-        st.write(f"**Clase predicha:** {pred}")
-        st.json({"probs": probs.tolist()})
+    if st.button("Analizar"):
+        if not user_input.strip():
+            st.warning("Por favor, introduce texto clínico.")
+        else:
+            with st.spinner("Analizando información clínica..."):
+                result = clinical_pipeline(user_input)
 
+            st.markdown("### 🧾 Resultado")
+            st.markdown(result)
+
+st.warning(
+    "⚠️ Esta herramienta es solo para fines académicos y de investigación. "
+    "No debe utilizarse para diagnóstico clínico real."
+)
 # -------------------------
 # SIDEBAR
 # -------------------------
-st.sidebar.title("⚙ Estado del Sistema")
-st.sidebar.success("Embeddings Neo4j + BERT + Visualización de grafo funcional.")
+#st.sidebar.title("⚙ Estado del Sistema")
+#st.sidebar.success("Embeddings Neo4j + BERT + Visualización de grafo funcional.")

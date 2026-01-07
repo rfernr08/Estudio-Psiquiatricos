@@ -4,7 +4,7 @@ from neo4j import GraphDatabase
 import pandas as pd
 import ast
 
-load_status = dotenv.load_dotenv("code\\neo4j\\Neo4j-921e6a7b-Created-2025-10-13.txt")
+load_status = dotenv.load_dotenv("code\\neo4j\\Neo4j-9263b1ec-Created-2025-12-24.txt")
 
 diagnosticos = "datasets/Full_Datos_Diag_Men.csv"
 pacientes = "datasets/neo4j/info_pacientes.csv"
