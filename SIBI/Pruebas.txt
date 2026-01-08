@@ -15,3 +15,5 @@ También presenta insomnio crónico y episodios de ansiedad.
 
 F20.0, Ansiedad generalizada, Hipertensión esencial (primaria), Insomnio  
 ¿Existe alguna relación entre estas comorbilidades y el desarrollo de la esquizofrenia paranoide?
+
+N81.6: Rectocele|Z90.710: Ausencia adquirida de ambos, de cuello uterino y de útero|F20.9: Esquizofrenia, no especifica|F12.259: Dependencia de cannabis, con trastorno psicótico no especificado|F39: Trastorno del estado de ánimo [afectivo], no especificado

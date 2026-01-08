@@ -105,7 +105,7 @@ def build_bert_input(clinical_items: list) -> str:
     return ", ".join(clinical_items)
 
 def bert_predict(text):
-    MODEL_PATH = "models\dccuchile_bert-base-spanish-wwm-cased_combinado_final"
+    MODEL_PATH = "models\dccuchile_bert-base-spanish-wwm-cased_codigos_final"
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
     model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
@@ -160,7 +160,7 @@ def neo4j_evidence(predictions):
     Dado un código ICD, recupera casos reales del grafo Neo4J.
     """
     query = """
-    MATCH (d:Diagnostico {terminoEN: $terminoEN})<-[:`DIAGNOSTICO_ASOCIADO`]-(p:Paciente)
+    MATCH (d:Diagnostico {terminoEN: $terminoEN})<-[:`DIAGNOSTICO_PSIQUIATRICO`]-(p:Paciente)
     RETURN p.numero_historia AS paciente_id, d.terminoEN AS diagnostico, d.ICD10 as icd_code
     LIMIT 25
     """
@@ -224,7 +224,7 @@ def final_llm_response(
     response = llm_synthesizer.chat(messages)
     return response
 
-
+"""
 def build_query_engine(bert_tool, neo4j_tool):
     Settings.llm = Cohere(
         api_key=os.getenv("COHERE_API_KEY"),
@@ -248,3 +248,4 @@ def build_query_engine(bert_tool, neo4j_tool):
     )
 
     return query_engine
+"""
