@@ -1,13 +1,12 @@
 import streamlit as st
 import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from neo4j import GraphDatabase
 import numpy as np
 from pyvis.network import Network
 import tempfile
 import os
 import dotenv
-from engine import neo4j_evidence, bert_predict, final_llm_response, analyze_user_input, build_bert_input
+from engine import neo4j_evidence, bert_predict, final_llm_response, analyze_user_input, build_bert_input, plot_diagnostic_frequencies, plot_bert_probabilities
 
 # -------------------------
 # CONFIGURACIÓN INICIAL
@@ -28,13 +27,11 @@ AUTH = (os.getenv("NEO4J_USERNAME"), os.getenv("NEO4J_PASSWORD"))
 driver = GraphDatabase.driver(URI, auth=AUTH)
 
 
+
 # -------------------------
 # Cargar modelo BERT
 # -------------------------
-MODEL_NAME = "dccuchile/bert-base-spanish-wwm-cased"
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
-model.eval()
+
 
 # -------------------------
 # Funciones Neo4j + Embeddings
@@ -123,10 +120,18 @@ def clinical_pipeline(text: str):
     st.markdown("### 📊 Probabilidades")
     st.json(probs)
 
+    fig_1 = plot_bert_probabilities(probs)
+    st.pyplot(fig_1)
+
     evidence = neo4j_evidence(pred)
 
-    st.markdown("### 🕸️ Evidencia Neo4j")
-    st.json(evidence)
+    st.subheader("📊 Diagnósticos asociados frecuentes")
+    fig_2 = plot_diagnostic_frequencies(evidence)
+
+    if fig_2:
+        st.pyplot(fig_2)
+    else:
+        st.info("No se encontraron diagnósticos asociados.")
 
     final_response = final_llm_response(
         original_text=text,
