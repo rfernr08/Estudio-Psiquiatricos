@@ -4,15 +4,13 @@ from neo4j import GraphDatabase
 import pandas as pd
 import ast
 
-load_status = dotenv.load_dotenv("code\\neo4j\\Neo4j-9263b1ec-Created-2025-12-24.txt")
+load_status = dotenv.load_dotenv()
 
 diagnosticos = "datasets/Full_Datos_Diag_Men.csv"
 pacientes = "datasets/neo4j/info_pacientes.csv"
 relacion_diag = "datasets/neo4j/diag_por_paciente.csv"
 relacion_psi = "datasets/neo4j/diag_psiquiatricos_por_paciente.csv"
 
-if load_status is False:
-    raise RuntimeError('Environment variables not loaded.')
 
 URI = os.getenv("NEO4J_URI")
 AUTH = (os.getenv("NEO4J_USERNAME"), os.getenv("NEO4J_PASSWORD"))

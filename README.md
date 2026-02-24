@@ -24,40 +24,6 @@ Es necesario tener Docker instalado en tu sistema.
 - **Linux**: Usa este tutorial según tu distribución:  
   https://docs.docker.com/engine/install/
 
-### Makefile
-Usamos un archivo Makefile para facilitar la ejecución de Docker. Asegúrate de tener `make` instalado.
-
-#### En Windows
-Si no tienes **Chocolatey** (choco) instalado, ejecuta el siguiente comando en PowerShell como administrador:
-```
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
-
-Luego instala `make` con el siguiente comando:
-```
-choco install make
-```
-
-
-#### En Linux
-En la mayoría de distribuciones, `make` ya está instalado. Si no es así, usa uno de estos comandos según tu distribución:
-
-- **Debian/Ubuntu**:
-```
-sudo apt update
-sudo apt install make
-```
-
-- **Red Hat/Fedora**:
-```
-sudo dnf install make
-```
-
-- **Arch Linux**:
-```
-sudo pacman -S make
-```
-
 
 ---
 
@@ -78,27 +44,15 @@ cd Mirage
 cd SIBI
 ```
 
-4. Si tienes windows abre Docker Desktop
-
-5. Inicia el proceso de construcción
+4. Construir la imagen de Docker
 - **Windows**:
 ```
-make build
-```
-
-- **Linux**:
-```
-sudo make build
+docker build -t mirage-chatbot .
 ```
 
 
-6. Ejecuta la aplicación
-- **Windows**:
-```
-make run
-```
+5. Ejecuta la aplicación
 
-- **Linux**:
 ```
-sudo make run
+streamlit run .\SIBI\interface.py
 ```
