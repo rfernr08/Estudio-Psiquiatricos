@@ -1,7 +1,7 @@
 import pandas as pd
 
-df_cod = pd.read_csv("recursos/otros/BERT/diagnosticos_unidos.csv", sep="|")
-df_desc = pd.read_csv("recursos/otros/BERT/diagnosticos_con_descripcion.csv", sep="|")
+df_cod = pd.read_csv("TFG/dataset/diagnosticos_limpios/diagnosticos_unidos.csv", sep="|")
+df_desc = pd.read_csv("TFG/dataset/diagnosticos_limpios/diagnosticos_con_descripciones.csv", sep="|")
 
 diag_cols = [col for col in df_cod.columns if col.startswith("Diag")]
 
@@ -29,7 +29,7 @@ for col in diag_cols:
     )
 
 # Guardar el resultado
-df_combined.to_csv("recursos/otros/BERT/diagnosticos_combinados.csv", sep="|", index=False)
+df_combined.to_csv("diagnosticos_combinados.csv", sep="|", index=False)
 
 print("✅ Archivo guardado con columnas sobrescritas")
 print(f"📊 Columnas procesadas: {len(diag_cols)}")
