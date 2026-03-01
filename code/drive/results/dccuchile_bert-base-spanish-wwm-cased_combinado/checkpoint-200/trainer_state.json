@@ -1,6 +1,6 @@
 {
   "best_global_step": 200,
-  "best_metric": 0.62,
+  "best_metric": 0.6524822695035462,
   "best_model_checkpoint": "./results/dccuchile_bert-base-spanish-wwm-cased_combinado\\checkpoint-200",
   "epoch": 2.0,
   "eval_steps": 500,
@@ -11,54 +11,54 @@
   "log_history": [
     {
       "epoch": 0.5,
-      "grad_norm": 4.108297348022461,
+      "grad_norm": 3.3345205783843994,
       "learning_rate": 2.925e-05,
-      "loss": 0.6261,
+      "loss": 0.6308,
       "step": 50
     },
     {
       "epoch": 1.0,
-      "grad_norm": 4.467772483825684,
+      "grad_norm": 6.999814033508301,
       "learning_rate": 2.5083333333333334e-05,
-      "loss": 0.6091,
+      "loss": 0.5615,
       "step": 100
     },
     {
       "epoch": 1.0,
-      "eval_accuracy": 0.7025,
-      "eval_f1": 0.06299212598425197,
-      "eval_loss": 0.6032646298408508,
-      "eval_precision": 1.0,
-      "eval_recall": 0.032520325203252036,
-      "eval_runtime": 2.165,
-      "eval_samples_per_second": 184.76,
-      "eval_steps_per_second": 11.548,
+      "eval_accuracy": 0.7375,
+      "eval_f1": 0.27586206896551724,
+      "eval_loss": 0.5688161253929138,
+      "eval_precision": 0.9090909090909091,
+      "eval_recall": 0.16260162601626016,
+      "eval_runtime": 1.9584,
+      "eval_samples_per_second": 204.253,
+      "eval_steps_per_second": 12.766,
       "step": 100
     },
     {
       "epoch": 1.5,
-      "grad_norm": 6.1342549324035645,
+      "grad_norm": 13.157978057861328,
       "learning_rate": 2.0916666666666666e-05,
-      "loss": 0.4793,
+      "loss": 0.487,
       "step": 150
     },
     {
       "epoch": 2.0,
-      "grad_norm": 5.700436115264893,
+      "grad_norm": 7.022762298583984,
       "learning_rate": 1.675e-05,
-      "loss": 0.4116,
+      "loss": 0.41,
       "step": 200
     },
     {
       "epoch": 2.0,
-      "eval_accuracy": 0.81,
-      "eval_f1": 0.62,
-      "eval_loss": 0.39931923151016235,
-      "eval_precision": 0.8051948051948052,
-      "eval_recall": 0.5040650406504065,
-      "eval_runtime": 2.1182,
-      "eval_samples_per_second": 188.839,
-      "eval_steps_per_second": 11.802,
+      "eval_accuracy": 0.755,
+      "eval_f1": 0.6524822695035462,
+      "eval_loss": 0.4785352349281311,
+      "eval_precision": 0.5786163522012578,
+      "eval_recall": 0.7479674796747967,
+      "eval_runtime": 1.9338,
+      "eval_samples_per_second": 206.847,
+      "eval_steps_per_second": 12.928,
       "step": 200
     }
   ],
