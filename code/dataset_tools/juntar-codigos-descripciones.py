@@ -1,7 +1,7 @@
 import pandas as pd
 
 df_cod = pd.read_csv("TFG/dataset/diagnosticos_limpios/diagnosticos_unidos.csv", sep="|")
-df_desc = pd.read_csv("TFG/dataset/diagnosticos_limpios/diagnosticos_con_descripciones.csv", sep="|")
+df_desc = pd.read_csv("TFG/dataset/diagnosticos_limpios/diagnosticos_con_descripcion.csv", sep="|")
 
 diag_cols = [col for col in df_cod.columns if col.startswith("Diag")]
 
