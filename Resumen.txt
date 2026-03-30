@@ -1,0 +1,9 @@
+Predicción de diagnósticos psiquiátricos mediante modelos de aprendizaje automatico
+--------
+Este trabajo de investigación tiene como objetivo el desarrollo de un sistema experimental para el análisis y predicción de diagnósticos psiquiátricos a partir de un conjunto de datos clínicos anonimizados. El proyecto busca estudiar el conjunto de datos con el fin de encontrar relaciones importantes entre diagnosticos que puedan llevar al desarrollo de algun tipo de esquizofrenia. Se usara diferentes enfoques y herramientas de inteligencia artifial y ciencia de datos con el fin de explorar nuevas formas de representación y análisis de información médica.
+
+Para buscar la correlacion que puede haber entre diagnosticos, se pretende montar un grafo de conocimiento en Neo4J con nuestro conjunto de datos, lo que permite representar relaciones entre pacientes, síntomas y enfermedades, facilitando el análisis relacional y la detección de patrones. El grafo nos proporcionara una forma hacer un estudio extenso sobre la cercania de los datos entre si o la existencia de comunidades.
+
+El proyecto pretende demostrar el potencial de la combinación de aprendizaje automático, grafos de conocimiento y modelos de lenguaje para el análisis de datos clínicos, así como explorar nuevas interfaces de interacción con sistemas de apoyo a la investigación en salud mental.
+---------
+Machine learning, deep learning, investigacion clinica, esquizofrenia, grafos de conocimiento.
