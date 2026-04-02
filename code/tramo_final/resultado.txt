@@ -1,0 +1,204 @@
+
+
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.0001, max_iter=300; total time=  45.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=500; total time=   6.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=500; total time=  10.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=500; total time=  12.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=500; total time=  15.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=500; total time=  12.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1000; total time=   6.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1000; total time=  10.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1000; total time=  12.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1000; total time=  15.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1000; total time=  13.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1500; total time=   6.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1500; total time=  10.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1500; total time=  12.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1500; total time=  15.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=1500; total time=  12.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=300; total time=   6.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=300; total time=  10.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=300; total time=  12.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=300; total time=  15.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256), learning_rate_init=0.01, max_iter=300; total time=  12.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=500; total time=   4.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=500; total time=   4.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=500; total time=   5.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=500; total time=   5.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=500; total time=   6.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1000; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1000; total time=   4.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1000; total time=   6.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1000; total time=   5.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1000; total time=   6.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1500; total time=   4.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1500; total time=   4.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1500; total time=   6.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1500; total time=   5.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=1500; total time=   6.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=300; total time=   5.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=300; total time=   4.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=300; total time=   6.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=300; total time=   5.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.001, max_iter=300; total time=   6.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=500; total time=  21.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=500; total time=  17.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=500; total time=  17.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=500; total time=  19.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=500; total time=  18.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1000; total time=  20.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1000; total time=  17.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1000; total time=  17.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1000; total time=  19.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1000; total time=  18.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1500; total time=  20.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1500; total time=  18.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1500; total time=  17.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1500; total time=  19.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=1500; total time=  18.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=300; total time=  20.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=300; total time=  17.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=300; total time=  17.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=300; total time=  19.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.0001, max_iter=300; total time=  18.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=500; total time=   4.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=500; total time=   5.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=500; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=500; total time=   4.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=500; total time=   7.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1000; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1000; total time=   5.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1000; total time=   4.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1000; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1000; total time=   7.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1500; total time=   4.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1500; total time=   4.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1500; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1500; total time=   4.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=1500; total time=   7.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=300; total time=   4.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=300; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=300; total time=   4.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=300; total time=   4.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64), learning_rate_init=0.01, max_iter=300; total time=   7.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=500; total time=  17.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=500; total time=   7.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=500; total time=  15.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=500; total time=  10.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=500; total time=  17.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1000; total time=  17.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1000; total time=   7.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1000; total time=  15.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1000; total time=   9.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1000; total time=  17.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1500; total time=  17.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1500; total time=   7.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1500; total time=  15.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1500; total time=  11.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=1500; total time=  18.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=300; total time=  17.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=300; total time=   7.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=300; total time=  16.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=300; total time=   9.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.001, max_iter=300; total time=  18.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=500; total time=  29.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=500; total time=  29.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=500; total time=  32.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=500; total time=  34.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=500; total time=  29.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1000; total time=  29.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1000; total time=  30.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1000; total time=  33.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1000; total time=  33.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1000; total time=  29.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1500; total time=  29.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1500; total time=  29.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1500; total time=  32.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1500; total time=  35.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=1500; total time=  29.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=300; total time=  29.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=300; total time=  29.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=300; total time=  32.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=300; total time=  32.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.0001, max_iter=300; total time=  30.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=500; total time=  11.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=500; total time=  11.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=500; total time=   9.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=500; total time=  10.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=500; total time=   9.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1000; total time=  11.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1000; total time=  11.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1000; total time=   9.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1000; total time=  10.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1000; total time=   9.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1500; total time=  11.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1500; total time=  11.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1500; total time=   9.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1500; total time=  12.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=1500; total time=   9.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=300; total time=  11.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=300; total time=  11.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=300; total time=  10.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=300; total time=  11.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(512, 256, 128), learning_rate_init=0.01, max_iter=300; total time=   9.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=500; total time=   6.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=500; total time=   6.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=500; total time=   5.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=500; total time=   7.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=500; total time=   4.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1000; total time=   6.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1000; total time=   6.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1000; total time=   5.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1000; total time=   7.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1000; total time=   5.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1500; total time=   5.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1500; total time=   6.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1500; total time=   5.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1500; total time=   7.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=1500; total time=   5.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=300; total time=   5.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=300; total time=   6.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=300; total time=   5.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=300; total time=   7.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.001, max_iter=300; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=500; total time=  16.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=500; total time=  14.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=500; total time=  20.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=500; total time=  19.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=500; total time=  18.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1000; total time=  17.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1000; total time=  14.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1000; total time=  20.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1000; total time=  19.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1000; total time=  17.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1500; total time=  17.2s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1500; total time=  13.9s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1500; total time=  18.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1500; total time=  18.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=1500; total time=  17.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=300; total time=  16.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=300; total time=  13.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=300; total time=  18.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=300; total time=  19.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.0001, max_iter=300; total time=  18.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=500; total time=   5.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=500; total time=   3.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=500; total time=   6.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=500; total time=   4.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=500; total time=   5.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1000; total time=   5.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1000; total time=   4.0s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1000; total time=   6.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1000; total time=   4.6s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1000; total time=   5.5s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1500; total time=   5.3s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1500; total time=   3.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1500; total time=   6.8s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1500; total time=   4.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=1500; total time=   5.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=300; total time=   5.1s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=300; total time=   3.7s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=300; total time=   6.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=300; total time=   4.4s
+[CV] END alpha=0.01, hidden_layer_sizes=(256, 128, 64, 32), learning_rate_init=0.01, max_iter=300; total time=   5.3s
+Mejor configuración: {'alpha': 0.0001, 'hidden_layer_sizes': (256,), 'learning_rate_init': 0.0001, 'max_iter': 300}
