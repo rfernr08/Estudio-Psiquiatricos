@@ -1,6 +1,6 @@
 import pandas as pd
 
-df_cod = pd.read_csv("C:\\Users\\Usuario\\Documents\\Workspace\\Mirage\\TFG\\dataset\\dataset_finales\\Dataset_procesable.csv", sep="|")
+df_cod = pd.read_csv("C:\\Users\\Usuario\\Documents\\Workspace\\Mirage\\TFG\\dataset\\dataset_finales\\Dataset_procesable_undersampled.csv", sep="|")
 df_desc = pd.read_csv("C:\\Users\\Usuario\\Documents\\Workspace\\Mirage\\dataset_descripciones.csv", sep="|")
 
 diag_cols = [col for col in df_cod.columns if col.startswith("Diag")]

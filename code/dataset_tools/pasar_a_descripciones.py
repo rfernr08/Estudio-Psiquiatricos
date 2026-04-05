@@ -35,4 +35,4 @@ def traducir_codigos_a_descripcion(dataset_limpio, archivo_equivalencias, output
     print(f"Traducción completada. Archivo guardado en: {output_file}")
 
 
-traducir_codigos_a_descripcion('C:\\Users\\Usuario\\Documents\\Workspace\\Mirage\\TFG\\dataset\\dataset_finales\\Dataset_procesable.csv', 'TFG/dataset/Conversor_Definitivo.csv', 'dataset_descripciones.csv')
+traducir_codigos_a_descripcion('C:\\Users\\Usuario\\Documents\\Workspace\\Mirage\\TFG\\dataset\\dataset_finales\\Dataset_procesable_undersampled.csv', 'TFG/dataset/Conversor_Definitivo.csv', 'dataset_descripciones.csv')

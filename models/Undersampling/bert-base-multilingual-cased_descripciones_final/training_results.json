@@ -1,0 +1,14 @@
+{
+  "modelo": "bert-base-multilingual-cased",
+  "dataset": "descripciones",
+  "learning_rate": 3e-05,
+  "batch_size": 16,
+  "epochs": 4,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.0,
+  "accuracy": 0.5223214285714286,
+  "f1": 0.2599091597681452,
+  "precision": 0.29842300556586265,
+  "recall": 0.2628908128908129,
+  "seed": 2136009712
+}
