@@ -1,0 +1,14 @@
+{
+  "modelo": "dccuchile/bert-base-spanish-wwm-cased",
+  "dataset": "descripciones",
+  "learning_rate": 3e-05,
+  "batch_size": 16,
+  "epochs": 4,
+  "weight_decay": 0.001,
+  "warmup_ratio": 0.0,
+  "accuracy": 0.6931567328918322,
+  "f1": 0.6754197284361475,
+  "precision": 0.6628846871634088,
+  "recall": 0.6931567328918322,
+  "seed": 193550488
+}
