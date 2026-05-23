@@ -1,0 +1,296 @@
+\documentclass[15pt, a4paper]{report} % Tamaño de fuente 15pt y papel A4 
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel} % Idioma español 
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage[top=3cm, left=3cm, bottom=2.5cm, right=2.5cm]{geometry} % Márgenes según normativa 
+\usepackage{setspace}
+\usepackage{lastpage} % Para obtener el número total de páginas 
+\usepackage{fancyhdr} % Para personalizar encabezados y pies de página 
+\usepackage{titlesec} % Para dar formato a los títulos 
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+
+% --- CONFIGURACIÓN DE FORMATO SEGÚN NORMATIVA ---
+\onehalfspacing % Interlineado 1.5 líneas 
+\setlength{\parskip}{0pt} % Sin espacio adicional entre párrafos 
+
+% Formato de Capítulos (28 puntos, negrita, primera mayúscula) 
+\titleformat{\chapter}[hang]
+  {\normalfont\fontsize{28}{34}\bfseries}
+  {\thechapter.}
+  {1em}
+  {}
+\titlespacing*{\chapter}{0pt}{-20pt}{12pt} % Línea en blanco de 12 puntos después del título 
+
+% Formato de Apartados (14 puntos, negrita, mayúsculas) 
+\titleformat{\section}
+  {\normalfont\fontsize{14}{17}\bfseries\MakeUppercase}
+  {\thesection}
+  {1em}
+  {}
+\titlespacing*{\section}{0pt}{12pt}{12pt} % Línea en blanco debajo del título 
+
+% Formato de Subapartados
+\titleformat{\subsection}
+  {\normalfont\fontsize{12}{15}\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+
+% Encabezados y Pies de página 
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\fancyhead[R]{Página \thepage\ de \pageref{LastPage}} % Encabezado: Numeración de hojas / total 
+\fancyfoot[C]{Raúl Fernández Rodríguez} % Pie de página: Nombre del autor 
+
+% Formato de figuras, tablas y ecuaciones 
+\numberwithin{equation}{chapter}
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+\captionsetup{font=normalsize, labelfont=bf, skip=10pt} % Texto de figuras/tablas a 12 puntos 
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+% -----------------------------------------
+% PORTADA 
+% -----------------------------------------
+\begin{titlepage}
+    \centering
+    \includegraphics[height=3cm]{Photo-ule.jpg}
+    \hfill
+    \includegraphics[height=3cm]{Photo-ingenierias.jpg}
+    \vspace{1cm}
+    
+    {\Large \textbf{UNIVERSIDAD DE LEÓN}} \\[0.5cm]
+    {\large \textbf{Escuela de Ingenierías Industrial, Informática y Aeroespacial}} \\[2cm]
+    
+    {\Large GRADO EN INGENIERÍA EN ELECTRÓNICA INDUSTRIAL Y AUTOMÁTICA} \\[1cm]
+    {\Large \textbf{Trabajo de Fin de Grado}} \\[2.5cm]
+    
+    {\huge \textbf{Predicción de diagnósticos psiquiátricos mediante modelos de aprendizaje automático.}} \\[1cm] % 
+    {\LARGE \textbf{Prediction of psychiatric diagnoses using machine learning models}} \\[3cm] % 
+    
+    \begin{flushleft}
+        \large
+        \textbf{Autor:} Raúl Fernández Rodríguez \\[0.5cm] 
+        \textbf{Tutor:} Sergio Rubio Martín \\ 
+    \end{flushleft}
+    
+    \vfill
+    {\large (Junio, 2026)}% [cite: 93]
+\end{titlepage}
+
+% -----------------------------------------
+% RESUMEN Y ABSTRACT 
+% -----------------------------------------
+\pagenumbering{roman} % Numeración romana para los índices
+\setcounter{page}{1}
+
+\chapter*{Resumen}
+\addcontentsline{toc}{chapter}{Resumen}
+La esquizofrenia es un trastorno psiquiátrico complejo con una gran heterogeneidad clínica, planteando el desafío crítico para el diagnóstico temprano y la personalización del tratamiento. Este trabajo de investigación presenta el estudio y desarrollo de un sistema experimental orientado al análisis relacional y la predicción de diagnósticos psiquiátricos mediante el uso de datos clínicos anonimizados de pacientes de la provincia de Castilla y León con esquizofrenia y sus distintas variantes. El objetivo principal de este proyecto es identificar patrones ocultos y correlaciones significativas entre síntomas, comorbilidades y evoluciones patológicas que puedan servir como guia a psiquiatras expertos.
+
+Para abordar este problema, se ha implementado una metodología híbrida que combina la ciencia de datos, técnicas de aprendizaje automático (\textit{Machine Learning} y \textit{Deep Learning}) y bases de datos orientadas a grafos. En primer lugar, se realizó la limpieza y acondicionamiento del \textit{dataset} clínico inicial, compuesto por una lista anonimizada de 3134 registros de pacientes, garantizando la consistencia mediante la imputacion de datos faltantes y normalizacion de los diagnosticos.  
+
+Posteriormente, se construyó un grafo de conocimiento utilizando Neo4j, modelando de manera estructurada las relaciones multivariantes entre los pacientes y los diagnósticos. Este enfoque permitió realizar un análisis de comunidades y evaluar la cercanía topológica de los datos clínicos. En paralelo, se integraron modelos de lenguaje (\textit{LLMs}) para el procesamiento de texto clínico y la búsqueda de relaciones semánticas entre diagnósticos. Asimismo, se entrenaron diferentes clasificadores para predecir la aparición de las distintas patologías.
+
+Se llevo a cabo un proceso de entrenamiento de varios modelos distintos, buscando demostrar mediante los resultados obtenidos la viabilidad del uso de los modelos como apoyo. Los modelos basados en \textit{Machine Learning} tradicional mostraron un mayor rendimiento y mejores resultados en comparación con las aproximaciones de \textit{Deep Learning} y \textit{LLMs}. Asimismo, el estudio de comunidades en Neo4j reveló patrones de comorbilidad específicos que validan hipótesis clínicas previas, junto a la formación de comunidades de diagnosticos relacionados. Por último, se ha desarrollado una aplicación web funcional que integra un conversor de códigos ICD, mejorando la accesibilidad y la interpretabilidad de los resultados para el personal médico.
+
+Como conclusión, este proyecto demuestra el potencial de combinar grafos de conocimiento y aprendizaje automático en el ámbito de la salud mental, proporcionando una herramienta complementaria de apoyo a la decisión clínica de expertos y a la investigación psiquiátrica.
+
+\vspace{0.5cm}
+\noindent \textbf{Palabras clave:} Esquizofrenia, Grafos de Conocimiento, Neo4j, Machine Learning, Deep Learning, Predicción Clínica, Códigos ICD.
+
+\newpage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Schizophrenia is a complex psychiatric disorder characterized by high clinical heterogeneity, which poses a critical challenge for early diagnosis and personalized treatment. This research paper presents the study and development of an experimental system oriented towards relational analysis and the prediction of psychiatric diagnoses, utilizing anonymized clinical data from patients with schizophrenia and its various subtypes in the region of Castilla y León. The main objective of this project is to identify hidden patterns and significant correlations among symptoms, comorbidities, and pathological evolutions to serve as a guide for medical practitioners and expert psychiatrists.
+
+To address this problem, a hybrid methodology has been implemented, combining data science, machine learning, deep learning techniques, and graph-oriented databases. First, the cleaning and conditioning of the initial clinical dataset—comprising an anonymized list of 3,134 patient records—was performed, ensuring data consistency through missing data imputation and the normalization of diagnoses.
+
+Subsequently, a knowledge graph was constructed using Neo4J, structurally modeling the multivariate relationships between patients and diagnoses. This approach enabled community detection analysis and the evaluation of the topological proximity of the clinical data. In parallel, Large Language Models (LLMs) were integrated for clinical text processing and the identification of semantic relationships between diagnoses. Furthermore, different classifiers were trained to predict the onset of distinct pathologies.
+
+An optimization and evaluation process of various architectures was carried out to demonstrate the viability of these systems as support tools. Traditional Machine Learning models demonstrated higher performance and better results compared to Deep Learning approaches and LLMs. On the other hand, the community analysis in Neo4J revealed specific comorbidity patterns that validate previous clinical hypotheses, showcasing the formation of related diagnostic clusters. Lastly, a functional web application integrating an ICD code converter was developed, thereby improving the accessibility and interpretability of the results for medical personnel.
+
+In conclusion, this project demonstrates the potential of combining knowledge graphs and machine learning within the mental health domain, providing a complementary clinical decision support tool and advancing psychiatric research.
+
+\vspace{0.5cm}
+\noindent \textbf{Keywords:} Schizophrenia, Knowledge Graphs, Neo4J, Machine Learning, Deep Learning, Clinical Prediction, ICD Codes.
+
+\newpage
+\chapter*{Glosario y Acrónimos}
+\addcontentsline{toc}{chapter}{Glosario y Acrónimos}
+
+\begin{description}
+    \item[AUC-ROC] (\textit{Area Under the Receiver Operating Characteristic curve}): Métrica de rendimiento para evaluar la calidad de un modelo de clasificación a diferentes umbrales.
+    \item[Deep Learning (DL)] Aprendizaje Profundo. Subcampo del \textit{Machine Learning} basado en redes neuronales artificiales de múltiples capas que permiten modelar relaciones complejas en los datos.
+    \item[ICD] (\textit{International Classification of Diseases} / Clasificación Internacional de Enfermedades): Sistema de codificación de trastornos, enfermedades y signos clínicos publicado por la Organización Mundial de la Salud (OMS).
+    \item[Large Language Model (LLM)] Modelo de Lenguaje de Gran Tamaño. Algoritmo de inteligencia artificial basado en arquitecturas de \textit{deep learning} (generalmente \textit{Transformers}) entrenado con textos masivos para procesar y generar lenguaje natural.
+    \item[Machine Learning (ML)] Aprendizaje Automático. Rama de la inteligencia artificial enfocada en el desarrollo de algoritmos que permiten a los ordenadores aprender patrones y tomar decisiones a partir de datos sin ser programados explícitamente.
+    \item[Neo4j] Sistema de gestión de bases de datos orientado a grafos, desarrollado en Java, que almacena la información en forma de nodos, relaciones y propiedades.
+    \item[Topología de Grafos] Estudio de la estructura y disposición de los elementos (nodos y aristas) dentro de una red o grafo de conocimiento, analizando métricas de conectividad y centralidad.
+    \item[Deep Learning (DL)] Aprendizaje Profundo. Subcampo del \textit{Machine Learning} basado en redes neuronales artificiales de múltiples capas (ocultas) que permiten extraer y modelar de forma automática características complejas y abstractas a partir de datos en bruto.
+    \item[Comorbilidad] Presencia de uno o más trastornos (o enfermedades) además de la enfermedad o trastorno primario en un mismo paciente.
+    \item[ICD / CIE] (\textit{International Classification of Diseases} / Clasificación Internacional de Enfermedades): Sistema de codificación de trastornos, enfermedades y signos clínicos publicado por la Organización Mundial de la Salud (OMS).
+    \item[Minería de Textos (Text Mining)] Proceso de analizar colecciones de textos en lenguaje natural para extraer patrones, conceptos o información estructurada de alto valor que no es directamente accesible para un algoritmo tradicional. 
+    \item[F1-Score] Métrica de rendimiento que combina la precisión y la exhaustividad (recall) en un solo valor, calculada como la media armónica de ambas.
+    \item[Clinical Decision Support System (CDSS)] Sistema de Soporte a la Decisión Clínica. Herramienta tecnológica de salud interactiva diseñada para asistir a los profesionales médicos en las tareas de toma de decisiones clínicas, utilizando datos de pacientes y bases de conocimiento para mejorar la calidad asistencial
+  \end{description}
+
+% -----------------------------------------
+% ÍNDICES 
+% -----------------------------------------
+\tableofcontents % Índice de contenidos 
+\newpage
+\listoffigures % Índice de figuras 
+\newpage
+\listoftables % Índice de cuadros y tablas 
+\newpage
+
+% -----------------------------------------
+% CUERPO DEL TRABAJO
+% -----------------------------------------
+\pagenumbering{arabic} % Vuelve a numeración arábiga para el contenido
+\setcounter{page}{1}
+
+\chapter{Introducción y objetivos}
+\section{Contexto del problema}
+
+La esquizofrenia es uno de los trastornos psiquiátricos más severos y complejos en el ámbito de la salud mental. Se caracteriza por una profunda heterogeneidad clínica que abarca desde síntomas positivos (como delirios y alucinaciones) hasta síntomas negativos (apatía, retraimiento social) y disfunciones cognitivas. Esta variabilidad no solo dificulta el diagnóstico temprano, sino que también complica el seguimiento a largo plazo, ya que los pacientes suelen presentar un alto índice de comorbilidades médicas y psiquiátricas.
+
+Tradicionalmente, la práctica psiquiátrica se ha apoyado en manuales diagnósticos estandarizados (como el DSM o el CIE/ICD) y en la experiencia acumulada del facultativo. Sin embargo, los sistemas de salud pública actuales generan un volumen masivo de datos clínicos desestructurados o aislados de forma diaria. En el contexto de la comunidad autónoma de Castilla y León, la gestión de estos historiales plantea un desafío evidente: la información existe, pero se encuentra almacenada en formatos que impiden una visión relacional y holística del recorrido del paciente. || Añadir aquí si los datos provienen de algún entorno hospitalario generalizado o red de salud específica de la comunidad si lo sabes ||
+
+La dificultad intrínseca de manejar estos diagnósticos radica en que las patologías mentales raramente se presentan de forma aislada. Un paciente diagnosticado con un subtipo de esquizofrenia puede desarrollar de manera adyacente otros trastornos conductuales o somáticos. Identificar estas transiciones y patrones relacionales a gran escala es inasumible mediante el análisis clínico tradicional paciente a paciente.
+
+Es en este escenario donde la intersección entre la psiquiatría y las tecnologías de la información cobra una relevancia crítica. La disponibilidad de un conjunto de datos clínicos regionales abre la puerta a la aplicación de técnicas avanzadas de Ciencia de Datos. El reto actual no es la recolección de los datos, sino su explotación: transformar un listado plano de registros médicos en un ecosistema de conocimiento interconectado que permita descubrir comunidades de diagnósticos, tendencias epidemiológicas y, en última instancia, ofrecer herramientas tecnológicas de soporte que sirvan de guía en la toma de decisiones clínicas.
+
+\section{Motivación}
+
+La principal motivación de este trabajo radica en la oportunidad de transformar datos clínicos estáticos y tabulares en conocimiento médico dinámico e interpretable. El análisis tradicional de datos en salud mental ha dependido históricamente de bases de datos relacionales orientadas a tablas. Aunque eficaces para el almacenamiento básico, estas estructuras carecen de la flexibilidad necesaria para representar la naturaleza interconectada de los trastornos psiquiátricos, donde un único diagnóstico puede bifurcarse en múltiples variantes o asociarse de forma compleja con otras patologías. 
+
+En este sentido, la adopción de las bases de datos orientadas a grafos, específicamente mediante el entorno Neo4j, se presenta como una alternativa tecnológica idónea. Los grafos permiten mapear directamente la realidad clínica: los pacientes y sus diagnósticos se convierten en nodos, mientras que las relaciones médicas actúan como aristas. Esta estructura no solo facilita una visualización intuitiva para el personal médico, sino que habilita el uso de algoritmos de teoría de grafos para la detección de comunidades, permitiendo descubrir agrupaciones de patologías que conviven en el dataset y que podrían pasar desapercibidas en un análisis estadístico convencional. || Candidato al glosario: Teoría de Grafos ||
+
+Por otro lado, la incorporación de técnicas de aprendizaje automático (\textit{Machine Learning} y \textit{Deep Learning}) responde a la necesidad de dotar al sistema de capacidades predictivas. En el ámbito de la esquizofrenia, anticipar la evolución de un cuadro clínico o clasificar correctamente sus variantes basándose en el historial del paciente puede abrir nuevas vías de investigación en la optimización de recursos sanitarios. Comparar enfoques tradicionales de \textit{Machine Learning} frente a arquitecturas complejas de \textit{Deep Learning} añade un valor experimental crítico al TFG, permitiendo evaluar el balance entre la precisión del modelo y su coste computacional. || Añadir aquí si tuviste alguna motivación extra por comparar ML vs DL, como la interpretabilidad de los modelos para los médicos o las limitaciones de hardware que tenías ||
+
+Finalmente, la reciente emergencia de los Modelos de Lenguaje de Gran Tamaño (\textit{LLMs}) ofrece un puente lingüístico inédito para la informática médica. Los historiales clínicos y las descripciones de los diagnósticos suelen estar cargados de texto natural complejo; motivar el uso de LLMs para procesar conceptualmente esta información y buscar relaciones semánticas responde al desafío actual de la minería de textos en salud. En conjunto, la convergencia de estas tres tecnologías sobre un dataset real de 3134 pacientes de Castilla y León constituye el motor de este proyecto, buscando demostrar que las herramientas de la ciencia de datos actual pueden integrarse de forma viable en entornos de soporte a la decisión clínica.
+
+\section{Objetivos del TFG}
+
+El objetivo general de este Trabajo de Fin de Grado consiste en el diseño, desarrollo y evaluación de un ecosistema tecnológico experimental que combine la analítica de grafos y el aprendizaje automático para el estudio relacional y la predicción de diagnósticos en pacientes con esquizofrenia de la comunidad de Castilla y León. Con ello, se busca transformar datos clínicos tabulares en herramientas de soporte que faciliten la identificación de patrones y comunidades de patologías asociadas.
+
+Para alcanzar este objetivo general, se han establecido y completado los siguientes objetivos específicos:
+
+\begin{itemize}
+    \item \textbf{Exploración y curación del conjunto de datos:} Analizar en profundidad el \textit{dataset} clínico inicial, aplicando técnicas de preprocesamiento, imputación de valores faltantes y normalización de las variables diagnósticas para garantizar la consistencia y calidad de los datos de los 3134 pacientes.
+    \item \textbf{Modelado relacional mediante Grafos de Conocimiento:} Diseñar e implementar una base de datos orientada a grafos en Neo4j para representar las conexiones multivariantes entre pacientes y patologías, permitiendo el estudio de la cercanía topológica y la detección de comunidades de diagnósticos relacionados.
+    \item \textbf{Procesamiento semántico con Modelos de Lenguaje:} Integrar modelos de lenguaje (\textit{LLMs}) para el análisis del texto clínico y la extracción de relaciones semánticas subyacentes entre las diferentes variantes de la esquizofrenia y sus comorbilidades.
+    \item \textbf{Desarrollo y optimización de modelos predictivos:} Entrenar, tunear y evaluar diversas arquitecturas de clasificación basándose en técnicas de \textit{Machine Learning} tradicional y \textit{Deep Learning} para predecir la probabilidad de aparición o el tipo de patología psiquiátrica, comparando su rendimiento computacional y métricas de acierto, como puede ser el \textit{AUC-ROC} o el \textit{F1-Score}.
+    \item \textbf{Diseño e integración de la interfaz del sistema:} Desarrollar una plataforma web funcional que articule de manera unificada los modelos predictivos, las visualizaciones del grafo y un conversor automatizado de códigos ICD, garantizando una transferencia tecnológica limpia desde el entorno de desarrollo hacia una interfaz accesible.
+\end{itemize}
+
+En última instancia, el verdadero objetivo final consiste en demostrar cómo la convergencia de la analítica relacional y el aprendizaje automático puede consolidarse en una herramienta viable, intuitiva y robusta de soporte a la decisión clínica (\textit{Clinical Decision Support System, CDSS}). Con ello, se pretende proporcionar a los facultativos y expertos psiquiatras un marco analítico complementario que agilice la interpretación de historiales complejos, visibilice tendencias epidemiológicas regionales y actúe como un catalizador en la optimización y personalización del diagnóstico de la esquizofrenia.
+
+\section{Estructura de la memoria}
+
+Para facilitar la lectura y el seguimiento detallado de la investigación realizada, esta memoria se encuentra organizada en ocho capítulos estructurados de la siguiente manera:
+
+El \textbf{Capítulo 2 (Estado del arte)} ofrece una revisión de la literatura científica en torno a la esquizofrenia y el análisis de datos clínicos, identificando los métodos computacionales utilizados habitualmente y las limitaciones de los enfoques previos. El \textbf{Capítulo 3 (Datos y preparación del dataset)} detalla el origen de los 3134 registros de la comunidad de Castilla y León, describiendo exhaustivamente el proceso de curación, imputación de datos faltantes y el modelado inicial en la base de datos orientada a grafos Neo4j. A continuación, el \textbf{Capítulo 4 (Metodología)} desglosa el diseño experimental del proyecto, justificando la selección de las métricas, las técnicas de validación cruzada y los algoritmos de \textit{Machine Learning}, \textit{Deep Learning} y modelos de lenguaje evaluados. 
+
+Los resultados empíricos derivados de dicha experimentación, junto con la comparativa de rendimiento entre las distintas arquitecturas y el análisis de comunidades, se exponen y discuten en el \textbf{Capítulo 5 (Resultados)}. Por su parte, el \textbf{Capítulo 6 (Aplicación desarrollada)} describe la arquitectura de la plataforma web funcional implementada, sus interfaces de visualización y el módulo conversor de códigos ICD. Finalmente, el \textbf{Capítulo 7 (Presupuesto)} analiza la viabilidad económica del proyecto a través de la estimación de costes de \textit{hardware}, \textit{software} y horas de ingeniería, dando paso al \textbf{Capítulo 8 (Conclusiones y trabajo futuro)}, donde se sintetizan las principales aportaciones del estudio, sus limitaciones actuales y las líneas de desarrollo que quedan abiertas para próximas investigaciones.
+
+\chapter{Estado del arte}
+\section{Trabajos previos}
+Texto de los trabajos previos...
+\section{Métodos utilizados en la literatura}
+Texto de los métodos...
+\section{Limitaciones detectadas}
+Texto de las limitaciones...
+
+\chapter{Datos y preparación del dataset}
+\section{Fuente de datos}
+Texto sobre la fuente de datos...
+\section{Variables utilizadas}
+Texto sobre las variables...
+\section{Limpieza y preprocesado}
+Texto sobre limpieza...
+\section{División entrenamiento/validación/test}
+Texto sobre la división de conjuntos...
+\section{Estratificación de datos}
+Texto sobre estratificación...
+\section{Mapas y estudio de comunidades}
+Zonas donde predominan unos diagnósticos sobre otros.
+
+\chapter{Metodología}
+\section{Baselines iniciales (Machine Learning vs Deep Learning)}
+Texto sobre las baselines...
+\section{Cross-validation}
+Texto sobre cross-validation...
+\section{Modelos evaluados}
+Texto sobre los modelos...
+\section{Búsqueda de hiperparámetros}
+Texto sobre la búsqueda...
+\section{Propuesta final}
+Texto de la propuesta...
+\section{Métricas empleadas y su justificación}
+Texto de las métricas...
+
+\chapter{Resultados}
+\section{Comparativa de modelos}
+Texto de comparativa...
+\section{Impacto de cada mejora introducida}
+Texto del impacto...
+\section{Análisis de resultados}
+Texto del análisis...
+
+\chapter{Aplicación desarrollada}
+\section{Visualizaciones}
+Texto de visualizaciones...
+\section{Gráficos de la aplicación}
+Texto de los gráficos...
+\section{Navegación}
+Texto sobre navegación...
+\section{Accesibilidad de la aplicación}
+Texto de accesibilidad...
+\section{Conversor de ICD}
+Texto del conversor...
+
+\chapter{Presupuesto} 
+\section{Recursos hardware utilizados}
+Texto sobre hardware...
+\section{Software y librerías empleadas}
+Texto sobre software...
+\section{Estimación de costes}
+Texto de costes...
+\section{Viabilidad de implantación o escalado}
+Texto de viabilidad...
+
+\chapter{Conclusiones y trabajo futuro} 
+\section{Principales aportaciones}
+Texto de aportaciones...
+\section{Limitaciones}
+Texto de limitaciones...
+\section{Posibles mejoras futuras}
+Texto de mejoras futuras...
+
+% -----------------------------------------
+% BIBLIOGRAFÍA Y ANEXOS 
+% -----------------------------------------
+\newpage
+\addcontentsline{toc}{chapter}{Bibliografía}
+\begin{thebibliography}{9}
+% Se recomienda estilo IEEE (numérico) o Harvard (Autor-Fecha) 
+\bibitem{ref1} Autor A, Autor B. "Título del artículo". Nombre de la Revista, vol. X, no. Y, pp. Z-W, Año.
+\end{thebibliography}
+
+\appendix
+\chapter{Anexos}
+En caso de tener información adicional (código fuente extenso, tablas de datos crudos, etc.), se coloca en esta sección.
+
+\end{document}

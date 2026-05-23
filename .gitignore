@@ -210,3 +210,5 @@ model.safetensors
 catboost_info
 
 optimizer.pt
+
+out/
