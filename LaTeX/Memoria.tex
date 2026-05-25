@@ -131,17 +131,21 @@ In conclusion, this project demonstrates the potential of combining knowledge gr
 \begin{description}
     \item[AUC-ROC] (\textit{Area Under the Receiver Operating Characteristic curve}): Métrica de rendimiento para evaluar la calidad de un modelo de clasificación a diferentes umbrales.
     \item[Deep Learning (DL)] Aprendizaje Profundo. Subcampo del \textit{Machine Learning} basado en redes neuronales artificiales de múltiples capas que permiten modelar relaciones complejas en los datos.
-    \item[ICD] (\textit{International Classification of Diseases} / Clasificación Internacional de Enfermedades): Sistema de codificación de trastornos, enfermedades y signos clínicos publicado por la Organización Mundial de la Salud (OMS).
+    \item[Recall] Exhaustividad. Métrica de rendimiento que mide la proporción de verdaderos positivos correctamente identificados por un modelo.     
+    \item[ICD/ CIE] (\textit{International Classification of Diseases} / Clasificación Internacional de Enfermedades): Sistema de codificación de trastornos, enfermedades y signos clínicos publicado por la Organización Mundial de la Salud (OMS).
     \item[Large Language Model (LLM)] Modelo de Lenguaje de Gran Tamaño. Algoritmo de inteligencia artificial basado en arquitecturas de \textit{deep learning} (generalmente \textit{Transformers}) entrenado con textos masivos para procesar y generar lenguaje natural.
-    \item[Machine Learning (ML)] Aprendizaje Automático. Rama de la inteligencia artificial enfocada en el desarrollo de algoritmos que permiten a los ordenadores aprender patrones y tomar decisiones a partir de datos sin ser programados explícitamente.
+    \item[Machine Learning (ML)] Aprendizaje Automático. Rama de la inteligencia artificial enfocada en el desarrollo de algoritmos que permiten a los ordenadores aprender patrones, tomar decisiones y hacer predicciones a partir de datos sin ser programados explícitamente.
     \item[Neo4j] Sistema de gestión de bases de datos orientado a grafos, desarrollado en Java, que almacena la información en forma de nodos, relaciones y propiedades.
     \item[Topología de Grafos] Estudio de la estructura y disposición de los elementos (nodos y aristas) dentro de una red o grafo de conocimiento, analizando métricas de conectividad y centralidad.
     \item[Deep Learning (DL)] Aprendizaje Profundo. Subcampo del \textit{Machine Learning} basado en redes neuronales artificiales de múltiples capas (ocultas) que permiten extraer y modelar de forma automática características complejas y abstractas a partir de datos en bruto.
     \item[Comorbilidad] Presencia de uno o más trastornos (o enfermedades) además de la enfermedad o trastorno primario en un mismo paciente.
     \item[ICD / CIE] (\textit{International Classification of Diseases} / Clasificación Internacional de Enfermedades): Sistema de codificación de trastornos, enfermedades y signos clínicos publicado por la Organización Mundial de la Salud (OMS).
     \item[Minería de Textos (Text Mining)] Proceso de analizar colecciones de textos en lenguaje natural para extraer patrones, conceptos o información estructurada de alto valor que no es directamente accesible para un algoritmo tradicional. 
-    \item[F1-Score] Métrica de rendimiento que combina la precisión y la exhaustividad (recall) en un solo valor, calculada como la media armónica de ambas.
+    \item[F1-Score] Métrica de rendimiento que combina la precisión y el recall en un solo valor, calculada como la media armónica de ambas.
     \item[Clinical Decision Support System (CDSS)] Sistema de Soporte a la Decisión Clínica. Herramienta tecnológica de salud interactiva diseñada para asistir a los profesionales médicos en las tareas de toma de decisiones clínicas, utilizando datos de pacientes y bases de conocimiento para mejorar la calidad asistencial
+    \item[Overfitting] Sobreentrenamiento. Fenómeno en el que un modelo de aprendizaje automático se ajusta demasiado a los datos de entrenamiento, capturando ruido o patrones específicos que no generalizan bien a datos nuevos o no vistos. 
+    \item[Embedding] Técnica de representación de datos en un espacio vectorial continuo, donde la proximidad entre vectores refleja la similitud semántica o relacional.
+    \item[PLN] Procesamiento del Lenguaje Natural. Subcampo de la inteligencia artificial que se ocupa de la interacción entre las computadoras y el lenguaje humano, permitiendo a las máquinas entender, interpretar y generar texto en lenguaje natural.
   \end{description}
 
 % -----------------------------------------
@@ -207,15 +211,65 @@ Los resultados empíricos derivados de dicha experimentación, junto con la comp
 
 \chapter{Estado del arte}
 \section{Trabajos previos}
-Texto de los trabajos previos...
+
+El estudio de los trastornos psiquiátricos mediante paradigmas computacionales ha cobrado un impulso significativo gracias a la creciente disponibilidad de Historias Clínicas Electrónicas (\textit{Electronic Health Records, EHR}) y al avance de la inteligencia artificial. La literatura científica reciente refleja un cambio de paradigma, transitando desde los análisis estadísticos descriptivos tradicionales hacia modelos predictivos y relacionales complejos. Para comprender el ecosistema en el que se inscribe este proyecto, los antecedentes se han estructurado en tres ejes fundamentales: el aprendizaje automático aplicado a la esquizofrenia, el uso de grafos de conocimiento en el sector salud y la irrupción de los modelos de lenguaje en entornos clínicos.
+
+En el primer eje, referente al modelado predictivo, la esquizofrenia ha sido objeto de estudio debido a su alta complejidad y la urgencia de un diagnóstico temprano. Diversas investigaciones previas han abordado la clasificación de pacientes utilizando datos tabulares y demográficos. Por ejemplo, el trabajo desarrollado por \cite{|| Cita1: Autor, Año del estudio clínico con ML ||} implementó un modelo basado en [mencionar algoritmo, ej.: Random Forest / SVM] sobre una muestra de [X] pacientes, logrando una precisión del [X]\% en la identificación de brotes psicóticos. || Añadir aquí un breve comentario si el estudio anterior utilizaba variables similares a las tuyas o si adolecía de falta de interpretabilidad ||. Asimismo, otros autores han explorado el uso de redes neuronales densas, aunque coinciden en que la naturaleza tabular y la presencia de datos faltantes en los registros clínicos reales suponen un desafío constante que requiere técnicas avanzadas de imputación.
+
+En el segundo eje, la necesidad de representar la información médica de una manera más natural y conectada ha propiciado el uso de bases de datos orientadas a grafos. Las ontologías biomédicas y los grafos de conocimiento han demostrado ser herramientas robustas para la medicina de precisión. || Candidato al glosario: Ontología Biomédica || En el ámbito de la gestión de bases de datos relacionales orientadas a salud, autores como \cite{|| Cita2: Autor, Año del estudio con Grafos/Neo4j ||} demostraron el potencial de entornos como Neo4j para mapear las interacciones multivariantes entre síntomas, fármacos y diagnósticos codificados. Su estudio concluyó que el análisis de la topología de la red permite identificar comorbilidades ocultas mediante algoritmos de agrupamiento, sentando un precedente directo para el análisis relacional de comunidades diagnósticas ejecutado en esta memoria.
+
+Finalmente, el tercer eje metodológico se centra en el Procesamiento del Lenguaje Natural (\textit{Natural Language Processing, NLP}) y los Modelos de Lenguaje de Gran Tamaño (\textit{LLMs}). Dado que gran parte de la información psiquiátrica reside en la narrativa libre de los informes médicos, la literatura ha comenzado a evaluar la capacidad de estos modelos para extraer entidades clínicas de forma automatizada. Investigaciones recientes \cite{|| Cita3: Autor, Año del estudio con LLMs clínicos ||} han puesto a prueba arquitecturas basadas en \textit{Transformers} para la traducción de texto clínico desestructurado a códigos estandarizados como el ICD. No obstante, la integración sinérgica de estos modelos lingüísticos con la estructura rígida de un grafo de conocimiento y clasificadores predictivos tradicionales sigue siendo un territorio de vanguardia con amplios márgenes de optimización.
+
 \section{Métodos utilizados en la literatura}
-Texto de los métodos...
+
+La diversidad de los datos clínicos de pacientes con esquizofrenia ha forzado la convergencia de diferentes metodologías analíticas en la literatura actual. Para abordar con rigor los antecedentes metodológicos, este apartado desglosa los fundamentos algorítmicos de las herramientas más extendidas en la investigación biomédica y computacional, clasificadas en tres familias principales: aprendizaje automático clásico, analítica topológica de grafos y modelos basados en atención para lenguaje natural.
+
+En el ámbito del \textit{Machine Learning} tradicional aplicado a datos clínicos estructurados, los clasificadores basados en ensamblados de árboles de decisión y vectores de soporte representan el núcleo metodológico de la literatura. El algoritmo \textit{Random Forest} se utiliza profusamente debido a su capacidad para manejar la alta dimensionalidad y mitigar el sobreentrenamiento mediante el promediado de múltiples árboles independientes. || Candidato al glosario: Sobreentrenamiento (\textit{Overfitting}) || Por su parte, las técnicas de \textit{Gradient Boosting}, representadas principalmente por XGBoost, destacan en las publicaciones por su optimización del gradiente y su eficiencia en el tratamiento de matrices dispersas de datos, comunes al registrar comorbilidades. El uso de funciones de pérdida regularizadas en estos métodos permite ponderar la importancia de variables sintomatológicas complejas. || Añadir aquí si en las lecturas que has hecho algún autor destaca otro algoritmo matemático clásico como las Regresiones Logísticas regularizadas o SVM ||
+
+En lo que respecta a la analítica de grafos y bases de datos NoSQL orientadas a redes (donde Neo4j actúa como estándar de facto), la literatura se centra en desvelar la estructura matemática de las relaciones. Los métodos matemáticos más utilizados son los algoritmos de detección de comunidades, entre los que destaca el método de \textit{Louvain}. Este método heurístico busca maximizar la modularidad de la red, agrupando de forma iterativa los nodos (pacientes o diagnósticos) que poseen una densidad de conexión interna significativamente mayor que la esperada de forma aleatoria. Asimismo, se documenta el uso de la centralidad de grado y de intermediación (\textit{Betweenness Centrality}) para identificar patologías críticas que actúan como "puentes" o catalizadores epidemiológicos entre diferentes familias de trastornos psiquiátricos. || Candidato al glosario: Centralidad de Intermediación ||
+
+Finalmente, para la explotación de la narrativa clínica desestructurada, los métodos basados en arquitecturas de \textit{Transformers} y mecanismos de auto-atención (\textit{Self-Attention}) dominan la literatura moderna de NLP médico. Modelos especializados de la familia BERT (como \textit{ClinicalBERT} o \textit{BioBERT}) son comúnmente utilizados para generar \textit{embeddings} semánticos denseificados. Estos métodos proyectan palabras o conceptos de informes psiquiátricos en un espacio vectorial continuo multidimensional, donde la cercanía geométrica (calculada frecuentemente mediante la similitud del coseno) correlaciona con la afinidad clínica de los conceptos. || Añadir aquí si en tu enfoque utilizaste LLMs comerciales tipo GPT o modelos \textit{open-source} locales tipo Llama, y si la literatura describe métodos de \textit{prompt engineering} o \textit{fine-tuning} para adaptarlos al entorno clínico ||
 \section{Limitaciones detectadas}
-Texto de las limitaciones...
+
+A pesar del notable avance en la digitalización de los entornos sanitarios y del despliegue de algoritmos avanzados descritos en las secciones precedentes, la revisión crítica de la literatura científica revela una serie de brechas metodológicas y prácticas. Estas limitaciones no solo restringen el impacto real de las tecnologías de la información en la práctica psiquiátrica actual, sino que constituyen la justificación directa del enfoque integrador propuesto en este Trabajo de Fin de Grado. A continuación, se detallan las tres deficiencias principales detectadas en el estado del arte:
+
+\begin{enumerate}
+    \item \textbf{Aislamiento y fragmentación de paradigmas computacionales:} La literatura tiende a segmentar el uso de las tecnologías. Por un lado, se encuentran sistemas predictivos basados en \textit{Machine Learning} que explotan matrices tabulares estáticas, ignorando la rica información topológica y relacional que vincula a los pacientes. Por otro lado, los estudios que implementan grafos de conocimiento se limitan a un análisis descriptivo de redes, omitiendo capacidades predictivas para nuevos diagnósticos. Existe una notable escasez de arquitecturas híbridas que unifiquen la potencia predictiva de los clasificadores con la flexibilidad estructural de bases de datos como Neo4j. || Añadir aquí si has observado que los artículos rara vez cruzan datos relacionales con texto libre de LLMs de forma simultánea ||
+    \item \textbf{El desafío de la interpretabilidad y la opacidad algorítmica:} En el campo de la salud mental, y específicamente en trastornos complejos como la esquizofrenia, el personal médico muestra una resistencia natural (y justificada) a adoptar modelos de \textit{Deep Learning} y \textit{LLMs} debido al fenómeno de la "caja negra". Los facultativos requieren entender el razonamiento subyacente a una predicción diagnóstica para poder confiar en ella. La literatura actual falla frecuentemente en dotar a estos modelos de una capa de explicabilidad o de representaciones visuales que traduzcan vectores matemáticos abstractos en conexiones clínicas comprensibles. || Candidato al glosario: Caja Negra (\textit{Black Box}) ||
+    \item \textbf{Brecha en la transferencia tecnológica y herramientas de soporte:} Una gran parte de las investigaciones analizadas se desarrollan en entornos puramente de laboratorio o de código aislado (como \textit{scripts} de investigación). Raras veces este conocimiento se transfiere a soluciones de software funcionales, accesibles y adaptadas a la rutina de una consulta psiquiátrica. Limitaciones como la falta de interfaces web interactivas o la ausencia de módulos utilitarios cotidianos —como un conversor automatizado entre sistemas de codificación como el ICD— impiden que la ciencia de datos actúe como un verdadero Sistema de Soporte a la Decisión Clínica (CDSS).
+\end{enumerate}
 
 \chapter{Datos y preparación del dataset}
+Este capítulo aborda de manera pormenorizada el origen, la estructura y el ciclo de transformación técnica al que fueron sometidos los datos clínicos utilizados en este proyecto. Dado que el éxito de los modelos de aprendizaje automático y la fiabilidad de la analítica de grafos dependen directamente de la calidad del dato de entrada, las siguientes secciones detallan desde la naturaleza inicial de la fuente hasta los procesos críticos de curación y el posterior modelado relacional.
+
 \section{Fuente de datos}
-Texto sobre la fuente de datos...
+
+El conjunto de datos que constituye la base analítica y experimental de este Trabajo de Fin de Grado proviene de [mencionar el origen general, ej.: un entorno de investigación sociosanitaria / provisto por el departamento de X de la universidad], recopilando registros clínicos de la comunidad autónoma de Castilla y León. El \textit{dataset} original se presenta en un formato tabular [mencionar formato, ej.: CSV / Excel] y consta de un total de 3134 registros independientes, donde cada fila representa una instancia clínica anonimizada asociada a un paciente diagnosticado con esquizofrenia o alguna de sus variantes afines.
+
+Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos —específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD)—, la fuente de datos fue sometida a un proceso previo de anonimización irreversible. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. || Añadir aquí si el dataset tiene alguna limitación temporal conocida, ej: registros acumulados entre los años 2015 y 2022 ||
+
+Estructuralmente, el \textit{dataset} se compone de un conjunto de [X] columnas que recogen diferentes dimensiones del perfil del paciente. Para facilitar su análisis técnico, estas variables se han categorizado en tres bloques principales, descritos a continuación y resumidos en la Tabla \ref{tab:esquema_dataset}:
+
+\begin{itemize}
+    \item \textbf{Variables Demográficas:} Hacen referencia a las características básicas del individuo, tales como la edad, el sexo o la zona geográfica general. || Modificar/añadir según tus columnas demográficas reales ||
+    \item \textbf{Variables Diagnósticas y Clínicas:} Representan el núcleo del estudio, incluyendo los códigos médicos de esquizofrenia (subtipos), la presencia de sintomatología específica o la fecha del primer diagnóstico. || Modificar/añadir según tus columnas clínicas reales ||
+    \item \textbf{Variables de Comorbilidad y Evolución:} Columnas destinadas a registrar la existencia de otros trastornos adyacentes (psiquiátricos o somáticos), reingresos hospitalarios o trayectorias farmacológicas. || Modificar/añadir según tus columnas de evolución reales ||
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|l|p{7cm}|}
+\hline
+\textbf{Nombre de la Columna} & \textbf{Tipo de Dato} & \textbf{Categoría} & \textbf{Descripción Clínica / Significado} \\ \hline
+\texttt{|| Columna 1, ej: ID\_Paciente ||} & || Entero / Alfanumérico || & Demográfica & || Identificador único anonimizado del registro. || \\ \hline
+\texttt{|| Columna 2, ej: Cod\_ICD ||} & || Cadena (String) || & Diagnóstica & || Código internacional de la patología principal. || \\ \hline
+\texttt{|| Columna 3, ej: Edad ||} & || Entero || & Demográfica & || Edad del paciente en el momento del registro. || \\ \hline
+\texttt{|| Columna 4 ||} & || ... || & ... & || ... || \\ \hline
+\end{tabular}
+\caption{Esquema analítico y descripción de las variables del dataset original.}
+\label{tab:esquema_dataset}
+\end{table}
 \section{Variables utilizadas}
 Texto sobre las variables...
 \section{Limpieza y preprocesado}
