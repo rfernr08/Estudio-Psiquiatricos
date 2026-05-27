@@ -205,6 +205,24 @@ Para alcanzar este objetivo general, se han establecido y completado los siguien
 
 En última instancia, el verdadero objetivo final consiste en demostrar cómo la convergencia de la analítica relacional y el aprendizaje automático puede consolidarse en una herramienta viable, intuitiva y robusta de soporte a la decisión clínica (\textit{Clinical Decision Support System, CDSS}). Con ello, se pretende proporcionar a los facultativos y expertos psiquiatras un marco analítico complementario que agilice la interpretación de historiales complejos, visibilice tendencias epidemiológicas regionales y actúe como un catalizador en la optimización y personalización del diagnóstico de la esquizofrenia.
 
+\section{Marco legal, normativo y ético}
+
+El desarrollo de soluciones tecnológicas aplicadas al ámbito de la salud mental conlleva una profunda responsabilidad legal y bioética. Dado que este proyecto interactúa con registros clínicos de pacientes diagnosticados con esquizofrenia y despliega modelos predictivos automatizados, su diseño y ejecución se han supeditado estrictamente al marco normativo vigente, estructurado en tres dimensiones esenciales:
+
+\subsection{Protección de datos y privacidad clínica}
+El tratamiento del conjunto de datos de los 3134 pacientes de Castilla y León se rige por el \cite{RGPD2016}  (RGPD, Reglamento UE 2016/679) y la \cite{LOPDGDD2018} \textit{Ley Orgánica 3/2018 de Protección de Datos Personales y Garantía de los Derechos Digitales} (LOPDGDD). Al clasificarse los datos de salud como <<categorías especiales de datos>> (Art. 9 del RGPD), se aplicó un protocolo estricto de anonimización irreversible previo al análisis. Esto garantiza la imposibilidad de reidentificar a los sujetos, protegiendo el secreto médico y los derechos fundamentales de los pacientes, salvaguardando simultáneamente la integridad estadística necesaria para el entrenamiento de los algoritmos.
+
+\subsection{Regulación de la Inteligencia Artificial de la Unión Europea}
+En consonancia con la normativa comunitaria actual, específicamente la Ley de Inteligencia Artificial de la Unión Europea (\textit{EU AI Act}), los sistemas de software destinados a actuar como herramientas de soporte al diagnóstico o cribado médico entran dentro de la consideración de sistemas de alto riesgo o requieren estrictas salvaguardas de transparencia. Este proyecto se ha diseñado respetando rigurosamente los requisitos de dicha ley:
+\begin{itemize}
+    \item \textbf{Trazabilidad y calidad del dato:} Garantizada mediante el proceso documentado de curación en el Capítulo 3.
+    \item \textbf{Transparencia e interpretabilidad:} Mitigando el efecto <<caja negra>> mediante la capa visual de grafos en Neo4j, permitiendo al clínico comprender la lógica relacional del sistema.
+    \item \textbf{Supervisión humana:} El sistema se define exclusivamente como una herramienta de apoyo (\textit{CDSS}); la decisión diagnóstica final y la responsabilidad prescriptiva recaen de manera unívoca en el facultativo especialista y no en el modelo predictivo de apoyo, evitando así cualquier riesgo de delegación indebida o automatización excesiva.
+\end{itemize}
+
+\subsection{Principios bioéticos y sesgo algorítmico}
+Desde una perspectiva puramente ética, el proyecto se alinea con los principios fundamentales de la bioética moderna: beneficencia (buscar el máximo beneficio analítico para optimizar tratamientos) y no maleficencia (evitar diagnósticos erróneos mediante la validación exhaustiva de métricas). Un desafío ético crítico abordado en el diseño ha sido la prevención del \textit{sesgo de automatización} (la tendencia humana a confiar ciegamente en los sistemas automatizados). Los modelos predictivos desarrollados mitigan este riesgo presentando las predicciones probabilísticas no como sentencias definitivas, sino como indicadores complementarios acompañados de la sintomatología relacional del paciente, fomentando el pensamiento crítico del experto psiquiatra.
+
 \section{Estructura de la memoria}
 
 Para facilitar la lectura y el seguimiento detallado de la investigación realizada, esta memoria se encuentra organizada en ocho capítulos estructurados de la siguiente manera:
@@ -376,7 +394,7 @@ Asumiendo un periodo de desarrollo del proyecto de 7 meses, la Tabla \ref{tab:co
 Estación de trabajo (PC) & 1.100,00 & 7 & 145,83 \\ \hline
 Portátil & 1.200,00 & 7 & 150,00 \\ \hline
 Periféricos y Monitor & 150,00 & 7 & 21,88 \\ \hline
-\multicolumn{3}{|l|}{\textbf{Total Hardware}} & \textbf{167,71 €} \\ \hline
+\multicolumn{3}{|l|}{\textbf{Total Hardware}} & \textbf{317,71 €} \\ \hline
 \end{tabular}
 \caption{Desglose de costes y amortización del hardware del proyecto.}
 \label{tab:coste_hardware}
@@ -389,11 +407,11 @@ La selección del ecosistema de \textit{software} para este proyecto se ha regid
 A continuación, se clasifican y justifican los recursos lógicos e informáticos empleados en las distintas fases del proyecto, los cuales se encuentran resumidos en la Tabla \ref{tab:coste_software}:
 
 \begin{itemize}
-    \item \textbf{Entorno de desarrollo y lenguaje base:} Se ha utilizado el lenguaje de programación \textbf{Python} debido a su hegemonía en el sector de la ciencia de datos. Como entorno de desarrollo (\textit{IDE}) se empleó \textbf{Visual Studio Code} junto con \textbf{Jupyter Notebooks} para la fase de experimentación interactiva y prototipado rápido.
-    \item \textbf{Persistencia y analítica de grafos:} Para el modelado relacional se optó por \textbf{Neo4j (Community Edition)}, un sistema de gestión de bases de datos NoSQL orientado a grafos que opera bajo la licencia GPLv3, permitiendo el almacenamiento local y la ejecución de algoritmos topológicos sin coste.
+    \item \textbf{Entorno de desarrollo y lenguaje base:} Se ha utilizado el lenguaje de programación \textbf{Python} debido a su hegemonía en el sector de la ciencia de datos. Como entorno de desarrollo (\textit{IDE}) se empleó \textbf{Visual Studio Code} junto con \textbf{Jupyter Notebooks} para la fase de experimentación con modelos y trabajo con la base de datos, ambos bajo licencias de código abierto (MIT y BSD respectivamente).
+    \item \textbf{Persistencia y analítica de grafos:} Para el modelado relacional  y almacenamiento de datosse optó por \textbf{Neo4j (Community Edition)}, un sistema de gestión de bases de datos NoSQL orientado a grafos que opera bajo la licencia GPLv3, permitiendo el almacenamiento local u online y la ejecución de algoritmos topológicos sin coste.
     \item \textbf{Ciencia de datos y Machine Learning:} El procesamiento tabular de los 3134 registros y el entrenamiento predictivo se articularon mediante librerías científicas estándar de Python: \textbf{Pandas} y \textbf{NumPy} para la manipulación matricial; \textbf{Scikit-Learn} para el preprocesamiento, imputación de datos y modelos clásicos; y \textbf{XGBoost} para los modelos de optimización del gradiente.
-    \item \textbf{Procesamiento del Lenguaje Natural y LLMs:} Para la integración de capacidades semánticas y el manejo de los modelos de lenguaje, se utilizaron las librerías de \textbf{Hugging Face (\textit{Transformers})} y/o || nombrar si usaste alguna otra como OpenAI API, LangChain u Ollama, especificando si el acceso fue gratuito ||.
-    \item \textbf{Despliegue de la aplicación web:} La interfaz gráfica interactiva dirigida a los expertos psiquiatras se desarrolló utilizando \textbf{Streamlit} (o || Flask / FastAPI ||), un marco de trabajo de código abierto en Python que permite desplegar aplicaciones web de datos de manera ágil y con un consumo mínimo de recursos en el servidor.
+    \item \textbf{Procesamiento del Lenguaje Natural y LLMs:} Para la integración de capacidades semánticas y el manejo de los modelos de lenguaje, se utilizaron las librerías de \textbf{Hugging Face (\textit{Transformers})}.
+    \item \textbf{Despliegue de la aplicación web:} La interfaz gráfica interactiva dirigida a los expertos psiquiatras se desarrolló utilizando \textbf{Streamlit}, un marco de trabajo de código abierto en Python que permite desplegar aplicaciones web de datos de manera ágil y con un consumo mínimo de recursos en el servidor.
 \end{itemize}
 
 \begin{table}[htbp]
@@ -407,7 +425,7 @@ Neo4j Community Ed. & Base de datos orientada a grafos & GPLv3 & 0,00 \\ \hline
 VS Code / Jupyter & Entorno de desarrollo integrado & MIT / BSD & 0,00 \\ \hline
 Scikit-Learn / XGBoost & Modelado predictivo y ML & BSD / Apache 2.0 & 0,00 \\ \hline
 Hugging Face / Transformers & Procesamiento de LLMs y NLP & Apache 2.0 & 0,00 \\ \hline
-Streamlit (o Flask) & Desarrollo de la interfaz web & Apache 2.0 & 0,00 \\ \hline
+Streamlit & Desarrollo de la interfaz web & Apache 2.0 & 0,00 \\ \hline
 Sistema Operativo & Windows 10 & OEM & 0,00 \\ \hline
 Sistema Operativo & Ubuntu Linux 24.04.4 LTS & GPL & 0,00 \\ \hline
 \multicolumn{3}{|l|}{\textbf{Total Software}} & \textbf{0,00 €} \\ \hline
@@ -416,9 +434,62 @@ Sistema Operativo & Ubuntu Linux 24.04.4 LTS & GPL & 0,00 \\ \hline
 \label{tab:coste_software}
 \end{table}
 \section{Estimación de costes}
-Texto de costes...
+
+En este apartado se consolida el análisis económico del proyecto, integrando los costes directos de mano de obra invertidos en el proyecto y los costes indirectos derivados de la actividad. Al tratarse de un proyecto de carácter individual, el factor humano constaria de la contratación de un único perfil de Ingeniero de Datos o Científico de Datos Junior encargado de todas las fases del ciclo de vida del software y la investigación.
+
+\subsubsection{Costes de personal (Mano de obra)}
+
+El volumen de trabajo estimado para la consecución de los objetivos de este TFG se alinea con la carga lectiva oficial de 12 créditos ECTS, lo que equivale a un total de 300 horas de dedicación. Atendiendo a los convenios colectivos actuales estandar y las tarifas de mercado para perfiles tecnológicos de nivel de entrada, se fija un coste horario de 22,00 €/hora (incluyendo costes salariales y cargas sociales). El cálculo del coste total de personal se detalla en la Tabla \ref{tab:coste_personal}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|c|c|r|}
+\hline
+\textbf{Perfil Profesional} & \textbf{Horas Dedicadas} & \textbf{Precio/Hora (€)} & \textbf{Coste Total (€)} \\ \hline
+Ingeniero de Datos Junior & 300 & 22,00 & 6.600,00 \\ \hline
+\multicolumn{3}{|l|}{\textbf{Total Mano de Obra}} & \textbf{6.600,00 €} \\ \hline
+\end{tabular}
+\caption{Desglose del coste de personal directo.}
+\label{tab:coste_personal}
+\end{table}
+
+\subsubsection{Costes indirectos y gastos generales}
+
+Los costes indirectos estaran compuestos por aquellos gastos que, sin estar ligados directamente a la programación o análisis, son indispensables para el desarrollo de la actividad física. Esto incluye el consumo de energía eléctrica de la estación de trabajo, la conexión a internet de banda ancha para la descarga de librerías o subida de modelos o codigo a Github, y el gasto logístico del espacio de oficina. Para simplificar y generalizar el modelo contable, se aplica un estándar industrial del 15\% sobre el coste total de la mano de obra directa:
+
+\begin{equation}
+\text{Costes Indirectos} = 6.600,00 \times 0,15 = 990,00 \text{ €}
+\end{equation}
+
+\subsubsection{Resumen del presupuesto total}
+
+Para concluir el análisis financiero, unificaremos todos los conceptos económicos desglosados a lo largo de este capítulo (como recursos hardware amortizados, licencias de software, mano de obra e indirectos) en un tabla \ref{tab:presupuesto_total}, ofreciendo la valoración económica global del proyecto.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|r|}
+\hline
+\textbf{Concepto Presupuestario} & \textbf{Coste Imputable (€)} \\ \hline
+Recursos Hardware (Amortización lineal) & 317,71 \\ \hline
+Software y Librerías de Código Abierto & 0,00 \\ \hline
+Costes de Personal (Mano de Obra Directa) & 6.600,00 \\ \hline
+Costes Indirectos (15\% sobre mano de obra) & 990,00 \\ \hline
+\textbf{PRESUPUESTO TOTAL DEL PROYECTO} & \textbf{7.907,71 €} \\ \hline
+\end{tabular}
+\caption{Resumen consolidado del presupuesto general del TFG.}
+\label{tab:presupuesto_total}
+\end{table}
 \section{Viabilidad de implantación o escalado}
-Texto de viabilidad...
+
+La solución tecnológica desarrollada en este trabajo ha sido diseñada bajo un paradigma modular y desacoplado, lo que facilita enormemente su transición desde un entorno de desarrollo local hacia un \textit{entorno de producción} real dentro de la infraestructura de un servicio de salud pública, especialmente locales como el Servicio de Salud de Castilla y León (SACYL). A continuación, se evalúa la viabilidad de este sistema atendiendo a criterios de escalabilidad técnica, seguridad normativa y sostenibilidad económica.
+
+Desde el punto de vista de la escalabilidad técnica, la elección de una base de datos NoSQL orientada a grafos como Neo4j garantiza un rendimiento óptimo incluso ante incrementos masivos en el volumen de datos. Si el sistema pasara de los 3134 registros analizados en esta memoria a gestionar el histórico completo de pacientes de la comunidad autónoma, las consultas relacionales de caminos cortos y la detección de comorbilidades mantendrían una complejidad temporal altamente eficiente gracias al principio de adyacencia libre de índices inherente a los grafos. Asimismo, para asegurar un despliegue ágil y homogéneo en la infraestructura servidores de la red sanitaria, el código de la interfaz y los modelos predictivos se han diseñado para ser empaquetados mediante tecnologías de contenedorización como Docker. Esto permite mitigar los conflictos de dependencias y replicar la aplicación de forma inmediata en cualquier nodo hospitalario.
+
+En el marco de la seguridad y el cumplimiento legal, al tratarse de información de alta sensibilidad relacionada con la salud mental, la implantación real de la plataforma exige una alineación estricta con el Esquema Nacional de Seguridad (ENS) y el Reglamento General de Protección de Datos (RGPD). La aplicación no almacena credenciales ni datos biométricos directamente identificables de forma local; en su lugar, está concebida para desplegarse dentro de una Red Privada Virtual (VPN) corporativa y delegar la validación de usuarios en los sistemas de autenticación federada del propio servicio de salud (mediante certificados digitales del personal sanitario). De este modo, la consulta del conversor ICD y la ejecución de los módulos predictivos se realizan bajo un canal completamente cifrado, seguro y auditable.
+
+Finalmente, la viabilidad económica representa una de las mayores fortalezas de la propuesta. Al haberse construido íntegramente sobre ecosistemas de código abierto, el coste de adquisición de licencias de \textit{software} para la administración pública es nulo (0,00 €). El único coste recurrente derivaría del mantenimiento operativo y el alojamiento en la nube corporativa o en un servicio gestionado (como Neo4j AuraDB). Una instancia en la nube con capacidades computacionales intermedias, suficiente para soportar las consultas concurrentes de los facultativos de la región, supondría un coste operativo estimado de entre 40,00 € y 80,00 € mensuales, haciendo destacar el proyecto como una opcion altamente rentable, eficiente y viable para el soporte a la decisión clínica.
 
 \chapter{Conclusiones y trabajo futuro} 
 \section{Principales aportaciones}
@@ -436,6 +507,8 @@ Texto de mejoras futuras...
 \begin{thebibliography}{9}
 % Se recomienda estilo IEEE (numérico) o Harvard (Autor-Fecha) 
 \bibitem{ref1} Autor A, Autor B. "Título del artículo". Nombre de la Revista, vol. X, no. Y, pp. Z-W, Año.
+\bibliographystyle{ieeetr} % Eliges el estilo (por ejemplo, el estilo IEEE que te gusta)
+\bibliography{bibliografia} % Llamas a tu archivo bibliografia.bib (sin el .bib)
 \end{thebibliography}
 
 \appendix
