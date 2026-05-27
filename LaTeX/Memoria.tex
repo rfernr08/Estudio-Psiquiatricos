@@ -5,6 +5,7 @@
 \usepackage[spanish, es-tabla]{babel} % Idioma español 
 \usepackage{amsmath, amssymb, amsfonts}
 \usepackage{graphicx}
+\usepackage{fix-cm}
 \usepackage[top=3cm, left=3cm, bottom=2.5cm, right=2.5cm]{geometry} % Márgenes según normativa 
 \usepackage{setspace}
 \usepackage{lastpage} % Para obtener el número total de páginas 
@@ -146,6 +147,9 @@ In conclusion, this project demonstrates the potential of combining knowledge gr
     \item[Overfitting] Sobreentrenamiento. Fenómeno en el que un modelo de aprendizaje automático se ajusta demasiado a los datos de entrenamiento, capturando ruido o patrones específicos que no generalizan bien a datos nuevos o no vistos. 
     \item[Embedding] Técnica de representación de datos en un espacio vectorial continuo, donde la proximidad entre vectores refleja la similitud semántica o relacional.
     \item[PLN] Procesamiento del Lenguaje Natural. Subcampo de la inteligencia artificial que se ocupa de la interacción entre las computadoras y el lenguaje humano, permitiendo a las máquinas entender, interpretar y generar texto en lenguaje natural.
+    \item[Escalabilidad] Capacidad de un sistema de software o base de datos para manejar una cantidad creciente de trabajo o usuarios (por ejemplo, pasar de un entorno local a toda la red hospitalaria regional) sin perder rendimiento.
+    \item[UX / UI] (\textit{User Experience / User Interface}) Conceptos del diseño de software enfocados en la experiencia del usuario (lo intuitivo y fluido que resulta el sistema) y la interfaz de usuario (el diseño visual de las pantallas y controles)
+    \item[Open-Source] Código Abierto. Modelo de desarrollo de software basado en la colaboración abierta, donde el código fuente se pone a disposición del público de forma gratuita, permitiendo que cualquiera lo inspeccione, modifique, reutilice y distribuya bajo ciertas licencias libres 
   \end{description}
 
 % -----------------------------------------
@@ -317,9 +321,100 @@ Texto del conversor...
 
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
-Texto sobre hardware...
+
+El desarrollo entero de este proyecto de investigación —incluyendo las fases de curación de datos, la ejecución de consultas en la base de datos orientada a grafos Neo4j, el entrenamiento de los modelos predictivos y el despliegue local de la interfaz web y demas— se ha llevado a cabo utilizando 2 estaciónes de trabajo, una local (ordenador de sobremesa) y otra portable (ordenador portátil). Debido a la carga computacional requerida para el procesamiento de grafos en memoria y el ajuste de modelos de aprendizaje automático, el equipo cuenta con unas especificaciones técnicas concretas, detalladas en la Tabla \ref{tab:especificaciones_hardware_sobremesa} y \ref{tab:especificaciones_hardware_portatil}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Componente Hardware} & \textbf{Modelo y Especificaciones Técnicas} \\ \hline
+Procesador (CPU) & 12th Gen Intel(R) Core(TM) i5-12400F   2.50 GHz \\ \hline
+Memoria RAM & 16 GB DDR4 a 3200 MHz \\ \hline
+Tarjeta Gráfica (GPU) & Ej: NVIDIA GeForce RTX 3060 12GB \\ \hline
+Almacenamiento & SSD NVMe M.2 de 1 TB \\ \hline
+Periféricos & Monitor || Ej: Full HD 24'' ||, teclado y ratón ergonómicos. \\ \hline
+\end{tabular}
+\caption{Especificaciones técnicas del equipamiento hardware en el ordenador de sobremesa.}
+\label{tab:especificaciones_hardware_sobremesa}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|p{0.63\textwidth}|}
+\hline
+\textbf{Componente Hardware} & \textbf{Modelo y Especificaciones Técnicas} \\ \hline
+Hardware Portátil & Acer Swift SFE16-42 \\ \hline
+Procesador (CPU) & AMD Ryzen 7 7735U \\\hline
+Memoria RAM & 16 GB DDR4 a 3200 MHz \\ \hline
+Tarjeta Gráfica (GPU) & Radeon Graphics x 16 integrada \\ \hline
+Almacenamiento & SSD NVMe M.2 de 1 TB \\ \hline
+Periféricos & Monitor, por ejemplo Full HD 24'', teclado y ratón ergonómicos. \\ \hline
+\end{tabular}
+\caption{Especificaciones técnicas del equipamiento hardware en el ordenador portátil.}
+\label{tab:especificaciones_hardware_portatil}
+\end{table}
+
+
+Para calcular el coste real al usar este equipamiento sobre el proyecto, se aplica el concepto contable de amortización lineal. Considerando que la vida útil estándar de un equipo informático de estas características se estima en 4 años (48 meses), el coste imputable se calcula mediante la ecuación \ref{eq:amortizacion}:
+
+\begin{equation}
+\text{Coste de Amortización} = \text{Precio de Adquisición} \times \left( \frac{\text{Meses de Uso}}{\text{Vida Útil (48 meses)}} \right)
+\label{eq:amortizacion}
+\end{equation}
+
+Asumiendo un periodo de desarrollo del proyecto de 7 meses, la Tabla \ref{tab:coste_hardware} desglosa el cálculo económico del impacto del hardware, aplicando el principio de amortización a los precios de mercado actuales de los componentes.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|r|c|r|}
+\hline
+\textbf{Elemento} & \textbf{Precio Original (€)} & \textbf{Tiempo de Uso (Meses)} & \textbf{Coste Imputable (€)} \\ \hline
+Estación de trabajo (PC) & 1.100,00 & 7 & 145,83 \\ \hline
+Portátil & 1.200,00 & 7 & 150,00 \\ \hline
+Periféricos y Monitor & 150,00 & 7 & 21,88 \\ \hline
+\multicolumn{3}{|l|}{\textbf{Total Hardware}} & \textbf{167,71 €} \\ \hline
+\end{tabular}
+\caption{Desglose de costes y amortización del hardware del proyecto.}
+\label{tab:coste_hardware}
+\end{table}
+
 \section{Software y librerías empleadas}
-Texto sobre software...
+
+La selección del ecosistema de \textit{software} para este proyecto se ha regido por los principios de eficiencia computacional, robustez comunitaria y, fundamentalmente, la filosofía del código abierto (\textit{Open-Source}). El uso de herramientas libres nos garantiza la reproducibilidad de los experimentos realizados durante el desarrollo del proyecto, sino que anula por completo los costes de adquisición de licencias comerciales, maximizando la viabilidad económica del sistema desarrollado.
+
+A continuación, se clasifican y justifican los recursos lógicos e informáticos empleados en las distintas fases del proyecto, los cuales se encuentran resumidos en la Tabla \ref{tab:coste_software}:
+
+\begin{itemize}
+    \item \textbf{Entorno de desarrollo y lenguaje base:} Se ha utilizado el lenguaje de programación \textbf{Python} debido a su hegemonía en el sector de la ciencia de datos. Como entorno de desarrollo (\textit{IDE}) se empleó \textbf{Visual Studio Code} junto con \textbf{Jupyter Notebooks} para la fase de experimentación interactiva y prototipado rápido.
+    \item \textbf{Persistencia y analítica de grafos:} Para el modelado relacional se optó por \textbf{Neo4j (Community Edition)}, un sistema de gestión de bases de datos NoSQL orientado a grafos que opera bajo la licencia GPLv3, permitiendo el almacenamiento local y la ejecución de algoritmos topológicos sin coste.
+    \item \textbf{Ciencia de datos y Machine Learning:} El procesamiento tabular de los 3134 registros y el entrenamiento predictivo se articularon mediante librerías científicas estándar de Python: \textbf{Pandas} y \textbf{NumPy} para la manipulación matricial; \textbf{Scikit-Learn} para el preprocesamiento, imputación de datos y modelos clásicos; y \textbf{XGBoost} para los modelos de optimización del gradiente.
+    \item \textbf{Procesamiento del Lenguaje Natural y LLMs:} Para la integración de capacidades semánticas y el manejo de los modelos de lenguaje, se utilizaron las librerías de \textbf{Hugging Face (\textit{Transformers})} y/o || nombrar si usaste alguna otra como OpenAI API, LangChain u Ollama, especificando si el acceso fue gratuito ||.
+    \item \textbf{Despliegue de la aplicación web:} La interfaz gráfica interactiva dirigida a los expertos psiquiatras se desarrolló utilizando \textbf{Streamlit} (o || Flask / FastAPI ||), un marco de trabajo de código abierto en Python que permite desplegar aplicaciones web de datos de manera ágil y con un consumo mínimo de recursos en el servidor.
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|l|r|}
+\hline
+\textbf{Software / Librería} & \textbf{Función Principal} & \textbf{Tipo de Licencia} & \textbf{Coste (€)} \\ \hline
+Python v3.13.5 & Lenguaje de programación núcleo & Python Software Foundation & 0,00 \\ \hline
+Neo4j Community Ed. & Base de datos orientada a grafos & GPLv3 & 0,00 \\ \hline
+VS Code / Jupyter & Entorno de desarrollo integrado & MIT / BSD & 0,00 \\ \hline
+Scikit-Learn / XGBoost & Modelado predictivo y ML & BSD / Apache 2.0 & 0,00 \\ \hline
+Hugging Face / Transformers & Procesamiento de LLMs y NLP & Apache 2.0 & 0,00 \\ \hline
+Streamlit (o Flask) & Desarrollo de la interfaz web & Apache 2.0 & 0,00 \\ \hline
+Sistema Operativo & Windows 10 & OEM & 0,00 \\ \hline
+Sistema Operativo & Ubuntu Linux 24.04.4 LTS & GPL & 0,00 \\ \hline
+\multicolumn{3}{|l|}{\textbf{Total Software}} & \textbf{0,00 €} \\ \hline
+\end{tabular}
+\caption{Desglose de costes de licencias del software y librerías utilizadas.}
+\label{tab:coste_software}
+\end{table}
 \section{Estimación de costes}
 Texto de costes...
 \section{Viabilidad de implantación o escalado}
