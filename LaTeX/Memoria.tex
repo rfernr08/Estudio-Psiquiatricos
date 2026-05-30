@@ -150,7 +150,8 @@ In conclusion, this project demonstrates the potential of combining knowledge gr
     \item[Escalabilidad] Capacidad de un sistema de software o base de datos para manejar una cantidad creciente de trabajo o usuarios (por ejemplo, pasar de un entorno local a toda la red hospitalaria regional) sin perder rendimiento.
     \item[UX / UI] (\textit{User Experience / User Interface}) Conceptos del diseño de software enfocados en la experiencia del usuario (lo intuitivo y fluido que resulta el sistema) y la interfaz de usuario (el diseño visual de las pantallas y controles)
     \item[Open-Source] Código Abierto. Modelo de desarrollo de software basado en la colaboración abierta, donde el código fuente se pone a disposición del público de forma gratuita, permitiendo que cualquiera lo inspeccione, modifique, reutilice y distribuya bajo ciertas licencias libres 
-  \end{description}
+    \item[Redes Neuronales de Grafos] (\textit{Graph Neural Networks, GNNs})   Tipo de arquitectura de aprendizaje profundo diseñada para procesar datos estructurados de forma nativa como grafos, permitiendo realizar predicciones a nivel de nodos, relaciones o del grafo completo al capturar las dependencias complejas entre los elementos vecinos.
+\end{description}
 
 % -----------------------------------------
 % ÍNDICES 
@@ -210,7 +211,7 @@ En última instancia, el verdadero objetivo final consiste en demostrar cómo la
 El desarrollo de soluciones tecnológicas aplicadas al ámbito de la salud mental conlleva una profunda responsabilidad legal y bioética. Dado que este proyecto interactúa con registros clínicos de pacientes diagnosticados con esquizofrenia y despliega modelos predictivos automatizados, su diseño y ejecución se han supeditado estrictamente al marco normativo vigente, estructurado en tres dimensiones esenciales:
 
 \subsection{Protección de datos y privacidad clínica}
-El tratamiento del conjunto de datos de los 3134 pacientes de Castilla y León se rige por el \cite{RGPD2016}  (RGPD, Reglamento UE 2016/679) y la \cite{LOPDGDD2018} \textit{Ley Orgánica 3/2018 de Protección de Datos Personales y Garantía de los Derechos Digitales} (LOPDGDD). Al clasificarse los datos de salud como <<categorías especiales de datos>> (Art. 9 del RGPD), se aplicó un protocolo estricto de anonimización irreversible previo al análisis. Esto garantiza la imposibilidad de reidentificar a los sujetos, protegiendo el secreto médico y los derechos fundamentales de los pacientes, salvaguardando simultáneamente la integridad estadística necesaria para el entrenamiento de los algoritmos.
+El tratamiento del conjunto de datos de los 3134 pacientes de Castilla y León se rige por el \cite{rgpd2016} (RGPD, Reglamento UE 2016/679) y la \cite{lopdgdd2018} \textit{Ley Orgánica 3/2018 de Protección de Datos Personales y Garantía de los Derechos Digitales} (LOPDGDD). Al clasificarse los datos de salud como <<categorías especiales de datos>> (Art. 9 del RGPD), se aplicó un protocolo estricto de anonimización irreversible previo al análisis. Esto garantiza la imposibilidad de reidentificar a los sujetos, protegiendo el secreto médico y los derechos fundamentales de los pacientes, salvaguardando simultáneamente la integridad estadística necesaria para el entrenamiento de los algoritmos.
 
 \subsection{Regulación de la Inteligencia Artificial de la Unión Europea}
 En consonancia con la normativa comunitaria actual, específicamente la Ley de Inteligencia Artificial de la Unión Europea (\textit{EU AI Act}), los sistemas de software destinados a actuar como herramientas de soporte al diagnóstico o cribado médico entran dentro de la consideración de sistemas de alto riesgo o requieren estrictas salvaguardas de transparencia. Este proyecto se ha diseñado respetando rigurosamente los requisitos de dicha ley:
@@ -222,6 +223,15 @@ En consonancia con la normativa comunitaria actual, específicamente la Ley de I
 
 \subsection{Principios bioéticos y sesgo algorítmico}
 Desde una perspectiva puramente ética, el proyecto se alinea con los principios fundamentales de la bioética moderna: beneficencia (buscar el máximo beneficio analítico para optimizar tratamientos) y no maleficencia (evitar diagnósticos erróneos mediante la validación exhaustiva de métricas). Un desafío ético crítico abordado en el diseño ha sido la prevención del \textit{sesgo de automatización} (la tendencia humana a confiar ciegamente en los sistemas automatizados). Los modelos predictivos desarrollados mitigan este riesgo presentando las predicciones probabilísticas no como sentencias definitivas, sino como indicadores complementarios acompañados de la sintomatología relacional del paciente, fomentando el pensamiento crítico del experto psiquiatra.
+
+\subsection{Regulación de la documentación clínica y autonomía del paciente}
+Al trabajar con un \textit{dataset} extraído de historiales médicos, el proyecto se alinea con la \textit{Ley 41/2002, de 14 de noviembre, básica reguladora de la autonomía del paciente y de derechos y obligaciones en materia de información y documentación clínica}. Esta ley establece que la historia clínica es un instrumento destinado fundamentalmente a garantizar una asistencia adecuada, pero permite su uso con fines de investigación científica. El proyecto cumple rigurosamente con el artículo 16 de dicha norma, el cual estipula que el acceso a la historia clínica con fines de investigación debe preservar el derecho del paciente a la confidencialidad, separando obligatoriamente los datos de identificación de los de carácter clínico-asistencial.
+
+\subsection{Marco de la investigación biomédica}
+Dado el carácter analítico y científico del estudio sobre la esquizofrenia, la actividad investigadora se encuadra en la \textit{Ley 14/2007, de 3 de julio, de Investigación Biomédica}, específicamente en su Título V, que regula el tratamiento de datos de carácter personal en el ámbito sanitario. La normativa ampara el uso secundario de datos clínicos para investigación epidemiológica y de salud pública sin necesidad de requerir un nuevo consentimiento informado explícito, siempre y cuando los datos hayan sido sometidos a una anonimización estricta por un equipo independiente, tal y como ocurre con las muestras del dataset nuestro utilizada en este trabajo.
+
+\subsection{Secreto profesional y consideraciones eticas en salud mental}
+El diseño de la aplicación web respeta los principios éticos esenciales de la práctica médica y psicológica en España. En el ámbito de la psiquiatría, la confidencialidad es un factor crítico debido al estigma social que lamentablemente sigue asociado a la esquizofrenia. La herramienta desarrollada cumple con este requisito ético ya que tanto el conversor ICD como los gráficos relacionales funcionan exclusivamente con identificadores anónimos (códigos numéricos) en lugar de datos personales reales como nombres o números de historia clínica. De este modo, cualquier facultativo puede utilizar la aplicación en su consulta diaria con total seguridad, garantizando que la privacidad de los pacientes jamás se vea comprometida.
 
 \section{Estructura de la memoria}
 
@@ -236,11 +246,15 @@ Los resultados empíricos derivados de dicha experimentación, junto con la comp
 
 El estudio de los trastornos psiquiátricos mediante paradigmas computacionales ha cobrado un impulso significativo gracias a la creciente disponibilidad de Historias Clínicas Electrónicas (\textit{Electronic Health Records, EHR}) y al avance de la inteligencia artificial. La literatura científica reciente refleja un cambio de paradigma, transitando desde los análisis estadísticos descriptivos tradicionales hacia modelos predictivos y relacionales complejos. Para comprender el ecosistema en el que se inscribe este proyecto, los antecedentes se han estructurado en tres ejes fundamentales: el aprendizaje automático aplicado a la esquizofrenia, el uso de grafos de conocimiento en el sector salud y la irrupción de los modelos de lenguaje en entornos clínicos.
 
-En el primer eje, referente al modelado predictivo, la esquizofrenia ha sido objeto de estudio debido a su alta complejidad y la urgencia de un diagnóstico temprano. Diversas investigaciones previas han abordado la clasificación de pacientes utilizando datos tabulares y demográficos. Por ejemplo, el trabajo desarrollado por \cite{|| Cita1: Autor, Año del estudio clínico con ML ||} implementó un modelo basado en [mencionar algoritmo, ej.: Random Forest / SVM] sobre una muestra de [X] pacientes, logrando una precisión del [X]\% en la identificación de brotes psicóticos. || Añadir aquí un breve comentario si el estudio anterior utilizaba variables similares a las tuyas o si adolecía de falta de interpretabilidad ||. Asimismo, otros autores han explorado el uso de redes neuronales densas, aunque coinciden en que la naturaleza tabular y la presencia de datos faltantes en los registros clínicos reales suponen un desafío constante que requiere técnicas avanzadas de imputación.
+En el primer eje, referente al modelado predictivo, la esquizofrenia ha sido objeto de estudio debido a su alta complejidad y la urgencia de un diagnóstico temprano. Diversas investigaciones previas han abordado la clasificación de pacientes utilizando datos tabulares y demográficos. % TODO: Añadir cita específica de estudio clínico con ML
+Asimismo, otros autores han explorado el uso de redes neuronales densas, aunque coinciden en que la naturaleza tabular y la presencia de datos faltantes en los registros clínicos reales suponen un desafío constante que requiere técnicas avanzadas de imputación.
 
-En el segundo eje, la necesidad de representar la información médica de una manera más natural y conectada ha propiciado el uso de bases de datos orientadas a grafos. Las ontologías biomédicas y los grafos de conocimiento han demostrado ser herramientas robustas para la medicina de precisión. || Candidato al glosario: Ontología Biomédica || En el ámbito de la gestión de bases de datos relacionales orientadas a salud, autores como \cite{|| Cita2: Autor, Año del estudio con Grafos/Neo4j ||} demostraron el potencial de entornos como Neo4j para mapear las interacciones multivariantes entre síntomas, fármacos y diagnósticos codificados. Su estudio concluyó que el análisis de la topología de la red permite identificar comorbilidades ocultas mediante algoritmos de agrupamiento, sentando un precedente directo para el análisis relacional de comunidades diagnósticas ejecutado en esta memoria.
+En el segundo eje, la necesidad de representar la información médica de una manera más natural y conectada ha propiciado el uso de bases de datos orientadas a grafos. Las ontologías biomédicas y los grafos de conocimiento han demostrado ser herramientas robustas para la medicina de precisión. % TODO: Candidato al glosario - Ontología Biomédica
+En el ámbito de la gestión de bases de datos relacionales orientadas a salud, ha quedado ampliamente documentado el potencial de entornos como Neo4j para mapear las interacciones multivariantes entre síntomas, fármacos y diagnósticos codificados. % TODO: Añadir cita específica de estudio con Grafos/Neo4j
+El análisis de la topología de la red permite identificar comorbilidades ocultas mediante algoritmos de agrupamiento, sentando un precedente directo para el análisis relacional de comunidades diagnósticas ejecutado en esta memoria.
 
-Finalmente, el tercer eje metodológico se centra en el Procesamiento del Lenguaje Natural (\textit{Natural Language Processing, NLP}) y los Modelos de Lenguaje de Gran Tamaño (\textit{LLMs}). Dado que gran parte de la información psiquiátrica reside en la narrativa libre de los informes médicos, la literatura ha comenzado a evaluar la capacidad de estos modelos para extraer entidades clínicas de forma automatizada. Investigaciones recientes \cite{|| Cita3: Autor, Año del estudio con LLMs clínicos ||} han puesto a prueba arquitecturas basadas en \textit{Transformers} para la traducción de texto clínico desestructurado a códigos estandarizados como el ICD. No obstante, la integración sinérgica de estos modelos lingüísticos con la estructura rígida de un grafo de conocimiento y clasificadores predictivos tradicionales sigue siendo un territorio de vanguardia con amplios márgenes de optimización.
+Finalmente, el tercer eje metodológico se centra en el Procesamiento del Lenguaje Natural (\textit{Natural Language Processing, NLP}) y los Modelos de Lenguaje de Gran Tamaño (\textit{LLMs}). Dado que gran parte de la información psiquiátrica reside en la narrativa libre de los informes médicos, la literatura ha comenzado a evaluar la capacidad de estos modelos para extraer entidades clínicas de forma automatizada. % TODO: Añadir cita específica de estudio con LLMs clínicos
+Arquitecturas basadas en \textit{Transformers} han sido puestas a prueba para la traducción de texto clínico desestructurado a códigos estandarizados como el ICD. No obstante, la integración sinérgica de estos modelos lingüísticos con la estructura rígida de un grafo de conocimiento y clasificadores predictivos tradicionales sigue siendo un territorio de vanguardia con amplios márgenes de optimización.
 
 \section{Métodos utilizados en la literatura}
 
@@ -340,7 +354,7 @@ Texto del conversor...
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
 
-El desarrollo entero de este proyecto de investigación —incluyendo las fases de curación de datos, la ejecución de consultas en la base de datos orientada a grafos Neo4j, el entrenamiento de los modelos predictivos y el despliegue local de la interfaz web y demas— se ha llevado a cabo utilizando 2 estaciónes de trabajo, una local (ordenador de sobremesa) y otra portable (ordenador portátil). Debido a la carga computacional requerida para el procesamiento de grafos en memoria y el ajuste de modelos de aprendizaje automático, el equipo cuenta con unas especificaciones técnicas concretas, detalladas en la Tabla \ref{tab:especificaciones_hardware_sobremesa} y \ref{tab:especificaciones_hardware_portatil}.
+El desarrollo entero de este proyecto de investigación, incluyendo las fases de curación de datos, la ejecución de consultas en la base de datos orientada a grafos Neo4j, el entrenamiento de los modelos predictivos y el despliegue local de la interfaz web y demas, se ha llevado a cabo utilizando 2 estaciónes de trabajo, una local (ordenador de sobremesa) y otra portable (ordenador portátil). Debido a la carga computacional requerida para el procesamiento de grafos en memoria y el ajuste de modelos de aprendizaje automático, el equipo cuenta con unas especificaciones técnicas concretas, detalladas en la Tabla \ref{tab:especificaciones_hardware_sobremesa} y \ref{tab:especificaciones_hardware_portatil}.
 
 \begin{table}[htbp]
 \centering
@@ -493,23 +507,54 @@ Finalmente, la viabilidad económica representa una de las mayores fortalezas de
 
 \chapter{Conclusiones y trabajo futuro} 
 \section{Principales aportaciones}
-Texto de aportaciones...
+
+El presente Trabajo de Fin de Grado ha permitido abordar de manera integral el análisis relacional y predictivo de comorbilidades en pacientes diagnosticados con trastornos del espectro esquizofrénico. Mediante un enfoque interdisciplinar que combina la ciencia de datos, los sistemas NoSQL y el desarrollo de \textit{software}, se han consolidado hitos que aportan valor tanto al ámbito técnico como al clínico. A continuación, se detallan las principales aportaciones generadas en este proyecto:
+
+\begin{itemize}
+    \item \textbf{Construcción de un recurso relacional estandarizado:} Se ha diseñado y unificado un conjunto de datos en formato tabular (CSV) que mapea de forma bidireccional los diagnósticos, descripciones clínicas en español (y con opcion en inglés) y equivalencias entre las codificaciones ICD-9 e ICD-10. Esta aportación resuelve un problema crítico de intercambio de información de forma segura en la documentación psiquiátrica actual, facilitando la traducción ágil de términos médicos libres a códigos normativos.
+    
+    \item \textbf{Modelado avanzado del entorno clínico mediante grafos:} La migración del paradigma tabular tradicional hacia una base de datos orientada a grafos en \textbf{Neo4j} representa una aportación metodológica clave. Este enfoque ha permitido estructurar las complejas redes de interconexión entre pacientes, sintomatologías y comorbilidades psiquiátricas, optimizando la eficiencia computacional en la exploración de caminos clínicos y vecindades diagnósticas.
+    
+    \item \textbf{Evaluación y validación de arquitecturas de aprendizaje automático:} Se ha implementado y comparado un flujo experimental con diversos modelos predictivos. Entre las alternativas evaluadas, el algoritmo \textbf{|| COMPLETAR CON EL MODELO GANADOR, Ej: XGBoost / Random Forest / LLM fine-tuned ||} ha demostrado ser la solución más robusta para este escenario clínico, alcanzando un rendimiento destacado con un \textbf{|| COMPLETAR CON MÉTRICA DE RENDIMIENTO, Ej: F1-score del X\% o Precisión del X\% ||} en las fases de testeo.
+    
+    \item \textbf{Desarrollo de una herramienta de transferencia tecnológica:} Como elemento diferenciador y complementario, se ha diseñado y desplegado una aplicación web interactiva basada en \textbf{Streamlit}. Esta interfaz traduce los modelos abstractos y las consultas de grafos en una herramienta visual, intuitiva y accesible para los profesionales de la psiquiatría, acercando los resultados de la investigación a la práctica clínica real en la consulta.
+\end{itemize}
 \section{Limitaciones}
-Texto de limitaciones...
+
+A pesar de los resultados satisfactorios obtenidos en el desarrollo del proyecto, es fundamental adoptar una postura crítica y reconocer las restricciones intrínsecas asociadas tanto a los datos disponibles como a las metodologías tecnológicas aplicadas. La identificación de estas limitaciones es clave para interpretar correctamente el alcance del estudio:
+
+\begin{itemize}
+    \item \textbf{Restricción geográfica y representatividad de la muestra:} El \textit{dataset} analizado refleja la realidad clínica y los patrones de diagnóstico de una provincia concreta. Por tanto, las frecuencias observadas y los mapas de distribución geográfica podrían estar influenciados por dinámicas sociodemográficas locales o por los criterios de codificación específicos del personal médico de la región. Esto limita la generalización inmediata de los modelos predictivos a otros entornos hospitalarios nacionales o internacionales sin un proceso previo de reentrenamiento.
+    
+    \item \textbf{Desequilibrio severo de clases (\textit{Class Imbalance}):} En el ámbito de la salud mental, la prevalencia de ciertos trastornos es dispar. Durante el diseño del flujo predictivo ,especialmente en las fases iniciales focalizadas en la esquizofrenia (F20 y F20.89) y en la posterior expansión multiclase, el desequilibrio en la cantidad de registros por patología supuso un desafío técnico importante. Los algoritmos basados en árboles (XGBoost y Random Forest) y los modelos lingüísticos (BERT) tienden a verse penalizados por las clases minoritarias, requiriendo un esfuerzo extra de computación y ajuste de pesos, que no consigue combatir completamente el sesgo.
+    
+    \item \textbf{Calidad y ruido en las descripciones textuales:} El entrenamiento de los modelos BERT para clasificar diagnósticos a partir de texto libre se enfrenta a la naturaleza caótica de la jerga médica. Las descripciones clínicas reales a menudo contienen abreviaturas no estandarizadas, errores tipográficos o expresiones ambiguas. Aunque el proceso de limpieza y el conversor ICD mitigaron este problema, el ruido remanente en el lenguaje clínico introduce una barrera natural en la precisión absoluta de los transformadores.
+    
+    \item \textbf{Carácter exploratorio del análisis topológico:} Las métricas de análisis de grafos en Neo4j, tales como las técnicas de centralidad (\textit{eigenvector}, \textit{degree}) y los algoritmos preliminares de detección de comunidades, se ejecutaron con un enfoque exploratorio. Debido a las limitaciones de cómputo de la infraestructura local y al uso de la versión \textit{Community} de la base de datos, no se profundizaron en dinámicas de grafos dinámicos o temporales, quedando estos estudios como una primera radiografía relacional del mapa de comorbilidades.
+\end{itemize}
 \section{Posibles mejoras futuras}
-Texto de mejoras futuras...
+
+A partir de las conclusiones obtenidas y las limitaciones identificadas en este trabajo, se abren diversas líneas de investigación y desarrollo tecnológico que permitirían expandir las capacidades del sistema y mejorar su precisión analítica. Las propuestas de trabajo futuro se estructuran en los siguientes vectores esenciales:
+
+\begin{itemize}
+    \item \textbf{Evolución hacia arquitecturas de lenguaje médicas especializadas:} Aunque los modelos BERT estándar entrenados para clasificación multiclase han ofrecido un rendimiento sólido, una evolución natural consistiría en el \textit{fine-tuning} de Modelos de Lenguaje Grandes (LLMs) especializados en el dominio biomédico (tales como \textit{BioBERT} o \textit{ClinicalBERT}). Estas arquitecturas están preentrenadas con corpus de textos clínicos y farmacéuticos, lo que permitiría una comprensión semántica mucho más precisa de las abreviaturas, la jerga médica local y la sintomatología compleja de la esquizofrenia.
+    
+    \item \textbf{Profundización en la minería de grafos y detección de comunidades:} El estudio topológico inicial realizado en Neo4j mediante métricas de centralidad sienta las bases para un análisis predictivo basado en topología. Como trabajo futuro, se propone explotar el algoritmo de detección de comunidades (\textit{Louvain} o \textit{Infomap}) para agrupar automáticamente a los pacientes según patrones de comorbilidad ocultos. Asimismo, se plantea la implementación de Redes Neuronales de Grafos (\textit{Graph Neural Networks}, GNNs) para combinar los \textit{embeddings} textuales de BERT con los \textit{embeddings} estructurales de la red, prediciendo así la aparición de futuras patologías asociadas.
+    
+    \item \textbf{Escalado multi-provincial y análisis geo-epidemiológico avanzado:} Para superar la restricción geográfica actual, se plantea expandir el \textit{dataset} integrando los registros clínicos de las restantes provincias de la comunidad autónoma. Esto permitiría correlacionar los mapas de frecuencia de diagnósticos con variables socioeconómicas, climatológicas o de acceso a recursos sanitarios, transformando la herramienta actual en un sistema de vigilancia epidemiológica predictivo de gran utilidad para la gestión de la salud pública, no solo de León, sino de toda la región.
+    
+    \item \textbf{Integración modular en sistemas de historia clínica electrónica (HCE):} Finalmente, el objetivo definitivo de la aplicación web desarrollada es su despliegue real. Una línea de desarrollo clave será transformar la interfaz actual en un módulo integrable (mediante APIs estándar de interoperabilidad médica como HL7 o FHIR) dentro de los sistemas informáticos de salud utilizados por los facultativos (por ejemplo, el sistema MEDORA en Castilla y León). Esto permitiría al psiquiatra consultar el conversor ICD y obtener las predicciones probabilísticas directamente durante la consulta, automatizando el flujo de trabajo clínico.
+\end{itemize}
 
 % -----------------------------------------
 % BIBLIOGRAFÍA Y ANEXOS 
 % -----------------------------------------
 \newpage
 \addcontentsline{toc}{chapter}{Bibliografía}
-\begin{thebibliography}{9}
-% Se recomienda estilo IEEE (numérico) o Harvard (Autor-Fecha) 
-\bibitem{ref1} Autor A, Autor B. "Título del artículo". Nombre de la Revista, vol. X, no. Y, pp. Z-W, Año.
-\bibliographystyle{ieeetr} % Eliges el estilo (por ejemplo, el estilo IEEE que te gusta)
-\bibliography{bibliografia} % Llamas a tu archivo bibliografia.bib (sin el .bib)
-\end{thebibliography}
+
+\bibliographystyle{ieeetr} 
+\bibliography{bibliografia} 
+
 
 \appendix
 \chapter{Anexos}
