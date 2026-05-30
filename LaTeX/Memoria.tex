@@ -63,9 +63,9 @@
 % -----------------------------------------
 \begin{titlepage}
     \centering
-    \includegraphics[height=3cm]{Photo-ule.jpg}
+    \includegraphics[height=3cm]{imagenes/Photo-ule.jpg}
     \hfill
-    \includegraphics[height=3cm]{Photo-ingenierias.jpg}
+    \includegraphics[height=3cm]{imagenes/Photo-ingenierias.jpg}
     \vspace{1cm}
     
     {\Large \textbf{UNIVERSIDAD DE LEÓN}} \\[0.5cm]
@@ -225,10 +225,10 @@ En consonancia con la normativa comunitaria actual, específicamente la Ley de I
 Desde una perspectiva puramente ética, el proyecto se alinea con los principios fundamentales de la bioética moderna: beneficencia (buscar el máximo beneficio analítico para optimizar tratamientos) y no maleficencia (evitar diagnósticos erróneos mediante la validación exhaustiva de métricas). Un desafío ético crítico abordado en el diseño ha sido la prevención del \textit{sesgo de automatización} (la tendencia humana a confiar ciegamente en los sistemas automatizados). Los modelos predictivos desarrollados mitigan este riesgo presentando las predicciones probabilísticas no como sentencias definitivas, sino como indicadores complementarios acompañados de la sintomatología relacional del paciente, fomentando el pensamiento crítico del experto psiquiatra.
 
 \subsection{Regulación de la documentación clínica y autonomía del paciente}
-Al trabajar con un \textit{dataset} extraído de historiales médicos, el proyecto se alinea con la \textit{Ley 41/2002, de 14 de noviembre, básica reguladora de la autonomía del paciente y de derechos y obligaciones en materia de información y documentación clínica}. Esta ley establece que la historia clínica es un instrumento destinado fundamentalmente a garantizar una asistencia adecuada, pero permite su uso con fines de investigación científica. El proyecto cumple rigurosamente con el artículo 16 de dicha norma, el cual estipula que el acceso a la historia clínica con fines de investigación debe preservar el derecho del paciente a la confidencialidad, separando obligatoriamente los datos de identificación de los de carácter clínico-asistencial.
+Al trabajar con un \textit{dataset} extraído de historiales médicos, el proyecto se alinea con la \cite{ley41_2002}. Esta ley establece que la historia clínica es un instrumento destinado fundamentalmente a garantizar una asistencia adecuada, pero permite su uso con fines de investigación científica. El proyecto cumple rigurosamente con el artículo 16 de dicha norma, el cual estipula que el acceso a la historia clínica con fines de investigación debe preservar el derecho del paciente a la confidencialidad, separando obligatoriamente los datos de identificación de los de carácter clínico-asistencial.
 
 \subsection{Marco de la investigación biomédica}
-Dado el carácter analítico y científico del estudio sobre la esquizofrenia, la actividad investigadora se encuadra en la \textit{Ley 14/2007, de 3 de julio, de Investigación Biomédica}, específicamente en su Título V, que regula el tratamiento de datos de carácter personal en el ámbito sanitario. La normativa ampara el uso secundario de datos clínicos para investigación epidemiológica y de salud pública sin necesidad de requerir un nuevo consentimiento informado explícito, siempre y cuando los datos hayan sido sometidos a una anonimización estricta por un equipo independiente, tal y como ocurre con las muestras del dataset nuestro utilizada en este trabajo.
+Dado el carácter analítico y científico del estudio sobre la esquizofrenia, la actividad investigadora se encuadra en la \cite{ley14_2007}, específicamente en su Título V, que regula el tratamiento de datos de carácter personal en el ámbito sanitario. La normativa ampara el uso secundario de datos clínicos para investigación epidemiológica y de salud pública sin necesidad de requerir un nuevo consentimiento informado explícito, siempre y cuando los datos hayan sido sometidos a una anonimización estricta por un equipo independiente, tal y como ocurre con las muestras del dataset nuestro utilizada en este trabajo.
 
 \subsection{Secreto profesional y consideraciones eticas en salud mental}
 El diseño de la aplicación web respeta los principios éticos esenciales de la práctica médica y psicológica en España. En el ámbito de la psiquiatría, la confidencialidad es un factor crítico debido al estigma social que lamentablemente sigue asociado a la esquizofrenia. La herramienta desarrollada cumple con este requisito ético ya que tanto el conversor ICD como los gráficos relacionales funcionan exclusivamente con identificadores anónimos (códigos numéricos) en lugar de datos personales reales como nombres o números de historia clínica. De este modo, cualquier facultativo puede utilizar la aplicación en su consulta diaria con total seguridad, garantizando que la privacidad de los pacientes jamás se vea comprometida.
@@ -282,7 +282,7 @@ Este capítulo aborda de manera pormenorizada el origen, la estructura y el cicl
 
 El conjunto de datos que constituye la base analítica y experimental de este Trabajo de Fin de Grado proviene de [mencionar el origen general, ej.: un entorno de investigación sociosanitaria / provisto por el departamento de X de la universidad], recopilando registros clínicos de la comunidad autónoma de Castilla y León. El \textit{dataset} original se presenta en un formato tabular [mencionar formato, ej.: CSV / Excel] y consta de un total de 3134 registros independientes, donde cada fila representa una instancia clínica anonimizada asociada a un paciente diagnosticado con esquizofrenia o alguna de sus variantes afines.
 
-Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos —específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD)—, la fuente de datos fue sometida a un proceso previo de anonimización irreversible. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. || Añadir aquí si el dataset tiene alguna limitación temporal conocida, ej: registros acumulados entre los años 2015 y 2022 ||
+Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. || Añadir aquí si el dataset tiene alguna limitación temporal conocida, ej: registros acumulados entre los años 2015 y 2022 ||
 
 Estructuralmente, el \textit{dataset} se compone de un conjunto de [X] columnas que recogen diferentes dimensiones del perfil del paciente. Para facilitar su análisis técnico, estas variables se han categorizado en tres bloques principales, descritos a continuación y resumidos en la Tabla \ref{tab:esquema_dataset}:
 
@@ -341,11 +341,39 @@ Texto del análisis...
 
 \chapter{Aplicación desarrollada}
 \section{Visualizaciones}
-Texto de visualizaciones...
-\section{Gráficos de la aplicación}
-Texto de los gráficos...
+
+El módulo de visualización de la aplicación se ha diseñado bajo el principio de simplicidad y eficiencia en la interfaz de usuario (\textit{UI/UX}). El objetivo principal es evitar la sobrecarga cognitiva del personal sanitario, transformando los resultados numéricos de los modelos predictivos y las consultas complejas de la base de datos de grafos en representaciones visuales intuitivas y directamente interpretables durante la práctica clínica.
+
+Visualización de la red relacional de comorbilidades: Utilizando las capacidades de consulta de Neo4j, la aplicación genera una representación interactiva de la red de diagnósticos. El facultativo no observa una tabla de datos abstracta, sino un grafo donde los nodos representan patologías (clasificadas por sus códigos ICD) y las aristas reflejan la coexistencia de estos trastornos en el histórico de pacientes. El grosor o la disposición de estas conexiones permite identificar de un vistazo las trayectorias clínicas más frecuentes y las relaciones de comorbilidad asociadas a la esquizofrenia.
+
+\section{Elementos de la interfaz y paneles de datos}
+
+Mi aplicación web centra su potencial visual en la estructuración limpia de formularios de texto, tablas de datos dinámicas y paneles interactivos. Dado que el objetivo primordial del sistema es la conversión ágil de códigos ICD y la clasificación semántica en tiempo real, el diseño da prioridad absoluta al texto y a la legibilidad de los diagnósticos frente a las representaciones gráficas convencionales.
+
+La interfaz de usuario se articula en torno a dos bloques visuales fundamentales que constan de un campo de texto libre optimizado donde el facultativo introduce la descripción clínica o el diagnóstico en lenguaje natural. Visualmente, el sistema responde de forma síncrona, eliminando elementos distractores y presentando el resultado del conversor ICD-9 a ICD-10 de manera jerárquica mediante cajas de texto contrastadas, permitiendo una validación visual inmediata.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{imagenes/Foto_Web.png}
+    \caption{Diseño de la interfaz principal de la aplicación: panel de conversión de códigos e histórico de registros.}
+    \label{fig:captura_app}
+\end{figure}
+
 \section{Navegación}
-Texto sobre navegación...
+
+La arquitectura de navegación de la aplicación web se ha concebido bajo el paradigma de jerarquía plana, minimizando la profundidad de los menús para reducir drásticamente el número de interacciones necesarias para obtener la información. En el entorno de una consulta psiquiátrica real, la eficiencia temporal es crítica; por lo tanto, el flujo de usuario se ha modelado para ser lineal, rápido y completamente libre de distracciones.
+
+El recorrido del profesional médico a través de la herramienta sigue una secuencia lógica que emula su propio proceso clínico:
+
+\begin{enumerate}
+    \item \textbf{Punto de entrada y selección contextual:} Mediante un menú de navegación simplificado (ubicado en un panel lateral o barra superior), el facultativo puede alternar de manera instantánea entre las funcionalidades principales del sistema (como el conversor de códigos ICD o el clasificador predictivo), sin necesidad de recargar la plataforma ni perder el contexto de la sesión.
+    
+    \item \textbf{Introducción directa de parámetros:} Al acceder al módulo deseado, el centro de la pantalla presenta de forma exclusiva los campos de entrada de texto. Esta ausencia de submenús obliga al sistema a guiar visualmente al usuario hacia la acción principal: introducir la descripción clínica o el código de diagnóstico del paciente.
+    
+    \item \textbf{Despliegue dinámico de resultados:} Una vez ejecutada la consulta, la navegación evita deliberadamente el uso de ventanas emergentes (\textit{pop-ups}) o redirecciones a nuevas páginas. Los resultados de los modelos predictivos (BERT) y las consultas a la base de datos (Neo4j) se renderizan en cascada en la misma pantalla. 
+\end{enumerate}
+
+Este diseño de un solo nivel garantiza que cualquier miembro del personal sanitario, independientemente de su grado de alfabetización digital, pueda asimilar el manejo de la herramienta en apenas unos minutos, manteniendo su atención focalizada en el diagnóstico del paciente y no en el uso del \textit{software}.
 \section{Accesibilidad de la aplicación}
 Texto de accesibilidad...
 \section{Conversor de ICD}
