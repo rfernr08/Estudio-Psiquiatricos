@@ -366,18 +366,50 @@ La arquitectura de navegación de la aplicación web se ha concebido bajo el par
 El recorrido del profesional médico a través de la herramienta sigue una secuencia lógica que emula su propio proceso clínico:
 
 \begin{enumerate}
-    \item \textbf{Punto de entrada y selección contextual:} Mediante un menú de navegación simplificado (ubicado en un panel lateral o barra superior), el facultativo puede alternar de manera instantánea entre las funcionalidades principales del sistema (como el conversor de códigos ICD o el clasificador predictivo), sin necesidad de recargar la plataforma ni perder el contexto de la sesión.
+    \item \textbf{Punto de entrada y selección contextual:} Mediante un menú de navegación simplificado (ubicado en un panel lateral o barra superior), el facultativo puede alternar de manera instantánea entre las funcionalidades principales del sistema (como el conversor de códigos ICD individual o el conversor de archivos), sin necesidad de recargar la plataforma ni perder el contexto de la sesión.
     
-    \item \textbf{Introducción directa de parámetros:} Al acceder al módulo deseado, el centro de la pantalla presenta de forma exclusiva los campos de entrada de texto. Esta ausencia de submenús obliga al sistema a guiar visualmente al usuario hacia la acción principal: introducir la descripción clínica o el código de diagnóstico del paciente.
+    \item \textbf{Introducción directa de parámetros:} Al acceder al módulo deseado, el centro de la pantalla presenta de forma exclusiva los campos de entrada de texto, para el conversor individual, o de archivos, para el conversor por lotes. Esta ausencia de submenús obliga al sistema a guiar visualmente al usuario hacia la acción principal: introducir la descripción clínica/código de diagnóstico del paciente o el archivo que se desea convertir.
     
-    \item \textbf{Despliegue dinámico de resultados:} Una vez ejecutada la consulta, la navegación evita deliberadamente el uso de ventanas emergentes (\textit{pop-ups}) o redirecciones a nuevas páginas. Los resultados de los modelos predictivos (BERT) y las consultas a la base de datos (Neo4j) se renderizan en cascada en la misma pantalla. 
+    \item \textbf{Despliegue dinámico de resultados:} Una vez ejecutada la consulta, la navegación evita deliberadamente el uso de ventanas emergentes (\textit{pop-ups}) o redirecciones a nuevas páginas. 
 \end{enumerate}
 
 Este diseño de un solo nivel garantiza que cualquier miembro del personal sanitario, independientemente de su grado de alfabetización digital, pueda asimilar el manejo de la herramienta en apenas unos minutos, manteniendo su atención focalizada en el diagnóstico del paciente y no en el uso del \textit{software}.
 \section{Accesibilidad de la aplicación}
-Texto de accesibilidad...
+
+La accesibilidad de la plataforma se ha planteado desde una perspectiva práctica y funcional, adaptando los criterios estándar de diseño web a las necesidades específicas del entorno clínico hospitalario. Siguiendo las directrices de simplicidad establecidas en las secciones previas, la accesibilidad de la aplicación no se basa en menús de configuración complejos, sino en un diseño nativamente inclusivo que reduce las barreras de uso para todo el personal sanitario.
+
+Este enfoque se consolida a través de tres pilares fundamentales de diseño:
+
+\begin{itemize}
+    \item \textbf{Legibilidad y contraste visual adaptativo:} Conscientes de que los terminales informáticos de las consultas médicas presentan una gran variabilidad en la calidad de sus pantallas y condiciones de iluminación, la interfaz utiliza una paleta de colores de alto contraste. Las fuentes tipográficas y los tamaños de los elementos textuales se han seleccionado para permitir un escaneo visual rápido, asegurando que los códigos de diagnóstico y los textos clínicos sean legibles sin provocar fatiga ocular durante jornadas laborales prolongadas.
+    
+    \item \textbf{Accesibilidad semántica mediante estándares clínicos:} La mayor barrera de accesibilidad en el software médico suele ser la falta de familiaridad con la interfaz. Esta aplicación mitiga dicho problema integrando de forma nativa los estándares de codificación \textit{International Classification of Diseases} (ICD-9 e ICD-10). Al estructurar la entrada y salida de datos bajo la misma nomenclatura internacional que los psiquiatras utilizan diariamente en sus informes, el sistema resulta inmediatamente comprensible y accesible desde el primer uso, eliminando la necesidad de formación técnica previa.
+    
+    \item \textbf{Eficiencia y ligereza tecnológica:} Al estar construida sobre un marco de trabajo web ágil, la aplicación prescinde de animaciones pesadas o elementos flotantes que dificulten la navegación a usuarios con habilidades digitales básicas. Esta ligereza técnica asegura también que la plataforma sea accesible desde ordenadores antiguos o clientes ligeros (\textit{thin clients}) integrados en la red hospitalaria local, garantizando un tiempo de respuesta rápido e independiente de las capacidades del \textit{hardware} del puesto de trabajo.
+\end{itemize}
 \section{Conversor de ICD}
-Texto del conversor...
+
+El módulo denominado <<Conversor y Buscador de Diagnósticos>> constituye el núcleo operativo de la interfaz de usuario. Su propósito principal es resolver la brecha de interoperabilidad semántica existente entre los sistemas de registro históricos (basados en la clasificación ICD-9) y los estándares de codificación modernos (ICD-10), proporcionando un entorno de traducción simétrica y consulta ágil para el facultativo.
+
+Tal y como se observa en el diseño implementado (véase la Figura~\ref{fig:conversor_icd}), el módulo se despliega en dos modalidades de trabajo primarias: un \textit{Buscador Individual} para consultas en tiempo real durante la consulta clínica, y un \textit{Conversor por Lotes} orientado al procesamiento masivo de historiales.
+
+Las características funcionales clave integradas en este panel son las siguientes:
+
+\begin{itemize}
+    \item \textbf{Flexibilidad de entrada multidireccional:} El sistema rompe la rigidez de los buscadores clínicos tradicionales al permitir al psiquiatra conmutar el criterio de búsqueda entre tres variantes: código ICD-10, código ICD-9 o descripción textual en lenguaje natural. Un motor de sugerencias dinámico filtra los registros del \textit{dataset} curado a medida que el usuario escribe, mitigando errores tipográficos.
+    
+    \item \textbf{Mapeo relacional de correspondencias:} Al seleccionar un diagnóstico específico —como, por ejemplo, la \textit{Esquizofrenia paranoide} (F20.0)—, la aplicación realiza una consulta indexada y presenta los resultados estructurados en tres tarjetas de datos diferenciadas por contraste cromático. Este panel revela visualmente la relación de correspondencia compleja (de uno a muchos) entre el estándar actual y el histórico, listando todos los códigos ICD-9 asociados (como 295.30 a 295.35).
+    
+    \item \textbf{Interoperabilidad internacional vía API externa:} Como característica de valor añadido, la interfaz incorpora un mecanismo de consulta externa integrado con la API de la \textit{National Library of Medicine} (NLM) de los Estados Unidos. Mediante un evento de activación asíncrono, el facultativo puede recuperar la descripción clínica oficializada en lengua inglesa, expandiendo la utilidad de la herramienta hacia entornos de investigación internacional o codificación cruzada global.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{imagenes/Web_en_accion.png}
+    \caption{Módulo del Conversor Individual: interfaz de búsqueda polivalente y panel de resultados de correspondencias ICD-9/ICD-10.}
+    \label{fig:conversor_icd}
+\end{figure}
+
 
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
