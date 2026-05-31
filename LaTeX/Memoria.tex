@@ -374,6 +374,17 @@ El recorrido del profesional médico a través de la herramienta sigue una secue
 \end{enumerate}
 
 Este diseño de un solo nivel garantiza que cualquier miembro del personal sanitario, independientemente de su grado de alfabetización digital, pueda asimilar el manejo de la herramienta en apenas unos minutos, manteniendo su atención focalizada en el diagnóstico del paciente y no en el uso del \textit{software}.
+
+Por otro lado, cuando el usuario conmuta la interfaz hacia la pestaña de \textit{Conversor por Lotes}, la arquitectura de la aplicación cambia hacia un modelo de flujo de trabajo guiado por estados secuenciales (\textit{State-driven Workflow}). Este diseño impide que el usuario cometa errores de configuración al bloquear las opciones avanzadas hasta que se verifiquen con éxito los pasos previos:
+
+\begin{enumerate}
+    \item \textbf{Fase de Ingesta e Inspección Estructural:} El flujo se inicia en un componente de arrastre de archivos (\textit{Drag and Drop}) optimizado para archivos CSV, proporcionado por Streamlit. Tras la carga del fichero por parte del usuario, el sistema realiza de forma asíncrona un \textit{parsing} primario y renderiza una previsualización interactiva limitada a las primeras 5 filas. Esto permite al facultativo comprobar visualmente si la estructura del archivo cargado coincide con sus expectativas antes de iniciar cualquier cómputo.
+    
+    \item \textbf{Fase de Parametrización Dinámica:} Una vez validada la presencia del archivo, la interfaz desbloquea dinámicamente el panel de <<Configuración de la conversión>>. En este punto, la navegación es puramente selectiva: el sistema lee las cabeceras del CSV original y rellena automáticamente un menú desplegable para que el usuario elija qué columna exacta contiene los datos a convertir, el formato de origen (ICD-9, ICD-10 o descripción) y las conversiones deseadas para el conjunto de datos resultante (códigos cruzados, descripciones en castellano o descripciones internacionales).
+    
+    \item \textbf{Ejecución, Validación y Persistencia:} Tras presionar el botón de procesamiento, el sistema ejecuta las transformaciones en segundo plano, notificando el éxito de la operación mediante una alerta visual integrada de éxito. Finalmente, el flujo concluye revelando una tabla de resultados enriquecida y habilitando de forma síncrona el botón de descarga, cerrando el ciclo de vida del dato dentro de la sesión web sin provocar disrupciones en la pantalla principal.
+\end{enumerate}
+
 \section{Accesibilidad de la aplicación}
 
 La accesibilidad de la plataforma se ha planteado desde una perspectiva práctica y funcional, adaptando los criterios estándar de diseño web a las necesidades específicas del entorno clínico hospitalario. Siguiendo las directrices de simplicidad establecidas en las secciones previas, la accesibilidad de la aplicación no se basa en menús de configuración complejos, sino en un diseño nativamente inclusivo que reduce las barreras de uso para todo el personal sanitario.
@@ -408,6 +419,43 @@ Las características funcionales clave integradas en este panel son las siguient
     \includegraphics[width=0.95\textwidth]{imagenes/Web_en_accion.png}
     \caption{Módulo del Conversor Individual: interfaz de búsqueda polivalente y panel de resultados de correspondencias ICD-9/ICD-10.}
     \label{fig:conversor_icd}
+\end{figure}
+
+\section{Procesamiento masivo y automatización por lotes}
+
+La segunda funcionalidad de la herramienta es el módulo de procesamiento masivo, diseñado específicamente para dar respuesta a flujos de trabajo orientados a la investigación epidemiológica o a la migración a gran escala de bases de datos hospitalarias locales. Esta funcionalidad traslada la lógica de traducción semántica individualizada a un motor de transformación de conjuntos de datos tabulares en memoria.
+
+Las características arquitectónicas y de diseño técnico que definen este panel se desglosan a continuación:
+
+\begin{itemize}
+    \item \textbf{Aislamiento y tipado dinámico de columnas:} El motor de la aplicación web lee de forma nativa el esquema del archivo CSV suministrado por el usuario. Al automatizar la extracción de las etiquetas de las columnas (como se ilustra en el campo \textit{Codigo\_Entrada}), el sistema independiza al profesional de la necesidad de adaptar o renombrar la estructura de sus archivos de origen, garantizando la compatibilidad con cualquier volcado de datos crudos proveniente de un sistema de historia clínica ajeno.
+    
+    \item \textbf{Modularidad bajo demanda y gestión de latencia:} El panel de selección de nuevas columnas permite configurar la carga de la consulta de forma granular. El usuario puede determinar si desea limitar la conversión al cruce estricto de códigos locales o si prefiere enriquecer el dataset con semántica lingüística. El sistema incluye una advertencia explícita respecto al coste computacional de activar la opción <<Inglés (API)>>; esto refleja un diseño consciente de la latencia informática, puesto que la traducción local basada en el \textit{dataset} curado opera en milisegundos, mientras que la concatenación de llamadas asíncronas externas a la API de la NLM introduce cuellos de botella de red que el usuario debe conocer.
+    
+    \item \textbf{Previsualización síncrona del dataset transformado:} Una vez completado el algoritmo de combinación y mapeo relacional, la aplicación despliega un \textit{dataframe} dinámico integrado en la propia vista. Esta visualización presenta de forma transparente el resultado de la transformación cruzada: un código de entrada genérico (por ejemplo, el código clínico \textit{E11.9} o \textit{M54.5}) se descompone horizontalmente indexando su equivalencia en el estándar opuesto, acoplando a la vez sus respectivas descripciones diagnósticas en castellano e inglés (si es pedido).
+    
+    \item \textbf{Persistencia y exportación limpia:} El módulo concluye su pipeline operativo exponiendo un botón de acción dedicado a la descarga del recurso enriquecido. El archivo resultante mantiene intacto el orden secuencial y los identificadores originales del usuario, añadiendo estrictamente las columnas configuradas. Esta salida estandarizada garantiza que el archivo generado pueda reintroducirse directamente en herramientas de análisis estadístico posteriores o motores de bases de datos corporativos.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{imagenes/Web_lotes_1.png}
+    \caption{Módulo del Conversor por Lotes: interfaz de carga de archivos}
+    \label{fig:conversor_lotes_1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{imagenes/Web_lotes_2.png}
+    \caption{Módulo del Conversor por Lotes: Panel de previsualización de datos cargados y selección de criterios de conversión.}
+    \label{fig:conversor_lotes_2}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{imagenes/Web_lotes_3.png}
+    \caption{Módulo del Conversor por Lotes: Resultados de la conversión seleccionada, con opción de descarga en formato CSV.}
+    \label{fig:conversor_lotes_3}
 \end{figure}
 
 

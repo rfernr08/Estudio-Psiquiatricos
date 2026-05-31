@@ -61,6 +61,10 @@ def procesar_ingles_lotes(df_final, col_icd10="ICD10", progress_callback=None):
     
     diccionario_ingles = {}
     total = len(codigos_unicos)
+
+    # Si no hay códigos válidos, devolvemos el DataFrame con la columna de inglés ya añadida.
+    if total == 0:
+        return df_final.with_columns(pl.lit("No encontrado en API").alias("Descripcion (Ingles)"))
     
     # Bucle de consultas a la API
     for i, codigo in enumerate(codigos_unicos):
@@ -75,8 +79,8 @@ def procesar_ingles_lotes(df_final, col_icd10="ICD10", progress_callback=None):
         
     # Mapeamos los resultados de vuelta a un DataFrame temporal
     df_traducciones = pl.DataFrame({
-        "codigo_temp": list(diccionario_ingles.keys()),
-        "Descripcion (Ingles)": list(diccionario_ingles.values())
+        "codigo_temp": pl.Series("codigo_temp", list(diccionario_ingles.keys()), dtype=pl.Utf8),
+        "Descripcion (Ingles)": pl.Series("Descripcion (Ingles)", list(diccionario_ingles.values()), dtype=pl.Utf8)
     })
     
     # Cruzamos las traducciones con el DataFrame principal
