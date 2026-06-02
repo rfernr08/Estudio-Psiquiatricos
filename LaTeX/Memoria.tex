@@ -180,6 +180,27 @@ La dificultad intrínseca de manejar estos diagnósticos radica en que las patol
 
 Es en este escenario donde la intersección entre la psiquiatría y las tecnologías de la información cobra una relevancia crítica. La disponibilidad de un conjunto de datos clínicos regionales abre la puerta a la aplicación de técnicas avanzadas de Ciencia de Datos. El reto actual no es la recolección de los datos, sino su explotación: transformar un listado plano de registros médicos en un ecosistema de conocimiento interconectado que permita descubrir comunidades de diagnósticos, tendencias epidemiológicas y, en última instancia, ofrecer herramientas tecnológicas de soporte que sirvan de guía en la toma de decisiones clínicas.
 
+\section{Hipótesis de trabajo}
+
+La génesis de este proyecto se fundamenta en la oportunidad de explotar un conjunto de datos clínicos regionales para extraer conocimiento de alto valor en el ámbito de la salud mental. Antes de iniciar la fase de desarrollo y experimentación, el trabajo se estructuró en torno a una serie de conjeturas iniciales. Estas hipótesis actúan como el hilo conductor de la planificación tecnológica, dividiéndose en tres vertientes esenciales:
+
+\subsection{Hipótesis clínicas y relacionales (El enfoque de grafos)}
+    Coexistencia patológica estructurada: Se parte de la premisa de que las comorbilidades asociadas a los trastornos del espectro esquizofrénico (F20) no se distribuyen de manera aleatoria en la población de la provincia. Se hipotetiza que existen patrones relacionales ocultos y agrupaciones de síntomas que pueden ser descubiertos mediante el análisis topológico.
+
+    Eficacia del paradigma NoSQL: Se plantea que la migración de un modelo tabular tradicional a una base de datos orientada a grafos (Neo4j) no solo optimizará el almacenamiento, sino que permitirá usar métricas de centralidad y detección de comunidades para identificar patologías "núcleo" que actúan como puentes diagnósticos.
+
+\subsection{Hipótesis tecnológicas y predictivas (El enfoque de IA)}
+
+    Superioridad de los modelos de lenguaje en texto libre: En el registro de historias clínicas, la jerga médica en texto libre suele ser caótica. Se establece como hipótesis que los modelos basados en transformadores (BERT), entrenados para la clasificación multiclase de diagnósticos finales, ofrecerán una comprensión semántica muy superior y una mayor tolerancia al ruido textual en comparación con los algoritmos tradicionales basados en árboles de decisión (XGBoost y Random Forest).
+
+    Interoperabilidad latente: Se sospecha la existencia de una desconexión informática en el histórico de registros debido a la coexistencia de las codificaciones ICD-9 e ICD-10. Se plantea que es posible unificar esta brecha mediante un motor de traducción bidireccional automatizado, resolviendo un problema de compatibilidad sin necesidad de alterar los registros originales.
+
+\subsection{Hipótesis epidemiológicas y de transferencia (El enfoque geográfico y de usuario)}
+
+    Heterogeneidad geográfica: Se asume que la prevalencia y la frecuencia de los diagnósticos del espectro esquizofrénico presentan variaciones espaciales significativas dentro de la provincia, las cuales pueden ser visibilizadas mediante cartografía digital para apoyar la toma de decisiones en salud pública.
+
+    Viabilidad de la transferencia tecnológica: Por último, se hipotetiza que la complejidad de los modelos predictivos de inteligencia artificial y de las consultas de grafos puede ser encapsulada con éxito en una interfaz web minimalista de una sola página, garantizando que una herramienta de alta densidad tecnológica sea adoptada de forma inmediata por el personal médico en su consulta diaria.
+
 \section{Motivación}
 
 La principal motivación de este trabajo radica en la oportunidad de transformar datos clínicos estáticos y tabulares en conocimiento médico dinámico e interpretable. El análisis tradicional de datos en salud mental ha dependido históricamente de bases de datos relacionales orientadas a tablas. Aunque eficaces para el almacenamiento básico, estas estructuras carecen de la flexibilidad necesaria para representar la naturaleza interconectada de los trastornos psiquiátricos, donde un único diagnóstico puede bifurcarse en múltiples variantes o asociarse de forma compleja con otras patologías. 
