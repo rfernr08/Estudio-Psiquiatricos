@@ -300,31 +300,36 @@ Este capítulo aborda de manera pormenorizada el origen, la estructura y el cicl
 
 \section{Fuente de datos}
 
-El conjunto de datos que constituye la base analítica y experimental de este Trabajo de Fin de Grado proviene de [mencionar el origen general, ej.: un entorno de investigación sociosanitaria / provisto por el departamento de X de la universidad], recopilando registros clínicos de la comunidad autónoma de Castilla y León. El \textit{dataset} original se presenta en un formato tabular [mencionar formato, ej.: CSV / Excel] y consta de un total de 3134 registros independientes, donde cada fila representa una instancia clínica anonimizada asociada a un paciente diagnosticado con esquizofrenia o alguna de sus variantes afines.
+El conjunto de datos que constituye la base analítica y experimental de este Trabajo de Fin de Grado proviene de una recopilación de registros clínicos en el hospital universitario de León, y después esta recopilación fue entregada al grupo de investigación ALBA de la Universidad de León para su posterior estudio. El \textit{dataset} original se presenta en un formato tabular Excel y consta de un total de 3134 registros independientes, donde cada fila representa una instancia clínica anonimizada asociada al ingreso de un paciente diagnosticado con esquizofrenia o alguna de sus variantes afines.
 
-Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. || Añadir aquí si el dataset tiene alguna limitación temporal conocida, ej: registros acumulados entre los años 2015 y 2022 ||
+Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. El dataset esta conformado por ingresos desde el año 2007 al 2019.
 
-Estructuralmente, el \textit{dataset} se compone de un conjunto de [X] columnas que recogen diferentes dimensiones del perfil del paciente. Para facilitar su análisis técnico, estas variables se han categorizado en tres bloques principales, descritos a continuación y resumidos en la Tabla \ref{tab:esquema_dataset}:
+Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas que recogen diferentes dimensiones del perfil del paciente, mas unas 7 columnas adicionales que añaden información recopilatoria. Para facilitar su análisis técnico, estas variables se han categorizado en tres bloques principales, descritos a continuación y resumidos en la Tabla \ref{tab:esquema_dataset}:
 
 \begin{itemize}
     \item \textbf{Variables Demográficas:} Hacen referencia a las características básicas del individuo, tales como la edad, el sexo o la zona geográfica general. || Modificar/añadir según tus columnas demográficas reales ||
     \item \textbf{Variables Diagnósticas y Clínicas:} Representan el núcleo del estudio, incluyendo los códigos médicos de esquizofrenia (subtipos), la presencia de sintomatología específica o la fecha del primer diagnóstico. || Modificar/añadir según tus columnas clínicas reales ||
     \item \textbf{Variables de Comorbilidad y Evolución:} Columnas destinadas a registrar la existencia de otros trastornos adyacentes (psiquiátricos o somáticos), reingresos hospitalarios o trayectorias farmacológicas. || Modificar/añadir según tus columnas de evolución reales ||
+    \item \textbf{Historial Clínico:} Recopilacion de todos los diagnósticos previos y posteriores al diagnóstico de esquizofrenia del paciente, incluyendo tanto trastornos mentales como enfermedades físicas.
+    \item \textbf{Información del Paciente:} Datos relacionados con la edad, sexo y nacionalidad del paciente, que pueden ser relevantes para el análisis epidemiológico y la identificación de patrones demográficos asociados a la esquizofrenia. 
+    \item \textbf{Información del Ingreso:} Datos relacionados con la fecha de ingreso, duración de la estancia hospitalaria, motivo de ingreso y tipo de alta, que pueden ser útiles para analizar la evolución clínica y los factores asociados a la hospitalización.
+    \item \textbf{Diagnóstico final:} Información sobre el diagnóstico definitivo del paciente, que puede incluir el subtipo de esquizofrenia o cualquier otra condición diagnóstica relevante.
+    \item \textbf{Recopilación de Datos:} Información sobre cómo se recopilaron los datos, incluyendo los métodos de recolección y cualquier procedimiento específico utilizado para garantizar la calidad y consistencia de los registros clínicos.
 \end{itemize}
 
 \begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{|l|l|l|p{7cm}|}
-\hline
-\textbf{Nombre de la Columna} & \textbf{Tipo de Dato} & \textbf{Categoría} & \textbf{Descripción Clínica / Significado} \\ \hline
-\texttt{|| Columna 1, ej: ID\_Paciente ||} & || Entero / Alfanumérico || & Demográfica & || Identificador único anonimizado del registro. || \\ \hline
-\texttt{|| Columna 2, ej: Cod\_ICD ||} & || Cadena (String) || & Diagnóstica & || Código internacional de la patología principal. || \\ \hline
-\texttt{|| Columna 3, ej: Edad ||} & || Entero || & Demográfica & || Edad del paciente en el momento del registro. || \\ \hline
-\texttt{|| Columna 4 ||} & || ... || & ... & || ... || \\ \hline
-\end{tabular}
-\caption{Esquema analítico y descripción de las variables del dataset original.}
-\label{tab:esquema_dataset}
+    \centering
+    \small
+    \begin{tabular}{|l|l|l|p{7cm}|}
+    \hline
+    \textbf{Nombre de la Columna} & \textbf{Tipo de Dato} & \textbf{Categoría} & \textbf{Descripción Clínica / Significado} \\ \hline
+    \texttt{|| Columna 1, ej: ID\_Paciente ||} & || Entero / Alfanumérico || & Demográfica & || Identificador único anonimizado del registro. || \\ \hline
+    \texttt{|| Columna 2, ej: Cod\_ICD ||} & || Cadena (String) || & Diagnóstica & || Código internacional de la patología principal. || \\ \hline
+    \texttt{|| Columna 3, ej: Edad ||} & || Entero || & Demográfica & || Edad del paciente en el momento del registro. || \\ \hline
+    \texttt{|| Columna 4 ||} & || ... || & ... & || ... || \\ \hline
+    \end{tabular}
+    \caption{Esquema analítico y descripción de las variables del dataset original.}
+    \label{tab:esquema_dataset}
 \end{table}
 \section{Variables utilizadas}
 Texto sobre las variables...
