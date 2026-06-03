@@ -13,6 +13,8 @@
 \usepackage{titlesec} % Para dar formato a los títulos 
 \usepackage{caption}
 \usepackage[hidelinks]{hyperref}
+\usepackage{cite}
+\usepackage{longtable}
 
 % --- CONFIGURACIÓN DE FORMATO SEGÚN NORMATIVA ---
 \onehalfspacing % Interlineado 1.5 líneas 
@@ -304,35 +306,122 @@ El conjunto de datos que constituye la base analítica y experimental de este Tr
 
 Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. El dataset esta conformado por ingresos desde el año 2007 al 2019.
 
-Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas que recogen diferentes dimensiones del perfil del paciente, mas unas 7 columnas adicionales que añaden información recopilatoria. Para facilitar su análisis técnico, estas variables se han categorizado en tres bloques principales, descritos a continuación y resumidos en la Tabla \ref{tab:esquema_dataset}:
+Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas que recogen diferentes dimensiones del perfil del paciente, mas unas 7 columnas adicionales que añaden información recopilatoria. Para facilitar su análisis técnico, estas variables se han categorizado en 5 bloques principales, descritos a continuación y resumidos en la Tabla \ref{tab:esquema_dataset}:
 
 \begin{itemize}
-    \item \textbf{Variables Demográficas:} Hacen referencia a las características básicas del individuo, tales como la edad, el sexo o la zona geográfica general. || Modificar/añadir según tus columnas demográficas reales ||
-    \item \textbf{Variables Diagnósticas y Clínicas:} Representan el núcleo del estudio, incluyendo los códigos médicos de esquizofrenia (subtipos), la presencia de sintomatología específica o la fecha del primer diagnóstico. || Modificar/añadir según tus columnas clínicas reales ||
-    \item \textbf{Variables de Comorbilidad y Evolución:} Columnas destinadas a registrar la existencia de otros trastornos adyacentes (psiquiátricos o somáticos), reingresos hospitalarios o trayectorias farmacológicas. || Modificar/añadir según tus columnas de evolución reales ||
-    \item \textbf{Historial Clínico:} Recopilacion de todos los diagnósticos previos y posteriores al diagnóstico de esquizofrenia del paciente, incluyendo tanto trastornos mentales como enfermedades físicas.
     \item \textbf{Información del Paciente:} Datos relacionados con la edad, sexo y nacionalidad del paciente, que pueden ser relevantes para el análisis epidemiológico y la identificación de patrones demográficos asociados a la esquizofrenia. 
     \item \textbf{Información del Ingreso:} Datos relacionados con la fecha de ingreso, duración de la estancia hospitalaria, motivo de ingreso y tipo de alta, que pueden ser útiles para analizar la evolución clínica y los factores asociados a la hospitalización.
-    \item \textbf{Diagnóstico final:} Información sobre el diagnóstico definitivo del paciente, que puede incluir el subtipo de esquizofrenia o cualquier otra condición diagnóstica relevante.
+    \item \textbf{Historial Clínico:} Representan el núcleo del estudio, una recopilacion de todos los diagnósticos previos y posteriores al diagnóstico de esquizofrenia del paciente, incluyendo tanto trastornos mentales como enfermedades físicas, mediante los codigos medicos ICD-9 e ICD-10.
+    \item \textbf{Diagnóstico final:} Nuestra metrica mas importante y la pieza central, información sobre el diagnóstico definitivo del paciente, que puede incluir el subtipo de esquizofrenia o cualquier otra condición diagnóstica relevante.
     \item \textbf{Recopilación de Datos:} Información sobre cómo se recopilaron los datos, incluyendo los métodos de recolección y cualquier procedimiento específico utilizado para garantizar la calidad y consistencia de los registros clínicos.
 \end{itemize}
 
-\begin{table}[htbp]
-    \centering
-    \small
-    \begin{tabular}{|l|l|l|p{7cm}|}
-    \hline
-    \textbf{Nombre de la Columna} & \textbf{Tipo de Dato} & \textbf{Categoría} & \textbf{Descripción Clínica / Significado} \\ \hline
-    \texttt{|| Columna 1, ej: ID\_Paciente ||} & || Entero / Alfanumérico || & Demográfica & || Identificador único anonimizado del registro. || \\ \hline
-    \texttt{|| Columna 2, ej: Cod\_ICD ||} & || Cadena (String) || & Diagnóstica & || Código internacional de la patología principal. || \\ \hline
-    \texttt{|| Columna 3, ej: Edad ||} & || Entero || & Demográfica & || Edad del paciente en el momento del registro. || \\ \hline
-    \texttt{|| Columna 4 ||} & || ... || & ... & || ... || \\ \hline
-    \end{tabular}
-    \caption{Esquema analítico y descripción de las variables del dataset original.}
-    \label{tab:esquema_dataset}
-\end{table}
+% Reduce pre/post spacing for longtable to avoid infinite glue shrinkage on page breaks
+\setlength\LTpre{0pt}
+\setlength\LTpost{0pt}
+\begin{longtable}{p{3.8cm} p{2.2cm} p{2.3cm} p{6.2cm}}
+\caption{Esquema analítico y descripción de las variables del dataset original.} \label{tab:esquema_dataset} \\
+\hline
+\textbf{Nombre de la Columna} & \textbf{Tipo de Dato} & \textbf{Categoría} & \textbf{Descripción} \\ \hline
+\endfirsthead
+
+\multicolumn{4}{c}%
+{{\bfseries \tablename\ \thetable{} -- Continuación de la página anterior}} \\
+\hline
+\textbf{Nombre de la Columna} & \textbf{Tipo de Dato} & \textbf{Categoría} & \textbf{Descripción} \\ \hline
+\endhead
+
+\hline
+\multicolumn{4}{r}{{Continúa en la siguiente página...}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+\texttt{Nº Historia} & Alfanumérico & Información del Paciente & Identificador único anonimizado del historial clínico del paciente. \\ \hline
+\texttt{Fecha Nacimiento} & Fecha & Información del Paciente & Fecha de nacimiento del paciente. \\ \hline
+\texttt{Edad en años} & Entero & Información del Paciente & Edad del paciente calculada en años en el momento del registro. \\ \hline
+\texttt{Sexo (Desc)} & Cadena (String) & Información del Paciente & Descripción textual del sexo biológico del paciente. \\ \hline
+\texttt{País de Nacimiento} & Cadena (String) & Información del Paciente & País de origen o nacimiento del individuo. \\ \hline
+\texttt{Provincia} & Cadena (String) & Información del Paciente & Provincia de residencia asociada al registro. \\ \hline
+\texttt{Municipio Residencia (Cód)} & Alfanumérico & Información del Paciente & Código numérico oficial del municipio de residencia. \\ \hline
+\texttt{Municipio Residencia (Des)} & Cadena (String) & Información del Paciente & Nombre del municipio de residencia. \\ \hline
+\texttt{Código Postal} & Alfanumérico & Información del Paciente & Código postal del domicilio del paciente. \\ \hline
+\texttt{Fecha Ingreso} & Fecha & Información del Ingreso & Fecha en la que se produce el ingreso hospitalario. \\ \hline
+\texttt{Año} & Entero & Información del Ingreso & Año de registro del alta o del proceso clínico. \\ \hline
+\texttt{Fecha Alta} & Fecha & Información del Ingreso & Fecha de alta del paciente. \\ \hline
+\texttt{Servicio Alta (Código)} & Alfanumérico & Información del Ingreso & Código del servicio médico que gestiona el alta. \\ \hline
+\texttt{Sección Alta (Código)} & Alfanumérico & Información del Ingreso & Código de la sección específica encargada del alta. \\ \hline
+\texttt{Diag 01 Principal (cod)} & Cadena (String) & Historial Clínico & Código identificador del diagnóstico principal que motivó el ingreso o atención. \\ \hline
+\texttt{Diag 02 al Diag 20 (cod)} & Cadena (String) & Historial Clínico & Bloque secuencial de 19 variables opcionales que registran las comorbilidades secundarias del paciente según la complejidad de su caso. \\ \hline
+\texttt{DIAG PSQ} & Cadena (String) & Diagnóstico final & Código del diagnóstico psiquiátrico de control definitivo propuesto por un especialista. \\ \hline
+\texttt{Conjunto Dx} & Cadena (String) & Recopilación de Datos & Agrupación de diagnósticos asociados al paciente en una unica columna. \\ \hline
+\texttt{DIAG PSQ ICD-9} & Cadena (String) & Diagnóstico final & Código equivalente en la clasificación ICD-9 para la patología psiquiátrica principal. \\ \hline
+\texttt{DIAG PSQ Descripcion Español} & Cadena (String) & Recopilación de Datos & Descripción literal en castellano del diagnóstico psiquiátrico principal. \\ \hline
+\texttt{DIAG PSQ Descripcion Ingles} & Cadena (String) & Recopilación de Datos & Descripción literal en inglés del diagnóstico psiquiátrico principal. \\ \hline
+\texttt{Conjunto Dx ICD-9} & Cadena (String) & Diagnóstica & Agrupación de los códigos equivalentes en ICD-9 para el historial clínico. \\ \hline
+\texttt{Conjunto Dx Descripcion Español} & Cadena (String) & Recopilación de Datos & Agrupación de descripciones en español del historial clínico. \\ \hline
+\texttt{Conjunto Dx Descripcion Ingles} & Cadena (String) & Recopilación de Datos & Agrupación de descripciones en inglés del historial clínico. \\ \hline
+\end{longtable}
+
 \section{Variables utilizadas}
-Texto sobre las variables...
+\subsection{Variables predictoras o características (\textit{Features})}
+
+El conjunto de variables de entrada seleccionadas para el entrenamiento y optimización de los modelos predictivos (XGBoost, Random Forest y arquitecturas basadas en BERT) se centra exclusivamente en la dimensión clínica del paciente. Se ha prescindido deliberadamente de factores administrativos para evitar sesgos informáticos, focalizando el aprendizaje del sistema en el historial de codificación diagnóstica.
+
+Las características operativas que constituyen el vector de entrada del modelo se desglosan en dos componentes fundamentales:
+
+\begin{itemize}
+    \item \textbf{Diagnóstico Principal (\texttt{Diag 01 Principal (cod)}):} Esta variable categórica representa la patología primaria o el motivo principal que facultó la atención médica o el ingreso hospitalario del individuo. Actúa como el anclaje semántico del perfil del paciente, aportando el peso estadístico base en las matrices de decisión de los algoritmos de aprendizaje supervisado.
+    
+    \item \textbf{Historial de Diagnósticos Secundarios (\texttt{Diag 02} al \texttt{Diag 20}):} Este bloque, compuesto por 19 variables indexadas, encapsula el perfil pluripatológico del paciente. Clínicamente, representa las comorbilidades concomitantes, trastornos crónicos subyacentes o manifestaciones secundarias que presenta el sujeto de estudio de manera simultánea. 
+\end{itemize}
+Desde el punto de vista del procesamiento de datos, la inclusión de este bloque de 20 variables en paralelo permite a los modelos de árboles de decisión evaluar interacciones complejas de características (\textit{feature interactions}). El algoritmo no analiza el impacto de una patología de forma aislada, sino que es capaz de ponderar cómo la coexistencia de determinados diagnósticos secundarios altera drásticamente la probabilidad probabilística de las diferentes variantes del espectro esquizofrénico, maximizando la precisión del clasificador multiclase.
+
+\subsection{Variable objetivo (\textit{Target})}
+
+El eje central sobre el cual pivota la totalidad del estudio analítico y el entrenamiento de los algoritmos de Inteligencia Artificial es el diagnóstico psiquiátrico final, establecido empíricamente por el personal médico experto en el momento del alta. 
+
+Dentro del \textit{dataset}, esta información se consolida principalmente en la variable \texttt{DIAG PSQ} (y sus proyecciones codificadas o semánticas, como \texttt{DIAG PSQ ICD-9} y \texttt{DIAG PSQ Descripcion Español}). En el paradigma del aprendizaje automático supervisado, esta columna asume el rol de variable dependiente o \textit{Target}. 
+
+En la práctica, esta variable constituye la <<verdad fundamental>> (\textit{ground truth}) que los modelos de clasificación (XGBoost, Random Forest y BERT) aprenden a inferir a partir del historial de diagnósticos del paciente. Al representar la confirmación clínica innegable de la patología psiquiátrica (con especial interés en los trastornos del espectro esquizofrénico), su exactitud es el pilar indiscutible que permite calcular, validar y justificar todas las métricas de rendimiento y precisión del proyecto.
+
+\subsection{Variables para el análisis estructural y geográfico}
+
+Para el desarrollo del módulo cartográfico y el estudio epidemiológico espacial, la selección de variables se vio condicionada por una fase previa de evaluación de la calidad del dato (\textit{Data Quality Assessment}). Aunque el \textit{dataset} original disponía de múltiples campos de localización geomorfológica —tales como \texttt{País de Nacimiento}, \texttt{Provincia}, \texttt{Municipio Residencia (Cód)} o \texttt{Municipio Residencia (Des)}—, el análisis de completitud reveló que estas variables sufrían de una alta tasa de valores nulos, registros incompletos o codificaciones imprecisas que imposibilitaban su uso directo.
+
+Ante esta restricción metodológica, se determinó utilizar la variable \texttt{Código Postal} como el eje conductor exclusivo para el análisis geográfico, fundamentando esta decisión en dos criterios técnicos:
+
+\begin{itemize}
+    \item \textbf{Integridad y completitud del registro:} A diferencia de los campos municipales o provinciales, la columna \texttt{Código Postal} se encontraba cumplimentada en la totalidad de los registros del histórico de pacientes ($100\%$ de \textit{completeness}), careciendo de ruido informático o fallas de formato. Esto garantizó la robustez de las consultas espaciales sin requerir técnicas artificiales de imputación de datos que pudiesen sesgar los resultados.
+    
+    \item \textbf{Resolución y granularidad espacial:} Desde la perspectiva analítica, la escala provincial resulta demasiado amplia y difusa para detectar patrones de prevalencia clínica significativos. El código postal, al actuar como una unidad de división administrativa micro-local, ofrece un nivel de granularidad óptimo. Esto permite mapear la distribución de los trastornos del espectro esquizofrénico a nivel de distritos sanitarios específicos y subzonas de la provincia, facilitando la identificación de posibles focos o clústeres socio-ambientales de forma mucho más precisa.
+\end{itemize}
+
+\subsection{Variables derivadas y de enriquecimiento semántico (\textit{Feature Engineering})}
+
+Durante la fase de preprocesamiento, se evidenció la necesidad de expandir la dimensionalidad del \textit{dataset} original para flexibilizar la experimentación con los distintos modelos de aprendizaje automático. Por ello, se llevó a cabo un proceso de ingeniería de características que dio lugar a la creación de siete nuevas columnas. 
+
+El objetivo principal de estas variables derivadas es disponer del historial clínico y de la variable objetivo en múltiples formatos (códigos históricos, agrupaciones y lenguaje natural bilingüe). Esto permite evaluar el rendimiento de los algoritmos ante diferentes representaciones del mismo dato (por ejemplo, alimentando al modelo BERT con texto en inglés frente a texto en español).
+
+Estas siete variables se dividen conceptualmente en dos bloques funcionales:
+
+\textbf{1. Enriquecimiento de la variable objetivo (Target):}
+\begin{itemize}
+    \item \texttt{DIAG PSQ ICD-9}: Representa la traducción inversa del diagnóstico psiquiátrico principal al estándar histórico ICD-9. Su función es mantener la trazabilidad con sistemas médicos heredados (\textit{legacy systems}).
+    \item \texttt{DIAG PSQ Descripcion Español}: Traducción del código a lenguaje natural en castellano. Es esencial para validar clínicamente los resultados sin requerir memorización de códigos por parte del usuario.
+    \item \texttt{DIAG PSQ Descripcion Ingles}: Traducción literal obtenida vía API externa. Resulta crítica para los modelos de procesamiento de lenguaje natural (NLP) avanzados, dado que arquitecturas como BERT presentan un mayor grado de madurez y precisión cuando procesan \textit{embeddings} en lengua inglesa.
+\end{itemize}
+
+\textbf{2. Agrupación y enriquecimiento del historial predictivo:}
+\begin{itemize}
+    \item \texttt{Conjunto Dx}: Es una variable de agregación que concatena los múltiples diagnósticos secundarios de un paciente en una única cadena estructurada. Facilita la inyección de datos tabulares en modelos que requieren una entrada de texto secuencial unificada.
+    \item \texttt{Conjunto Dx ICD-9}: Mapeo relacional del conjunto anterior hacia la codificación ICD-9, garantizando la uniformidad del formato si se decide entrenar modelos exclusivamente con el estándar histórico.
+    \item \texttt{Conjunto Dx Descripcion Español} y \texttt{Conjunto Dx Descripcion Ingles}: Transforman el vector de comorbilidades (códigos) en párrafos de texto descriptivo. Estas columnas son el insumo principal para probar la capacidad de atención y comprensión contextual de los modelos transformadores (LLMs) frente al uso de vectores numéricos tradicionales en árboles de decisión.
+\end{itemize}
+
+En conclusión, la generación de este bloque semántico no solo actúa como un recopilador de soporte documental, sino que proporciona el entorno de pruebas multimodal necesario para determinar empíricamente qué representación del conocimiento clínico maximiza la capacidad predictiva del sistema.
+
 \section{Limpieza y preprocesado}
 Texto sobre limpieza...
 \section{División entrenamiento/validación/test}
@@ -657,7 +746,8 @@ El presente Trabajo de Fin de Grado ha permitido abordar de manera integral el a
 A pesar de los resultados satisfactorios obtenidos en el desarrollo del proyecto, es fundamental adoptar una postura crítica y reconocer las restricciones intrínsecas asociadas tanto a los datos disponibles como a las metodologías tecnológicas aplicadas. La identificación de estas limitaciones es clave para interpretar correctamente el alcance del estudio:
 
 \begin{itemize}
-    \item \textbf{Restricción geográfica y representatividad de la muestra:} El \textit{dataset} analizado refleja la realidad clínica y los patrones de diagnóstico de una provincia concreta. Por tanto, las frecuencias observadas y los mapas de distribución geográfica podrían estar influenciados por dinámicas sociodemográficas locales o por los criterios de codificación específicos del personal médico de la región. Esto limita la generalización inmediata de los modelos predictivos a otros entornos hospitalarios nacionales o internacionales sin un proceso previo de reentrenamiento.
+    \item \textbf{Restricción geográfica y representatividad de la muestra:} El \textit{dataset} analizado refleja la realidad clínica y los patrones de diagnóstico de una provincia concreta. Por tanto, las frecuencias observadas y los mapas de distribución geográfica podrían estar influenciados por dinámicas socioInformación del Paciente
+s locales o por los criterios de codificación específicos del personal médico de la región. Esto limita la generalización inmediata de los modelos predictivos a otros entornos hospitalarios nacionales o internacionales sin un proceso previo de reentrenamiento.
     
     \item \textbf{Desequilibrio severo de clases (\textit{Class Imbalance}):} En el ámbito de la salud mental, la prevalencia de ciertos trastornos es dispar. Durante el diseño del flujo predictivo ,especialmente en las fases iniciales focalizadas en la esquizofrenia (F20 y F20.89) y en la posterior expansión multiclase, el desequilibrio en la cantidad de registros por patología supuso un desafío técnico importante. Los algoritmos basados en árboles (XGBoost y Random Forest) y los modelos lingüísticos (BERT) tienden a verse penalizados por las clases minoritarias, requiriendo un esfuerzo extra de computación y ajuste de pesos, que no consigue combatir completamente el sesgo.
     
