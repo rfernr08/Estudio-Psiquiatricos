@@ -400,7 +400,7 @@ Ante esta restricción metodológica, se determinó utilizar la variable \texttt
 
 \subsection{Variables derivadas y de enriquecimiento semántico (\textit{Feature Engineering})}
 
-Durante la fase de preprocesamiento, se evidenció la necesidad de expandir la dimensionalidad del \textit{dataset} original para flexibilizar la experimentación con los distintos modelos de aprendizaje automático. Por ello, se llevó a cabo un proceso de ingeniería de características que dio lugar a la creación de siete nuevas columnas. 
+Durante la fase de preprocesamiento, se observo la necesidad de expandir la dimensionalidad del \textit{dataset} original para flexibilizar la experimentación con los distintos modelos de aprendizaje automático. Por ello, se llevó a cabo un proceso de ingeniería de características que dio lugar a la creación de siete nuevas columnas. 
 
 El objetivo principal de estas variables derivadas es disponer del historial clínico y de la variable objetivo en múltiples formatos (códigos históricos, agrupaciones y lenguaje natural bilingüe). Esto permite evaluar el rendimiento de los algoritmos ante diferentes representaciones del mismo dato (por ejemplo, alimentando al modelo BERT con texto en inglés frente a texto en español).
 
@@ -408,7 +408,7 @@ Estas siete variables se dividen conceptualmente en dos bloques funcionales:
 
 \textbf{1. Enriquecimiento de la variable objetivo (Target):}
 \begin{itemize}
-    \item \texttt{DIAG PSQ ICD-9}: Representa la traducción inversa del diagnóstico psiquiátrico principal al estándar histórico ICD-9. Su función es mantener la trazabilidad con sistemas médicos heredados (\textit{legacy systems}).
+    \item \texttt{DIAG PSQ ICD-9}: Representa la traducción inversa del diagnóstico psiquiátrico principal al estándar histórico ICD-9. Su función es mantener la trazabilidad con sistemas médicos antiguos (\textit{legacy systems}).
     \item \texttt{DIAG PSQ Descripcion Español}: Traducción del código a lenguaje natural en castellano. Es esencial para validar clínicamente los resultados sin requerir memorización de códigos por parte del usuario.
     \item \texttt{DIAG PSQ Descripcion Ingles}: Traducción literal obtenida vía API externa. Resulta crítica para los modelos de procesamiento de lenguaje natural (NLP) avanzados, dado que arquitecturas como BERT presentan un mayor grado de madurez y precisión cuando procesan \textit{embeddings} en lengua inglesa.
 \end{itemize}
@@ -421,6 +421,22 @@ Estas siete variables se dividen conceptualmente en dos bloques funcionales:
 \end{itemize}
 
 En conclusión, la generación de este bloque semántico no solo actúa como un recopilador de soporte documental, sino que proporciona el entorno de pruebas multimodal necesario para determinar empíricamente qué representación del conocimiento clínico maximiza la capacidad predictiva del sistema.
+
+\subsection{Variables excluidas y justificación del descarte}
+
+En todo proyecto de aprendizaje automático, la reducción selectiva de la dimensionalidad es un paso crítico para garantizar la robustez de los modelos. Mantener variables irrelevantes, redundantes o incompletas introduce ruido estadístico, aumenta innecesariamente el coste computacional y eleva el riesgo de sobreajuste (\textit{overfitting}). 
+
+Tras una fase de filtrado analítico, se procedió a la exclusión definitiva de 12 variables del \textit{dataset} original:
+
+\begin{itemize}
+    \item \textbf{Variables de gestión administrativa (\texttt{Servicio Alta (Código)} y \texttt{Sección Alta (Código)}):} Estos campos describen la estructura logística e institucional del centro hospitalario en el momento del alta. Dado que reflejan flujos organizativos internos y no variables sintomatológicas o clínicas del sujeto, se omitieron para evitar que los algoritmos correlacionaran artificialmente una sección médica concreta con un diagnóstico psiquiátrico específico, previniendo así un sesgo operativo severo.
+    
+    \item \textbf{Variables temporales y cronológicas (\texttt{Fecha Ingreso}, \texttt{Año} y \texttt{Fecha}):} El diseño experimental de este estudio está planteado como una clasificación estática transversal, orientada a evaluar el perfil de comorbilidades concurrentes. Al no abordarse un análisis predictivo de series temporales, las fechas exactas aportaban una variabilidad excesiva (\textit{high cardinality}) sin valor clínico para el entrenamiento de redes neuronales o árboles de decisión.
+    
+    \item \texttt{Variables demográficas generales (\texttt{Fecha Nacimiento}, \texttt{Edad en años}, \texttt{Sexo (Desc)} y \texttt{País de Nacimiento}):} Aunque estas variables poseen valor epidemiológico descriptivo, se constató que la firma diagnóstica contenida en el vector de las 20 columnas de codificación médica poseía un peso predictivo infinitamente superior. La inclusión de la edad o el sexo biológico introducía correlaciones espúreas en el clasificador multiclase, por lo que se prefirió aislar los modelos para que aprendieran exclusivamente de la semántica de las patologías.
+    
+    \item \textbf{Variables geográficas de baja calidad (\texttt{Provincia}, \texttt{Municipio Residencia (Cód)} y \texttt{Municipio Residencia (Des)}):} Tal y como se justificó en la sección anterior, el análisis de calidad detectó una tasa crítica de valores ausentes e inconsistencias en estos campos. El valor de estas variable ha sido eclipsado por la variable \texttt{Código Postal}, que se mantuvo como el único referente geográfico para el estudio espacial.
+\end{itemize}
 
 \section{Limpieza y preprocesado}
 Texto sobre limpieza...
