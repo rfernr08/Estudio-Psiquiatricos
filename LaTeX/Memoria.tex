@@ -532,8 +532,61 @@ Con el propósito de evaluar empíricamente el impacto del desequilibrio de clas
 \end{enumerate}
 
 La comparación sistemática del rendimiento de los modelos sobre estos tres escenarios compositivos permite determinar si el uso de arquitecturas generativas profundas (VAE) penaliza o beneficia la frontera de decisión del clasificador multiclase frente a las aproximaciones estadísticas tradicionales.
-\section{Mapas y estudio de comunidades}
-Zonas donde predominan unos diagnósticos sobre otros.
+\section{Mapas y Frecuencias Geoespaciales}
+
+Como último eslabón del tratamiento del \textit{dataset}, se diseñó un módulo de geoprocesamiento orientado a la representación espacial de la prevalencia diagnóstica. El objetivo de este apartado es describir la arquitectura de datos y las herramientas de \textit{software} utilizadas para la generación de los mapas epidemiológicos, postergando la interpretación clínica y el análisis de los hallazgos para el capítulo de resultados de esta memoria.
+
+El pipeline de desarrollo cartográfico se estructuró en dos etapas técnicas independientes: la agregación matricial de frecuencias y la renderización geomorfológica interactiva.
+
+\subsection{Extracción y Agregación de Frecuencias Espaciales}
+Los modelos predictivos operan a nivel de registro individual (paciente por paciente); sin embargo, el análisis geoespacial requiere una estructura de datos indexada por partición geográfica. Para ello, se desarrolló un script en Python que transformó el \textit{dataset} original mediante operaciones de agrupación masiva (\textit{clustering} estadístico).
+
+El proceso consistió en aislar las variables \texttt{Código Postal} y la variable objetivo \texttt{DIAG PSQ}, aplicando una función de agregación para calcular la frecuencia absoluta de afectados. El resultado de esta transformación se consolidó en archivos estructurados en formato CSV, cuya matriz de datos sigue el siguiente esquema relacional:
+
+\begin{equation}
+\text{Matriz Espacial} = \{ \text{Código Postal}, \, \text{Código Diagnóstico (ICD)}, \, \text{Frecuencia Absoluta} \}
+\end{equation}
+
+Esta estructura simplificada redujo drásticamente la redundancia del \textit{dataset} original, aislando únicamente las métricas de densidad poblacional necesarias para alimentar el motor gráfico.
+
+\subsection{Integración GeoJSON y Renderizado con Folium}
+Para la construcción de los mapas interactivos se optó por un enfoque basado en mapas coropléticos, donde el gradiente de color de cada zona representa la intensidad o volumen de casos de una patología concreta. La implementación tecnológica se basó en dos pilares:
+
+\begin{itemize}
+    \item \textbf{Capa de Límite Administrativo (GeoJSON):} Se integró un archivo estructurado en formato GeoJSON que contiene la delimitación vectorial y las coordenadas geográficas exactas de la división por códigos postales de España. Este archivo actúa como el mapa base de polígonos sobre el cual se proyectan los datos.
+    
+    \item \textbf{Motor de Visualización (Folium):} Utilizando la librería \textit{Folium} (el \textit{wrapper} oficial de Python para la biblioteca JavaScript \textit{Leaflet}), se programó el motor de renderizado. El algoritmo realiza un cruce de datos (\textit{merge}) en tiempo de ejecución entre el código postal del archivo GeoJSON y la clave primaria del CSV de frecuencias generado previamente.
+\end{itemize}
+
+Gracias a esta arquitectura, el sistema es capaz de inyectar dinámicamente el número de afectados por diagnóstico en las capas del mapa, generando una interfaz interactiva que permite hacer \textit{zoom}, consultar burbujas de información (\textit{tooltips}) por distrito y observar la distribución macroscópica de las comunidades de pacientes de forma ágil y computacionalmente liviana.
+
+Se crearon 3 mapas coropléticos independientes, para mostrar la presencia de los diagnosticos no solo en la zona central del estudio, León, sino también teniendo en cuenta el resto de España, ya que el dataset incluye pacientes de otras provincias.
+\begin{itemize}    
+    \item Mapa 1: Distribución de la frecuencia de casos diagnosticados con cualquier trastorno del espectro esquizofrénico (F20, F22, F23, F25, F29) encontrados en el dataset por código postal en León. Figura~\ref{fig:mapa_leon} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos en determinadas zonas de la provincia.
+    \item Mapa 2: Distribución de la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal en León. Figura~\ref{fig:mapa_frecuencia_leon} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos diagnosticados con esquizofrenia en determinadas zonas de la provincia.
+    \item Mapa 3: Distribución de la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal en España. Figura~\ref{fig:mapa_frecuencia_espana} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos diagnosticados con esquizofrenia en determinadas zonas de España que se encuentran en el dataset.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{imagenes/Mapa_Diagnosticos_Leon.png}
+    \caption{Ejemplo de mapa coroplético generado para la provincia de León, mostrando la distribución de casos diagnosticados con trastornos del espectro esquizofrénico por código postal.}
+    \label{fig:mapa_leon}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{imagenes/Mapa_Frecuencia_Leon.png}
+    \caption{Ejemplo de mapa coroplético generado para la provincia de León, mostrando la frecuencia de casos diagnosticados con trastornos del espectro esquizofrénico por código postal.}
+    \label{fig:mapa_frecuencia_leon}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{imagenes/Mapa_Frecuencia_España.png}
+    \caption{Ejemplo de mapa coroplético generado para España, mostrando la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal.}
+    \label{fig:mapa_frecuencia_espana}
+\end{figure}
 
 \chapter{Metodología}
 \section{Baselines iniciales (Machine Learning vs Deep Learning)}
