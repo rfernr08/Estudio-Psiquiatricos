@@ -438,12 +438,100 @@ Tras una fase de filtrado analítico, se procedió a la exclusión definitiva de
     \item \textbf{Variables geográficas de baja calidad (\texttt{Provincia}, \texttt{Municipio Residencia (Cód)} y \texttt{Municipio Residencia (Des)}):} Tal y como se justificó en la sección anterior, el análisis de calidad detectó una tasa crítica de valores ausentes e inconsistencias en estos campos. El valor de estas variable ha sido eclipsado por la variable \texttt{Código Postal}, que se mantuvo como el único referente geográfico para el estudio espacial.
 \end{itemize}
 
-\section{Limpieza y preprocesado}
-Texto sobre limpieza...
-\section{División entrenamiento/validación/test}
-Texto sobre la división de conjuntos...
-\section{Estratificación de datos}
-Texto sobre estratificación...
+\section{Limpieza y Preprocesamiento de Datos}
+
+Una vez definidas las variables de interés, se procedió a diseñar un pipeline de preprocesamiento y limpieza de datos empleando la librería Pandas en Python. El objetivo de esta fase es transformar un conjunto de registros administrativos crudos en una matriz de información limpia, homogénea y optimizada para los modelos de aprendizaje automático y la base de datos relacional de grafos. 
+
+El flujo de depuración implementado se divide en cuatro bloques secuenciales:
+
+\subsection{Anonimización y Seguridad de la Información}
+Dado que se trabaja con datos médicos de alta sensibilidad sujetos al Reglamento General de Protección de Datos (RGPD), el primer paso crítico consistió en verificar la completa desidentificación de la muestra. Se eliminó cualquier columna que pudiera contener datos nominativos directos, transformando el identificador del paciente en el campo alfanumérico ciego \texttt{Nº Historia}. Este proceso garantiza que es matemáticamente imposible revertir la identidad del paciente, permitiendo trabajar en un entorno de desarrollo seguro.
+
+\subsection{Filtrado de Registros e Imputación de Valores Nulos}
+En lugar de recurrir a técnicas artificiales de imputación de datos (como la media o modas) que podrían alterar la realidad clínica de la muestra, se optó por una política de filtrado estricto basada en la calidad del dato:
+\begin{itemize}
+    \item Se descartaron de forma automática aquellos registros que presentaban valores nulos en la variable objetivo (\texttt{DIAG PSQ}) o en el diagnóstico principal (\texttt{Diag 01 Principal}).
+    \item Tras constatar la integridad absoluta del campo \texttt{Código Postal} ($100\%$ de registros válidos), se eliminaron las filas remanentes con valores atípicos o ausentes en los campos de control geográfico secundarios.
+\end{itemize}
+
+\subsection{Sanitización y Normalización Textual (NLP Prep)}
+Para preparar los campos de texto libre (las descripciones de los diagnósticos) de cara al entrenamiento del modelo basado en transformadores (BERT), se aplicó una función de limpieza lingüística estructurada:
+\begin{itemize}
+    \item \textbf{Normalización de caja:} Conversión de todo el texto a minúsculas para evitar que el modelo diferencie una misma palabra por su posición en la frase.
+    \item \textbf{Eliminación de caracteres especiales:} Supresión de signos de puntuación redundantes, dobles espacios en blanco y caracteres no alfanuméricos que introducen ruido en los \textit{tokens}.
+    \item \textbf{Corrección tipográfica base:} Homogeneización de términos recurrentes o abreviaturas médicas típicas del registro hospitalario manual.
+\end{itemize}
+
+\subsection{Unificación Semántica mediante Mapeo de Códigos}
+El último hito del preprocesamiento consistió en resolver la brecha temporal entre las codificaciones ICD-9 e ICD-10 presentes en el histórico. Utilizando el motor del conversor desarrollado en este proyecto, se transformaron de forma masiva los códigos antiguos a sus equivalencias modernas estandarizadas. Este paso permitió unificar el criterio de comorbilidades en el bloque de las 20 columnas de diagnósticos, consolidando un \textit{dataset} simétrico donde cada fila comparte exactamente el mismo espacio semántico y normativo internacional.
+
+
+INCISO: LOS F20.89 SE CONVIRTIERON EN F20. EXPLICARRRRRRRRRRRRR
+JULIO
+\section{División del Conjunto de Datos: Entrenamiento, Validación y Test}
+
+Para garantizar la capacidad de generalización de los modelos predictivos y evaluar su rendimiento ante escenarios clínicos reales con pacientes no vistos previamente, se diseñó un protocolo riguroso de partición del conjunto de datos. En el ámbito del aprendizaje automático (\textit{Machine Learning}) y el aprendizaje profundo (\textit{Deep Learning}), evaluar un modelo con los mismos datos con los que ha entrenado constituye un grave error metodológico que deriva en sobreajuste (\textit{overfitting}).
+
+Para mitigar este riesgo, el \textit{dataset} depurado se fragmentó en tres subconjuntos independientes y disjuntos. Esta operación se ejecutó de manera automatizada mediante el módulo \texttt{model\_selection} de la librería \textit{Scikit-Learn} en Python, empleando el método estandarizado \texttt{train\_test\_split}. 
+
+
+
+La distribución porcentual de la muestra y la función técnica de cada partición se detallan a continuación:
+
+\begin{itemize}
+    \item \textbf{Conjunto de Entrenamiento (\textit{Train Set} - 80\%):} Constituye la porción mayoritaria de los datos. Su propósito es alimentar directamente a los algoritmos (XGBoost, Random Forest y BERT) para que el sistema aprenda las relaciones estadísticas y semánticas latentes entre el vector de 20 diagnósticos de entrada y la variable objetivo psiquiátrica. Es el conjunto donde se ajustan los pesos de las redes neuronales y las fronteras de decisión de los árboles.
+    
+    \item \textbf{Conjunto de Validación (\textit{Validation Set}):} Esta partición intermedia actúa como un entorno de prueba preliminar durante la fase de desarrollo. Se utiliza exclusivamente para la optimización de hiperparámetros (como la profundidad de los árboles en XGBoost o la tasa de aprendizaje en BERT) y para aplicar técnicas de parada temprana (\textit{early stopping}). Su existencia evita el sesgo de optimizar el modelo enfocándose a ciegas en el conjunto de test definitivo. Se saco a partir de una nueva división del conjunto de entrenamiento y test, reservando un 20\% de este para validación.
+    
+    \item \textbf{Conjunto de Test (\textit{Test Set} - 20\%):} Es un subconjunto completamente aislado que permanece oculto para los modelos durante toda la fase de entrenamiento y calibración. Funciona como una auditoría externa ciega. Las métricas finales de precisión, \textit{F1-Score} y especificidad expuestas en este trabajo se extraen única y exclusivamente de este conjunto, garantizando un reflejo fiel de la eficacia del sistema ante registros hospitalarios nuevos.
+\end{itemize}
+
+\subsection{Prevención de Fuga de Datos (\textit{Data Leakage})}
+Un aspecto crítico en el diseño de esta división fue la garantía de un aislamiento absoluto entre las particiones para evitar la fuga de datos (\textit{data leakage}). Este fenómeno ocurre cuando información del conjunto de test o validación se filtra de manera inadvertida en el conjunto de entrenamiento (por ejemplo, a través de estadísticas globales o transformaciones de texto mal calculadas), invalidando los resultados. 
+
+Para blindar el proceso, todas las operaciones de normalización, vectorización de texto y codificación de variables se ajustaron (\textit{fit}) exclusivamente utilizando los datos del conjunto de entrenamiento, para posteriormente aplicarse (\textit{transform}) de manera ciega sobre los conjuntos de validación y test.
+
+\subsection{Control de Aleatoriedad y Reproducibilidad}
+Debido a que el método de partición utiliza un algoritmo de selección pseudoaleatoria, el proceso se fijó mediante la asignación de una semilla persistente (\textit{seed control} a través del parámetro \texttt{random\_state} en Python). Esto asegura el cumplimiento del principio científico de reproducibilidad: cualquier ejecución posterior del código fuente generará exactamente las mismas particiones, aislando el rendimiento del modelo de posibles fluctuaciones fortuitas en la distribución de la muestra y permitiendo una comparación justa entre los distintos algoritmos evaluados.
+\section{Estratificación y Gestión del Desbalanceo de Datos}
+
+El análisis de la distribución real de la variable objetivo (\texttt{DIAG PSQ}) reveló un escenario de desbalanceo de clases extremo, un fenómeno intrínseco y habitual en los registros epidemiológicos de salud mental. Como se detalla en la Tabla~\ref{tab:frecuencias_target}, la clase mayoritaria correspondiente a la esquizofrenia paranoide y comunes (\texttt{F20}) acumula 2277 registros, mientras que patologías del mismo espectro como el trastorno esquizotípico (\texttt{F21}) apenas cuentan con 5 casos documentados.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrr}
+\hline
+\textbf{Código de Diagnóstico (ICD)} & \textbf{Frecuencia Absoluta} & \textbf{Proporción} \\ \hline
+\texttt{F20} (Esquizofrenia) & 2277 & 72.64\% \\
+\texttt{F22} (Trastornos delirantes persistentes) & 345 & 11.0\% \\
+\texttt{F29} (Psicosis no orgánica no especificada) & 177 & 5.64\% \\
+\texttt{F25} (Trastornos esquizoafectivos) & 172 & 5.48\% \\
+\texttt{F23} (Trastornos psicóticos agudos y transitorios) & 89 & 2.83\% \\
+\texttt{F60.1} (Trastorno esquizoide de la personalidad) & 13 & 0.41\% \\
+\texttt{F21} (Trastorno esquizotípico) & 5 & 0.15\% \\ \hline
+\end{tabular}
+\caption{Distribución empírica y desbalanceo de la variable objetivo en el dataset de estudio.}
+\label{tab:frecuencias_target}
+\end{table}
+
+Entrenar un modelo predictivo bajo esta asimetría estadística provocaría que los algoritmos desarrollaran un sesgo de la clase mayoritaria (\textit{majority class bias}). El clasificador tendería a optimizar su función de pérdida prediciendo sistemáticamente la clase \texttt{F20}, obteniendo una precisión general falsamente elevada pero una capacidad de detección nula (\textit{F1-Score} de $0$) sobre las patologías minoritarias.
+
+\subsection{El Rol de la Estratificación}
+Para mitigar el riesgo de exclusión de las clases críticas durante las fases de partición, se implementó una división estratificada estricta. La estratificación actúa como una salvaguarda matemática que fuerza al algoritmo de partición a respetar las proporciones relativas de la Tabla~\ref{tab:frecuencias_target} de forma idéntica en los subconjuntos de entrenamiento, validación y test. Esto garantiza que incluso la clase \texttt{F21} (con solo 5 muestras) cuente con representación proporcional supervisada en todas las etapas, permitiendo que el modelo sea evaluado de manera justa.
+
+\subsection{Estrategia Experimental: Gestión del Desbalanceo Mediante Tres Datasets}
+Con el propósito de evaluar empíricamente el impacto del desequilibrio de clases en la capacidad de generalización de la IA, y siguiendo las directrices del equipo de tutoría académica, el flujo de trabajo se bifurcó en la gestión y entrenamiento de tres conjuntos de datos diferenciados:
+
+\begin{enumerate}
+    \item \textbf{Dataset 1: Original Sanitizado (Línea Base):} Este conjunto mantiene la distribución asimétrica real del entorno hospitalario. Ha sido sometido exclusivamente a la limpieza de registros duplicados, filtrado de nulos y corrección de errores de inscripción manual. Funciona como el grupo de control predictivo para evaluar cómo responden los modelos (XGBoost, Random Forest y BERT) ante el sesgo de la realidad clínica bruta.
+    
+    \item \textbf{Dataset 2: Submuestreo Aleatorio (\textit{Random Undersampling - RUS}):} Construido a partir del dataset sanitizado, esta estrategia aplica un recorte agresivo sobre la clase dominante (\texttt{F20}) para aproximar su volumen al tamaño de las clases intermedias. Aunque el submuestreo equilibra las fuerzas del clasificador y reduce el coste computacional, presenta la contrapartida técnica de destruir información potencialmente valiosa del histórico de pacientes de la clase mayoritaria.
+    
+    \item \textbf{Dataset 3: Enfoque Híbrido Avanzado (RUS + \textit{Variational Autoencoders - VAE}):} Representa la propuesta metodológica más compleja del proyecto. A partir del dataset submuestreado, se diseñó e implementó una red neuronal generativa de tipo Autoencoder Variacional (VAE). Este modelo probabilístico aprende la distribución del espacio latente de las características clínicas de las clases minoritarias (como \texttt{F23}, \texttt{F60.1} o \texttt{F21}) para posteriormente generar vectores de comorbilidades sintéticos pero clínicamente plausibles (\textit{Data Augmentation}). 
+\end{enumerate}
+
+La comparación sistemática del rendimiento de los modelos sobre estos tres escenarios compositivos permite determinar si el uso de arquitecturas generativas profundas (VAE) penaliza o beneficia la frontera de decisión del clasificador multiclase frente a las aproximaciones estadísticas tradicionales.
 \section{Mapas y estudio de comunidades}
 Zonas donde predominan unos diagnósticos sobre otros.
 
@@ -468,6 +556,7 @@ Texto de comparativa...
 Texto del impacto...
 \section{Análisis de resultados}
 Texto del análisis...
+\section{Estudio de comunidades y mapas}
 
 \chapter{Aplicación desarrollada}
 \section{Visualizaciones}
