@@ -589,14 +589,135 @@ Se crearon 3 mapas coropléticos independientes, para mostrar la presencia de lo
 \end{figure}
 
 \chapter{Metodología}
+\label{ch:metodologia}
+
+Una vez definido el flujo de preparación, enriquecimiento y gestión del desbalanceo de los datos clínicos, este capítulo aborda el diseño formal del marco experimental implementado para la predicción multiclase de los trastornos del espectro esquizofrénico. El objetivo fundamental de la metodología propuesta es establecer un entorno de evaluación riguroso, reproducible y transparente que permita comparar de manera justa el rendimiento de diferentes paradigmas de computación inteligente.
+
+A lo largo de las siguientes secciones, se describe la transición desde los modelos base de referencia (\textit{baselines}) hasta las arquitecturas más complejas de aprendizaje profundo. El diseño metodológico se ha estructurado para dar respuesta a dos enfoques analíticos complementarios: por un lado, el procesamiento de datos tabulares estructurados (códigos de diagnóstico clínico) mediante algoritmos de aprendizaje automático tradicional; por otro lado, la explotación de la semántica del lenguaje natural (descripciones diagnósticas) mediante modelos basados en transformadores.
+
+Asimismo, se detallan las salvaguardas estadísticas adoptadas mediante protocolos de validación cruzada, las estrategias de optimización hiperparamétrica automatizada y el catálogo de métricas analíticas seleccionadas. Estas últimas han sido cuidadosamente justificadas para neutralizar el impacto del desbalanceo severo de la muestra y garantizar que el rendimiento del sistema se mida bajo criterios de estricta seguridad y utilidad clínica.
 \section{Baselines iniciales (Machine Learning vs Deep Learning)}
-Texto sobre las baselines...
+
+El punto de partida del marco experimental consiste en el diseño y construcción de los modelos de referencia o (\textit{baselines}). En el diseño de sistemas de inteligencia artificial, el establecimiento de una línea base es un requisito metodológico esencial: permite medir el beneficio real y la ganancia en precisión que aportan las arquitecturas complejas frente a soluciones más tradicionales y computacionalmente económicas.
+
+Para este estudio, el horizonte experimental se ha dividido en dos paradigmas tecnológicos claramente diferenciados, permitiendo una confrontación directa entre el Aprendizaje Automático clásico \textit{(Machine Learning)} y el Aprendizaje Profundo \textit{(Deep Learning)}:
+\subsection{El Paradigma Tabular (Machine Learning Tradicional)}
+
+Como modelos de referencia iniciales, se seleccionaron Random Forest y XGBoost (Extreme Gradient Boosting). La elección de estos dos algoritmos no es fortuita; ambos representan el estado del arte en el manejo de datos estructurados y tabulares.
+\begin{itemize}
+    \item \textbf{Random Forest}: Actúa como el baseline estático fundamental. Al ser un modelo de ensamble basado en el promediado de múltiples árboles de decisión independientes (bagging), ofrece una excelente resistencia al sobreajuste y una alta estabilidad macroscópica, ideal para establecer el suelo mínimo de precisión del proyecto.
+
+    \item \textbf{XGBoost}: Representa un escalón superior dentro del aprendizaje tradicional. Basado en el principio de optimización por gradiente (boosting), este algoritmo construye árboles de forma secuencial, donde cada nuevo árbol corrige los errores de los anteriores. Su inclusión como segundo baseline permite explotar al máximo las interacciones no lineales entre las 20 columnas de códigos de diagnóstico clínico del historial del paciente.
+
+\end{itemize}
+
+\subsection{El Paradigma Semántico (Deep Learning con BERT)}
+La definición de estos dos baselines estructurados fundamenta la posterior introducción de modelos basados en Transformers (BERT). Mientras que Random Forest y XGBoost procesan el problema desde una perspectiva puramente matemática y relacional utilizando los códigos numéricos indexados del dataset, el modelo profundo BERT abordará el problema desde la perspectiva del Procesamiento del Lenguaje Natural (NLP), interpretando la semántica de las descripciones textuales en lenguaje natural.
+
+En conclusión, este diseño de baselines iniciales permite estructurar una evaluación comparativa justa. El objetivo técnico final no es solo determinar qué algoritmo es más preciso, sino evaluar si la complejidad computacional y el coste de entrenamiento que requiere una red neuronal profunda (Deep Learning) están justificados por un incremento significativo en el rendimiento predictivo frente a la eficiencia empírica de los árboles de decisión (Machine Learning).
+  
 \section{Cross-validation}
-Texto sobre cross-validation...
+El diseño del protocolo de evaluación de los modelos es un componente crítico para garantizar que las métricas obtenidas sean un fiel reflejo de la capacidad de generalización del sistema. Aunque en entornos de aprendizaje automático tradicional con datos tabulares pequeños es habitual aplicar esquemas de validación cruzada de múltiples pliegues \textit{(K-Fold Cross-Validation)}, la incorporación de modelos basados en el aprendizaje profundo \textit{(Deep Learning)} como BERT altera esta necesidad metodológica.
+
+El entrenamiento y la optimización hiperparamétrica de arquitecturas basadas en Transformers imponen una carga computacional y temporal extremadamente elevada. Reentrenar múltiples veces un modelo lingüístico masivo bajo un esquema de validación cruzada tradicional resultaría inviable en términos de infraestructura y tiempo de cómputo. Por este motivo, se determinó adoptar una estrategia de validación por partición única estrictamente estratificada \textit{(Stratified Validation Split)}, una práctica estándar y metodológicamente robusta en el ámbito del procesamiento del lenguaje natural.
+
+La pieza angular de esta estrategia de validación es la estratificación, la cual responde directamente al problema de desbalanceo severo analizado en el capítulo previo. El proceso opera bajo las siguientes directrices técnicas:
+\begin{itemize}
+    \item \textbf{Preservación de la distribución de probabilidad:} Al segmentar los datos para la evaluación de los modelos, el algoritmo de división calcula la frecuencia relativa de cada uno de los 7 diagnósticos del espectro esquizofrénico en la muestra global. Posteriormente, fuerza de manera matemática a que tanto el conjunto de validación (utilizado para monitorizar el entrenamiento de BERT) como el conjunto de test (utilizado para la evaluación final de XGBoost y Random Forest) repliquen exactamente esas mismas proporciones.
+    \item \textbf{Garantía de evaluación para clases minoritarias:} Al asegurar que el 15\% de los datos de validación y el 15\% de los datos de test contengan una representación exacta y proporcional de patologías críticas pero poco frecuentes (como el trastorno esquizotípico \texttt{F21}), se evita el riesgo latente de que un modelo sea evaluado sobre un subconjunto donde no existan ejemplos de dicha enfermedad, lo que corrompería el cálculo de las métricas de rendimiento.
+\end{itemize}
+
+
 \section{Modelos evaluados}
-Texto sobre los modelos...
-\section{Búsqueda de hiperparámetros}
-Texto sobre la búsqueda...
+
+Con el propósito de hallar la arquitectura óptima para la clasificación del espectro esquizofrénico, el marco metodológico de este proyecto plantea un diseño experimental exhaustivo dividiendo los algoritmos evaluados en dos grandes familias tecnológicas.
+
+\subsubsection{Enfoque Tabular: Algoritmos de Ensamble y Árboles de Decisión}
+
+Este primer bloque metodológico procesa la matriz de información estructurada correspondiente a las 20 columnas de codificación diagnóstica clínica del historial del paciente. Se han seleccionado seis algoritmos que cubren desde la estructura fundacional hasta las implementaciones de gradiente más modernas del estado del arte:
+
+\begin{itemize}
+\item \textbf{Decision Tree Classifier:} Actúa como la unidad atómica y el modelo base de control. Permite evaluar la capacidad predictiva de un único árbol de decisión mediante particiones binarias del espacio de características, sirviendo como referencia fundamental de complejidad mínima.
+
+\item \textbf{Random Forest Classifier:} Implementa una estrategia de ensamble por promediado o \textit{bagging}. Construye una colección de árboles de decisión independientes entrenados sobre subconjuntos aleatorios de los datos y de variables. Su objetivo en este estudio es reducir la varianza intrínseca del clasificador base y evitar el sobreajuste.
+
+\item \textbf{Gradient Boosting Classifier:} Representa la transición hacia el aprendizaje secuencial o \textit{boosting}. Construye árboles de forma sucesiva, donde cada nuevo modelo se especializa en minimizar la función de pérdida y corregir los errores cometidos por los árboles predecesores.
+
+\item \textbf{XGBoost (Extreme Gradient Boosting):} Optimización avanzada del algoritmo de gradiente que introduce regularización formal L1 y L2 en la función objetivo para controlar la complejidad del modelo. Destaca por su alta velocidad de cómputo y eficiencia en problemas de clasificación multiclase tabulares.
+
+\item \textbf{LightGBM Classifier:} Variante de \textit{Gradient Boosting} desarrollada por Microsoft que destaca por su estrategia de crecimiento de árboles por hojas (\textit{leaf-wise}) en lugar de por niveles (\textit{level-wise}). Esto permite una convergencia estadística mucho más rápida y un menor consumo de memoria RAM al manejar matrices de alta dimensionalidad.
+
+\item \textbf{CatBoost Classifier:} Implementación optimizada de Yandex diseñada específicamente para el tratamiento nativo de variables categóricas mediante la técnica de permutaciones simétricas. Dado que el historial clínico está compuesto exclusivamente por códigos diagnósticos alfanuméricos, este modelo resulta clave por su capacidad para procesar la naturaleza categórica pura de los datos sin requerir mapeos complejos de \textit{one-hot encoding}.
+\end{itemize}
+
+\subsubsection{Enfoque Semántico: Modelos del Lenguaje Basados en Transformers (BERT)}
+
+El segundo bloque metodológico cambia el paradigma tabular por el Procesamiento del Lenguaje Natural (NLP). El objetivo es explotar la riqueza contextual y semántica de las descripciones clínicas textuales en lugar de los códigos crudos. Para ello, se evalúan cuatro arquitecturas basadas en la tecnología de atención bidireccional:
+
+\begin{itemize}
+\item \textbf{\texttt{bert-base-multilingual-cased}:} Modelo fundacional de Google entrenado sobre corpus de más de 104 idiomas diferenciados. Se incluye de manera intencionada para comprobar si un conocimiento lingüístico global y masivo es capaz de capturar la jerga médica internacional, manteniendo la distinción de mayúsculas y minúsculas (\textit{cased}) que suele ser relevante en acrónimos clínicos.
+
+\item \textbf{\texttt{dccuchile/bert-base-spanish-wwm-uncased} (BETO):} Adaptación de la arquitectura BERT preentrenada específicamente con un corpus masivo exclusivo en español por el Centro de Investigación de la Web de la Universidad de Chile. Utiliza la estrategia de \textit{Whole Word Masking} (enmascaramiento de palabras completas). Al ser la versión \textit{uncased} (ignora mayúsculas y acentos), simplifica el espacio de \textit{tokens} para el procesamiento de historias clínicas manuales que suelen arrastrar descuidos tipográficos.
+
+\item \textbf{\texttt{dccuchile/bert-base-spanish-wwm-cased}:} Variante homóloga de la anterior pero sensible a la caja textual. Su evaluación comparativa directa frente a la versión \textit{uncased} permite determinar de forma empírica si la preservación de las mayúsculas aporta valor semántico o si, por el contrario, actúa como ruido informático en la clasificación psiquiátrica.
+
+\item \textbf{\texttt{xlm-roberta-base}:} Evolución avanzada multilingüe basada en el enfoque de optimización RoBERTa de Facebook. Entrenado con un volumen de datos drásticamente superior (\textit{CC-Net}) y modificando el procedimiento eliminando la tarea de predicción de la siguiente frase (\textit{Next Sentence Prediction}), este modelo se evalúa para medir si su robustez en el espacio latente supera a las arquitecturas nativas en español en la tarea multiclase.
+\end{itemize}
+
+\section{Búsqueda de hiperparámetros y optimización de modelos}
+\label{sec:busqueda_hiperparametros}
+
+El rendimiento final de los algoritmos de aprendizaje automático no solo depende de la calidad de los datos de entrada, sino también del ajuste fino de sus hiperparámetros. Los hiperparámetros son las variables de configuración estructural del modelo que no se aprenden de forma automática durante el proceso de entrenamiento, sino que deben ser predefinidas por el diseñador del sistema antes de iniciar el cómputo.
+
+Para identificar la configuración óptima de cada uno de los diez modelos evaluados, se implementó un flujo de optimización basado principalmente en la técnica de \textbf{Búsqueda en Rejilla (\textit{Grid Search})}, apoyada de forma preliminar por la estrategia de \textbf{Búsqueda Aleatoria (\textit{Randomized Search})} en las fases iniciales de exploración de los modelos tabulares.
+
+\subsection{Impacto y justificación metodológica de Grid Search}
+
+La adopción de \textit{Grid Search} (ejecutada a través del módulo \texttt{GridSearchCV} de \textit{Scikit-Learn} y las funciones nativas de optimización de las librerías independientes) aporta tres ventajas críticas al marco experimental de este proyecto:
+
+\begin{itemize}
+    \item \textbf{Exhaustividad en el espacio de búsqueda:} A diferencia de los enfoques heurísticos o manuales, \textit{Grid Search} realiza un escaneo cartesiano completo. Al definir un conjunto finito de parámetros con sus respectivos rangos, el algoritmo evalúa de manera sistemática la totalidad de las combinaciones posibles, garantizando la localización del óptimo global dentro de la rejilla acotada.
+    \item \textbf{Garantía de reproducibilidad:} Al ser un método puramente determinista, cualquier réplica posterior del experimento bajo el mismo espacio de búsqueda arrojará exactamente las mismas configuraciones óptimas, blindando la rigurosidad científica de la memoria.
+    \item \textbf{Neutralización del sobreajuste:} Al combinar la búsqueda en rejilla con la partición de validación estructurada y técnicas de parada temprana (\textit{early stopping}), se asegura que los hiperparámetros seleccionados maximizan la capacidad de generalización del sistema y evitan la mera memorización del conjunto de entrenamiento.
+\end{itemize}
+
+\subsection{Espacio de búsqueda e hiperparámetros evaluados}
+
+El diseño de la rejilla de optimización se estructuró de forma diferenciada atendiendo a la naturaleza tecnológica y conceptual de los dos bloques de modelos:
+
+\subsubsection{Modelos tabulares y algoritmos de ensamble}
+Para los modelos basados en particionamiento del espacio (árboles de decisión y algoritmos de \textit{boosting}), la calibración se orientó al control de la complejidad estructural de los estimadores y a la velocidad de convergencia de las funciones de pérdida. Las variables y rangos evaluados se resumen en la Tabla~\ref{tab:hiperparametros_ml}.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{lp{3.2cm}p{3.2cm}}
+        \hline
+        \textbf{Familia de Modelos} & \textbf{Hiperparámetro} & \textbf{Valores Probados} \\ \hline
+        Modelos Base & \texttt{n\_estimators} & $[50, 100, 200, 500]$ \\
+        \textit{(Decision Tree,} & \texttt{max\_depth} & $[5, 10, 20, \text{None}]$ \\
+        \textit{Random Forest)} & \texttt{min\_samples\_split} & $[2, 5, 10]$ \\ \hline
+        Algoritmos de Gradiente & \texttt{learning\_rate} ($\eta$) & $[0.01, 0.05, 0.1, 0.2]$  \\
+        \textit{(XGBoost, LightGBM,} & \texttt{max\_depth} & $[3, 6, 8, 10]$  \\
+        \textit{CatBoost)} & \texttt{subsample} & $[0.7, 0.8, 1.0]$ \\
+        & \texttt{reg\_lambda} ($\lambda$) & $[0, 1, 10]$ \\ \hline
+    \end{tabular}
+    \caption{Espacio de búsqueda de hiperparámetros para el ecosistema de Machine Learning tradicional.}
+    \label{tab:hiperparametros_ml}
+\end{table}
+
+El proposito de estas variables es controlar el número de estimadores del ensamble y mitigar el crecimiento desmedido de las ramas para evitar el overfitting. A la vez, queremos regular el tamaño del paso de actualización del gradiente, la profundidad de los árboles secuenciales y aplicar penalizaciones L2 para estabilizar el aprendizaje.
+
+\subsubsection{Modelos lingüísticos basados en Transformers (BERT)}
+Para el ajuste fino (\textit{fine-tuning}) de las arquitecturas profundas (\texttt{bert-base-multilingual-cased}, versiones bilingües de \texttt{BETO} y \texttt{xlm-roberta-base}), el espacio de búsqueda se adaptó estrictamente a las restricciones impuestas por la literatura científica de redes neuronales de atención y la memoria física de la GPU:
+
+\begin{itemize}
+    \item \textbf{Tasa de aprendizaje (\textit{Learning Rate}):} Se evaluaron valores conservadores dentro del rango $[2\cdot10^{-5}, 3\cdot10^{-5}, 5\cdot10^{-5}]$. El empleo de tasas superiores destruye de forma irreversible el conocimiento previo del modelo (\textit{catastrophic forgetting}), mientras que valores inferiores impiden la convergencia matemática del optimizador.
+    \item \textbf{Tamaño de lote (\textit{Batch Size}):} Debido a las limitaciones de hardware para procesar tensores de alta dimensionalidad, se fijaron rejillas estáticas de $[16, 32]$ muestras por iteración para equilibrar la estabilidad del descenso de gradiente estocástico.
+    \item \textbf{Épocas de entrenamiento (\textit{Epochs}):} Se acotó el rango de ejecución entre $[3, 4, 5]$ épocas completas, implementando el optimizador \texttt{AdamW} acoplado a un esquema de decaimiento lineal (\textit{linear learning rate scheduler}) para congelar los pesos de la red en su punto exacto de máxima generalización.
+\end{itemize}
+
 \section{Propuesta final}
 Texto de la propuesta...
 \section{Métricas empleadas y su justificación}
