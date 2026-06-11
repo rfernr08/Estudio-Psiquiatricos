@@ -1,3 +1,4 @@
+% Tipo de documento:
 \documentclass[15pt, a4paper]{report} % Tamaño de fuente 15pt y papel A4 
 
 % --- PAQUETES BÁSICOS ---
@@ -15,6 +16,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{cite}
 \usepackage{longtable}
+\usepackage{listings}
 
 % --- CONFIGURACIÓN DE FORMATO SEGÚN NORMATIVA ---
 \onehalfspacing % Interlineado 1.5 líneas 
@@ -63,30 +65,40 @@
 % -----------------------------------------
 % PORTADA 
 % -----------------------------------------
+
 \begin{titlepage}
-    \centering
+	\centering
     \includegraphics[height=3cm]{imagenes/Photo-ule.jpg}
     \hfill
     \includegraphics[height=3cm]{imagenes/Photo-ingenierias.jpg}
     \vspace{1cm}
-    
-    {\Large \textbf{UNIVERSIDAD DE LEÓN}} \\[0.5cm]
-    {\large \textbf{Escuela de Ingenierías Industrial, Informática y Aeroespacial}} \\[2cm]
-    
-    {\Large GRADO EN INGENIERÍA EN ELECTRÓNICA INDUSTRIAL Y AUTOMÁTICA} \\[1cm]
-    {\Large \textbf{Trabajo de Fin de Grado}} \\[2.5cm]
-    
-    {\huge \textbf{Predicción de diagnósticos psiquiátricos mediante modelos de aprendizaje automático.}} \\[1cm] % 
-    {\LARGE \textbf{Prediction of psychiatric diagnoses using machine learning models}} \\[3cm] % 
-    
-    \begin{flushleft}
-        \large
-        \textbf{Autor:} Raúl Fernández Rodríguez \\[0.5cm] 
-        \textbf{Tutor:} Sergio Rubio Martín \\ 
-    \end{flushleft}
-    
+
+	\begin{center}
+        \vspace*{2.5cm} 
+
+		\textbf{{\Large \bf Escuela de Ingenierías}}\\[0.5cm] 
+		\textbf{{\Large \bf Industrial, Informática y Aeroespacial}}\\[2.0cm]
+
+		{\Large \bf GRADO EN INGENIERÍA INFORMÁTICA}\\[2.0cm]
+
+		{\Large Trabajo de Fin de Grado}\\[1.5cm]
+
+		{\Large \textbf{Predicción de diagnósticos psiquiátricos mediante modelos de aprendizaje automático.}}\\[0.5cm]
+        
+        {\Large \textbf{Prediction of psychiatric diagnoses using machine learning models}}\\[1.5cm]
+	\end{center}
+
     \vfill
-    {\large (Junio, 2026)}% [cite: 93]
+	\begin{flushright}
+		{\bf Autor: Raúl Fernández Rodríguez}\\[0.1cm]
+		{\bf Tutor: Sergio Rubio Martín}\\[0.1cm]
+		{\bf Co-Tutor: Arturo Crespo Alvarez}\\[0.1cm]
+	\end{flushright}
+
+    \vfill
+	\begin{center}
+		\Huge{(Junio, 2026)}
+	\end{center}
 \end{titlepage}
 
 % -----------------------------------------
@@ -95,8 +107,27 @@
 \pagenumbering{roman} % Numeración romana para los índices
 \setcounter{page}{1}
 
-\chapter*{Resumen}
-\addcontentsline{toc}{chapter}{Resumen}
+\begin{center}
+\begin{longtable}{|l|l|l|}
+    \hline
+    \multicolumn{3}{|c|}{} \\
+    \multicolumn{3}{|c|}{\textbf{UNIVERSIDAD DE LEÓN}} \\
+    \multicolumn{3}{|c|}{\textbf{Escuela de Ingenierías Industrial, Informática y Aeroespacial}} \\
+    \multicolumn{3}{|c|}{\textbf{GRADO EN INGENIERÍA INFORMÁTICA}} \\
+    \multicolumn{3}{|c|}{\textbf{Trabajo de Fin de Grado}} \\
+    \multicolumn{3}{|c|}{} \\
+    \hline
+    \multicolumn{3}{|l|}{\textbf{ALUMNO}: Raúl Fernández Rodríguez} \\
+    \hline
+    \multicolumn{3}{|l|}{\textbf{TUTORA}: Sergio Rubio Martín} \\
+    \hline
+    \multicolumn{3}{|l|}{\textbf{CO-TUTOR}: Arturo Crespo Alvarez} \\
+    \hline
+    \multicolumn{3}{|p{15cm}|}{\textbf{TÍTULO}: Predicción de diagnósticos psiquiátricos mediante modelos de aprendizaje automático} \\
+    \hline
+    \multicolumn{3}{|l|}{\textbf{CONVOCATORIA}: Julio, 2026} \\
+    \hline
+    \multicolumn{3}{|p{15cm}|}{\textbf{RESUMEN}: 
 La esquizofrenia es un trastorno psiquiátrico complejo con una gran heterogeneidad clínica, planteando el desafío crítico para el diagnóstico temprano y la personalización del tratamiento. Este trabajo de investigación presenta el estudio y desarrollo de un sistema experimental orientado al análisis relacional y la predicción de diagnósticos psiquiátricos mediante el uso de datos clínicos anonimizados de pacientes de la provincia de Castilla y León con esquizofrenia y sus distintas variantes. El objetivo principal de este proyecto es identificar patrones ocultos y correlaciones significativas entre síntomas, comorbilidades y evoluciones patológicas que puedan servir como guia a psiquiatras expertos.
 
 Para abordar este problema, se ha implementado una metodología híbrida que combina la ciencia de datos, técnicas de aprendizaje automático (\textit{Machine Learning} y \textit{Deep Learning}) y bases de datos orientadas a grafos. En primer lugar, se realizó la limpieza y acondicionamiento del \textit{dataset} clínico inicial, compuesto por una lista anonimizada de 3134 registros de pacientes, garantizando la consistencia mediante la imputacion de datos faltantes y normalizacion de los diagnosticos.  
@@ -106,13 +137,12 @@ Posteriormente, se construyó un grafo de conocimiento utilizando Neo4j, modelan
 Se llevo a cabo un proceso de entrenamiento de varios modelos distintos, buscando demostrar mediante los resultados obtenidos la viabilidad del uso de los modelos como apoyo. Los modelos basados en \textit{Machine Learning} tradicional mostraron un mayor rendimiento y mejores resultados en comparación con las aproximaciones de \textit{Deep Learning} y \textit{LLMs}. Asimismo, el estudio de comunidades en Neo4j reveló patrones de comorbilidad específicos que validan hipótesis clínicas previas, junto a la formación de comunidades de diagnosticos relacionados. Por último, se ha desarrollado una aplicación web funcional que integra un conversor de códigos ICD, mejorando la accesibilidad y la interpretabilidad de los resultados para el personal médico.
 
 Como conclusión, este proyecto demuestra el potencial de combinar grafos de conocimiento y aprendizaje automático en el ámbito de la salud mental, proporcionando una herramienta complementaria de apoyo a la decisión clínica de expertos y a la investigación psiquiátrica.
-
-\vspace{0.5cm}
-\noindent \textbf{Palabras clave:} Esquizofrenia, Grafos de Conocimiento, Neo4j, Machine Learning, Deep Learning, Predicción Clínica, Códigos ICD.
-
-\newpage
-\chapter*{Abstract}
-\addcontentsline{toc}{chapter}{Abstract}
+    } \\
+    \multicolumn{3}{|l|}{} \\
+    \hline
+    \multicolumn{3}{|p{15cm}|}{\textbf{PALABRAS CLAVE}: Esquizofrenia, Grafos de Conocimiento, Neo4j, Machine Learning, Deep Learning, Predicción Clínica, Códigos ICD.} \\
+    \hline
+    \multicolumn{3}{|p{15cm}|}{ \textbf{ABSTRACT}: 
 
 Schizophrenia is a complex psychiatric disorder characterized by high clinical heterogeneity, which poses a critical challenge for early diagnosis and personalized treatment. This research paper presents the study and development of an experimental system oriented towards relational analysis and the prediction of psychiatric diagnoses, utilizing anonymized clinical data from patients with schizophrenia and its various subtypes in the region of Castilla y León. The main objective of this project is to identify hidden patterns and significant correlations among symptoms, comorbidities, and pathological evolutions to serve as a guide for medical practitioners and expert psychiatrists.
 
@@ -123,13 +153,33 @@ Subsequently, a knowledge graph was constructed using Neo4J, structurally modeli
 An optimization and evaluation process of various architectures was carried out to demonstrate the viability of these systems as support tools. Traditional Machine Learning models demonstrated higher performance and better results compared to Deep Learning approaches and LLMs. On the other hand, the community analysis in Neo4J revealed specific comorbidity patterns that validate previous clinical hypotheses, showcasing the formation of related diagnostic clusters. Lastly, a functional web application integrating an ICD code converter was developed, thereby improving the accessibility and interpretability of the results for medical personnel.
 
 In conclusion, this project demonstrates the potential of combining knowledge graphs and machine learning within the mental health domain, providing a complementary clinical decision support tool and advancing psychiatric research.
+    } \\
+    \hline
+    \multicolumn{3}{|p{15cm}|}{\textbf{KEYWORDS}: Schizophrenia, Knowledge Graphs, Neo4J, Machine Learning, Deep Learning, Clinical Prediction, ICD Codes.} \\
+    \multicolumn{3}{|l|}{} \\
+    \hline
+\end{longtable}
+\end{center}
 
-\vspace{0.5cm}
-\noindent \textbf{Keywords:} Schizophrenia, Knowledge Graphs, Neo4J, Machine Learning, Deep Learning, Clinical Prediction, ICD Codes.
+
+
+% -----------------------------------------
+% ÍNDICES 
+% -----------------------------------------
+\tableofcontents % Índice de contenidos 
+\newpage
+\listoffigures % Índice de figuras 
+\newpage
+\listoftables % Índice de cuadros y tablas 
+\newpage
+\lstlistoflistings % Índice de codigos
 
 \newpage
 \chapter*{Glosario y Acrónimos}
 \addcontentsline{toc}{chapter}{Glosario y Acrónimos}
+\label{ch:glossary}
+\pagestyle{headings}
+\markboth{GLOSARIO}{}
 
 \begin{description}
     \item[AUC-ROC] (\textit{Area Under the Receiver Operating Characteristic curve}): Métrica de rendimiento para evaluar la calidad de un modelo de clasificación a diferentes umbrales.
@@ -154,16 +204,6 @@ In conclusion, this project demonstrates the potential of combining knowledge gr
     \item[Open-Source] Código Abierto. Modelo de desarrollo de software basado en la colaboración abierta, donde el código fuente se pone a disposición del público de forma gratuita, permitiendo que cualquiera lo inspeccione, modifique, reutilice y distribuya bajo ciertas licencias libres 
     \item[Redes Neuronales de Grafos] (\textit{Graph Neural Networks, GNNs})   Tipo de arquitectura de aprendizaje profundo diseñada para procesar datos estructurados de forma nativa como grafos, permitiendo realizar predicciones a nivel de nodos, relaciones o del grafo completo al capturar las dependencias complejas entre los elementos vecinos.
 \end{description}
-
-% -----------------------------------------
-% ÍNDICES 
-% -----------------------------------------
-\tableofcontents % Índice de contenidos 
-\newpage
-\listoffigures % Índice de figuras 
-\newpage
-\listoftables % Índice de cuadros y tablas 
-\newpage
 
 % -----------------------------------------
 % CUERPO DEL TRABAJO
@@ -296,6 +336,39 @@ A pesar del notable avance en la digitalización de los entornos sanitarios y de
     \item \textbf{El desafío de la interpretabilidad y la opacidad algorítmica:} En el campo de la salud mental, y específicamente en trastornos complejos como la esquizofrenia, el personal médico muestra una resistencia natural (y justificada) a adoptar modelos de \textit{Deep Learning} y \textit{LLMs} debido al fenómeno de la "caja negra". Los facultativos requieren entender el razonamiento subyacente a una predicción diagnóstica para poder confiar en ella. La literatura actual falla frecuentemente en dotar a estos modelos de una capa de explicabilidad o de representaciones visuales que traduzcan vectores matemáticos abstractos en conexiones clínicas comprensibles. || Candidato al glosario: Caja Negra (\textit{Black Box}) ||
     \item \textbf{Brecha en la transferencia tecnológica y herramientas de soporte:} Una gran parte de las investigaciones analizadas se desarrollan en entornos puramente de laboratorio o de código aislado (como \textit{scripts} de investigación). Raras veces este conocimiento se transfiere a soluciones de software funcionales, accesibles y adaptadas a la rutina de una consulta psiquiátrica. Limitaciones como la falta de interfaces web interactivas o la ausencia de módulos utilitarios cotidianos —como un conversor automatizado entre sistemas de codificación como el ICD— impiden que la ciencia de datos actúe como un verdadero Sistema de Soporte a la Decisión Clínica (CDSS).
 \end{enumerate}
+
+Estado del Arte: Inteligencia Artificial en el Diagnóstico y Pronóstico de la Esquizofrenia
+\section{Evolución del Diagnóstico Clínico a los Sistemas CAD} La esquizofrenia se define como un trastorno psiquiátrico crónico, complejo y multifactorial que afecta aproximadamente a 20 millones de personas a nivel mundial, manifestándose a través de distorsiones en el pensamiento, la percepción y las funciones cognitivas \cite{Tyagi2022}. Tradicionalmente, la práctica diagnóstica ha dependido de entrevistas de estatus mental y criterios subjetivos, lo que conlleva una variabilidad significativa en la precisión clínica y la selección del tratamiento \cite{Saboori2025}.
+La transición hacia sistemas de Diagnóstico Ayudado por Ordenador (CAD) responde a la necesidad crítica de identificar biomarcadores objetivos. Estos sistemas, integrados en el marco de los Sistemas de Soporte a la Decisión Clínica (CDSS), permiten a los clínicos y especialistas en neuroimagen analizar conjuntos de datos masivos para detectar anomalías estructurales y funcionales de manera automatizada, facilitando un diagnóstico temprano que es fundamental para prevenir el deterioro funcional y la resistencia secundaria al tratamiento \cite{Tyagi2022, Saboori2025}.
+\section{Modalidades de Datos y Neuroimagen}
+\subsection{Electroencefalografía (EEG)} La electroencefalografía destaca por ser una técnica no invasiva y de bajo coste que captura la dinámica temporal de la actividad eléctrica cerebral. Los pacientes con esquizofrenia suelen presentar asimetrías de amplitud y alteraciones en los patrones de ondas cerebrales que sirven como biomarcadores electrofisiológicos \cite{Tyagi2022}. En términos de rendimiento predictivo, los modelos basados en EEG han demostrado una eficacia superior a otras modalidades; según el meta-análisis de Saboori Amleshi et al. (2025), estos alcanzan una sensibilidad del 89\% y una especificidad del 94\% en la predicción de la respuesta terapéutica, consolidándose como una herramienta práctica para entornos clínicos de escasos recursos.
+\subsection{Resonancia Magnética Estructural (sMRI)} La modalidad sMRI permite un análisis volumétrico y morfológico detallado de los tejidos cerebrales: materia gris (GM), materia blanca (WM) y líquido cefalorraquídeo (CSF). La literatura reporta hallazgos consistentes como el agrandamiento de los ventrículos laterales y la pérdida de volumen en el córtex temporal superior y el tálamo \cite{Tyagi2022}. Un avance técnico fundamental es la aplicación de una \textit{estrategia de radiómica}, que permite extraer características cuantitativas de alta dimensionalidad invisibles al ojo humano. Además, se han identificado los \textbf{patrones de girificación} como biomarcadores estructurales críticos para predecir la trayectoria de la enfermedad \cite{Saboori2025}.
+\subsection{Resonancia Magnética Funcional (fMRI)} La fMRI mide la actividad metabólica mediante el flujo sanguíneo, diferenciando entre el estado de reposo (rs-fMRI) y la ejecución de tareas (T-fMRI). Mientras que la investigación general subraya alteraciones en la red neuronal por defecto (DMN) \cite{Tyagi2022}, el análisis de \textbf{conectividad efectiva} ha resultado particularmente útil para predecir respuestas específicas a fármacos como la clozapina. Asimismo, estudios de neuroimagen funcional han vinculado el \textbf{aumento de la síntesis de dopamina estriatal} con la probabilidad de respuesta farmacológica \cite{Saboori2025}. Es imperativo notar que, aunque potentes, los modelos basados estrictamente en imagenología presentan un rendimiento inferior al EEG, con una sensibilidad combinada del 76\% y una especificidad del 80% \cite{Saboori2025}.
+\section{Algoritmos de Machine Learning y Deep Learning} En el panorama actual de la psiquiatría computacional, el \textit{Machine Learning} (ML) convencional, especialmente las Máquinas de Vector de Soporte (SVM), continúa dominando debido a su robustez en conjuntos de datos de tamaño moderado. A pesar del potencial teórico de las redes neuronales multicapa, existe una notable escasez de aplicaciones de \textit{Deep Learning} (DL) validadas en meta-análisis; de hecho, en la revisión sistemática de Saboori et al. (2025), solo un estudio empleó un híbrido de DL (\textit{Extreme Gradient Boosting}).
+A continuación, se presenta una comparativa técnica de los algoritmos identificados:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|p{7cm}|}
+        \hline
+        \textbf{Algoritmo} & \textbf{Categoría} & \textbf{Contexto Clínico y Aplicación} \\
+        \hline
+        SVM & ML & Predominante en la literatura; alta capacidad de generalización en problemas no lineales de neuroimagen \cite{Saboori2025}. \\
+        \hline
+        Random Forest & ML & Eficaz para manejar interacciones multivariantes complejas, aunque sensible a la calidad del preprocesamiento \cite{Saboori2025}. \\
+        \hline
+        k-NN & ML & Utilizado en estudios piloto para clasificar pacientes basados en la distancia de características pre-tratamiento en EEG \cite{Tyagi2022}. \\
+        \hline
+        CNN / RNN & DL & Empleadas para el procesamiento de tensores de imagen (CNN) y señales temporales (RNN), aunque con menor representación en meta-análisis clínicos \cite{Tyagi2022}. \\
+        \hline
+    \end{tabular}
+    \caption{Comparativa de algoritmos de IA aplicados a la predicción de resultados en esquizofrenia.}
+\end{table}
+\section{Conectividad y la Paradoja Multimodal} El análisis basado en grafos permite modelar el cerebro como una red compleja, utilizando métricas como la eficiencia local, la centralidad de intermediación y el coeficiente de agrupamiento para caracterizar la desorganización topológica \cite{Tyagi2022}.
+Sin embargo, la integración de múltiples fuentes de datos (clínicos, genéticos e imagen) presenta lo que denominamos la \textbf{"Paradoja Multimodal"}. A pesar de la intuición de que más datos mejoran el modelo, el meta-análisis de Saboori Amleshi et al. (2025) revela que los modelos multimodales presentan un rendimiento inferior, con una sensibilidad de apenas el 63%. Este fenómeno se atribuye a la \textit{amplificación de ruido} y a la extrema complejidad de armonizar fuentes heterogéneas, lo que sugiere que las técnicas de fusión actuales aún no superan el ruido introducido durante la normalización de datos.
+\section{Modelos de Lenguaje (LLMs) y Procesamiento de Lenguaje Natural} Más allá de la neuroimagen, el Procesamiento de Lenguaje Natural (NLP) emerge como una vía prometedora para el análisis de los síntomas del pensamiento y el lenguaje. Dado que la desorganización del discurso es un síntoma cardinal, los modelos de lenguaje permiten cuantificar patrones lingüísticos sutiles que actúan como proxies de la actividad neuronal subyacente, ofreciendo una dimensión diagnóstica complementaria y de bajo coste \cite{Tyagi2022}.
+\section{Desafíos Críticos: Explicabilidad y Alta Dimensionalidad} La implementación de estos modelos en entornos reales de salud mental enfrenta obstáculos metodológicos significativos:
+\begin{itemize} \item \textbf{IA Explicable (XAI):} La necesidad de transparencia en la toma de decisiones clínicas ha impulsado el uso de SHAP y LIME. No obstante, herramientas como los \textbf{Procesos Gaussianos}, si bien ofrecen una valiosa cuantificación de la incertidumbre, presentan dificultades técnicas severas al enfrentarse a \textbf{entradas de alta dimensionalidad}, lo que limita su aplicabilidad en estudios de radiómica extensos \cite{Saboori2025}. \item \textbf{Heterogeneidad de las Muestras:} La variabilidad en las definiciones de "respuesta al tratamiento" (frecuentemente basada en umbrales PANSS dispares) y el reducido tamaño muestral en modalidades como el EEG comprometen la validez externa de los modelos \cite{Saboori2025}. \end{itemize}
+\section{Conclusiones y Perspectivas Futuras} La inteligencia artificial aplicada a la esquizofrenia se encuentra en un punto de inflexión. Si bien el EEG y la neuroimagen estructural mediante radiómica ofrecen una precisión diagnóstica y pronóstica notable, la integración multimodal requiere de algoritmos de fusión más sofisticados que eviten la degradación del rendimiento por ruido. El futuro de la disciplina debe priorizar el desarrollo de modelos longitudinales y marcos de XAI que no solo predigan el resultado clínico, sino que proporcionen al clínico una justificación biológica interpretable, transformando la psiquiatría hacia una medicina de precisión personalizada. \cite{Saboori2025}.
 
 \chapter{Datos y preparación del dataset}
 Este capítulo aborda de manera pormenorizada el origen, la estructura y el ciclo de transformación técnica al que fueron sometidos los datos clínicos utilizados en este proyecto. Dado que el éxito de los modelos de aprendizaje automático y la fiabilidad de la analítica de grafos dependen directamente de la calidad del dato de entrada, las siguientes secciones detallan desde la naturaleza inicial de la fuente hasta los procesos críticos de curación y el posterior modelado relacional.
@@ -591,48 +664,54 @@ Se crearon 3 mapas coropléticos independientes, para mostrar la presencia de lo
 \chapter{Metodología}
 \label{ch:metodologia}
 
-Una vez definido el flujo de preparación, enriquecimiento y gestión del desbalanceo de los datos clínicos, este capítulo aborda el diseño formal del marco experimental implementado para la predicción multiclase de los trastornos del espectro esquizofrénico. El objetivo fundamental de la metodología propuesta es establecer un entorno de evaluación riguroso, reproducible y transparente que permita comparar de manera justa el rendimiento de diferentes paradigmas de computación inteligente.
+Tras la fase de ingeniería de datos, flujo de preparación, enriquecimiento y gestión del desbalanceo, este capítulo detalla el diseño del marco experimental implementado para la predicción multiclase de trastornos del espectro esquizofrénico. El enfoque metodológico se fundamenta en un análisis comparativo multicapa, donde se evalúa el rendimiento de diversas arquitecturas de inteligencia artificial bajo diferentes escenarios de calidad de datos. El objetivo es identificar no solo el modelo más preciso, sino aquel que presente la mejor capacidad de generalización en un entorno clínico real, equilibrando la interpretabilidad de los resultados con la complejidad computacional, permitiendonos comparar de forma justa el redimiento de modelos de aprendizaje automático tradicionales (como XGBoost) frente a modelos de aprendizaje profundo basados en transformadores (BERT).
 
-A lo largo de las siguientes secciones, se describe la transición desde los modelos base de referencia (\textit{baselines}) hasta las arquitecturas más complejas de aprendizaje profundo. El diseño metodológico se ha estructurado para dar respuesta a dos enfoques analíticos complementarios: por un lado, el procesamiento de datos tabulares estructurados (códigos de diagnóstico clínico) mediante algoritmos de aprendizaje automático tradicional; por otro lado, la explotación de la semántica del lenguaje natural (descripciones diagnósticas) mediante modelos basados en transformadores.
+A lo largo de las siguientes secciones, se describe la transición desde los modelos base de referencia (\textit{baselines}) hasta las arquitecturas más complejas de aprendizaje profundo. El diseño metodológico
+          se ha estructurado para dar respuesta a dos enfoques analíticos complementarios: por un lado, el procesamiento de datos tabulares estructurados (códigos de diagnóstico clínico) mediante algoritmos de aprendizaje
+          automático tradicional; por otro lado, la explotación de la semántica del lenguaje natural (descripciones diagnósticas) mediante modelos basados en transformadores. 
 
-Asimismo, se detallan las salvaguardas estadísticas adoptadas mediante protocolos de validación cruzada, las estrategias de optimización hiperparamétrica automatizada y el catálogo de métricas analíticas seleccionadas. Estas últimas han sido cuidadosamente justificadas para neutralizar el impacto del desbalanceo severo de la muestra y garantizar que el rendimiento del sistema se mida bajo criterios de estricta seguridad y utilidad clínica.
+Asimismo, se detallan las salvaguardas estadísticas adoptadas mediante protocolos de validación cruzada, las estrategias de optimización hiperparamétrica automatizada y el catálogo de métricas analíticas
+          seleccionadas. 
 \section{Baselines iniciales (Machine Learning vs Deep Learning)}
 
-El punto de partida del marco experimental consiste en el diseño y construcción de los modelos de referencia o (\textit{baselines}). En el diseño de sistemas de inteligencia artificial, el establecimiento de una línea base es un requisito metodológico esencial: permite medir el beneficio real y la ganancia en precisión que aportan las arquitecturas complejas frente a soluciones más tradicionales y computacionalmente económicas.
+El diseño del marco experimental se estructura en un enfoque incremental, diseñando y construyendo los modelos de referencia o \textit{baselines}. En la investigación de IA, estos modelos actúan como un punto de control crítico que nos permite cuantificar la ganancia real de rendimiento en precision que aportan las arquitecturas complejas (como BERT) frente a métodos computacionalmente más livianos y económicos.
 
-Para este estudio, el horizonte experimental se ha dividido en dos paradigmas tecnológicos claramente diferenciados, permitiendo una confrontación directa entre el Aprendizaje Automático clásico \textit{(Machine Learning)} y el Aprendizaje Profundo \textit{(Deep Learning)}:
-\subsection{El Paradigma Tabular (Machine Learning Tradicional)}
+Para este estudio, el horizonte experimental se ha dividido en dos paradigmas tecnológicos claramente diferenciados, permitiendo una confrontación directa entre el Aprendizaje Automático clásico \textit{(Machine Learning)} y el Aprendizaje Profundo \textit{(Deep Learning)}
 
+\subsection{Paradigma Tabular (ML Tradicional)}
 Como modelos de referencia iniciales, se seleccionaron Random Forest y XGBoost (Extreme Gradient Boosting). La elección de estos dos algoritmos no es fortuita; ambos representan el estado del arte en el manejo de datos estructurados y tabulares.
 \begin{itemize}
     \item \textbf{Random Forest}: Actúa como el baseline estático fundamental. Al ser un modelo de ensamble basado en el promediado de múltiples árboles de decisión independientes (bagging), ofrece una excelente resistencia al sobreajuste y una alta estabilidad macroscópica, ideal para establecer el suelo mínimo de precisión del proyecto.
 
     \item \textbf{XGBoost}: Representa un escalón superior dentro del aprendizaje tradicional. Basado en el principio de optimización por gradiente (boosting), este algoritmo construye árboles de forma secuencial, donde cada nuevo árbol corrige los errores de los anteriores. Su inclusión como segundo baseline permite explotar al máximo las interacciones no lineales entre las 20 columnas de códigos de diagnóstico clínico del historial del paciente.
-
 \end{itemize}
 
 \subsection{El Paradigma Semántico (Deep Learning con BERT)}
-La definición de estos dos baselines estructurados fundamenta la posterior introducción de modelos basados en Transformers (BERT). Mientras que Random Forest y XGBoost procesan el problema desde una perspectiva puramente matemática y relacional utilizando los códigos numéricos indexados del dataset, el modelo profundo BERT abordará el problema desde la perspectiva del Procesamiento del Lenguaje Natural (NLP), interpretando la semántica de las descripciones textuales en lenguaje natural.
+A diferencia del enfoque tabular, este paradigma no ve códigos aislados, sino que intenta capturar la semántica latente y las relaciones contextuales en las descripciones clínicas de los diagnósticos.
 
-En conclusión, este diseño de baselines iniciales permite estructurar una evaluación comparativa justa. El objetivo técnico final no es solo determinar qué algoritmo es más preciso, sino evaluar si la complejidad computacional y el coste de entrenamiento que requiere una red neuronal profunda (Deep Learning) están justificados por un incremento significativo en el rendimiento predictivo frente a la eficiencia empírica de los árboles de decisión (Machine Learning).
-  
-\section{Cross-validation}
-El diseño del protocolo de evaluación de los modelos es un componente crítico para garantizar que las métricas obtenidas sean un fiel reflejo de la capacidad de generalización del sistema. Aunque en entornos de aprendizaje automático tradicional con datos tabulares pequeños es habitual aplicar esquemas de validación cruzada de múltiples pliegues \textit{(K-Fold Cross-Validation)}, la incorporación de modelos basados en el aprendizaje profundo \textit{(Deep Learning)} como BERT altera esta necesidad metodológica.
+La definición de estos dos baselines estructurados fundamenta la posterior introducción de modelos basados en Transformers (BERT). Mientras que Random Forest y XGBoost procesan el problema desde una perspectiva puramente matemática y relacional utilizando los códigos numéricos indexados del dataset, el modelo profundo BERT abordará el problema desde la perspectiva del Procesamiento del Lenguaje Natural (NLP), interpretando la semántica de las descripciones textuales en lenguaje natural
 
-El entrenamiento y la optimización hiperparamétrica de arquitecturas basadas en Transformers imponen una carga computacional y temporal extremadamente elevada. Reentrenar múltiples veces un modelo lingüístico masivo bajo un esquema de validación cruzada tradicional resultaría inviable en términos de infraestructura y tiempo de cómputo. Por este motivo, se determinó adoptar una estrategia de validación por partición única estrictamente estratificada \textit{(Stratified Validation Split)}, una práctica estándar y metodológicamente robusta en el ámbito del procesamiento del lenguaje natural.
+Esta dualidad metodológica permite responder a la pregunta fundamental de este trabajo: ¿es el conocimiento semántico del lenguaje natural más eficaz que el análisis estadístico de códigos médicos tradicionales para predecir patologías psiquiátricas?
+
+\section{Cross-validation y Estrategia de Evaluación}
+
+El diseño del protocolo de evaluación de los modelos es un componente crítico para garantizar que las métricas obtenidas sean un fiel reflejo de la capacidad de generalización del sistema. Aunque en entornos de aprendizaje automático tradicional con datos tabulares pequeños es habitual aplicar esquemas de validación cruzada de múltiples pliegues (K-Fold Cross-Validation), la incorporación de modelos basados en el aprendizaje profundo (Deep Learning) como BERT altera esta necesidad metodológica.
+
+El entrenamiento y la optimización hiperparamétrica de arquitecturas basadas en Transformers imponen una carga computacional y temporal extremadamente elevada. Reentrenar múltiples veces un modelo lingüístico masivo bajo un esquema de validación cruzada tradicional resultaría inviable en términos de infraestructura y tiempo de cómputo. Por este motivo, se determinó adoptar una estrategia de validación por partición única estrictamente estratificada (Stratified Validation Split), una práctica estándar y metodológicamente robusta en el ámbito del procesamiento del lenguaje natural.
 
 La pieza angular de esta estrategia de validación es la estratificación, la cual responde directamente al problema de desbalanceo severo analizado en el capítulo previo. El proceso opera bajo las siguientes directrices técnicas:
 \begin{itemize}
-    \item \textbf{Preservación de la distribución de probabilidad:} Al segmentar los datos para la evaluación de los modelos, el algoritmo de división calcula la frecuencia relativa de cada uno de los 7 diagnósticos del espectro esquizofrénico en la muestra global. Posteriormente, fuerza de manera matemática a que tanto el conjunto de validación (utilizado para monitorizar el entrenamiento de BERT) como el conjunto de test (utilizado para la evaluación final de XGBoost y Random Forest) repliquen exactamente esas mismas proporciones.
-    \item \textbf{Garantía de evaluación para clases minoritarias:} Al asegurar que el 15\% de los datos de validación y el 15\% de los datos de test contengan una representación exacta y proporcional de patologías críticas pero poco frecuentes (como el trastorno esquizotípico \texttt{F21}), se evita el riesgo latente de que un modelo sea evaluado sobre un subconjunto donde no existan ejemplos de dicha enfermedad, lo que corrompería el cálculo de las métricas de rendimiento.
+    \item \textbf{Preservación de la distribución de probabilidad}: Al segmentar los datos para la evaluación de los modelos, el algoritmo de división calcula la frecuencia relativa de cada uno de los 7 diagnósticos del espectro esquizofrénico en la muestra global. Posteriormente, fuerza de manera matemática a que tanto el conjunto de validación (utilizado para monitorizar el entrenamiento de BERT) como el conjunto de test (utilizado para la evaluación final de XGBoost y Random Forest) repliquen exactamente esas mismas proporciones.
+    \item \textbf{Garantía de evaluación para clases minoritarias}: Al asegurar que el 15\% de los datos de validación y el 15\% de los datos de test contengan una representación exacta y proporcional de patologías críticas pero poco frecuentes (como el trastorno esquizotípico \texttt{F21}), se evita el riesgo latente de que un modelo sea evaluado sobre un subconjunto donde no existan ejemplos de dicha enfermedad, lo que corrompería el cálculo de las métricas de rendimiento.
 \end{itemize}
 
+A través de este enfoque de validación indexada y estratificada, se logra un equilibrio óptimo entre el rigor metodológico y la eficiencia computacional. Se garantiza que todos los modelos (tanto los baselines de árboles de decisión como la red neuronal profunda) sean entrenados, calibrados y auditados exactamente bajo las mismas condiciones de distribución de clases, permitiendo una posterior comparación directa y justa de sus capacidades predictivas.
 
 \section{Modelos evaluados}
 
 Con el propósito de hallar la arquitectura óptima para la clasificación del espectro esquizofrénico, el marco metodológico de este proyecto plantea un diseño experimental exhaustivo dividiendo los algoritmos evaluados en dos grandes familias tecnológicas.
 
-\subsubsection{Enfoque Tabular: Algoritmos de Ensamble y Árboles de Decisión}
+\subsection{Enfoque Tabular: Algoritmos de Ensamble y Árboles de Decisión}
 
 Este primer bloque metodológico procesa la matriz de información estructurada correspondiente a las 20 columnas de codificación diagnóstica clínica del historial del paciente. Se han seleccionado seis algoritmos que cubren desde la estructura fundacional hasta las implementaciones de gradiente más modernas del estado del arte:
 
@@ -650,7 +729,7 @@ Este primer bloque metodológico procesa la matriz de información estructurada 
 \item \textbf{CatBoost Classifier:} Implementación optimizada de Yandex diseñada específicamente para el tratamiento nativo de variables categóricas mediante la técnica de permutaciones simétricas. Dado que el historial clínico está compuesto exclusivamente por códigos diagnósticos alfanuméricos, este modelo resulta clave por su capacidad para procesar la naturaleza categórica pura de los datos sin requerir mapeos complejos de \textit{one-hot encoding}.
 \end{itemize}
 
-\subsubsection{Enfoque Semántico: Modelos del Lenguaje Basados en Transformers (BERT)}
+\subsection{Enfoque Semántico: Modelos del Lenguaje Basados en Transformers (BERT)}
 
 El segundo bloque metodológico cambia el paradigma tabular por el Procesamiento del Lenguaje Natural (NLP). El objetivo es explotar la riqueza contextual y semántica de las descripciones clínicas textuales en lugar de los códigos crudos. Para ello, se evalúan cuatro arquitecturas basadas en la tecnología de atención bidireccional:
 
@@ -663,6 +742,8 @@ El segundo bloque metodológico cambia el paradigma tabular por el Procesamiento
 
 \item \textbf{\texttt{xlm-roberta-base}:} Evolución avanzada multilingüe basada en el enfoque de optimización RoBERTa de Facebook. Entrenado con un volumen de datos drásticamente superior (\textit{CC-Net}) y modificando el procedimiento eliminando la tarea de predicción de la siguiente frase (\textit{Next Sentence Prediction}), este modelo se evalúa para medir si su robustez en el espacio latente supera a las arquitecturas nativas en español en la tarea multiclase.
 \end{itemize}
+
+Con el propósito de hallar la arquitectura óptima para la clasificación del espectro esquizofrénico, se ha planteado un diseño experimental que cubre diez algoritmos diferenciados. Esta selección no es arbitraria; busca comparar la eficiencia de los modelos basados en particionamiento del espacio (árboles) frente a la potencia de los modelos basados en atención contextual (BERT).
 
 \section{Búsqueda de hiperparámetros y optimización de modelos}
 \label{sec:busqueda_hiperparametros}
@@ -710,18 +791,51 @@ Para los modelos basados en particionamiento del espacio (árboles de decisión 
 El proposito de estas variables es controlar el número de estimadores del ensamble y mitigar el crecimiento desmedido de las ramas para evitar el overfitting. A la vez, queremos regular el tamaño del paso de actualización del gradiente, la profundidad de los árboles secuenciales y aplicar penalizaciones L2 para estabilizar el aprendizaje.
 
 \subsubsection{Modelos lingüísticos basados en Transformers (BERT)}
-Para el ajuste fino (\textit{fine-tuning}) de las arquitecturas profundas (\texttt{bert-base-multilingual-cased}, versiones bilingües de \texttt{BETO} y \texttt{xlm-roberta-base}), el espacio de búsqueda se adaptó estrictamente a las restricciones impuestas por la literatura científica de redes neuronales de atención y la memoria física de la GPU:
+Para el ajuste fino (\textit{fine-tuning}) de las arquitecturas profundas (\texttt{bert-base-multilingual-cased}, versiones bilingües de \texttt{BETO} y \texttt{xlm-roberta-base}), se diseñó un espacio de búsqueda que integra tanto la exploración de hiperparámetros de aprendizaje como técnicas de regularización avanzadas. Dado que el entrenamiento de modelos basados en atención es computacionalmente costoso y extremadamente sensible a la inestabilidad del gradiente, la rejilla de parámetros se estructuró en cuatro ejes estratégicos siguiendo las mejores prácticas de la literatura:
 
 \begin{itemize}
-    \item \textbf{Tasa de aprendizaje (\textit{Learning Rate}):} Se evaluaron valores conservadores dentro del rango $[2\cdot10^{-5}, 3\cdot10^{-5}, 5\cdot10^{-5}]$. El empleo de tasas superiores destruye de forma irreversible el conocimiento previo del modelo (\textit{catastrophic forgetting}), mientras que valores inferiores impiden la convergencia matemática del optimizador.
-    \item \textbf{Tamaño de lote (\textit{Batch Size}):} Debido a las limitaciones de hardware para procesar tensores de alta dimensionalidad, se fijaron rejillas estáticas de $[16, 32]$ muestras por iteración para equilibrar la estabilidad del descenso de gradiente estocástico.
-    \item \textbf{Épocas de entrenamiento (\textit{Epochs}):} Se acotó el rango de ejecución entre $[3, 4, 5]$ épocas completas, implementando el optimizador \texttt{AdamW} acoplado a un esquema de decaimiento lineal (\textit{linear learning rate scheduler}) para congelar los pesos de la red en su punto exacto de máxima generalización.
+    \item \textbf{Convergencia profunda con tasas bajas:} Se evaluaron ejecuciones de 5 épocas con tasas de aprendizaje de $1\cdot10^{-5}$ y $2\cdot10^{-5}$, buscando un ajuste exhaustivo de los pesos sin comprometer la estabilidad semántica del modelo preentrenado.
+    \item \textbf{Optimización de compromiso:} Se exploró una tasa de aprendizaje intermedia ($3\cdot10^{-5}$) variando el tamaño de lote (\textit{batch size}) entre 16 y 32, permitiendo analizar el impacto de la granularidad del gradiente en la precisión final.
+    \item \textbf{Exploración de alta velocidad (Riesgo):} Se probó una tasa de $5\cdot10^{-5}$ en ciclos cortos de 3 épocas para identificar el límite superior de aprendizaje antes de incurrir en el fenómeno de olvido catastrófico.
+    \item \textbf{Regularización y Estabilización:} A diferencia de los modelos tabulares, se incorporó el decaimiento de pesos (\textit{weight decay})  y un ratio de calentamiento (\textit{warmup ratio}) de $0.1$ para suavizar la actualización de los gradientes en las iteraciones iniciales mediante el optimizador \texttt{AdamW}.
+\end{itemize}
+
+En resumen, los rangos técnicos seleccionados para la optimización de los modelos BERT fueron los siguientes:
+\begin{itemize}
+    \item \textbf{Tasa de aprendizaje (\textit{Learning Rate}):} $[1\cdot10^{-5}, 2\cdot10^{-5}, 3\cdot10^{-5}, 5\cdot10^{-5}]$.
+    \item \textbf{Tamaño de lote (\textit{Batch Size}):} $[16, 32]$ muestras.
+    \item \textbf{Épocas:} $[3, 4, 5]$ ciclos completos sobre el conjunto de entrenamiento.
+    \item \textbf{Decaimiento de pesos (\textit{Weight Decay}):} $[0.0, 0.001, 0.01]$.
+    \item \textbf{Ratio de calentamiento (\textit{Warmup Ratio}):} $[0.0, 0.1]$.
 \end{itemize}
 
 \section{Propuesta final}
-Texto de la propuesta...
+Tras el análisis exhaustivo de los diferentes paradigmas tecnológicos y los resultados obtenidos en las fases preliminares de experimentación, se define la \textbf{Propuesta Final} de este sistema de soporte a la decisión clínica. Esta propuesta no se limita a la selección de un único algoritmo, sino que se articula como una arquitectura híbrida que integra la potencia predictiva del aprendizaje automático, la riqueza estructural de los grafos de conocimiento y la interoperabilidad semántica de los conversores de códigos.
+
+La arquitectura propuesta se fundamenta en los siguientes tres pilares técnicos:
+
+\begin{enumerate}
+\item \textbf{Motor Predictivo basado en Ensamblados (ML Tradicional):} A pesar de la sofisticación semántica y la capacidad de atención de los modelos basados en Transformers (BERT), la experimentación empírica determinó que, para la naturaleza tabular y la alta dimensionalidad de las 20 columnas de diagnósticos clínicos, los algoritmos \textbf{XGBoost} y \textbf{Random Forest} ofrecen un rendimiento superior. Por ello, la propuesta final selecciona estos modelos entrenados sobre el \textbf{Dataset 3 (Híbrido RUS + VAE)}, garantizando una frontera de decisión robusta, equilibrada frente al desbalanceo de clases y con un coste computacional significativamente menor en tiempo de inferencia.
+\item \textbf{Capa de Contexto Relacional (Neo4j):} Como complemento a la predicción probabilística del motor de \textit{Machine Learning}, se integra de forma permanente el \textbf{Grafo de Conocimiento}. Esta capa permite al clínico no solo recibir una predicción numérica, sino visualizar la red de comorbilidades y la cercanía topológica del paciente dentro de la comunidad de diagnósticos del \textit{dataset} regional. Esta integración aporta una dimensión de interpretabilidad relacional necesaria en entornos médicos, permitiendo validar las predicciones del modelo mediante la observación de patrones de co-ocurrencia clínica.
+\item \textbf{Motor de Interoperabilidad Semántica (Conversor ICD):} Se propone la integración nativa de un motor de traducción que actúe como la puerta de enlace (\textit{gateway}) de la información. Esto garantiza que la propuesta final sea agnóstica al sistema de codificación del historial original (ICD-9 o ICD-10) y que pueda transformar texto libre en códigos estandarizados, permitiendo una ingesta de datos limpia hacia los clasificadores y una salida bilingüe orientada a la investigación internacional.
+\end{enumerate}
+En conclusión, la propuesta metodológica definitiva de este trabajo consiste en un \textbf{Sistema de Soporte Híbrido} que orquesta estos tres componentes bajo una interfaz web unificada. El flujo de trabajo propuesto comienza con la normalización y conversión de los diagnósticos, continúa con la clasificación del espectro esquizofrénico mediante árboles de decisión optimizados y finaliza con la validación visual de la trayectoria del paciente a través del análisis de comunidades en el grafo de conocimiento. Esta sinergia tecnológica permite transformar un listado plano de registros en un marco de decisión clínica estructurado, transparente y funcional.
+
 \section{Métricas empleadas y su justificación}
-Texto de las métricas...
+
+Para evaluar el desempeño de los modelos predictivos desarrollados y determinar su eficacia en la clasificación de los trastornos del espectro esquizofrénico, se han seleccionado una serie de métricas estadísticas estándar en el ámbito del aprendizaje automático supervisado. Dado el desbalanceo severo de clases identificado en el Capítulo 3, la elección de estas métricas no se limita únicamente a la precisión global, sino que prioriza aquellas que permiten medir la capacidad de detección de las patologías minoritarias.
+
+A continuación, se describen y justifican las métricas utilizadas:
+
+\begin{itemize}
+    \item \textbf{Precisión Global (\textit{Accuracy}):} Representa la proporción de predicciones correctas sobre el total de casos evaluados. Aunque es una métrica intuitiva, en este proyecto actúa únicamente como un indicador de referencia macroscópico, ya que puede resultar engañosa en presencia de clases mayoritarias dominantes.
+    \item \textbf{Precisión (\textit{Precision}):} Mide la proporción de verdaderos positivos entre todas las predicciones positivas realizadas por el modelo para una clase concreta. En el contexto clínico, una alta precisión asegura que, cuando el sistema predice un diagnóstico específico, la probabilidad de que el paciente realmente lo padezca sea elevada, minimizando los falsos positivos.
+    \item \textbf{Sensibilidad o Exhaustividad (\textit{Recall}):} Indica la capacidad del modelo para identificar todos los casos reales de una patología. Para este estudio, es una métrica crítica, ya que un \textit{Recall} bajo implicaría que el sistema está omitiendo diagnósticos reales, lo cual es inaceptable en un Sistema de Soporte a la Decisión Clínica.
+    \item \textbf{F1-Score:} Se calcula como la media armónica entre la Precisión y el \textit{Recall}. Es la métrica principal de evaluación en este trabajo, ya que proporciona un equilibrio justo entre ambas y es especialmente robusta ante el desbalanceo de los datos, permitiendo comparar el rendimiento de los modelos en clases con muy pocas muestras (como F21).
+    \item \textbf{AUC-ROC (\textit{Area Under the Receiver Operating Characteristic curve}):} Evalúa la capacidad del clasificador para distinguir entre las diferentes clases diagnósticas a distintos umbrales de decisión. Un valor de AUC cercano a 1 indica que el modelo posee una excelente capacidad de discriminación, independientemente de la distribución de las clases.
+\end{itemize}
+
+Para garantizar la robustez de estas métricas, los resultados expuestos en el siguiente capítulo se han obtenido promediando los valores sobre el conjunto de test (\textit{weighted average}), teniendo en cuenta el peso relativo de cada patología en la población de estudio.
 
 \chapter{Resultados}
 \section{Comparativa de modelos}
@@ -1055,6 +1169,7 @@ A partir de las conclusiones obtenidas y las limitaciones identificadas en este 
 \addcontentsline{toc}{chapter}{Bibliografía}
 
 \bibliographystyle{ieeetr} 
+\nocite{*}
 \bibliography{bibliografia} 
 
 
