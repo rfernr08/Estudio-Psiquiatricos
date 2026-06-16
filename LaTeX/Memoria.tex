@@ -1,63 +1,124 @@
 % Tipo de documento:
-\documentclass[15pt, a4paper]{report} % Tamaño de fuente 15pt y papel A4 
+\documentclass[12pt,a4paper,onecolumn,oneside]{report}
+\newcommand{\mychapter}[2]{
+	\setcounter{chapter}{#1}
+	\setcounter{section}{0}
+	\chapter*{#2}
+	\addcontentsline{toc}{chapter}{#2}
+}
 
-% --- PAQUETES BÁSICOS ---
-\usepackage[utf8]{inputenc}
-\usepackage[spanish, es-tabla]{babel} % Idioma español 
-\usepackage{amsmath, amssymb, amsfonts}
-\usepackage{graphicx}
-\usepackage{fix-cm}
-\usepackage[top=3cm, left=3cm, bottom=2.5cm, right=2.5cm]{geometry} % Márgenes según normativa 
-\usepackage{setspace}
-\usepackage{lastpage} % Para obtener el número total de páginas 
-\usepackage{fancyhdr} % Para personalizar encabezados y pies de página 
-\usepackage{titlesec} % Para dar formato a los títulos 
-\usepackage{caption}
-\usepackage[hidelinks]{hyperref}
-\usepackage{cite}
+
+
+% Opcional: Tamaño personalizado para los márgenes:
+\usepackage[a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+\usepackage[utf8]{inputenc} % Codificación UTF-8.
+\usepackage[T1]{fontenc}    % Para usar caracteres con tilde.
+\usepackage[spanish,es-tabla]{babel} % Escritura en castellano.
+\usepackage{eurosym}  % Para el símbolo del EURO (€).
+\usepackage{graphicx} % Paquete de imágenes, para introducir figuras.
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usepackage[usenames,dvipsnames]{color} % Texto en colores.
+\usepackage{xcolor}   % Extra colors.
+\usepackage{url}      % Para escritura de URLs.
+\usepackage[breaklinks]{hyperref} % Hiperreferencias.
+\usepackage{amsmath,amssymb} % Para los símbolos matemáticos.
+\usepackage{cite}     % Para las citas de referencias (crea el superíndice).
+\usepackage{listings} % Para coloreado de código fuente.
+\usepackage{verbatim} % Para textos tipo consola y otros formatos.
+\usepackage{fancyvrb} % Más opciones de verbatim.
+\usepackage{parskip}  % OPCIONAL: Separa los párrafos con una línea en blanco.
+\setlength{\parindent}{15pt} % Sangría de párrafos estándar (15 puntos). Necesario incluirla si se usa el paquete 'parskip'.
+\usepackage[export]{adjustbox}
+\usepackage{caption}  % Para personalizar los pies de foto.
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18} % ajustar, es para los graficos
+\usepackage{siunitx} 
+\usepackage{booktabs} %para la matriz de confusion
+\usepackage{hhline} %para linea doble cortada
+\usepackage{rotating}
+\usepackage{pgfgantt}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage{tabularx}
 \usepackage{longtable}
-\usepackage{listings}
+\usepackage{doi}
 
-% --- CONFIGURACIÓN DE FORMATO SEGÚN NORMATIVA ---
-\onehalfspacing % Interlineado 1.5 líneas 
-\setlength{\parskip}{0pt} % Sin espacio adicional entre párrafos 
+% Opciones del paquete caption para los pies de imágenes y tablas:
+\captionsetup{figurename=Figura, tablename=Tabla, labelsep=colon, labelfont=bf, font=small, justification=centering}
 
-% Formato de Capítulos (28 puntos, negrita, primera mayúscula) 
-\titleformat{\chapter}[hang]
-  {\normalfont\fontsize{28}{34}\bfseries}
-  {\thechapter.}
-  {1em}
-  {}
-\titlespacing*{\chapter}{0pt}{-20pt}{12pt} % Línea en blanco de 12 puntos después del título 
+% Para el control de líneas viudas y huérfanas (líneas sueltas en páginas nuevas):
+\usepackage[all]{nowidow}
 
-% Formato de Apartados (14 puntos, negrita, mayúsculas) 
-\titleformat{\section}
-  {\normalfont\fontsize{14}{17}\bfseries\MakeUppercase}
-  {\thesection}
-  {1em}
-  {}
-\titlespacing*{\section}{0pt}{12pt}{12pt} % Línea en blanco debajo del título 
+\usepackage[nottoc]{tocbibind}    % Incluye el apartado "Referencias" en el índice.
+%\def\spanishrefname{Bibliografía} % Para que ponga "Bibliografía" en lugar de "Referencias". SÓLO se aplica a formato "article". En "report" ya pone "Bibliografía".
 
-% Formato de Subapartados
-\titleformat{\subsection}
-  {\normalfont\fontsize{12}{15}\bfseries}
-  {\thesubsection}
-  {1em}
-  {}
+\usepackage{fancyhdr}
 
-% Encabezados y Pies de página 
-\pagestyle{fancy}
-\fancyhf{}
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\footrulewidth}{0.5pt}
-\fancyhead[R]{Página \thepage\ de \pageref{LastPage}} % Encabezado: Numeración de hojas / total 
-\fancyfoot[C]{Raúl Fernández Rodríguez} % Pie de página: Nombre del autor 
+\setlength{\unitlength}{1 cm} % Unidad de trabajo de medidas.
 
-% Formato de figuras, tablas y ecuaciones 
-\numberwithin{equation}{chapter}
-\numberwithin{figure}{chapter}
-\numberwithin{table}{chapter}
-\captionsetup{font=normalsize, labelfont=bf, skip=10pt} % Texto de figuras/tablas a 12 puntos 
+\renewcommand*{\baselinestretch}{1.25} % Altura del INTERLINEADO.
+\renewcommand{\shorthandsspanish}{}    % Para que corte las palabras según el castellano.
+
+
+% Propiedades para el PDF generado (METADATOS):
+\newcommand{\authorNames}{Nombre y apellidos del autor}
+\newcommand{\pdftitle}{Título del trabajo}
+\hypersetup{
+  pdftitle={\pdftitle},% Título
+  pdfauthor={\authorNames},% Autor
+  pdfsubject={\pdftitle \ - \authorNames},% Asunto
+% pdfkeywords={Opcional: algunas palabras clave}%
+}
+
+% Para la representación de código fuente:
+% Para BASH:
+\lstset{
+	language=bash,
+	basicstyle=\scriptsize,
+	frame=single,
+	numbers=left,
+	numberstyle=\scriptsize,
+	stepnumber=1,
+	numbersep=9pt,
+	backgroundcolor=\color{White},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=4,
+	captionpos=b,
+	breaklines=true,
+	keywordstyle=\color{blue}\bfseries,
+	%identifierstyle=\color{green}\bfseries,
+	stringstyle=\color{orange}\bfseries,
+	commentstyle=\color{gray}\bfseries
+}
+
+\usepackage{fancyhdr} % Para el tamaño y estilo de los encabezados.
+\usepackage{lastpage} % Para referenciar el número total de páginas.
+
+\fancypagestyle{mainContentStyle}{
+    \fancyhf{} % Limpia cabeceras y pies previos
+    \lhead{\small \it Grado en Ingeniería Informática}
+    \rhead{\small \it Página \thepage \hspace{1pt} de \pageref*{LastPage}}
+    \rfoot{\small \it Raúl Fernández Rodríguez}
+    \renewcommand{\headrulewidth}{1pt}
+    \renewcommand{\footrulewidth}{1pt}
+}
+
+% Asegura que también aparezca en páginas de capítulo.
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \lhead{\small \it Grado en Ingeniería Informática}
+    \rhead{\small \it Página \thepage \hspace{1pt} de \pageref*{LastPage}}
+    \rfoot{\small \it Raúl Fernández Rodríguez}
+    \renewcommand{\headrulewidth}{1pt}
+    \renewcommand{\footrulewidth}{1pt}
+}
+
+% Ajustes para división manual de palabras:
+\hyphenation{Python} % Impide que la palabra Python sea dividida al acabar una línea.
 
 % --- INICIO DEL DOCUMENTO ---
 \begin{document}
@@ -106,6 +167,7 @@
 % -----------------------------------------
 \pagenumbering{roman} % Numeración romana para los índices
 \setcounter{page}{1}
+\pagestyle{mainContentStyle}
 
 \begin{center}
 \begin{longtable}{|l|l|l|}
@@ -178,7 +240,7 @@ In conclusion, this project demonstrates the potential of combining knowledge gr
 \chapter*{Glosario y Acrónimos}
 \addcontentsline{toc}{chapter}{Glosario y Acrónimos}
 \label{ch:glossary}
-\pagestyle{headings}
+\pagestyle{mainContentStyle}
 \markboth{GLOSARIO}{}
 
 \begin{description}
@@ -197,12 +259,15 @@ In conclusion, this project demonstrates the potential of combining knowledge gr
     \item[F1-Score] Métrica de rendimiento que combina la precisión y el recall en un solo valor, calculada como la media armónica de ambas.
     \item[Clinical Decision Support System (CDSS)] Sistema de Soporte a la Decisión Clínica. Herramienta tecnológica de salud interactiva diseñada para asistir a los profesionales médicos en las tareas de toma de decisiones clínicas, utilizando datos de pacientes y bases de conocimiento para mejorar la calidad asistencial
     \item[Overfitting] Sobreentrenamiento. Fenómeno en el que un modelo de aprendizaje automático se ajusta demasiado a los datos de entrenamiento, capturando ruido o patrones específicos que no generalizan bien a datos nuevos o no vistos. 
+    \item[Betweenness Centrality] Centralidad de Intermediación. Métrica de teoría de grafos que mide la importancia de un nodo en función del número de veces que actúa como puente o intermediario en el camino más corto entre otros nodos.
     \item[Embedding] Técnica de representación de datos en un espacio vectorial continuo, donde la proximidad entre vectores refleja la similitud semántica o relacional.
     \item[PLN] Procesamiento del Lenguaje Natural. Subcampo de la inteligencia artificial que se ocupa de la interacción entre las computadoras y el lenguaje humano, permitiendo a las máquinas entender, interpretar y generar texto en lenguaje natural.
     \item[Escalabilidad] Capacidad de un sistema de software o base de datos para manejar una cantidad creciente de trabajo o usuarios (por ejemplo, pasar de un entorno local a toda la red hospitalaria regional) sin perder rendimiento.
     \item[UX / UI] (\textit{User Experience / User Interface}) Conceptos del diseño de software enfocados en la experiencia del usuario (lo intuitivo y fluido que resulta el sistema) y la interfaz de usuario (el diseño visual de las pantallas y controles)
     \item[Open-Source] Código Abierto. Modelo de desarrollo de software basado en la colaboración abierta, donde el código fuente se pone a disposición del público de forma gratuita, permitiendo que cualquiera lo inspeccione, modifique, reutilice y distribuya bajo ciertas licencias libres 
     \item[Redes Neuronales de Grafos] (\textit{Graph Neural Networks, GNNs})   Tipo de arquitectura de aprendizaje profundo diseñada para procesar datos estructurados de forma nativa como grafos, permitiendo realizar predicciones a nivel de nodos, relaciones o del grafo completo al capturar las dependencias complejas entre los elementos vecinos.
+    \item[Umbrales de PANSS] Puntos de corte porcentuales en la Escala de los Síndromes Positivo y Negativo (como reducciones del 20\% o 30\%) para definir el éxito terapéutico en psicosis; su falta de estandarización genera heterogeneidad muestral en los modelos predictivos.
+    \item[Black Box] Caja Negra. Término utilizado para describir sistemas o modelos de inteligencia artificial cuya lógica interna es opaca o difícil de interpretar, lo que dificulta la comprensión de cómo se toman las decisiones o se generan las predicciones.
 \end{description}
 
 % -----------------------------------------
@@ -216,7 +281,7 @@ In conclusion, this project demonstrates the potential of combining knowledge gr
 
 La esquizofrenia es uno de los trastornos psiquiátricos más severos y complejos en el ámbito de la salud mental. Se caracteriza por una profunda heterogeneidad clínica que abarca desde síntomas positivos (como delirios y alucinaciones) hasta síntomas negativos (apatía, retraimiento social) y disfunciones cognitivas. Esta variabilidad no solo dificulta el diagnóstico temprano, sino que también complica el seguimiento a largo plazo, ya que los pacientes suelen presentar un alto índice de comorbilidades médicas y psiquiátricas.
 
-Tradicionalmente, la práctica psiquiátrica se ha apoyado en manuales diagnósticos estandarizados (como el DSM o el CIE/ICD) y en la experiencia acumulada del facultativo. Sin embargo, los sistemas de salud pública actuales generan un volumen masivo de datos clínicos desestructurados o aislados de forma diaria. En el contexto de la comunidad autónoma de Castilla y León, la gestión de estos historiales plantea un desafío evidente: la información existe, pero se encuentra almacenada en formatos que impiden una visión relacional y holística del recorrido del paciente. || Añadir aquí si los datos provienen de algún entorno hospitalario generalizado o red de salud específica de la comunidad si lo sabes ||
+Tradicionalmente, la práctica psiquiátrica se ha apoyado en manuales diagnósticos estandarizados (como el DSM o el CIE/ICD) y en la experiencia acumulada del facultativo. Sin embargo, los sistemas de salud pública actuales generan un volumen masivo de datos clínicos desestructurados o aislados de forma diaria. En el contexto de la comunidad autónoma de Castilla y León, la gestión de estos historiales plantea un desafío evidente: la información existe, pero se encuentra almacenada en formatos que impiden una visión relacional y holística del recorrido del paciente.
 
 La dificultad intrínseca de manejar estos diagnósticos radica en que las patologías mentales raramente se presentan de forma aislada. Un paciente diagnosticado con un subtipo de esquizofrenia puede desarrollar de manera adyacente otros trastornos conductuales o somáticos. Identificar estas transiciones y patrones relacionales a gran escala es inasumible mediante el análisis clínico tradicional paciente a paciente.
 
@@ -304,6 +369,7 @@ El \textbf{Capítulo 2 (Estado del arte)} ofrece una revisión de la literatura 
 Los resultados empíricos derivados de dicha experimentación, junto con la comparativa de rendimiento entre las distintas arquitecturas y el análisis de comunidades, se exponen y discuten en el \textbf{Capítulo 5 (Resultados)}. Por su parte, el \textbf{Capítulo 6 (Aplicación desarrollada)} describe la arquitectura de la plataforma web funcional implementada, sus interfaces de visualización y el módulo conversor de códigos ICD. Finalmente, el \textbf{Capítulo 7 (Presupuesto)} analiza la viabilidad económica del proyecto a través de la estimación de costes de \textit{hardware}, \textit{software} y horas de ingeniería, dando paso al \textbf{Capítulo 8 (Conclusiones y trabajo futuro)}, donde se sintetizan las principales aportaciones del estudio, sus limitaciones actuales y las líneas de desarrollo que quedan abiertas para próximas investigaciones.
 
 \chapter{Estado del arte}
+
 \section{Trabajos previos}
 
 El estudio de los trastornos psiquiátricos mediante paradigmas computacionales ha cobrado un impulso significativo gracias a la creciente disponibilidad de Historias Clínicas Electrónicas (\textit{Electronic Health Records, EHR}) y al avance de la inteligencia artificial. La literatura científica reciente refleja un cambio de paradigma, transitando desde los análisis estadísticos descriptivos tradicionales hacia modelos predictivos y relacionales complejos. Para comprender el ecosistema en el que se inscribe este proyecto, los antecedentes se han estructurado en tres ejes fundamentales: el aprendizaje automático aplicado a la esquizofrenia, el uso de grafos de conocimiento en el sector salud y la irrupción de los modelos de lenguaje en entornos clínicos.
@@ -314,64 +380,98 @@ Asimismo, otros autores han explorado el uso de redes neuronales densas, aunque 
 En el segundo eje, la necesidad de representar la información médica de una manera más natural y conectada ha propiciado el uso de bases de datos orientadas a grafos. Las ontologías biomédicas y los grafos de conocimiento han demostrado ser herramientas robustas para la medicina de precisión. % TODO: Candidato al glosario - Ontología Biomédica
 En el ámbito de la gestión de bases de datos relacionales orientadas a salud, ha quedado ampliamente documentado el potencial de entornos como Neo4j para mapear las interacciones multivariantes entre síntomas, fármacos y diagnósticos codificados. % TODO: Añadir cita específica de estudio con Grafos/Neo4j
 El análisis de la topología de la red permite identificar comorbilidades ocultas mediante algoritmos de agrupamiento, sentando un precedente directo para el análisis relacional de comunidades diagnósticas ejecutado en esta memoria.
+Este enfoque relacional es crítico para la medicina de precisión, ya que permite evaluar la "cercanía" de un paciente a determinados clústeres patológicos, facilitando la identificación de enfermedades "núcleo" que actúan como puentes entre diferentes trastornos psiquiátricos \cite{Tyagi}.
 
 Finalmente, el tercer eje metodológico se centra en el Procesamiento del Lenguaje Natural (\textit{Natural Language Processing, NLP}) y los Modelos de Lenguaje de Gran Tamaño (\textit{LLMs}). Dado que gran parte de la información psiquiátrica reside en la narrativa libre de los informes médicos, la literatura ha comenzado a evaluar la capacidad de estos modelos para extraer entidades clínicas de forma automatizada. % TODO: Añadir cita específica de estudio con LLMs clínicos
-Arquitecturas basadas en \textit{Transformers} han sido puestas a prueba para la traducción de texto clínico desestructurado a códigos estandarizados como el ICD. No obstante, la integración sinérgica de estos modelos lingüísticos con la estructura rígida de un grafo de conocimiento y clasificadores predictivos tradicionales sigue siendo un territorio de vanguardia con amplios márgenes de optimización.
+Arquitecturas basadas en \textit{Transformers} han sido puestas a prueba para la traducción de texto clínico desestructurado a códigos estandarizados como el ICD. No obstante, la integración sinérgica de estos modelos lingüísticos con la estructura rígida de un grafo de conocimiento y clasificadores predictivos tradicionales sigue siendo un territorio de vanguardia con amplios márgenes de optimización,  dejando una brecha en la explotación de registros
+clínicos reales y desestructurados, que es donde se sitúa la propuesta de esta investigación.
 
 \section{Métodos utilizados en la literatura}
 
 La diversidad de los datos clínicos de pacientes con esquizofrenia ha forzado la convergencia de diferentes metodologías analíticas en la literatura actual. Para abordar con rigor los antecedentes metodológicos, este apartado desglosa los fundamentos algorítmicos de las herramientas más extendidas en la investigación biomédica y computacional, clasificadas en tres familias principales: aprendizaje automático clásico, analítica topológica de grafos y modelos basados en atención para lenguaje natural.
 
-En el ámbito del \textit{Machine Learning} tradicional aplicado a datos clínicos estructurados, los clasificadores basados en ensamblados de árboles de decisión y vectores de soporte representan el núcleo metodológico de la literatura. El algoritmo \textit{Random Forest} se utiliza profusamente debido a su capacidad para manejar la alta dimensionalidad y mitigar el sobreentrenamiento mediante el promediado de múltiples árboles independientes. || Candidato al glosario: Sobreentrenamiento (\textit{Overfitting}) || Por su parte, las técnicas de \textit{Gradient Boosting}, representadas principalmente por XGBoost, destacan en las publicaciones por su optimización del gradiente y su eficiencia en el tratamiento de matrices dispersas de datos, comunes al registrar comorbilidades. El uso de funciones de pérdida regularizadas en estos métodos permite ponderar la importancia de variables sintomatológicas complejas. || Añadir aquí si en las lecturas que has hecho algún autor destaca otro algoritmo matemático clásico como las Regresiones Logísticas regularizadas o SVM ||
+En el ámbito del \textit{Machine Learning} tradicional aplicado a datos clínicos estructurados, los clasificadores basados en ensamblados de árboles de decisión y vectores de soporte representan el núcleo metodológico de la literatura. El algoritmo \textit{Random Forest} se utiliza profusamente debido a su capacidad para manejar la alta dimensionalidad y mitigar el sobreentrenamiento mediante el promediado de múltiples árboles independientes. Por su parte, las técnicas de \textit{Gradient Boosting}, representadas principalmente por XGBoost, destacan en las publicaciones por su optimización del gradiente y su eficiencia en el tratamiento de matrices dispersas de datos, comunes al registrar comorbilidades. El uso de funciones de pérdida regularizadas en estos métodos permite ponderar la importancia de variables sintomatológicas complejas \cite{Amleshi}
 
-En lo que respecta a la analítica de grafos y bases de datos NoSQL orientadas a redes (donde Neo4j actúa como estándar de facto), la literatura se centra en desvelar la estructura matemática de las relaciones. Los métodos matemáticos más utilizados son los algoritmos de detección de comunidades, entre los que destaca el método de \textit{Louvain}. Este método heurístico busca maximizar la modularidad de la red, agrupando de forma iterativa los nodos (pacientes o diagnósticos) que poseen una densidad de conexión interna significativamente mayor que la esperada de forma aleatoria. Asimismo, se documenta el uso de la centralidad de grado y de intermediación (\textit{Betweenness Centrality}) para identificar patologías críticas que actúan como "puentes" o catalizadores epidemiológicos entre diferentes familias de trastornos psiquiátricos. || Candidato al glosario: Centralidad de Intermediación ||
+En lo que respecta a la analítica de grafos y bases de datos NoSQL orientadas a redes (donde Neo4j actúa como estándar de facto), la literatura se centra en desvelar la estructura matemática de las relaciones. Los métodos matemáticos más utilizados son los algoritmos de detección de comunidades, entre los que destaca el método de \textit{Louvain}. Este método heurístico busca maximizar la modularidad de la red, agrupando de forma iterativa los nodos (pacientes o diagnósticos) que poseen una densidad de conexión interna significativamente mayor que la esperada de forma aleatoria. Asimismo, se documenta el uso de la centralidad de grado y de intermediación (\textit{Betweenness Centrality}) para identificar patologías críticas que actúan como "puentes" o catalizadores epidemiológicos entre diferentes familias de trastornos psiquiátricos.
 
-Finalmente, para la explotación de la narrativa clínica desestructurada, los métodos basados en arquitecturas de \textit{Transformers} y mecanismos de auto-atención (\textit{Self-Attention}) dominan la literatura moderna de NLP médico. Modelos especializados de la familia BERT (como \textit{ClinicalBERT} o \textit{BioBERT}) son comúnmente utilizados para generar \textit{embeddings} semánticos denseificados. Estos métodos proyectan palabras o conceptos de informes psiquiátricos en un espacio vectorial continuo multidimensional, donde la cercanía geométrica (calculada frecuentemente mediante la similitud del coseno) correlaciona con la afinidad clínica de los conceptos. || Añadir aquí si en tu enfoque utilizaste LLMs comerciales tipo GPT o modelos \textit{open-source} locales tipo Llama, y si la literatura describe métodos de \textit{prompt engineering} o \textit{fine-tuning} para adaptarlos al entorno clínico ||
+Finalmente, para la explotación de la narrativa clínica desestructurada, los métodos basados en arquitecturas de \textit{Transformers} y mecanismos de auto-atención (\textit{Self-Attention}) dominan la literatura moderna de NLP médico. Modelos especializados de la familia BERT (como \textit{ClinicalBERT} o \textit{BioBERT}) son comúnmente utilizados para generar \textit{embeddings} semánticos denseificados. Estos métodos proyectan palabras o conceptos de informes psiquiátricos en un espacio vectorial continuo multidimensional, donde la cercanía geométrica (calculada frecuentemente mediante la similitud del coseno) correlaciona con la afinidad clínica de los conceptos.
+Los LLMs permiten procesar el caos de la jerga médica en texto libre, traduciendo descripciones diagnósticas a códigos estandarizados (ICD-9/ICD-10) y extrayendo entidades clínicas de forma automatizada. Sin embargo, uno de los mayores desafíos detectados en la literatura es la opacidad algorítmica o efecto de "caja negra",
+
 \section{Limitaciones detectadas}
 
-A pesar del notable avance en la digitalización de los entornos sanitarios y del despliegue de algoritmos avanzados descritos en las secciones precedentes, la revisión crítica de la literatura científica revela una serie de brechas metodológicas y prácticas. Estas limitaciones no solo restringen el impacto real de las tecnologías de la información en la práctica psiquiátrica actual, sino que constituyen la justificación directa del enfoque integrador propuesto en este Trabajo de Fin de Grado. A continuación, se detallan las tres deficiencias principales detectadas en el estado del arte:
+A pesar del notable avance en la digitalización de los entornos sanitarios y del despliegue de algoritmos avanzados descritos en las secciones precedentes, la revisión crítica de la literatura científica revela una serie de brechas metodológicas y prácticas. A continuación, se detallan las tres deficiencias principales detectadas en el estado del arte:
 
 \begin{enumerate}
-    \item \textbf{Aislamiento y fragmentación de paradigmas computacionales:} La literatura tiende a segmentar el uso de las tecnologías. Por un lado, se encuentran sistemas predictivos basados en \textit{Machine Learning} que explotan matrices tabulares estáticas, ignorando la rica información topológica y relacional que vincula a los pacientes. Por otro lado, los estudios que implementan grafos de conocimiento se limitan a un análisis descriptivo de redes, omitiendo capacidades predictivas para nuevos diagnósticos. Existe una notable escasez de arquitecturas híbridas que unifiquen la potencia predictiva de los clasificadores con la flexibilidad estructural de bases de datos como Neo4j. || Añadir aquí si has observado que los artículos rara vez cruzan datos relacionales con texto libre de LLMs de forma simultánea ||
-    \item \textbf{El desafío de la interpretabilidad y la opacidad algorítmica:} En el campo de la salud mental, y específicamente en trastornos complejos como la esquizofrenia, el personal médico muestra una resistencia natural (y justificada) a adoptar modelos de \textit{Deep Learning} y \textit{LLMs} debido al fenómeno de la "caja negra". Los facultativos requieren entender el razonamiento subyacente a una predicción diagnóstica para poder confiar en ella. La literatura actual falla frecuentemente en dotar a estos modelos de una capa de explicabilidad o de representaciones visuales que traduzcan vectores matemáticos abstractos en conexiones clínicas comprensibles. || Candidato al glosario: Caja Negra (\textit{Black Box}) ||
-    \item \textbf{Brecha en la transferencia tecnológica y herramientas de soporte:} Una gran parte de las investigaciones analizadas se desarrollan en entornos puramente de laboratorio o de código aislado (como \textit{scripts} de investigación). Raras veces este conocimiento se transfiere a soluciones de software funcionales, accesibles y adaptadas a la rutina de una consulta psiquiátrica. Limitaciones como la falta de interfaces web interactivas o la ausencia de módulos utilitarios cotidianos —como un conversor automatizado entre sistemas de codificación como el ICD— impiden que la ciencia de datos actúe como un verdadero Sistema de Soporte a la Decisión Clínica (CDSS).
+    \item \textbf{Aislamiento y fragmentación de paradigmas computacionales:} La literatura tiende a segmentar el uso de las tecnologías. Por un lado, se encuentran sistemas predictivos basados en \textit{Machine Learning} que explotan matrices tabulares estáticas, ignorando la rica información topológica y relacional que vincula a los pacientes. Por otro lado, los estudios que implementan grafos de conocimiento se limitan a un análisis descriptivo de redes, omitiendo capacidades predictivas para nuevos diagnósticos. Existe una notable escasez de arquitecturas híbridas que unifiquen la potencia predictiva de los clasificadores con la flexibilidad estructural de bases de datos como Neo4j. 
+    \item \textbf{El desafío de la interpretabilidad y la opacidad algorítmica:} En el campo de la salud mental, y específicamente en trastornos complejos como la esquizofrenia, el personal médico muestra una resistencia natural (y justificada) a adoptar modelos de \textit{Deep Learning} y \textit{LLMs} debido al fenómeno de la "caja negra". Los facultativos requieren entender el razonamiento subyacente a una predicción diagnóstica para poder confiar en ella. La literatura actual falla frecuentemente en dotar a estos modelos de una capa de explicabilidad o de representaciones visuales que traduzcan vectores matemáticos abstractos en conexiones clínicas comprensibles. 
+    \item \textbf{Brecha en la transferencia tecnológica y herramientas de soporte:} Una gran parte de las investigaciones analizadas se desarrollan en entornos puramente de laboratorio o de código aislado (como \textit{scripts} de investigación). Raras veces este conocimiento se transfiere a soluciones de software funcionales, accesibles y adaptadas a la rutina de una consulta psiquiátrica. Limitaciones como la falta de interfaces web interactivas o la ausencia de módulos utilitarios cotidianos, como un conversor automatizado entre sistemas de codificación como el ICD, impiden que la ciencia de datos actúe como un verdadero Sistema de Soporte a la Decisión Clínica (CDSS).
 \end{enumerate}
 
-Estado del Arte: Inteligencia Artificial en el Diagnóstico y Pronóstico de la Esquizofrenia
-\section{Evolución del Diagnóstico Clínico a los Sistemas CAD} La esquizofrenia se define como un trastorno psiquiátrico crónico, complejo y multifactorial que afecta aproximadamente a 20 millones de personas a nivel mundial, manifestándose a través de distorsiones en el pensamiento, la percepción y las funciones cognitivas \cite{Tyagi2022}. Tradicionalmente, la práctica diagnóstica ha dependido de entrevistas de estatus mental y criterios subjetivos, lo que conlleva una variabilidad significativa en la precisión clínica y la selección del tratamiento \cite{Saboori2025}.
-La transición hacia sistemas de Diagnóstico Ayudado por Ordenador (CAD) responde a la necesidad crítica de identificar biomarcadores objetivos. Estos sistemas, integrados en el marco de los Sistemas de Soporte a la Decisión Clínica (CDSS), permiten a los clínicos y especialistas en neuroimagen analizar conjuntos de datos masivos para detectar anomalías estructurales y funcionales de manera automatizada, facilitando un diagnóstico temprano que es fundamental para prevenir el deterioro funcional y la resistencia secundaria al tratamiento \cite{Tyagi2022, Saboori2025}.
+
+\section{Evolución del Diagnóstico Clínico a los Sistemas CAD} 
+
+La esquizofrenia se define como un trastorno psiquiátrico crónico, complejo y multifactorial que afecta a aproximadamente 20 millones de personas a nivel mundial \cite{Tyagi}. Se caracteriza por manifestaciones multifactoriales que incluyen delirios, alucinaciones y deficiencias cognitivas, con una trayectoria clínica marcada por altas tasas de cronicidad; aproximadamente el 80\% de los pacientes experimentan recaídas dentro de los primeros 10 años tras el episodio inicial \cite{Amleshi}.Tradicionalmente, la práctica diagnóstica ha dependido de entrevistas de estatus mental y criterios subjetivos, lo que conlleva una variabilidad significativa en la precisión clínica y la selección del tratamiento.
+
+
+La transición hacia sistemas de Diagnóstico Ayudado por Ordenador (CAD) responde a la necesidad crítica de identificar biomarcadores objetivos mediante el Aprendizaje Automático (ML) y el Aprendizaje Profundo (DL). Estos sistemas, integrados en el marco de los Sistemas de Soporte a la Decisión Clínica (CDSS), permiten a los clínicos y especialistas en neuroimagen analizar conjuntos de datos masivos para detectar anomalías estructurales y funcionales de manera automatizada, facilitando un diagnóstico temprano que es fundamental para prevenir el deterioro funcional y la resistencia secundaria al tratamiento \cite{Amleshi, Tyagi, DelFabro}.
+
 \section{Modalidades de Datos y Neuroimagen}
-\subsection{Electroencefalografía (EEG)} La electroencefalografía destaca por ser una técnica no invasiva y de bajo coste que captura la dinámica temporal de la actividad eléctrica cerebral. Los pacientes con esquizofrenia suelen presentar asimetrías de amplitud y alteraciones en los patrones de ondas cerebrales que sirven como biomarcadores electrofisiológicos \cite{Tyagi2022}. En términos de rendimiento predictivo, los modelos basados en EEG han demostrado una eficacia superior a otras modalidades; según el meta-análisis de Saboori Amleshi et al. (2025), estos alcanzan una sensibilidad del 89\% y una especificidad del 94\% en la predicción de la respuesta terapéutica, consolidándose como una herramienta práctica para entornos clínicos de escasos recursos.
-\subsection{Resonancia Magnética Estructural (sMRI)} La modalidad sMRI permite un análisis volumétrico y morfológico detallado de los tejidos cerebrales: materia gris (GM), materia blanca (WM) y líquido cefalorraquídeo (CSF). La literatura reporta hallazgos consistentes como el agrandamiento de los ventrículos laterales y la pérdida de volumen en el córtex temporal superior y el tálamo \cite{Tyagi2022}. Un avance técnico fundamental es la aplicación de una \textit{estrategia de radiómica}, que permite extraer características cuantitativas de alta dimensionalidad invisibles al ojo humano. Además, se han identificado los \textbf{patrones de girificación} como biomarcadores estructurales críticos para predecir la trayectoria de la enfermedad \cite{Saboori2025}.
-\subsection{Resonancia Magnética Funcional (fMRI)} La fMRI mide la actividad metabólica mediante el flujo sanguíneo, diferenciando entre el estado de reposo (rs-fMRI) y la ejecución de tareas (T-fMRI). Mientras que la investigación general subraya alteraciones en la red neuronal por defecto (DMN) \cite{Tyagi2022}, el análisis de \textbf{conectividad efectiva} ha resultado particularmente útil para predecir respuestas específicas a fármacos como la clozapina. Asimismo, estudios de neuroimagen funcional han vinculado el \textbf{aumento de la síntesis de dopamina estriatal} con la probabilidad de respuesta farmacológica \cite{Saboori2025}. Es imperativo notar que, aunque potentes, los modelos basados estrictamente en imagenología presentan un rendimiento inferior al EEG, con una sensibilidad combinada del 76\% y una especificidad del 80% \cite{Saboori2025}.
-\section{Algoritmos de Machine Learning y Deep Learning} En el panorama actual de la psiquiatría computacional, el \textit{Machine Learning} (ML) convencional, especialmente las Máquinas de Vector de Soporte (SVM), continúa dominando debido a su robustez en conjuntos de datos de tamaño moderado. A pesar del potencial teórico de las redes neuronales multicapa, existe una notable escasez de aplicaciones de \textit{Deep Learning} (DL) validadas en meta-análisis; de hecho, en la revisión sistemática de Saboori et al. (2025), solo un estudio empleó un híbrido de DL (\textit{Extreme Gradient Boosting}).
-A continuación, se presenta una comparativa técnica de los algoritmos identificados:
+
+El análisis técnico de la esquizofrenia se fundamenta en diversas modalidades que capturan alteraciones estructurales y funcionales del cerebro:
+
+\subsection{Electroencefalografía (EEG)} 
+
+La electroencefalografía destaca por ser una técnica no invasiva y de bajo coste que captura la dinámica temporal de la actividad eléctrica cerebral con una alta utilidad predictiva. Los pacientes con esquizofrenia suelen presentar asimetrías de amplitud y alteraciones en los patrones de ondas cerebrales que sirven como biomarcadores electrofisiológicos, lo que permite captar firmas neuronales sutiles de la respuesta al tratamiento \cite{Tyagi}. En términos de rendimiento predictivo, los modelos basados en EEG han demostrado una eficacia superior a otras modalidades; según el meta-análisis de Amleshi Amleshi et al. (2025), estos alcanzan una sensibilidad del 89\% y una especificidad del 94\% en la predicción de la respuesta terapéutica, consolidándose como una herramienta práctica para entornos clínicos de escasos recursos. \cite{Amleshi}
+
+\subsection{Resonancia Magnética Estructural (sMRI)} 
+
+La modalidad sMRI permite un análisis volumétrico y morfológico detallado de los tejidos cerebrales: materia gris (GM), materia blanca (WM) y líquido cefalorraquídeo (CSF). Los estudios reportan hallazgos consistentes como el agrandamiento de los ventrículos laterales y la pérdida de volumen en el córtex temporal superior y el tálamo \cite{Tyagi}. Un avance técnico fundamental es la aplicación de una \textit{estrategia de radiómica}, que permite extraer características cuantitativas de alta dimensionalidad invisibles al ojo humano. Además, se han identificado los \textbf{patrones de girificación} en regiones criticas como biomarcadores estructurales críticos para predecir la trayectoria de la enfermedad \cite{Kraguljac}.
+
+\subsection{Resonancia Magnética Funcional (fMRI)} 
+
+La fMRI mide la actividad metabólica mediante el flujo sanguíneo, diferenciando entre el estado de reposo (rs-fMRI) y la ejecución de tareas (T-fMRI). Mientras que la investigación general subraya alteraciones en la red neuronal por defecto \cite{Tyagi}, el análisis de \textbf{conectividad efectiva} ha resultado particularmente útil para predecir respuestas específicas a fármacos como la clozapina. Asimismo, estudios de neuroimagen funcional han vinculado el \textbf{aumento de la síntesis de dopamina estriatal} con la probabilidad de respuesta farmacológica \cite{Keshavan}. Es imperativo notar que, aunque potentes, los modelos basados estrictamente en imagenología presentan un rendimiento inferior al EEG, con una sensibilidad combinada del 76\% y una especificidad del 80\% \cite{Kraguljac,Keshavan}.
+
+\section{Algoritmos de Machine Learning y Deep Learning} 
+
+En el panorama actual de la psiquiatría computacional, el \textit{Machine Learning} (ML) convencional, especialmente las Máquinas de Vector de Soporte (SVM), continúa dominando debido a su robustez en conjuntos de datos de tamaño moderado. No obstante, enfoques avanzados como el \textit{Extreme Gradient Boosting} (XGBoost) han demostrado una superioridad arquitectónica en el rendimiento predictivo frente a métodos tradicionales al optimizar la función de pérdida de manera más eficiente \cite{Amleshi}. A pesar del potencial teórico de las redes neuronales multicapa, existe una notable escasez de aplicaciones de \textit{Deep Learning} (DL) validadas en meta-análisis; de hecho, en la revisión sistemática de Amleshi et al. (2025), solo un estudio empleó un híbrido de DL (\textit{Extreme Gradient Boosting}).
+
+A continuación, se presenta una comparativa técnica de los algoritmos identificados en la tabla:
 \begin{table}[h]
     \centering
-    \begin{tabular}{|l|l|p{7cm}|}
+    \begin{tabular}{|l|p{3cm}|p{5cm}|p{4cm}|}
         \hline
-        \textbf{Algoritmo} & \textbf{Categoría} & \textbf{Contexto Clínico y Aplicación} \\
+        \textbf{Algoritmo} & \textbf{Fortalezas} & \textbf{Limitaciones} & \textbf{Necesidad de Procesamiento}\\
         \hline
-        SVM & ML & Predominante en la literatura; alta capacidad de generalización en problemas no lineales de neuroimagen \cite{Saboori2025}. \\
+        SVM & Robustez en problemas no lineales y alta dimensionalidad. & Predominante en la literatura; alta capacidad de generalización en problemas no lineales de neuroimagen \cite{Amleshi}. & Requiere escalado de características y reducción de ruido. \\
         \hline
-        Random Forest & ML & Eficaz para manejar interacciones multivariantes complejas, aunque sensible a la calidad del preprocesamiento \cite{Saboori2025}. \\
+        Random Forest & Eficacia en el manejo de interacciones multivariantes complejas y correlacionadas. & Sensibilidad a la calidad y sesgos de los datos de entrada \cite{Amleshi}. & Necesita eliminación de características redundantes. \\
         \hline
-        k-NN & ML & Utilizado en estudios piloto para clasificar pacientes basados en la distancia de características pre-tratamiento en EEG \cite{Tyagi2022}. \\
+        k-NN & Simplicidad en la implementación y comprensión. & Alta sensibilidad a la calidad del preprocesamiento y el ruido \cite{Tyagi}. & Requiere normalización de variables y control del ruido. \\
         \hline
-        CNN / RNN & DL & Empleadas para el procesamiento de tensores de imagen (CNN) y señales temporales (RNN), aunque con menor representación en meta-análisis clínicos \cite{Tyagi2022}. \\
+        CNN / RNN & Capacidad para procesar tensores de imagen y señales temporales. & Menor representación en meta-análisis clínicos \cite{Tyagi}. & Requiere selección rigurosa de hiperparámetros.\\
         \hline
+        DL & Potencial para modelar relaciones no lineales complejas. & Riesgo de sobreajuste y falta de interpretabilidad \cite{Amleshi}. & Requiere grandes conjuntos de datos y técnicas de regularización. \\
     \end{tabular}
     \caption{Comparativa de algoritmos de IA aplicados a la predicción de resultados en esquizofrenia.}
 \end{table}
-\section{Conectividad y la Paradoja Multimodal} El análisis basado en grafos permite modelar el cerebro como una red compleja, utilizando métricas como la eficiencia local, la centralidad de intermediación y el coeficiente de agrupamiento para caracterizar la desorganización topológica \cite{Tyagi2022}.
-Sin embargo, la integración de múltiples fuentes de datos (clínicos, genéticos e imagen) presenta lo que denominamos la \textbf{"Paradoja Multimodal"}. A pesar de la intuición de que más datos mejoran el modelo, el meta-análisis de Saboori Amleshi et al. (2025) revela que los modelos multimodales presentan un rendimiento inferior, con una sensibilidad de apenas el 63%. Este fenómeno se atribuye a la \textit{amplificación de ruido} y a la extrema complejidad de armonizar fuentes heterogéneas, lo que sugiere que las técnicas de fusión actuales aún no superan el ruido introducido durante la normalización de datos.
-\section{Modelos de Lenguaje (LLMs) y Procesamiento de Lenguaje Natural} Más allá de la neuroimagen, el Procesamiento de Lenguaje Natural (NLP) emerge como una vía prometedora para el análisis de los síntomas del pensamiento y el lenguaje. Dado que la desorganización del discurso es un síntoma cardinal, los modelos de lenguaje permiten cuantificar patrones lingüísticos sutiles que actúan como proxies de la actividad neuronal subyacente, ofreciendo una dimensión diagnóstica complementaria y de bajo coste \cite{Tyagi2022}.
-\section{Desafíos Críticos: Explicabilidad y Alta Dimensionalidad} La implementación de estos modelos en entornos reales de salud mental enfrenta obstáculos metodológicos significativos:
-\begin{itemize} \item \textbf{IA Explicable (XAI):} La necesidad de transparencia en la toma de decisiones clínicas ha impulsado el uso de SHAP y LIME. No obstante, herramientas como los \textbf{Procesos Gaussianos}, si bien ofrecen una valiosa cuantificación de la incertidumbre, presentan dificultades técnicas severas al enfrentarse a \textbf{entradas de alta dimensionalidad}, lo que limita su aplicabilidad en estudios de radiómica extensos \cite{Saboori2025}. \item \textbf{Heterogeneidad de las Muestras:} La variabilidad en las definiciones de "respuesta al tratamiento" (frecuentemente basada en umbrales PANSS dispares) y el reducido tamaño muestral en modalidades como el EEG comprometen la validez externa de los modelos \cite{Saboori2025}. \end{itemize}
-\section{Conclusiones y Perspectivas Futuras} La inteligencia artificial aplicada a la esquizofrenia se encuentra en un punto de inflexión. Si bien el EEG y la neuroimagen estructural mediante radiómica ofrecen una precisión diagnóstica y pronóstica notable, la integración multimodal requiere de algoritmos de fusión más sofisticados que eviten la degradación del rendimiento por ruido. El futuro de la disciplina debe priorizar el desarrollo de modelos longitudinales y marcos de XAI que no solo predigan el resultado clínico, sino que proporcionen al clínico una justificación biológica interpretable, transformando la psiquiatría hacia una medicina de precisión personalizada. \cite{Saboori2025}.
+
+\section{IA Explicable, Conectividad y Desafíos en la Integración Multimodal}
+
+La caracterización de la desorganización cerebral ha avanzado notablemente mediante el análisis basado en grafos, el cual permite modelar la topología de las redes complejas a través de métricas como la eficiencia local, la centralidad de intermediación y el coeficiente de agrupamiento \cite{Tyagi}. De manera complementaria y a bajo coste, el Procesamiento del Lenguaje Natural (NLP) y los Modelos de Lenguaje (LLMs) emergen como una vía prometedora para cuantificar patrones lingüísticos sutiles en el discurso desorganizado, actuando como proxies de la actividad neuronal subyacente \cite{Tyagi}.
+
+Sin embargo, la implementación clínica de estas herramientas exige superar la opacidad de los modelos de "caja negra". Para aportar interpretabilidad visual y cuantitativa a las decisiones analíticas, los marcos de Inteligencia Artificial Explicable (XAI) como SHAP y LIME se han consolidado como estándares de la industria \cite{Amleshi, Tyagi}. No obstante, otras aproximaciones como los Procesos Gaussianos, si bien resultan valiosas para la cuantificación de la incertidumbre, presentan severas limitaciones técnicas ante entradas de alta dimensionalidad, lo que restringe significativamente su aplicabilidad en estudios radiómicos extensos \cite{Amleshi}.
+
+A estos obstáculos metodológicos se suma la denominada "Paradoja Multimodal". A pesar de la intuición teórica de que la integración de fuentes heterogéneas (datos clínicos, genéticos e imagen) optimiza los resultados, el meta-análisis de Amleshi et al. (2025) revela que los enfoques multimodales presentan un rendimiento inferior a modalidades aisladas como el EEG, registrando una sensibilidad de apenas el 63\% y una especificidad del 65\% \cite{Amleshi}. Este fenómeno se atribuye a la amplificación de ruido y a las dificultades técnicas inherentes a la armonización de datos durante su normalización. 
+
+Finalmente, la validez externa y la generalización de los modelos predictivos se ven críticamente comprometidas por dos factores: la marcada heterogeneidad muestral —derivada de criterios clínicos dispares, como el uso de umbrales PANSS variables para definir la "respuesta al tratamiento" y el reducido tamaño de las muestras en modalidades electrofisiológicas como el EEG \cite{Amleshi}.
+
+\section{Conclusiones y Perspectivas Futuras} 
+
+La inteligencia artificial aplicada a la esquizofrenia se encuentra en un punto de inflexión. Si bien el EEG y la neuroimagen estructural mediante radiómica ofrecen una precisión diagnóstica y pronóstica notable(un AUC promedio de 0.84 en la identificación de resultados terapéuticos \cite{Amleshi}), la integración multimodal requiere de algoritmos de fusión más sofisticados que eviten la degradación del rendimiento por ruido. El futuro de la disciplina debe priorizar el desarrollo de modelos longitudinales y marcos de XAI que no solo predigan el resultado clínico, sino que proporcionen al clínico una justificación biológica interpretable, transformando la psiquiatría hacia una medicina de precisión personalizada. \cite{Amleshi}.
 
 \chapter{Datos y preparación del dataset}
 Este capítulo aborda de manera pormenorizada el origen, la estructura y el ciclo de transformación técnica al que fueron sometidos los datos clínicos utilizados en este proyecto. Dado que el éxito de los modelos de aprendizaje automático y la fiabilidad de la analítica de grafos dependen directamente de la calidad del dato de entrada, las siguientes secciones detallan desde la naturaleza inicial de la fuente hasta los procesos críticos de curación y el posterior modelado relacional.
+
 
 \section{Fuente de datos}
 
@@ -969,7 +1069,7 @@ Las características arquitectónicas y de diseño técnico que definen este pan
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
 
-El desarrollo entero de este proyecto de investigación, incluyendo las fases de curación de datos, la ejecución de consultas en la base de datos orientada a grafos Neo4j, el entrenamiento de los modelos predictivos y el despliegue local de la interfaz web y demas, se ha llevado a cabo utilizando 2 estaciónes de trabajo, una local (ordenador de sobremesa) y otra portable (ordenador portátil). Debido a la carga computacional requerida para el procesamiento de grafos en memoria y el ajuste de modelos de aprendizaje automático, el equipo cuenta con unas especificaciones técnicas concretas, detalladas en la Tabla \ref{tab:especificaciones_hardware_sobremesa} y \ref{tab:especificaciones_hardware_portatil}.
+El desarrollo entero de este proyecto de investigación, incluyendo las fases de curación de datos, la ejecución de consultas en la base de datos orientada a grafos Neo4j, el entrenamiento de los modelos predictivos y el despliegue local de la interfaz web y demas, se ha llevado a cabo utilizando 2 estaciónes de trabajo, una local (ordenador de sobremesa) y otra portable (ordenador portátil). Debido a la carga computacional requerida para el procesamiento de grafos en memoria y el ajuste de modelos de aprendizaje automático, detallo los costes en la Tabla \ref{tab:especificaciones_hardware_sobremesa} y \ref{tab:especificaciones_hardware_portatil}.
 
 \begin{table}[htbp]
 \centering
@@ -981,7 +1081,7 @@ Procesador (CPU) & 12th Gen Intel(R) Core(TM) i5-12400F   2.50 GHz \\ \hline
 Memoria RAM & 16 GB DDR4 a 3200 MHz \\ \hline
 Tarjeta Gráfica (GPU) & Ej: NVIDIA GeForce RTX 3060 12GB \\ \hline
 Almacenamiento & SSD NVMe M.2 de 1 TB \\ \hline
-Periféricos & Monitor || Ej: Full HD 24'' ||, teclado y ratón ergonómicos. \\ \hline
+Periféricos & Monitor Full HD 24'', teclado y ratón ergonómicos. \\ \hline
 \end{tabular}
 \caption{Especificaciones técnicas del equipamiento hardware en el ordenador de sobremesa.}
 \label{tab:especificaciones_hardware_sobremesa}
@@ -998,7 +1098,7 @@ Procesador (CPU) & AMD Ryzen 7 7735U \\\hline
 Memoria RAM & 16 GB DDR4 a 3200 MHz \\ \hline
 Tarjeta Gráfica (GPU) & Radeon Graphics x 16 integrada \\ \hline
 Almacenamiento & SSD NVMe M.2 de 1 TB \\ \hline
-Periféricos & Monitor, por ejemplo Full HD 24'', teclado y ratón ergonómicos. \\ \hline
+Periféricos & Ratón ergonómicos. \\ \hline
 \end{tabular}
 \caption{Especificaciones técnicas del equipamiento hardware en el ordenador portátil.}
 \label{tab:especificaciones_hardware_portatil}
@@ -1015,16 +1115,18 @@ Para calcular el coste real al usar este equipamiento sobre el proyecto, se apli
 Asumiendo un periodo de desarrollo del proyecto de 7 meses, la Tabla \ref{tab:coste_hardware} desglosa el cálculo económico del impacto del hardware, aplicando el principio de amortización a los precios de mercado actuales de los componentes.
 
 \begin{table}[htbp]
-\centering
 \small
-\begin{tabular}{|l|r|c|r|}
+\setlength{\tabcolsep}{4pt}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|c|c|c|}
 \hline
 \textbf{Elemento} & \textbf{Precio Original (€)} & \textbf{Tiempo de Uso (Meses)} & \textbf{Coste Imputable (€)} \\ \hline
 Estación de trabajo (PC) & 1.100,00 & 7 & 145,83 \\ \hline
 Portátil & 1.200,00 & 7 & 150,00 \\ \hline
 Periféricos y Monitor & 150,00 & 7 & 21,88 \\ \hline
-\multicolumn{3}{|l|}{\textbf{Total Hardware}} & \textbf{317,71 €} \\ \hline
+\multicolumn{3}{|c|}{\textbf{Total Hardware}} & \textbf{317,71 €} \\ \hline
 \end{tabular}
+\end{center}
 \caption{Desglose de costes y amortización del hardware del proyecto.}
 \label{tab:coste_hardware}
 \end{table}
@@ -1037,7 +1139,7 @@ A continuación, se clasifican y justifican los recursos lógicos e informático
 
 \begin{itemize}
     \item \textbf{Entorno de desarrollo y lenguaje base:} Se ha utilizado el lenguaje de programación \textbf{Python} debido a su hegemonía en el sector de la ciencia de datos. Como entorno de desarrollo (\textit{IDE}) se empleó \textbf{Visual Studio Code} junto con \textbf{Jupyter Notebooks} para la fase de experimentación con modelos y trabajo con la base de datos, ambos bajo licencias de código abierto (MIT y BSD respectivamente).
-    \item \textbf{Persistencia y analítica de grafos:} Para el modelado relacional  y almacenamiento de datosse optó por \textbf{Neo4j (Community Edition)}, un sistema de gestión de bases de datos NoSQL orientado a grafos que opera bajo la licencia GPLv3, permitiendo el almacenamiento local u online y la ejecución de algoritmos topológicos sin coste.
+    \item \textbf{Persistencia y analítica de grafos:} Para el modelado relacional  y almacenamiento de datos se optó por \textbf{Neo4j (Community Edition)}, un sistema de gestión de bases de datos NoSQL orientado a grafos que opera bajo la licencia GPLv3, permitiendo el almacenamiento local u online y la ejecución de algoritmos topológicos sin coste.
     \item \textbf{Ciencia de datos y Machine Learning:} El procesamiento tabular de los 3134 registros y el entrenamiento predictivo se articularon mediante librerías científicas estándar de Python: \textbf{Pandas} y \textbf{NumPy} para la manipulación matricial; \textbf{Scikit-Learn} para el preprocesamiento, imputación de datos y modelos clásicos; y \textbf{XGBoost} para los modelos de optimización del gradiente.
     \item \textbf{Procesamiento del Lenguaje Natural y LLMs:} Para la integración de capacidades semánticas y el manejo de los modelos de lenguaje, se utilizaron las librerías de \textbf{Hugging Face (\textit{Transformers})}.
     \item \textbf{Despliegue de la aplicación web:} La interfaz gráfica interactiva dirigida a los expertos psiquiatras se desarrolló utilizando \textbf{Streamlit}, un marco de trabajo de código abierto en Python que permite desplegar aplicaciones web de datos de manera ágil y con un consumo mínimo de recursos en el servidor.
@@ -1046,7 +1148,7 @@ A continuación, se clasifican y justifican los recursos lógicos e informático
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabular}{|l|l|l|r|}
+\begin{tabular}{|p{4.5cm}|p{4.5cm}|p{3.5cm}|p{1.5cm}|}
 \hline
 \textbf{Software / Librería} & \textbf{Función Principal} & \textbf{Tipo de Licencia} & \textbf{Coste (€)} \\ \hline
 Python v3.13.5 & Lenguaje de programación núcleo & Python Software Foundation & 0,00 \\ \hline
@@ -1166,7 +1268,6 @@ A partir de las conclusiones obtenidas y las limitaciones identificadas en este 
 % BIBLIOGRAFÍA Y ANEXOS 
 % -----------------------------------------
 \newpage
-\addcontentsline{toc}{chapter}{Bibliografía}
 
 \bibliographystyle{ieeetr} 
 \nocite{*}
