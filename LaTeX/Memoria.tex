@@ -338,7 +338,7 @@ En última instancia, el verdadero objetivo final consiste en demostrar cómo la
 El desarrollo de soluciones tecnológicas aplicadas al ámbito de la salud mental conlleva una profunda responsabilidad legal y bioética. Dado que este proyecto interactúa con registros clínicos de pacientes diagnosticados con esquizofrenia y despliega modelos predictivos automatizados, su diseño y ejecución se han supeditado estrictamente al marco normativo vigente, estructurado en tres dimensiones esenciales:
 
 \subsection{Protección de datos y privacidad clínica}
-El tratamiento del conjunto de datos de los 3134 pacientes de Castilla y León se rige por el \cite{rgpd2016} (RGPD, Reglamento UE 2016/679) y la \cite{lopdgdd2018} \textit{Ley Orgánica 3/2018 de Protección de Datos Personales y Garantía de los Derechos Digitales} (LOPDGDD). Al clasificarse los datos de salud como <<categorías especiales de datos>> (Art. 9 del RGPD), se aplicó un protocolo estricto de anonimización irreversible previo al análisis. Esto garantiza la imposibilidad de reidentificar a los sujetos, protegiendo el secreto médico y los derechos fundamentales de los pacientes, salvaguardando simultáneamente la integridad estadística necesaria para el entrenamiento de los algoritmos.
+El tratamiento del conjunto de datos de los 3134 pacientes de Castilla y León se rige por el Reglamento (UE) 2016/679 sobre protección de datos personales (RGPD) \cite{rgpd2016} y por la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD) \cite{lopdgdd2018}. Al clasificarse los datos de salud como <<categorías especiales de datos>> (Art. 9 del RGPD), se aplicó un protocolo estricto de anonimización irreversible previo al análisis. Esto garantiza la imposibilidad de reidentificar a los sujetos, protegiendo el secreto médico y los derechos fundamentales de los pacientes, salvaguardando simultáneamente la integridad estadística necesaria para el entrenamiento de los algoritmos.
 
 \subsection{Regulación de la Inteligencia Artificial de la Unión Europea}
 En consonancia con la normativa comunitaria actual, específicamente la Ley de Inteligencia Artificial de la Unión Europea (\textit{EU AI Act}), los sistemas de software destinados a actuar como herramientas de soporte al diagnóstico o cribado médico entran dentro de la consideración de sistemas de alto riesgo o requieren estrictas salvaguardas de transparencia. Este proyecto se ha diseñado respetando rigurosamente los requisitos de dicha ley:
@@ -352,13 +352,24 @@ En consonancia con la normativa comunitaria actual, específicamente la Ley de I
 Desde una perspectiva puramente ética, el proyecto se alinea con los principios fundamentales de la bioética moderna: beneficencia (buscar el máximo beneficio analítico para optimizar tratamientos) y no maleficencia (evitar diagnósticos erróneos mediante la validación exhaustiva de métricas). Un desafío ético crítico abordado en el diseño ha sido la prevención del \textit{sesgo de automatización} (la tendencia humana a confiar ciegamente en los sistemas automatizados). Los modelos predictivos desarrollados mitigan este riesgo presentando las predicciones probabilísticas no como sentencias definitivas, sino como indicadores complementarios acompañados de la sintomatología relacional del paciente, fomentando el pensamiento crítico del experto psiquiatra.
 
 \subsection{Regulación de la documentación clínica y autonomía del paciente}
-Al trabajar con un \textit{dataset} extraído de historiales médicos, el proyecto se alinea con la \cite{ley41_2002}. Esta ley establece que la historia clínica es un instrumento destinado fundamentalmente a garantizar una asistencia adecuada, pero permite su uso con fines de investigación científica. El proyecto cumple rigurosamente con el artículo 16 de dicha norma, el cual estipula que el acceso a la historia clínica con fines de investigación debe preservar el derecho del paciente a la confidencialidad, separando obligatoriamente los datos de identificación de los de carácter clínico-asistencial.
+Al trabajar con un \textit{dataset} extraído de historiales médicos, el proyecto se alinea con la Ley 41/2002, de 14 de noviembre, básica reguladora de la autonomía del paciente y de derechos y obligaciones en materia de información y documentación clínica \cite{ley41_2002}. Esta ley establece que la historia clínica es un instrumento destinado fundamentalmente a garantizar una asistencia adecuada, pero permite su uso con fines de investigación científica. El proyecto cumple rigurosamente con el artículo 16 de dicha norma, el cual estipula que el acceso a la historia clínica con fines de investigación debe preservar el derecho del paciente a la confidencialidad, separando obligatoriamente los datos de identificación de los de carácter clínico-asistencial.
 
 \subsection{Marco de la investigación biomédica}
-Dado el carácter analítico y científico del estudio sobre la esquizofrenia, la actividad investigadora se encuadra en la \cite{ley14_2007}, específicamente en su Título V, que regula el tratamiento de datos de carácter personal en el ámbito sanitario. La normativa ampara el uso secundario de datos clínicos para investigación epidemiológica y de salud pública sin necesidad de requerir un nuevo consentimiento informado explícito, siempre y cuando los datos hayan sido sometidos a una anonimización estricta por un equipo independiente, tal y como ocurre con las muestras del dataset nuestro utilizada en este trabajo.
+Dado el carácter analítico y científico del estudio sobre la esquizofrenia, la actividad investigadora se encuadra en la Ley 14/2007, de 3 de julio, de Investigación Biomédica \cite{ley14_2007}, específicamente en su Título V, que regula el tratamiento de datos de carácter personal en el ámbito sanitario. La normativa ampara el uso secundario de datos clínicos para investigación epidemiológica y de salud pública sin necesidad de requerir un nuevo consentimiento informado explícito, siempre y cuando los datos hayan sido sometidos a una anonimización estricta por un equipo independiente, tal y como ocurre con las muestras del dataset nuestro utilizada en este trabajo.
 
 \subsection{Secreto profesional y consideraciones eticas en salud mental}
 El diseño de la aplicación web respeta los principios éticos esenciales de la práctica médica y psicológica en España. En el ámbito de la psiquiatría, la confidencialidad es un factor crítico debido al estigma social que lamentablemente sigue asociado a la esquizofrenia. La herramienta desarrollada cumple con este requisito ético ya que tanto el conversor ICD como los gráficos relacionales funcionan exclusivamente con identificadores anónimos (códigos numéricos) en lugar de datos personales reales como nombres o números de historia clínica. De este modo, cualquier facultativo puede utilizar la aplicación en su consulta diaria con total seguridad, garantizando que la privacidad de los pacientes jamás se vea comprometida.
+
+\subsection{Marco de Seguridad y Cumplimiento (ENS)}
+Dada la naturaleza de los datos tratados, el proyecto ha sido diseñado bajo las directrices fundamentales del Esquema Nacional de Seguridad (ENS), de acuerdo con el Real Decreto 311/2022. Aunque el alcance de este Trabajo de Fin de Grado es de investigación, el sistema se ha estructurado siguiendo los principios de seguridad por diseño (security by design) para garantizar la protección de la confidencialidad, integridad y disponibilidad de la información:
+\begin{itemize}
+    \item \textbf{Gestión de la Identidad}: Implementación de técnicas de desidentificación que aseguran que el modelo de IA opera exclusivamente con datos anonimizados, cumpliendo con la necesidad de "principio de mínimo privilegio".
+
+    \item \textbf{Trazabilidad}: El pipeline de preprocesamiento registra todas las transformaciones realizadas sobre el dataset, cumpliendo con la exigencia de auditabilidad del ENS.
+
+    \item \textbf{Integridad del dato}: El uso de semillas aleatorias (\texttt{random\_state}) y la reproducibilidad de los experimentos garantizan que los resultados no han sido manipulados, alineándose con el pilar de integridad del esquema.
+\end{itemize}
+Este enfoque asegura que cualquier futura escalada de este proyecto hacia un entorno de producción hospitalario real cuente con una base arquitectónica preparada para la certificación formal.
 
 \section{Estructura de la memoria}
 
@@ -1190,7 +1201,7 @@ Ingeniero de Datos Junior & 300 & 22,00 & 6.600,00 \\ \hline
 Los costes indirectos estaran compuestos por aquellos gastos que, sin estar ligados directamente a la programación o análisis, son indispensables para el desarrollo de la actividad física. Esto incluye el consumo de energía eléctrica de la estación de trabajo, la conexión a internet de banda ancha para la descarga de librerías o subida de modelos o codigo a Github, y el gasto logístico del espacio de oficina. Para simplificar y generalizar el modelo contable, se aplica un estándar industrial del 15\% sobre el coste total de la mano de obra directa:
 
 \begin{equation}
-\text{Costes Indirectos} = 6.600,00 \times 0,15 = 990,00 \text{ €}
+\text{Costes Indirectos} = 317,71 \times 0,15 = 47,66 \text{ €}
 \end{equation}
 
 \subsubsection{Resumen del presupuesto total}
@@ -1206,8 +1217,8 @@ Para concluir el análisis financiero, unificaremos todos los conceptos económi
 Recursos Hardware (Amortización lineal) & 317,71 \\ \hline
 Software y Librerías de Código Abierto & 0,00 \\ \hline
 Costes de Personal (Mano de Obra Directa) & 6.600,00 \\ \hline
-Costes Indirectos (15\% sobre mano de obra) & 990,00 \\ \hline
-\textbf{PRESUPUESTO TOTAL DEL PROYECTO} & \textbf{7.907,71 €} \\ \hline
+Costes Indirectos (15\% sobre mano de obra) & 47,66 \\ \hline
+\textbf{PRESUPUESTO TOTAL DEL PROYECTO} & \textbf{ 6.965,37} \\ \hline
 \end{tabular}
 \caption{Resumen consolidado del presupuesto general del TFG.}
 \label{tab:presupuesto_total}
