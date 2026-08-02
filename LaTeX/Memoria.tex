@@ -1239,7 +1239,6 @@ Las características arquitectónicas y de diseño técnico que definen este pan
 \end{figure}
 
 \chapter{Planificación y Gestión del Proyecto}
-\label{cap:planificacion}
 
 En el ámbito de la ingeniería de \textit{software} y la ciencia de datos, la adopción de una metodología de gestión resulta indispensable para garantizar el cumplimiento de los objetivos dentro de los plazos establecidos. Este capítulo detalla el marco metodológico utilizado, el desglose de iteraciones (\textit{Sprints}), la asignación de las Historias de Usuario y el cronograma temporal del proyecto.
 
@@ -1247,7 +1246,7 @@ En el ámbito de la ingeniería de \textit{software} y la ciencia de datos, la a
 
 De cara a organizar el proyecto de manera eficiente, se ha seguido una metodología ágil basada en \textbf{Scrum adaptado} al contexto de investigación y desarrollo individual. Seguir esta metodología me permitira afrontar mejor las incertidumbres de un proyecto de investigación mediante ciclos iterativos e incrementales.
 
-El proyecto se organizó para una duración estimada de \textbf{24 semanas} (6 meses), estructurada en X Sprints de 3 semanas de duración cada uno (a excepción del último Sprint dedicado a la memoria final). 
+El proyecto se organizó para una duración estimada de \textbf{24 semanas} (6 meses), estructurada en 8 Sprints de 3 semanas de duración cada uno (a excepción del último Sprint dedicado a la memoria final). 
 
 \begin{comment}
 Cada iteración integró las siguientes ceremonias adaptadas:
@@ -1262,77 +1261,70 @@ Cada iteración integró las siguientes ceremonias adaptadas:
 A continuación, se detalla el alcance funcional y técnico desarrollado en cada una de las fases del proyecto:
 
 \begin{description}
-    \item[Sprint 1: Análisis y Limpieza del dataset (Semanas 1 a 3)] \hfill \\
-    Fase dedicada a la ingesta del \textit{dataset} hospitalario, la auditoría del cumplimiento del ENS y la unificación ICD-9 a ICD-10.
+    \item[Sprint 1: Análisis y Limpieza del Dataset] \hfill \\
+    Fase inicial orientada a la ingesta, auditoría y sanitización de la matriz de datos clínica.
     \begin{itemize}
-        \item \textit{Tareas:} Descarte de 12 variables no relevantes, generalización del código \texttt{F20.89} a \texttt{F20}, y especificación del catálogo de Requisitos (RF/RNF).
+        \item \textit{Tareas realizadas:} Descarte de 12 variables irrelevantes para evitar ruido, filtrado de nulos, estandarización del texto descriptivo para modelos de lenguaje y generalización de los códigos. Auditoría inicial de seguridad (ENS/RGPD).
+        \item \textit{Requisitos asociados:} \texttt{RNF-03}.
     \end{itemize}
 
-    \item[Sprint 2: Conversor de codigos ICD] \hfill \\
-
+    \item[Sprint 2: Conversor de Códigos ICD] \hfill \\
+    Diseño del archivo de equivalencias entre los estándares ICD-9, ICD-10 y descripciones clínicas.
     \begin{itemize}
-        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-04} (Mapeo CIE) y desarrollo del módulo de conversión bidireccional entre códigos ICD-9 e ICD-10.
+        \item \textit{Tareas realizadas:} Mapeo bidireccional ICD-9 $\rightarrow$ ICD-10, estructuración de descripciones clínicas en español e inglés y generación de equivalencias en el dataset.
+        \item \textit{Historias de Usuario y Requisitos:} \texttt{HU-04}, \texttt{RF-02}.
     \end{itemize}
 
-    \item[Sprint 3: Creacion y estudio de mapas de prevalencia] \hfill \\
-
+    \item[Sprint 3: Creación y Estudio de Mapas de Prevalencia] \hfill \\
+    Elaboración de mapas de prevalencia para visualizar la distribución geográfica de los casos del espectro esquizofrénico en la provincia.
     \begin{itemize}
-        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-03} (Mapa de prevalencia espacial) y desarrollo del módulo de visualización geográfica con Leaflet/Folium.
-    \end{itemize}
-    
-    \item[Sprint 4: Formada la base de datos para la exploración de la red de comorbilidades] \hfill \\
-    Diseño del modelo relacional en grafos y construcción de la base de datos Neo4j.
-    \begin{itemize}
-        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-02} (Explorador de Grafos Neo4j) y desarrollo del módulo de visualización de la red relacional de comorbilidades.
+        \item \textit{Tareas realizadas:} Agregación de frecuencias por código postal, integración de cartografía vectorial en formato GeoJSON de España y generación de visores coropléticos mediante la librería \textit{Folium}.
+        \item \textit{Historias de Usuario y Requisitos:} \texttt{HU-03}, \texttt{RF-04}, \texttt{RNF-04}.
     \end{itemize}
     
-    \item[Sprint 5: Entrenamiento de modelos de aprendizaje automático y profundo] \hfill \\
-
+    \item[Sprint 4: Formación de la Base de Datos de Grafos] \hfill \\
+    Migración del paradigma tabular del dataset a un modelo NoSQL orientado a grafos para la exploración de comorbilidades.
     \begin{itemize}
-        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-01} (Predicción asistida) y desarrollo del bloque de Procesamiento del Lenguaje Natural con arquitecturas BERT. Generación de los datasets submuestreados (RUS) y sintéticos (VAE). fine-tuning de arquitecturas BERT (\texttt{BETO}, \texttt{XLM-RoBERTa}) y calibración vía \textit{Grid Search}.
+        \item \textit{Tareas realizadas:} Instalación y configuración de \textbf{Neo4j}, modelado del esquema de entidades (\textit{Paciente}, \textit{Diagnóstico}) y relaciones clínicas, y escritura de consultas avanzadas en lenguaje \textit{Cypher}.
+        \item \textit{Historias de Usuario y Requisitos:} \texttt{HU-02}, \texttt{RF-03}, \texttt{RNF-06}.
+    \end{itemize}
+    
+    \item[Sprint 5: Entrenamiento de Modelos ML y DL] \hfill \\
+    Construcción del núcleo predictivo mediante la experimentación sobre los 3 datasets (Original, RUS y VAE) mediante la división estratificada.
+    \begin{itemize}
+        \item \textit{Tareas realizadas:} Entrenamiento de 6 clasificadores tabulares (\textit{Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM, CatBoost}) y ajuste fino (\textit{fine-tuning}) de 4 modelos de lenguaje basados en Transformers (\texttt{bert-base-multilingual-cased}, \texttt{BETO} \textit{cased/uncased}, \texttt{xlm-roberta-base}).
+        \item \textit{Requisitos asociados:} \texttt{RF-01}, \texttt{RF-05}.
     \end{itemize}
         
-    \item[Sprint 6: Evaluación y comparacion de resultados] \hfill \\
-
+    \item[Sprint 6: Evaluación y Comparación de Resultados] \hfill \\
+    Comparacion técnica del rendimiento y resultados de los modelos entrenados.
     \begin{itemize}
-        \item \textit{Tareas:} Consolidación del benchmark de modelos, verificación de Requisitos No Funcionales (RNF) y redacción final de la memoria del TFG.
+        \item \textit{Tareas realizadas:} Ejecución de la Búsqueda en Rejilla (\textit{Grid Search}), cálculo de métricas de rendimiento (F1-Score, Precisión, Sensibilidad, AUC) y selección del modelo ganador.
+        \item \textit{Requisitos asociados:} \texttt{RNF-01}, \texttt{RF-08}.
     \end{itemize}
     
     \item[Sprint 7: Desarrollo de la aplicación web] \hfill \\
-    
+    Construcción de una pagina web unificando los módulos desarrollados en los Sprints anteriores.
     \begin{itemize}
-        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-01} (Predicción asistida), \texttt{HU-02} (Explorador de Grafos Neo4j) y \texttt{HU-03} (Mapa de prevalencia espacial con Leaflet/Folium).
+        \item \textit{Tareas realizadas:} Programación de la interfaz interactiva en \textbf{Streamlit}.
+% integración de los archivos de pesos de IA (\texttt{.pkl}/\texttt{PyTorch}), conexión con Neo4j y renderizado del visor geográfico. 
+        \item \textit{Requisitos asociados:} \texttt{RNF-02}, \texttt{RNF-05}.
     \end{itemize}
     
-    \item[Sprint 8: Evaluación, Pruebas e Integración de la Memoria (Semanas 13 a 16)] \hfill \\
-    Consolidación del benchmark de modelos, verificación de Requisitos No Funcionales (RNF) y redacción final de la memoria del TFG.
+    \item[Sprint 8: Evaluación, Pruebas e Integración de la Memoria] \hfill \\
+    Cierre del proyecto, verificación de calidad y documentación formal.
+    \begin{itemize}
+        \item \textit{Tareas realizadas:} Pruebas de integración, auditoría final del cumplimiento del ENS y redacción de la memoria del TFG.
+        \item \textit{Requisitos asociados:} \texttt{RNF-01}, \texttt{RNF-03}, \texttt{RNF-07}.
+    \end{itemize}
 \end{description}
 
-\newpage
-\section{Cronograma y Diagrama de Gantt}
-
-La Tabla~\ref{tab:cronograma_gantt} ilustra la planificación temporal de las tareas a lo largo de las X semanas de ejecución del proyecto, mostrando el solapamiento entre la fase experimental de IA y el desarrollo de la aplicación web.
-
-\begin{table}[htbp]
-\centering
-\small
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-\textbf{Fases / Tareas} & \textbf{Sprint 1} & \textbf{Sprint 2} & \textbf{Sprint 3} & \textbf{Sprint 4} & \textbf{Sprint 5} \\ 
-& (Sem 1-3) & (Sem 4-6) & (Sem 7-9) & (Sem 10-12) & (Sem 13-16) \\ \hline
-1. Requisitos y Preprocesamiento & \textbf{X} & & & & \\ \hline
-2. Modelado en Grafos (Neo4j) & & \textbf{X} & & & \\ \hline
-3. Modelos ML Tabulares & & \textbf{X} & & & \\ \hline
-4. Modelos NLP (BERT) y VAE & & & \textbf{X} & & \\ \hline
-5. Grid Search e Hiperparámetros & & & \textbf{X} & & \\ \hline
-6. Desarrollo Web (Streamlit) & & & & \textbf{X} & \\ \hline
-7. Integración e HUs (HU-01/04) & & & & \textbf{X} & \\ \hline
-8. Pruebas RNF y Redacción & & & & & \textbf{X} \\ \hline
-\end{tabular}
-\caption{Cronograma de planificación del proyecto dividido por Sprints y semanas.}
-\label{tab:cronograma_gantt}
-\end{table}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{imagenes/diagrama_gantt.png}
+    \caption{Diagrama de Gantt del proyecto.}
+    \label{fig:diagrama_gantt}
+\end{figure}
 
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
