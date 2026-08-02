@@ -27,6 +27,7 @@
 \usepackage{cite}     % Para las citas de referencias (crea el superíndice).
 \usepackage{listings} % Para coloreado de código fuente.
 \usepackage{verbatim} % Para textos tipo consola y otros formatos.
+\usepackage{enumitem} % Para personalizar listas enumeradas y con viñetas.
 \usepackage{fancyvrb} % Más opciones de verbatim.
 \usepackage{parskip}  % OPCIONAL: Separa los párrafos con una línea en blanco.
 \setlength{\parindent}{15pt} % Sangría de párrafos estándar (15 puntos). Necesario incluirla si se usa el paquete 'parskip'.
@@ -38,6 +39,7 @@
 \usepackage{siunitx} 
 \usepackage{booktabs} %para la matriz de confusion
 \usepackage{hhline} %para linea doble cortada
+\usepackage{colortbl} % Para colores en tablas
 \usepackage{rotating}
 \usepackage{pgfgantt}
 \usepackage{pdflscape}
@@ -1025,6 +1027,105 @@ El módulo de visualización de la aplicación se ha diseñado bajo el principio
 
 Visualización de la red relacional de comorbilidades: Utilizando las capacidades de consulta de Neo4j, la aplicación genera una representación interactiva de la red de diagnósticos. El facultativo no observa una tabla de datos abstracta, sino un grafo donde los nodos representan patologías (clasificadas por sus códigos ICD) y las aristas reflejan la coexistencia de estos trastornos en el histórico de pacientes. El grosor o la disposición de estas conexiones permite identificar de un vistazo las trayectorias clínicas más frecuentes y las relaciones de comorbilidad asociadas a la esquizofrenia.
 
+\section{Requisitos}
+
+Para garantizar un desarrollo de \textit{software} riguroso y alineado con las metodologías ágiles de ingeniería, la herramienta web desarrollada en \textbf{Streamlit} se ha diseñado a partir de una fase previa de especificación técnica. Este apartado formaliza el comportamiento del sistema mediante el catálogo de Requisitos Funcionales (RF), Requisitos No Funcionales (RNF) y las Historias de Usuario (HU) asociadas.
+Los requisitos del sistema delimitan las capacidades operativas y las restricciones de calidad que debe satisfacer la plataforma:
+
+\subsection{Requisitos Funcionales}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lp{10cm}}
+\hline
+\textbf{Código} & \textbf{Descripción del Requisito Funcional (RF)} \\ \hline
+\textbf{RF-01} & \textbf{Mapeo normativo CIE-9 / CIE-10:} El sistema debe realizar la conversión automática y bidireccional entre las codificaciones diagnósticas antiguas e independientes. \\
+\textbf{RF-02} & \textbf{Múltiples conversiones:} El sistema debe permitir la conversión simultánea de varios códigos a un formato deseado. \\
+\textbf{RF-03} & \textbf{Exportación de informes y analítica:} El sistema debe permitir descargar los resultados de las conversiones en lote en formatos estándar (PDF/CSV). \\
+\begin{comment}
+\textbf{RF-02} & \textbf{Inferencia predictiva multiclase:} El sistema debe procesar sintomatología o historiales clínicos y devolver la probabilidad diagnóstica dentro del espectro esquizofrénico mediante los modelos entrenados. \\
+\textbf{RF-03} & \textbf{Exploración de grafos clínicos:} El sistema debe consultar la base de datos Neo4j mediante lenguaje \textit{Cypher} para renderizar visualmente las comorbilidades y trayectorias de pacientes. \\
+\textbf{RF-04} & \textbf{Visualización epidemiológica espacial:} El sistema debe generar mapas coropléticos interactivos cruzando datos de densidad poblacional (CSV) con límites vectoriales (GeoJSON). \\
+\textbf{RF-05} & \textbf{Procesamiento de texto libre (NLP):} El sistema debe tokenizar y evaluar descripciones médicas en lenguaje natural en español mediante la arquitectura BERT. \\ \hline
+\textbf{RF-07} & \textbf{Filtrado avanzado en la red de grafos:} El sistema debe ofrecer controles interactivos para filtrar el subgrafo de Neo4j según variables sociodemográficas (rango de edad, sexo) o por umbrales de densidad de la relación de comorbilidad. \\
+\textbf{RF-08} & \textbf{Trazabilidad y registro de inferencias (Logs):} El sistema debe almacenar un registro local desidentificado de los diagnósticos inferidos y parámetros utilizados para permitir auditorías técnicas posteriores. \\ \hline
+\end{comment}
+
+\end{tabular}
+\caption{Catálogo de Requisitos Funcionales del sistema.}
+\label{tab:requisitos_funcionales}
+\end{table}
+
+\newpage
+\subsection{Requisitos No Funcionales}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lp{10cm}}
+\hline
+\textbf{Código} & \textbf{Descripción del Requisito No Funcional (RNF)} \\ \hline
+\textbf{RNF-01} & \textbf{Tiempo de respuesta (Rendimiento):} El tiempo de inferencia de las conversiones individuales no superará los 5 segundos y las conversiones en lote no excederán los 30 segundos. \\
+\textbf{RNF-02} & \textbf{Usabilidad (UX/UI):} La interfaz debe ser intuitiva, accesible desde navegadores web convencionales y no requerir conocimientos de programación por parte del clínico. \\
+\textbf{RNF-03} & \textbf{Seguridad y Privacidad (ENS/RGPD):} El sistema debe garantizar la anonimización absoluta de la información tratada, operando bajo el principio de mínimo privilegio. \\
+\textbf{RNF-04} & \textbf{Interoperabilidad y Portabilidad:} El \textit{backend} debe basarse en formatos abiertos y estándar (CSV, GeoJSON, ejecutable de Python). \\
+\textbf{RNF-05} & \textbf{Mantenibilidad y Modularidad:} La arquitectura del \textit{software} debe estar desacoplada en capas independientes (interfaz, pipelines de IA y conector Neo4j) para facilitar el reemplazo o actualización de modelos sin alterar la interfaz. \\
+\textbf{RNF-06} & \textbf{Escalabilidad del almacenamiento:} La base de datos orientada a grafos debe estar optimizada en índices de nodos para mantener tiempos de consulta eficientes ante futuros incrementos en el número de pacientes o conexiones diagnósticas. \\ \hline
+\end{tabular}
+\caption{Catálogo de Requisitos No Funcionales del sistema.}
+\label{tab:requisitos_no_funcionales}
+\end{table}
+
+\newpage
+\subsection{Historias de Usuario}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Código: HU-01} & \textbf{Título: Conversión e Interoperabilidad CIE-9 / CIE-10} \\ \hline
+\textbf{Rol del usuario} & Personal Administrativo / Clínico. \\ \hline
+\textbf{Descripción} & Como usuario del sistema, quiero consultar la equivalencia exacta entre códigos históricos CIE-9 y modernos CIE-10 para mantener la integridad documental. \\ \hline
+\textbf{Prioridad} & Media (\textit{Should Have}). \\ \hline
+\textbf{Dependencias} & RF-02, Tabla relacional CSV de mapeos normativos. \\ \hline
+\textbf{Criterios de Aceptación} & 
+\begin{itemize}[leftmargin=*]
+    \item \textbf{CA-4.1:} El módulo debe permitir búsquedas bidireccionales por código o por texto descriptivo.
+    \item \textbf{CA-4.2:} Debe mostrarse de forma clara la correspondencia oficial y su descripción en español.
+\end{itemize} \\ \hline
+\end{tabular}
+\caption{Especificación de la Historia de Usuario HU-04: Mapeo CIE.}
+\label{tab:hu_04}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Código: HU-02} & \textbf{Título: Análisis Espacial e Inspección Cartográfica} \\ \hline
+\textbf{Rol del usuario} & Gestor Sanitario / Epidemiólogo. \\ \hline
+\textbf{Descripción} & Como epidemiólogo, quiero visualizar la distribución geográfica de los casos por código postal para detectar focos de prevalencia poblacional. \\ \hline
+\textbf{Prioridad} & Alta. \\ \hline
+\textbf{Dependencias} & Ficheros GeoJSON y CSV de frecuencias agregadas. \\ \hline
+\textbf{Criterios de Aceptación} & 
+\begin{itemize}[leftmargin=*]
+    \item \textbf{CA-3.1:} El mapa coroplético debe renderizar un gradiente de color proporcional a la frecuencia de casos.
+    \item \textbf{CA-3.2:} Al pasar el cursor (\textit{tooltip}) sobre un código postal, debe mostrarse el número de afectados.
+    \item \textbf{CA-3.3:} El visor debe permitir hacer \textit{zoom} y desplazamiento fluido por todo el territorio.
+\end{itemize} \\ \hline
+\end{tabular}
+\caption{Especificación de la Historia de Usuario HU-03: Análisis Espacial.}
+\label{tab:hu_03}
+\end{table}
+
 \section{Elementos de la interfaz y paneles de datos}
 
 Mi aplicación web centra su potencial visual en la estructuración limpia de formularios de texto, tablas de datos dinámicas y paneles interactivos. Dado que el objetivo primordial del sistema es la conversión ágil de códigos ICD y la clasificación semántica en tiempo real, el diseño da prioridad absoluta al texto y a la legibilidad de los diagnósticos frente a las representaciones gráficas convencionales.
@@ -1137,6 +1238,101 @@ Las características arquitectónicas y de diseño técnico que definen este pan
     \label{fig:conversor_lotes_3}
 \end{figure}
 
+\chapter{Planificación y Gestión del Proyecto}
+\label{cap:planificacion}
+
+En el ámbito de la ingeniería de \textit{software} y la ciencia de datos, la adopción de una metodología de gestión resulta indispensable para garantizar el cumplimiento de los objetivos dentro de los plazos establecidos. Este capítulo detalla el marco metodológico utilizado, el desglose de iteraciones (\textit{Sprints}), la asignación de las Historias de Usuario y el cronograma temporal del proyecto.
+
+\section{Metodología de Desarrollo: Scrum Adaptado}
+
+De cara a organizar el proyecto de manera eficiente, se ha seguido una metodología ágil basada en \textbf{Scrum adaptado} al contexto de investigación y desarrollo individual. Seguir esta metodología me permitira afrontar mejor las incertidumbres de un proyecto de investigación mediante ciclos iterativos e incrementales.
+
+El proyecto se organizó para una duración estimada de \textbf{24 semanas} (6 meses), estructurada en X Sprints de 3 semanas de duración cada uno (a excepción del último Sprint dedicado a la memoria final). 
+
+\begin{comment}
+Cada iteración integró las siguientes ceremonias adaptadas:
+\begin{itemize}
+    \item \textbf{Planificación del Sprint (\textit{Sprint Planning}):} Definición de las tareas técnicas y las Historias de Usuario (\textit{Product Backlog}) a abordar en el periodo.
+    \item \textbf{Revisión y Refactorización (\textit{Sprint Review}):} Evaluación de las métricas obtenidas por los modelos de IA y ajuste de los hiperparámetros o del \textit{pipeline} de datos.
+\end{itemize}
+\end{comment}
+
+\section{Desglose de Sprints y Asignación de Tareas}
+
+A continuación, se detalla el alcance funcional y técnico desarrollado en cada una de las fases del proyecto:
+
+\begin{description}
+    \item[Sprint 1: Análisis y Limpieza del dataset (Semanas 1 a 3)] \hfill \\
+    Fase dedicada a la ingesta del \textit{dataset} hospitalario, la auditoría del cumplimiento del ENS y la unificación ICD-9 a ICD-10.
+    \begin{itemize}
+        \item \textit{Tareas:} Descarte de 12 variables no relevantes, generalización del código \texttt{F20.89} a \texttt{F20}, y especificación del catálogo de Requisitos (RF/RNF).
+    \end{itemize}
+
+    \item[Sprint 2: Conversor de codigos ICD] \hfill \\
+
+    \begin{itemize}
+        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-04} (Mapeo CIE) y desarrollo del módulo de conversión bidireccional entre códigos ICD-9 e ICD-10.
+    \end{itemize}
+
+    \item[Sprint 3: Creacion y estudio de mapas de prevalencia] \hfill \\
+
+    \begin{itemize}
+        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-03} (Mapa de prevalencia espacial) y desarrollo del módulo de visualización geográfica con Leaflet/Folium.
+    \end{itemize}
+    
+    \item[Sprint 4: Formada la base de datos para la exploración de la red de comorbilidades] \hfill \\
+    Diseño del modelo relacional en grafos y construcción de la base de datos Neo4j.
+    \begin{itemize}
+        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-02} (Explorador de Grafos Neo4j) y desarrollo del módulo de visualización de la red relacional de comorbilidades.
+    \end{itemize}
+    
+    \item[Sprint 5: Entrenamiento de modelos de aprendizaje automático y profundo] \hfill \\
+
+    \begin{itemize}
+        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-01} (Predicción asistida) y desarrollo del bloque de Procesamiento del Lenguaje Natural con arquitecturas BERT. Generación de los datasets submuestreados (RUS) y sintéticos (VAE). fine-tuning de arquitecturas BERT (\texttt{BETO}, \texttt{XLM-RoBERTa}) y calibración vía \textit{Grid Search}.
+    \end{itemize}
+        
+    \item[Sprint 6: Evaluación y comparacion de resultados] \hfill \\
+
+    \begin{itemize}
+        \item \textit{Tareas:} Consolidación del benchmark de modelos, verificación de Requisitos No Funcionales (RNF) y redacción final de la memoria del TFG.
+    \end{itemize}
+    
+    \item[Sprint 7: Desarrollo de la aplicación web] \hfill \\
+    
+    \begin{itemize}
+        \item \textit{Tareas:} Implementación de la Historia de Usuario \texttt{HU-01} (Predicción asistida), \texttt{HU-02} (Explorador de Grafos Neo4j) y \texttt{HU-03} (Mapa de prevalencia espacial con Leaflet/Folium).
+    \end{itemize}
+    
+    \item[Sprint 8: Evaluación, Pruebas e Integración de la Memoria (Semanas 13 a 16)] \hfill \\
+    Consolidación del benchmark de modelos, verificación de Requisitos No Funcionales (RNF) y redacción final de la memoria del TFG.
+\end{description}
+
+\newpage
+\section{Cronograma y Diagrama de Gantt}
+
+La Tabla~\ref{tab:cronograma_gantt} ilustra la planificación temporal de las tareas a lo largo de las X semanas de ejecución del proyecto, mostrando el solapamiento entre la fase experimental de IA y el desarrollo de la aplicación web.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Fases / Tareas} & \textbf{Sprint 1} & \textbf{Sprint 2} & \textbf{Sprint 3} & \textbf{Sprint 4} & \textbf{Sprint 5} \\ 
+& (Sem 1-3) & (Sem 4-6) & (Sem 7-9) & (Sem 10-12) & (Sem 13-16) \\ \hline
+1. Requisitos y Preprocesamiento & \textbf{X} & & & & \\ \hline
+2. Modelado en Grafos (Neo4j) & & \textbf{X} & & & \\ \hline
+3. Modelos ML Tabulares & & \textbf{X} & & & \\ \hline
+4. Modelos NLP (BERT) y VAE & & & \textbf{X} & & \\ \hline
+5. Grid Search e Hiperparámetros & & & \textbf{X} & & \\ \hline
+6. Desarrollo Web (Streamlit) & & & & \textbf{X} & \\ \hline
+7. Integración e HUs (HU-01/04) & & & & \textbf{X} & \\ \hline
+8. Pruebas RNF y Redacción & & & & & \textbf{X} \\ \hline
+\end{tabular}
+\caption{Cronograma de planificación del proyecto dividido por Sprints y semanas.}
+\label{tab:cronograma_gantt}
+\end{table}
 
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
@@ -1242,7 +1438,7 @@ En este apartado se consolida el análisis económico del proyecto, integrando l
 
 \subsubsection{Costes de personal (Mano de obra)}
 
-El volumen de trabajo estimado para la consecución de los objetivos de este TFG se alinea con la carga lectiva oficial de 12 créditos ECTS, lo que equivale a un total de 300 horas de dedicación. Atendiendo a los convenios colectivos actuales estandar y las tarifas de mercado para perfiles tecnológicos de nivel de entrada, se fija un coste horario de 22,00 €/hora (incluyendo costes salariales y cargas sociales). El cálculo del coste total de personal se detalla en la Tabla \ref{tab:coste_personal}.
+El volumen de trabajo estimado para la consecución de los objetivos de este TFG se alinea con la carga lectiva oficial de 12 créditos ECTS, lo que equivale a un total de 300 horas de dedicación. Atendiendo a los convenios colectivos actuales estandar y las tarifas de mercado para perfiles tecnológicos de nivel de entrada, se fija un coste horario de 14,00 €/hora (incluyendo costes salariales y cargas sociales) \cite{salario-ingeniero-datos}. El cálculo del coste total de personal se detalla en la Tabla \ref{tab:coste_personal}.
 
 \begin{table}[htbp]
 \centering
@@ -1250,8 +1446,8 @@ El volumen de trabajo estimado para la consecución de los objetivos de este TFG
 \begin{tabular}{|l|c|c|r|}
 \hline
 \textbf{Perfil Profesional} & \textbf{Horas Dedicadas} & \textbf{Precio/Hora (€)} & \textbf{Coste Total (€)} \\ \hline
-Ingeniero de Datos Junior & 300 & 22,00 & 6.600,00 \\ \hline
-\multicolumn{3}{|l|}{\textbf{Total Mano de Obra}} & \textbf{6.600,00 €} \\ \hline
+Ingeniero de Datos Junior & 300 & 14,00 & 4.200,00 \\ \hline
+\multicolumn{3}{|l|}{\textbf{Total Mano de Obra}} & \textbf{4.200,00 €} \\ \hline
 \end{tabular}
 \caption{Desglose del coste de personal directo.}
 \label{tab:coste_personal}
@@ -1262,7 +1458,7 @@ Ingeniero de Datos Junior & 300 & 22,00 & 6.600,00 \\ \hline
 Los costes indirectos estaran compuestos por aquellos gastos que, sin estar ligados directamente a la programación o análisis, son indispensables para el desarrollo de la actividad física. Esto incluye el consumo de energía eléctrica de la estación de trabajo, la conexión a internet de banda ancha para la descarga de librerías o subida de modelos o codigo a Github, y el gasto logístico del espacio de oficina. Para simplificar y generalizar el modelo contable, se aplica un estándar industrial del 15\% sobre el coste total de la mano de obra directa:
 
 \begin{equation}
-\text{Costes Indirectos} = 317,71 \times 0,15 = 47,66 \text{ €}
+\text{Costes Indirectos} = 4.200,00 \times 0,15 = 630,00 \text{ €}
 \end{equation}
 
 \subsubsection{Resumen del presupuesto total}
@@ -1270,11 +1466,11 @@ Los costes indirectos estaran compuestos por aquellos gastos que, sin estar liga
 Para concluir el análisis financiero, unificaremos todos los conceptos económicos desglosados a lo largo de este capítulo (como recursos hardware amortizados, licencias de software, mano de obra e indirectos) en una tabla \ref{tab:presupuesto_total}, ofreciendo la valoración económica global del proyecto. Además, se incorpora un \textbf{margen de beneficio industrial} del 10\% sobre el coste total calculado, con el fin de cubrir posibles cambios de alcance, ajustes técnicos o imprevistos durante el desarrollo sin generar sobrecostes significativos para garantizar la viabilidad económica del proyecto.
 
 \begin{equation}
-\text{Margen de beneficio industrial} = 0{,}10 \times 6\,965{,}37 = 696{,}54 \text{ €}
+\text{Margen de beneficio industrial} = 0{,}10 \times 4.830,00 = 483,00 \text{ €}
 \end{equation}
 
 \begin{equation}
-\text{Presupuesto total con margen} = 6\,965{,}37 + 696{,}54 = 7\,661{,}91 \text{ €}
+\text{Presupuesto total con margen} = 4.830,00 + 483,00 = 5.313,00 \text{ €}
 \end{equation}
 
 \begin{table}[htbp]
@@ -1285,10 +1481,10 @@ Para concluir el análisis financiero, unificaremos todos los conceptos económi
 \textbf{Concepto Presupuestario} & \textbf{Coste Imputable (€)} \\ \hline
 Recursos Hardware (Amortización lineal) & 317,71 \\ \hline
 Software y Librerías de Código Abierto & 0,00 \\ \hline
-Costes de Personal (Mano de Obra Directa) & 6.600,00 \\ \hline
-Costes Indirectos (15\% sobre mano de obra) & 47,66 \\ \hline
-Margen de Beneficio Industrial (10\%) & 696,54 \\ \hline
-\textbf{PRESUPUESTO TOTAL DEL PROYECTO} & \textbf{7.661,91} \\ \hline
+Costes de Personal (Mano de Obra Directa) & 4.200,00 \\ \hline
+Costes Indirectos (15\% sobre mano de obra) & 630,00 \\ \hline
+Margen de Beneficio Industrial (10\%) & 483,00 \\ \hline
+\textbf{PRESUPUESTO TOTAL DEL PROYECTO} & \textbf{5.313,00} \\ \hline
 \end{tabular}
 \caption{Resumen consolidado del presupuesto general del TFG.}
 \label{tab:presupuesto_total}
