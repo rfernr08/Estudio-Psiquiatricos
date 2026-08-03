@@ -47,6 +47,12 @@
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage{doi}
+\usepackage[htt]{hyphenat}
+\usepackage[spanish]{babel}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\emergencystretch=3em
 
 % Opciones del paquete caption para los pies de imágenes y tablas:
 \captionsetup{figurename=Figura, tablename=Tabla, labelsep=colon, labelfont=bf, font=small, justification=centering}
@@ -63,6 +69,11 @@
 
 \renewcommand*{\baselinestretch}{1.25} % Altura del INTERLINEADO.
 \renewcommand{\shorthandsspanish}{}    % Para que corte las palabras según el castellano.
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.7}
 
 
 % Propiedades para el PDF generado (METADATOS):
@@ -449,7 +460,9 @@ A pesar del notable avance en la digitalización de los entornos sanitarios y de
 
 \begin{enumerate}
     \item \textbf{Aislamiento y fragmentación de paradigmas computacionales:} La literatura tiende a segmentar el uso de las tecnologías. Por un lado, se encuentran sistemas predictivos basados en \textit{Machine Learning} que explotan matrices tabulares estáticas, ignorando la rica información topológica y relacional que vincula a los pacientes. Por otro lado, los estudios que implementan grafos de conocimiento se limitan a un análisis descriptivo de redes, omitiendo capacidades predictivas para nuevos diagnósticos. Existe una notable escasez de arquitecturas híbridas que unifiquen la potencia predictiva de los clasificadores con la flexibilidad estructural de bases de datos como Neo4j. 
-    \item \textbf{El desafío de la interpretabilidad y la opacidad algorítmica:} En el campo de la salud mental, y específicamente en trastornos complejos como la esquizofrenia, el personal médico muestra una resistencia natural (y justificada) a adoptar modelos de \textit{Deep Learning} y \textit{LLMs} debido al fenómeno de la "caja negra". Los facultativos requieren entender el razonamiento subyacente a una predicción diagnóstica para poder confiar en ella. La literatura actual falla frecuentemente en dotar a estos modelos de una capa de explicabilidad o de representaciones visuales que traduzcan vectores matemáticos abstractos en conexiones clínicas comprensibles. 
+    \begin{comment}
+    \item \textbf{El desafío de la interpretabilidad y la opacidad algorítmica:} En el campo de la salud mental, y específicamente en trastornos complejos como la esquizofrenia, el personal médico muestra una resistencia natural a adoptar modelos de \textit{Deep Learning} y \textit{LLMs} debido al fenómeno de la "caja negra". Los facultativos requieren entender el razonamiento subyacente a una predicción diagnóstica para poder confiar en ella. La literatura actual falla frecuentemente en dotar a estos modelos de una capa de explicabilidad o de representaciones visuales que traduzcan vectores matemáticos abstractos en conexiones clínicas comprensibles. 
+    \end{comment}
     \item \textbf{Brecha en la transferencia tecnológica y herramientas de soporte:} Una gran parte de las investigaciones analizadas se desarrollan en entornos puramente de laboratorio o de código aislado (como \textit{scripts} de investigación). Raras veces este conocimiento se transfiere a soluciones de software funcionales, accesibles y adaptadas a la rutina de una consulta psiquiátrica. Limitaciones como la falta de interfaces web interactivas o la ausencia de módulos utilitarios cotidianos, como un conversor automatizado entre sistemas de codificación como el ICD, impiden que la ciencia de datos actúe como un verdadero Sistema de Soporte a la Decisión Clínica (CDSS).
 \end{enumerate}
 
@@ -536,7 +549,7 @@ A continuación, en las siguientes figuras se representa una descripción detall
 % Reduce pre/post spacing for longtable to avoid infinite glue shrinkage on page breaks
 \setlength\LTpre{0pt}
 \setlength\LTpost{0pt}
-\begin{longtable}{p{3.8cm} p{2.2cm} p{2.3cm} p{6.2cm}}
+\begin{longtable}{p{3.2cm} p{2.2cm} p{2.3cm} p{5.8cm}}
 \caption{Esquema analítico y descripción de las variables del dataset original.} \label{tab:esquema_dataset} \\
 \hline
 \textbf{Nombre de la Columna} & \textbf{Tipo de Dato} & \textbf{Categoría} & \textbf{Descripción} \\ \hline
@@ -791,21 +804,41 @@ Se crearon 3 mapas coropléticos independientes, para mostrar la presencia de lo
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{imagenes/Mapa_Diagnosticos_Leon.png}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_Diagnosticos_Leon.png}}
     \caption{Ejemplo de mapa coroplético generado para la provincia de León, mostrando la distribución de casos diagnosticados con trastornos del espectro esquizofrénico por código postal.}
     \label{fig:mapa_leon}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{imagenes/Mapa_Frecuencia_Leon.png}
+    \makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_Frecuencia_Leon.png}}
     \caption{Ejemplo de mapa coroplético generado para la provincia de León, mostrando la frecuencia de casos diagnosticados con trastornos del espectro esquizofrénico por código postal.}
     \label{fig:mapa_frecuencia_leon}
 \end{figure}
 
+\begin{comment}
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/Mapa_Diagnosticos_Leon.png}
+    \caption{Distribución de casos.}
+    \label{subfig:casos}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/Mapa_Frecuencia_Leon.png}
+    \caption{Frecuencia por código postal.}
+    \label{subfig:frecuencia}
+  \end{subfigure}
+  \caption{Ejemplos de mapas coropléticos generados para la provincia de León.}
+  \label{fig:mapas_leon}
+\end{figure}
+\end{comment}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{imagenes/Mapa_Frecuencia_España.png}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_Frecuencia_España.png}}
     \caption{Ejemplo de mapa coroplético generado para España, mostrando la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal.}
     \label{fig:mapa_frecuencia_espana}
 \end{figure}
@@ -978,7 +1011,7 @@ Para fijar la notación, se emplea la matriz de confusión binaria. En este cont
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{imagenes/MATRIZ_CONFUSION.png}
+    \makebox[\textwidth]{\includegraphics[width=1.0\textwidth]{imagenes/MATRIZ_CONFUSION.png}}
     \caption{Matriz de Confusión Binaria, donde se definen los conceptos de Verdaderos Positivos (TP), Falsos Positivos (FP), Falsos Negativos (FN) y Verdaderos Negativos (TN).}
     \label{fig:matriz_confusion}
 \end{figure}
@@ -1083,7 +1116,7 @@ Los requisitos del sistema delimitan las capacidades operativas y las restriccio
 \begin{table}[htbp]
 \centering
 \small
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.0}
 \begin{tabular}{|p{3.5cm}|p{10.5cm}|}
 \hline
 \rowcolor[RGB]{239,239,239} 
@@ -1102,11 +1135,10 @@ Los requisitos del sistema delimitan las capacidades operativas y las restriccio
 \label{tab:hu_04}
 \end{table}
 
-
 \begin{table}[htbp]
 \centering
 \small
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.0}
 \begin{tabular}{|p{3.5cm}|p{10.5cm}|}
 \hline
 \rowcolor[RGB]{239,239,239} 
@@ -1134,7 +1166,7 @@ La interfaz de usuario se articula en torno a dos bloques visuales fundamentales
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{imagenes/Foto_Web.png}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Foto_Web.png}}
     \caption{Diseño de la interfaz principal de la aplicación: panel de conversión de códigos e histórico de registros.}
     \label{fig:captura_app}
 \end{figure}
@@ -1196,7 +1228,7 @@ Las características funcionales clave integradas en este panel son las siguient
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{imagenes/Web_en_accion.png}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Web_en_accion.png}}
     \caption{Módulo del Conversor Individual: interfaz de búsqueda polivalente y panel de resultados de correspondencias ICD-9/ICD-10.}
     \label{fig:conversor_icd}
 \end{figure}
@@ -1219,21 +1251,21 @@ Las características arquitectónicas y de diseño técnico que definen este pan
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{imagenes/Web_lotes_1.png}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Web_lotes_1.png}}
     \caption{Módulo del Conversor por Lotes: interfaz de carga de archivos}
     \label{fig:conversor_lotes_1}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{imagenes/Web_lotes_2.png}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Web_lotes_2.png}}
     \caption{Módulo del Conversor por Lotes: Panel de previsualización de datos cargados y selección de criterios de conversión.}
     \label{fig:conversor_lotes_2}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{imagenes/Web_lotes_3.png}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Web_lotes_3.png}}
     \caption{Módulo del Conversor por Lotes: Resultados de la conversión seleccionada, con opción de descarga en formato CSV.}
     \label{fig:conversor_lotes_3}
 \end{figure}
@@ -1319,12 +1351,95 @@ A continuación, se detalla el alcance funcional y técnico desarrollado en cada
     \end{itemize}
 \end{description}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.95\textwidth]{imagenes/diagrama_gantt.png}
-    \caption{Diagrama de Gantt del proyecto.}
-    \label{fig:diagrama_gantt}
-\end{figure}
+\begin{landscape}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=\linewidth, keepaspectratio]{imagenes/Gantt.png}
+        \caption{Cronograma del Proyecto - Diagrama de Gantt}
+        \label{fig:diagrama_gantt}
+    \end{figure}
+\end{landscape}
+
+\section{Gestión y Mitigación de Riesgos}
+
+En cualquier proyecto de ingeniería enfocado en la Inteligencia Artificial y los sistemas de información clínica, existen factores de incertidumbre técnica, operativa y de infraestructura que pueden comprometer los plazos de entrega o la calidad de las soluciones. Para mitigar estos imprevistos, se ha llevado a cabo una evaluación probabilística de riesgos, clasificándolos según su probabilidad de ocurrencia ($P$) e impacto ($I$) sobre el proyecto, y definiendo estrategias previas de prevención y planes de contingencia.
+
+\subsection{Matriz de Evaluación de Riesgos}
+
+La Tabla~\ref{tab:matriz_riesgos} resume los principales riesgos identificados en el ciclo de vida del proyecto, evaluados en una escala cualitativa (Baja, Media, Alta, Crítica).
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|p{3.8cm}|c|c|p{4.8cm}|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Código} & \textbf{Riesgo Identificado} & \textbf{Prob.} & \textbf{Impacto} & \textbf{Estrategia de Mitigación} \\ \hline
+\textbf{RSG-01} & Incompatibilidad de librerías y dependencias software. & Alta & Alto & Creación de entornos aislados mediante el gestor de paquetes \textbf{Mamba}. \\ \hline
+\textbf{RSG-02} & Restricción de memoria GPU/RAM en modelos BERT. & Media & Alto & Optimización de \textit{batch size}, \textit{gradient accumulation} y precisión FP16. \\ \hline
+\textbf{RSG-03} & Sesgo extremo por desbalanceo de clases clínicas. & Alta & Alto & Enfoque experimental tripartito (Dataset Original, RUS y VAE). \\ \hline
+\textbf{RSG-04} & Latencia en consultas complejas de grafos (Neo4j). & Media & Medio & Indexación de propiedades en Neo4j y uso de almacenamiento en caché (\texttt{@st.cache}). \\ \hline
+\textbf{RSG-05} & Riesgo de fuga de información de salud (ENS/RGPD). & Baja & Crítico & Anonimización estricta en el Sprint 1 y descarte de variables identificativas. \\ \hline
+\end{tabular}
+\caption{Matriz de evaluación y mitigación de riesgos del proyecto.}
+\label{tab:matriz_riesgos}
+\end{table}
+
+
+\subsection{Detalle de Riesgos y Acciones de Contención}
+
+A continuación, se justifican técnicamente las acciones adoptadas para solventar cada uno de los riesgos identificados:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{RSG-01: Incompatibilidad de librerías y dependencias del entorno (Riesgo Técnico)}
+    \begin{itemize}
+        \item \textit{Descripción:} La integración simultánea de marcos de trabajo pesados como \texttt{PyTorch}, \texttt{HuggingFace Transformers}, \texttt{Scikit-Learn}, librerías de ensambles (\texttt{XGBoost}, \texttt{LightGBM}, \texttt{CatBoost}) y los conectores de \texttt{Neo4j} suele provocar conflictos críticos de versiones de C++ / Python y colisiones en los árboles de dependencias.
+        \item \textit{Solución adoptada:} Se empleó el gestor de paquetes \textbf{Mamba} (reimplementación en C++ de Conda). Mediante el uso de Mamba se garantizó la resolución determinista de dependencias complejas a alta velocidad, congelando el entorno virtual en un archivo manifiesto de especificación técnica (\texttt{environment.yml}). Esto garantizó la reproducibilidad del proyecto entre distintas plataformas de entrenamiento.
+    \end{itemize}
+
+    \item \textbf{RSG-02: Insuficiencia de memoria en GPU/RAM durante el Deep Learning (Riesgo de Cómputo)}
+    \begin{itemize}
+        \item \textit{Descripción:} El entrenamiento y ajuste fino (\textit{fine-tuning}) de arquitecturas Transformers de gran tamaño (\texttt{xlm-roberta-base} o \texttt{BETO}) sobre GPUs con memoria limitada puede provocar errores de desbordamiento (\textit{CUDA Out Of Memory}).
+        \item \textit{Solución adoptada:} Se acotó el espacio de búsqueda de hiperparámetros reduciendo el tamaño de lote (\textit{batch size} a 16 o 32 muestras) e implementando acumulación de gradiente (\textit{gradient accumulation}) y entrenamiento en precisión mixta (FP16), logrando estabilizar la convergencia sin agotar los recursos del hardware.
+    \end{itemize}
+
+    \item \textbf{RSG-03: Degradación del rendimiento predictivo por desbalanceo de datos (Riesgo de Datos)}
+    \begin{itemize}
+        \item \textit{Descripción:} La elevada disparidad entre patologías (como la dominancia de la clase \texttt{F20} frente a la escasez de \texttt{F21}) corría el riesgo de hacer colapsar los algoritmos hacia la clase mayoritaria, obteniendo métricas engañosas.
+        \item \textit{Solución adoptada:} Se articuló la fase experimental en 3 matrices de datos independientes (Original, balanceo por submuestreo RUS y balanceo sintético mediante Generación de Autoencoders Variacionales - VAE), evaluando los modelos con métricas inmunes al desbalanceo como el \textit{F1-Score Macro}.
+    \end{itemize}
+
+    \item \textbf{RSG-04: Cuellos de botella en la renderización de grafos (Riesgo de Rendimiento)}
+    \begin{itemize}
+        \item \textit{Descripción:} El lanzamiento repetitivo de consultas complejas en lenguaje \textit{Cypher} a la base de datos Neo4j desde la interfaz de Streamlit podía ralentizar la experiencia de usuario final.
+        \item \textit{Solución adoptada:} Se crearon índices explícitos sobre las propiedades de los nodos (\texttt{Paciente} y \texttt{Diagnóstico}) en Neo4j y se implementaron decoradores de caché en Streamlit (\texttt{@st.cache\_resource}), evitando la reejecución de consultas idénticas.
+    \end{itemize}
+
+    \item \textbf{RSG-05: Vulneración de la privacidad y datos de salud (Riesgo Regulatorio/Seguridad)}
+    \begin{itemize}
+        \item \textit{Descripción:} El manejo inadvertido de identificadores directos del paciente durante el desarrollo o la visualización en la aplicación web incurriría en una falta grave respecto a la normativa RGPD y el Esquema Nacional de Seguridad (ENS).
+        \item \textit{Solución adoptada:} Se implementó una canalización estricta de sanitización en la primera fase del proyecto (Sprint 1), descartando 12 variables identificativas o irrelevantes y asegurando que los motores de IA y Neo4j operen exclusivamente sobre identificadores alfanuméricos anonimizados.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Justificación Técnica y Gestión del Entorno Virtual mediante Mamba}
+\label{subsec:justificacion_mamba}
+
+El desarrollo de sistemas basados en Inteligencia Artificial aplicada exige la convivencia de múltiples librerías complejas con dependencias nativas en C/C++, controladores de GPU (CUDA) y marcos de trabajo heterogéneos (\texttt{PyTorch}, \texttt{HuggingFace Transformers}, \texttt{Scikit-Learn}, \texttt{XGBoost}, \texttt{LightGBM}, \texttt{CatBoost} y los conectores de \texttt{Neo4j}). En proyectos de esta envergadura, el uso de gestores de paquetes convencionales basados exclusivamente en \textit{pip} suele derivar en un jaleo y caos de dependencias, donde la actualización o instalación de una librería corrompe los binarios compilados de otra.
+
+Para prevenir este riesgo y garantizar la reproducibilidad absoluta del código, se descartó el gestor tradicional de \textit{Conda} en favor de \textbf{Mamba} (un motor de gestión de paquetes de alto rendimiento reimplementado en C++, basandose en la misma Conda). La adopción de Mamba como eje de la infraestructura de desarrollo se justifica bajo cuatro pilares técnicos fundamentales:
+
+\begin{itemize}
+    \item \textbf{Motor de resolución C++ (\textit{libsolv}):} A diferencia de Conda (cuyo motor de resolución en Python puede tardar decenas de minutos o bloquearse al calcular el árbol de dependencias de entornos complejos), Mamba utiliza la librería \texttt{libsolv} basada en algoritmos SAT (\textit{Boolean Satisfiability Problem}). Esto reduce el tiempo de resolución del grafo de dependencias de minutos a escasos segundos, garantizando un estado coherente en todo momento.
+    
+    \item \textbf{Manejo nativo de binarios pesados y aceleración GPU:} Mamba gestiona con precisión quirúrgica las dependencias a nivel de sistema operativo y controladores CUDA. Esto permitió enlazar las versiones exactas de las librerías C++ requeridas por \texttt{PyTorch} para la GPU sin conflictos con las extensiones optimizadas de la CPU utilizadas por los algoritmos de ensambles tabulares.
+
+    
+    \item \textbf{Garantía de reproducibilidad científica:} La totalidad del entorno virtual fue congelada en un archivo de especificación declarativa (\texttt{environment.yml}). Esto asegura que cualquier investigador o tribunal puede replicar el entorno de ejecución exacto (mismas versiones de Python, compiladores C++ y librerías de IA) en cualquier máquina sin variaciones en el comportamiento de los modelos.
+\end{itemize}
+
+Esta decisión de ingeniería garantiza que el \textit{pipeline} experimental del proyecto es invulnerable a la obsolescencia o cambios no retrocompatibles en las librerías de terceros.
 
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
@@ -1375,9 +1490,10 @@ Para calcular el coste real al usar este equipamiento sobre el proyecto, se apli
 Asumiendo un periodo de desarrollo del proyecto de 7 meses, la Tabla \ref{tab:coste_hardware} desglosa el cálculo económico del impacto del hardware, aplicando el principio de amortización a los precios de mercado actuales de los componentes.
 
 \begin{table}[htbp]
+\centering
 \small
+\resizebox{\textwidth}{!}{%
 \setlength{\tabcolsep}{4pt}
-\begin{center}
 \begin{tabular}{|p{3.5cm}|c|c|c|}
 \hline
 \textbf{Elemento} & \textbf{Precio Original (€)} & \textbf{Tiempo de Uso (Meses)} & \textbf{Coste Imputable (€)} \\ \hline
@@ -1385,12 +1501,11 @@ Estación de trabajo (PC) & 1.100,00 & 7 & 145,83 \\ \hline
 Portátil & 1.200,00 & 7 & 150,00 \\ \hline
 Periféricos y Monitor & 150,00 & 7 & 21,88 \\ \hline
 \multicolumn{3}{|c|}{\textbf{Total Hardware}} & \textbf{317,71 €} \\ \hline
-\end{tabular}
-\end{center}
+\end{tabular}%
+}
 \caption{Desglose de costes y amortización del hardware del proyecto.}
 \label{tab:coste_hardware}
 \end{table}
-
 \section{Software y librerías empleadas}
 
 La selección del ecosistema de \textit{software} para este proyecto se ha regido por los principios de eficiencia computacional, robustez comunitaria y, fundamentalmente, la filosofía del código abierto (\textit{Open-Source}). El uso de herramientas libres nos garantiza la reproducibilidad de los experimentos realizados durante el desarrollo del proyecto, sino que anula por completo los costes de adquisición de licencias comerciales, maximizando la viabilidad económica del sistema desarrollado.
@@ -1408,7 +1523,8 @@ A continuación, se clasifican y justifican los recursos lógicos e informático
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabular}{|p{4.5cm}|p{4.5cm}|p{3.5cm}|p{1.5cm}|}
+\makebox[\textwidth][c]{%
+\begin{tabular}{|p{3cm}|p{4cm}|p{3.5cm}|p{1.8cm}|}
 \hline
 \textbf{Software / Librería} & \textbf{Función Principal} & \textbf{Tipo de Licencia} & \textbf{Coste (€)} \\ \hline
 Python v3.13.5 & Lenguaje de programación núcleo & Python Software Foundation & 0,00 \\ \hline
@@ -1420,7 +1536,8 @@ Streamlit & Desarrollo de la interfaz web & Apache 2.0 & 0,00 \\ \hline
 Sistema Operativo & Windows 10 & OEM & 0,00 \\ \hline
 Sistema Operativo & Ubuntu Linux 24.04.4 LTS & GPL & 0,00 \\ \hline
 \multicolumn{3}{|l|}{\textbf{Total Software}} & \textbf{0,00 €} \\ \hline
-\end{tabular}
+\end{tabular}%
+}
 \caption{Desglose de costes de licencias del software y librerías utilizadas.}
 \label{tab:coste_software}
 \end{table}
