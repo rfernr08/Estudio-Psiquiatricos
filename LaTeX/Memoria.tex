@@ -393,6 +393,8 @@ Al trabajar con un \textit{dataset} extraído de historiales médicos, el proyec
 \subsection{Marco de la investigación biomédica}
 Dado el carácter analítico y científico del estudio sobre la esquizofrenia, la actividad investigadora se encuadra en la Ley 14/2007, de 3 de julio, de Investigación Biomédica \cite{ley14_2007}, específicamente en su Título V, que regula el tratamiento de datos de carácter personal en el ámbito sanitario. La normativa ampara el uso secundario de datos clínicos para investigación epidemiológica y de salud pública sin necesidad de requerir un nuevo consentimiento informado explícito, siempre y cuando los datos hayan sido sometidos a una anonimización estricta por un equipo independiente, tal y como ocurre con las muestras del dataset nuestro utilizada en este trabajo.
 
+Dado el carácter analítico y científico del estudio sobre la esquizofrenia, la actividad investigadora se encuadra en la Ley 14/2007, de 3 de julio, de Investigación Biomédica \cite{ley14_2007}, específicamente en su Título V, que regula el tratamiento de datos de carácter personal en el ámbito sanitario. Esta normativa, siguiendo los criterios habituales de los Comités de Ética de la Investigación (CEI/CEIm) \cite{ley14_2007_cei} y la Disposición Adicional 17.ª de la LOPDGDD \cite{rd1090_2015_ceim}, establece el uso secundario de datos clínicos para investigación epidemiológica sin necesidad de solicitar un nuevo consentimiento informado explícito, siempre que la muestra haya sido sometida a un proceso previo de anonimización irreversible por un equipo independiente, tal y como se ha garantizado en el conjunto de datos utilizado en este trabajo.
+
 \subsection{Secreto profesional y consideraciones eticas en salud mental}
 El diseño de la aplicación web respeta los principios éticos esenciales de la práctica médica y psicológica en España. En el ámbito de la psiquiatría, la confidencialidad es un factor crítico debido al estigma social que lamentablemente sigue asociado a la esquizofrenia. La herramienta desarrollada cumple con este requisito ético ya que tanto el conversor ICD como los gráficos relacionales funcionan exclusivamente con identificadores anónimos (códigos numéricos) en lugar de datos personales reales como nombres o números de historia clínica. De este modo, cualquier facultativo puede utilizar la aplicación en su consulta diaria con total seguridad, garantizando que la privacidad de los pacientes jamás se vea comprometida.
 
@@ -1003,6 +1005,13 @@ La arquitectura propuesta se fundamenta en los siguientes tres pilares técnicos
 \end{enumerate}
 En conclusión, la propuesta metodológica definitiva de este trabajo consiste en un \textbf{Sistema de Soporte Híbrido} que orquesta estos tres componentes bajo una interfaz web unificada. El flujo de trabajo propuesto comienza con la normalización y conversión de los diagnósticos, continúa con la clasificación del espectro esquizofrénico mediante árboles de decisión optimizados y finaliza con la validación visual de la trayectoria del paciente a través del análisis de comunidades en el grafo de conocimiento. Esta sinergia tecnológica permite transformar un listado plano de registros en un marco de decisión clínica estructurado, transparente y funcional.
 
+\begin{figure}
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.0\textwidth]{imagenes/Diagrama_Arquitectura.png}}
+    \caption{Arquitectura final propuesta para el Sistema de Soporte a la Decisión Clínica, integrando el motor predictivo basado en ensambles.}
+    \label{fig:diagrama_arquitectura}
+\end{figure}
+
 \section{Métricas empleadas y su justificación}
 
 Para evaluar el desempeño de los modelos predictivos desarrollados y determinar su eficacia en la clasificación de los trastornos del espectro esquizofrénico, se han seleccionado una serie de métricas estadísticas estándar en el ámbito del aprendizaje automático supervisado. Dado el desbalanceo severo de clases identificado en el Capítulo 3, la elección de estas métricas no se limita únicamente a la precisión global, sino que prioriza aquellas que permiten medir la capacidad de detección de las patologías minoritarias. Las definiciones y fórmulas presentadas a continuación se han tomado de referencias clásicas de evaluación de clasificadores, especialmente Sokolova y Lapalme \cite{Sokolova2009} y Powers \cite{Powers2011}.
@@ -1196,6 +1205,13 @@ Por otro lado, cuando el usuario conmuta la interfaz hacia la pestaña de \texti
     
     \item \textbf{Ejecución, Validación y Persistencia:} Tras presionar el botón de procesamiento, el sistema ejecuta las transformaciones en segundo plano, notificando el éxito de la operación mediante una alerta visual integrada de éxito. Finalmente, el flujo concluye revelando una tabla de resultados enriquecida y habilitando de forma síncrona el botón de descarga, cerrando el ciclo de vida del dato dentro de la sesión web sin provocar disrupciones en la pantalla principal.
 \end{enumerate}
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Diagrama_navegacion.png}}
+    \caption{Diagrama de flujo de la aplicación web, mostrando la secuencia de interacción del usuario desde la selección de funcionalidad hasta la obtención de resultados.}
+    \label{fig:flujo_app}
+\end{figure}
 
 \section{Accesibilidad de la aplicación}
 
