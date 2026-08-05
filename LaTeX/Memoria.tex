@@ -1062,6 +1062,74 @@ Texto del impacto...
 Texto del análisis...
 \section{Estudio de comunidades y mapas}
 
+El estudio en profundidad de comunidades y mapas se centro en la identificación de patrones geoespaciales y la segmentación territorial de los diagnósticos psiquiátricos. Para ello, ee han empleado técnicas de análisis de redes y visualización geográfica para comprender cómo se distribuyen las patologías del espectro esquizofrénico en la provincia de León, junto a la elaboracion de hipotesis sobre los factores que influyen en su distribución.
+
+
+
+\subsection{Segmentación Geográfica mediante K-Means ($K=4$)}
+Para el correcto desempeño del algoritmo K-Means, las variables diagnósticas fueron estandarizadas mediante \textit{StandardScaler}:
+\begin{equation}
+z = \frac{x - \mu}{\sigma}
+\end{equation}
+Donde $x$ es la frecuencia del diagnóstico, $\mu$ la media poblacional y $\sigma$ la desviación estándar. Esta transformación es imprescindible para evitar que las patologías de alta frecuencia dominen el cálculo de la distancia euclidiana sobre diagnósticos menos comunes pero clínicamente relevantes.
+La determinación del número de clústeres óptimo se realizó mediante el \textbf{Método del Codo} (\textit{Elbow Method}), evaluando la inercia o suma de cuadrados intra-clúster ($SSE$):
+\begin{equation}
+SSE = \sum_{k=1}^{K} \sum_{x \in C_k} ||x - \mu_k||^2
+\end{equation}
+
+Como se observa en la curva de inercia, el punto de inflexión decisivo se sitúa en $K=4$. A partir de dicho valor, las reducciones en la inercia resultan marginales, garantizando un modelo con alta parsimonia y máxima capacidad explicativa.
+
+
+
+\subsection{Análisis de Dominancia Clínica}
+Para evaluar la "identidad clínica" de cada código postal independientemente del volumen poblacional, se identificó la patología predominante mediante la función de argumento máximo:
+\begin{equation}
+\text{Patología Predominante}_i = \arg\max_{j} (\text{Frecuencia}_{i,j})
+\end{equation}
+
+Los resultados muestran una especialización espacial marcada dentro del mapa urbano: ciertos códigos postales presentan una clara hegemonía de diagnósticos del espectro de la esquizofrenia ($F20$), mientras que en barrios contiguos el perfil virante hacia trastornos delirantes ($F22$) o esquizoafectivos ($F25$). Esta segregación diagnóstica sugiere la influencia de determinantes ambientales locales o diferencias en los criterios de derivación asistencial.
+
+\subsection{Índice de Comorbilidad y Complejidad Asistencial}
+Se definió el \textbf{Índice de Comorbilidad Media} ($\bar{C}_{CP}$) por código postal a partir de la suma de diagnósticos secundarios activos:
+\begin{equation}
+\bar{C}_{CP} = \frac{1}{N_{CP}} \sum_{k=1}^{N_{CP}} \left( \sum_{m=2}^{20} \mathbb{I}(\text{Diag}_{m,k}) \right)
+\end{equation}
+Donde $N_{CP}$ es el número de pacientes en el código postal y $\mathbb{I}$ es una función indicadora que adopta el valor $1$ si existe un diagnóstico secundario registrado y $0$ en caso contrario.
+
+\subsubsection{Identificación de Zonas Frágiles}
+El mapa de comorbilidad permite cartografiar la \textbf{carga real de cuidados} en cada micro-área geográfica, donde se identificaron códigos postales con medias superiores a $4.5$ diagnósticos secundarios por paciente. Estas "zonas calientes" señalan comunidades con un alto grado de cronicidad y fragilidad física/mental simultánea, requiriendo un abordaje asistencial intensivo y multidisciplinar por parte de los servicios sanitarios.
+
+
+\subsection{Efecto de Proximidad y Sesgo de Detección}
+Se contempla la hipótesis del \textbf{sesgo de detección geográfico}: la cercanía física a centros asistenciales de referencia (como el Complejo Asistencial Universitario de León u Hospital HM Regla) incrementa la tasa de diagnóstico capturada. Este fenómeno no implica necesariamente una mayor morbilidad real, sino una mayor tasa de contacto con el sistema sanitario.
+
+\subsection{Hallazgo Principal: El Contraste Urbano-Rural}
+Los resultados cartográficos revelan un patrón estructural claro:
+\begin{itemize}
+    \item \textbf{Entorno Rural (Homogeneidad territorial):} La práctica totalidad de la provincia queda subsumida en un único clúster predominante. Este grupo refleja una baja frecuencia absoluta de diagnósticos específicos registrados, lo cual sugiere dos posibles explicaciones: la dispersión poblacional o la existencia de barreras de acceso al diagnóstico especializado.
+    \item \textbf{Entorno Urbano (Segregación en León Capital):} En el núcleo urbano de la capital convergen la totalidad de los 4 clústeres identificados. Esto demuestra que la densidad poblacional fragmenta el perfil de atención de la salud mental en micro-áreas diferenciadas.
+\end{itemize}
+
+\section{Conversión de códigos}
+
+Uno de los resultados más relevantes y diferenciadores de este trabajo, más allá del ámbito estrictamente predictivo, ha sido la construcción y validación de un recurso de datos estructurado para la conversión y correspondencia bidireccional entre las codificaciones CIE-9 y CIE-10 (\textit{ICD-9-CM} e \textit{ICD-10-CM}) adaptado al contexto clínico en español.
+
+Durante la fase de revisión del estado del arte e inspección de recursos disponibles, se identificó una clara limitación en las fuentes abiertas actuales: los portales oficiales, como el motor de búsqueda del Ministerio de Sanidad de España, están orientados a la consulta puntual e individualizada por parte del usuario a través de interfaces web. Tampoco existía, hasta la fecha, un conjunto de datos tabular completo, unificado y de libre acceso que mapeara de forma directa, masiva e interoperable ambos sistemas normativos incorporando la descripción clínica completa en castellano, dandonos un nicho que rellenar.
+
+El dataset resultante, se ha estructurado en un formato tabular de 3 columnas y 108054 filas, donde cada fila representa una correspondencia única entre códigos de ambas normativas. Las columnas incluyen:
+
+\begin{itemize}
+    \item \textbf{Mapeo bidireccional estructurado:} Correspondencia directa entre códigos tridimensionales y específicos de la CIE-9 y la CIE-10.
+    \item \textbf{Estandarización lingüística:} Integración de las descripciones diagnósticas oficiales en español, facilitando la traducción semántica del texto libre a códigos estandarizados o viceversa.
+    \item \textbf{Optimización para procesamiento masivo:} Estructura optimizada para su carga en memoria en entornos de ciencia de datos (\textit{Dataframes}) o su ingesta en bases de datos relacionales y de grafos.
+\end{itemize}
+
+Este dataset universal nos da 2 aplicacions muy importantes:
+\begin{enumerate}
+    \item \textbf{Transferencia tecnológica e integración en \textit{software}:} Este conjunto de datos ha constituido el motor lógico sobre el que se programó el módulo conversor y la principal función de la herramienta web en \textbf{Streamlit}. Esto permite sustituir la búsqueda manual y fragmentada en repositorios web por una consulta automatizada e instantánea, integrable en flujos de trabajo clínico.
+    \item \textbf{Recurso reutilizable para la comunidad científica y médica:} El dataset resultante sirve mas alla del proposito de esta investigacion, constituyendo un artefacto independiente e universal listo para ser aprovechado por investigadores y profesionales sanitarios para la migración automatizada de conjuntos de datos históricos sin riesgo de inconsistencias semánticas.
+\end{enumerate}
+
 \chapter{Aplicación desarrollada}
 \section{Visualizaciones}
 
