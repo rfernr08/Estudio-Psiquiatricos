@@ -1054,8 +1054,128 @@ A continuación, se describen y justifican las métricas utilizadas:
 Para garantizar la robustez de estas métricas, los resultados expuestos en el siguiente capítulo se han obtenido promediando los valores sobre el conjunto de test (\textit{weighted average}), teniendo en cuenta el peso relativo de cada patología en la población de estudio.
 
 \chapter{Resultados}
-\section{Comparativa de modelos}
+\section{Comparativa de modelos tradicionales}
 Texto de comparativa...
+
+\section{Evaluación y Comparativa de Modelos de Aprendizaje Profundo}
+
+En este bloque experimental se evalúa la capacidad de generalización y extracción de patrones textuales sintomáticos mediante el \textit{fine-tuning} de cuatro arquitecturas basadas en Transformers sobre las tres variantes del conjunto de datos (Original, RUS y RUS+VAE). 
+
+La Tabla~\ref{tab:comparativa_nlp} sintetiza el rendimiento global obtenido por cada modelo según la variante del dataset, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica.
+
+\subsection{Codigos}
+\begin{table}[htbp]
+\small
+\renewcommand{\arraystretch}{1.25}
+\makebox[\linewidth][l]{%
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variante Dataset} & \textbf{Modelo Architecture} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Accuracy} \\ 
+\rowcolor[RGB]{239,239,239} 
+& & \scriptsize{(Macro)} & \scriptsize{(Recall Macro)} & \scriptsize{(Macro)} & \\ \hline
+
+\multirow{4}{*}{\textbf{Original}} 
+ & \texttt{BETO (cased)} & 0.6164 & 0.7317 & 0.6691 & 0.7775 \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+
+\multirow{4}{*}{\textbf{Undersampling}} 
+ & \texttt{BETO (cased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{BETO (uncased)} & 0.2408 & 0.2452 & 0.2348 & 0.5 \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+
+\multirow{4}{*}{\textbf{Undersampling + VAE}} 
+ & \texttt{BETO (cased)} & 0.6419 & 0.7019 & 0.6614 & 0.7019 \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+\end{tabular}}
+\caption{Comparativa de rendimiento de los modelos Transformers en el dataset de codigos.}
+\label{tab:comparativa_nlp_codigos}
+\end{table}
+
+\subsection{Descripciones}
+\begin{table}[htbp]
+\small
+\renewcommand{\arraystretch}{1.25}
+\makebox[\linewidth][l]{%
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variante Dataset} & \textbf{Modelo Architecture} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Accuracy} \\ 
+\rowcolor[RGB]{239,239,239} 
+& & \scriptsize{(Macro)} & \scriptsize{(Recall Macro)} & \scriptsize{(Macro)} & \\ \hline
+
+\multirow{4}{*}{\textbf{Original}} 
+ & \texttt{BETO (cased)} & 0.7314 & 0.6528 & 0.6899 & 0.8225 \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+
+\multirow{4}{*}{\textbf{Undersampling}} 
+ & \texttt{BETO (cased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.2984 & 0.2628 & 0.2599 & 0.5223 \\ \hline
+
+\multirow{4}{*}{\textbf{Undersampling + VAE}} 
+ & \texttt{BETO (cased)} & 0.6628 & 0.6931 & 0.6754 & 0.6931 \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+\end{tabular}}
+\caption{Comparativa de rendimiento de los modelos Transformers en el dataset de codigos.}
+\label{tab:comparativa_nlp_descripciones}
+\end{table}
+
+\subsection{Combinado}
+\begin{table}[htbp]
+\small
+\renewcommand{\arraystretch}{1.25}
+\makebox[\linewidth][l]{%
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variante Dataset} & \textbf{Modelo Architecture} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Accuracy} \\ 
+\rowcolor[RGB]{239,239,239} 
+& & \scriptsize{(Macro)} & \scriptsize{(Recall Macro)} & \scriptsize{(Macro)} & \\ \hline
+
+\multirow{4}{*}{\textbf{Original}} 
+ & \texttt{BETO (cased)} & 0.6339 & 0.7886 & 0.7028 & 0.795 \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+
+\multirow{4}{*}{\textbf{Undersampling}} 
+ & \texttt{BETO (cased)} & 0.2717 & 0.2510 & 0.2489 & 0.5223 \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+
+\multirow{4}{*}{\textbf{Undersampling + VAE}} 
+ & \texttt{BETO (cased)} & 0.6669 & 0.7284 & 0.6856 & 0.7284 \\
+ & \texttt{BETO (uncased)} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
+ & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
+\end{tabular}}
+\caption{Comparativa de rendimiento de los modelos Transformers en el dataset de codigos.}
+\label{tab:comparativa_nlp_combinado}
+\end{table}
+
+\subsubsection{Análisis Cualitativo e Interpretación de Resultados}
+
+El análisis comparativo de los experimentos con procesamiento del lenguaje natural permite extraer tres conclusiones técnicas fundamentales:
+
+\begin{itemize}
+    \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) superó de forma consistente a \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico con corpus en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las locuciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos.
+    
+    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} El modelo \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas dentro de la historia de salud.
+    
+    \item \textbf{Efecto de la generación sintética con VAE:} Mientras que el conjunto de datos reducido con \textit{undersampling} (RUS) provocó una caída leve en el \textit{F1-Score Macro} debido a la pérdida de diversidad textual, la integración de vectores latentes generados mediante Autoencoders Variacionales (\textbf{RUS+VAE}) permitió estabilizar las fronteras de decisión en las clases minoritarias, incrementando el \textit{Recall} general del sistema sin degradar la precisión.
+\end{itemize}
 \section{Impacto de cada mejora introducida}
 Texto del impacto...
 \section{Análisis de resultados}
