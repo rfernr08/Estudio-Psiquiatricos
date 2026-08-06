@@ -1060,11 +1060,16 @@ Texto de comparativa...
 Texto del impacto...
 \section{Análisis de resultados}
 Texto del análisis...
-\section{Estudio de comunidades y mapas}
+
+\section{Estudio de grafos}
+
+\subsection{Comunidades}
+
+\subsection{Centralidad}
+
+\section{Estudio de mapas}
 
 El estudio en profundidad de comunidades y mapas se centro en la identificación de patrones geoespaciales y la segmentación territorial de los diagnósticos psiquiátricos. Para ello, ee han empleado técnicas de análisis de redes y visualización geográfica para comprender cómo se distribuyen las patologías del espectro esquizofrénico en la provincia de León, junto a la elaboracion de hipotesis sobre los factores que influyen en su distribución.
-
-
 
 \subsection{Segmentación Geográfica mediante K-Means ($K=4$)}
 Para el correcto desempeño del algoritmo K-Means, las variables diagnósticas fueron estandarizadas mediante \textit{StandardScaler}:
@@ -1109,6 +1114,13 @@ Los resultados cartográficos revelan un patrón estructural claro:
     \item \textbf{Entorno Rural (Homogeneidad territorial):} La práctica totalidad de la provincia queda subsumida en un único clúster predominante. Este grupo refleja una baja frecuencia absoluta de diagnósticos específicos registrados, lo cual sugiere dos posibles explicaciones: la dispersión poblacional o la existencia de barreras de acceso al diagnóstico especializado.
     \item \textbf{Entorno Urbano (Segregación en León Capital):} En el núcleo urbano de la capital convergen la totalidad de los 4 clústeres identificados. Esto demuestra que la densidad poblacional fragmenta el perfil de atención de la salud mental en micro-áreas diferenciadas.
 \end{itemize}
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_clusters.png}}
+    \caption{Mapa de Clústeres de Códigos Postales.}
+    \label{fig:mapa_clusters}
+\end{figure}
 
 \section{Conversión de códigos}
 
