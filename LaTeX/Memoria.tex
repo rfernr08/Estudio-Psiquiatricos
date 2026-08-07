@@ -1061,7 +1061,7 @@ Texto de comparativa...
 
 En este bloque experimental se evalúa la capacidad de generalización y extracción de patrones textuales sintomáticos mediante el \textit{fine-tuning} de cuatro arquitecturas basadas en Transformers sobre las tres variantes del conjunto de datos (Original, RUS y RUS+VAE). 
 
-La Tabla~\ref{tab:comparativa_nlp} sintetiza el rendimiento global obtenido por cada modelo según la variante del dataset, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica.
+Las tablas sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica.
 
 \subsection{Codigos}
 \begin{table}[htbp]
@@ -1127,7 +1127,7 @@ La Tabla~\ref{tab:comparativa_nlp} sintetiza el rendimiento global obtenido por 
  & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
  & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
 \end{tabular}}
-\caption{Comparativa de rendimiento de los modelos Transformers en el dataset de codigos.}
+\caption{Comparativa de rendimiento de los modelos Transformers en el dataset de descripciones.}
 \label{tab:comparativa_nlp_descripciones}
 \end{table}
 
@@ -1161,20 +1161,20 @@ La Tabla~\ref{tab:comparativa_nlp} sintetiza el rendimiento global obtenido por 
  & \texttt{xlm-roberta-base} & 0.XX & 0.XX & 0.XX & 0.XX \\
  & \texttt{bert-base-multilingual-cased} & 0.XX & 0.XX & 0.XX & 0.XX \\ \hline
 \end{tabular}}
-\caption{Comparativa de rendimiento de los modelos Transformers en el dataset de codigos.}
+\caption{Comparativa de rendimiento de los modelos Transformers en el dataset combinado de códigos y descripciones.}
 \label{tab:comparativa_nlp_combinado}
 \end{table}
 
-\subsubsection{Análisis Cualitativo e Interpretación de Resultados}
+\subsection{Análisis Cualitativo e Interpretación de Resultados}
 
-El análisis comparativo de los experimentos con procesamiento del lenguaje natural permite extraer tres conclusiones técnicas fundamentales:
+Esta gran cantidad de datos y métricas permite extraer varias conclusiones de interés clínico y metodológico, especialmente destacando cual de los modelos y estrategias de preprocesamiento ofrecen un rendimiento superior, confirmado aun mas por los resultados de un Grid Search. Entre los hallazgos más relevantes se encuentran:
 
 \begin{itemize}
-    \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) superó de forma consistente a \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico con corpus en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las locuciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos.
+    \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura especializada \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) ha superado de forma consistente a otros modelos multilingües como \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las locuciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos.
     
-    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} El modelo \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas dentro de la historia de salud.
+    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, el modelo \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score Macro} y su aparicion continua en el Grid Search. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas dentro de la historia de salud.
     
-    \item \textbf{Efecto de la generación sintética con VAE:} Mientras que el conjunto de datos reducido con \textit{undersampling} (RUS) provocó una caída leve en el \textit{F1-Score Macro} debido a la pérdida de diversidad textual, la integración de vectores latentes generados mediante Autoencoders Variacionales (\textbf{RUS+VAE}) permitió estabilizar las fronteras de decisión en las clases minoritarias, incrementando el \textit{Recall} general del sistema sin degradar la precisión.
+    \item \textbf{Efecto de la generación sintética con VAE:} Mientras que el conjunto de datos reducido con \textit{undersampling} (RUS) provocó una caída drastica en todas las metricas debido a la pérdida de diversidad textual, la integración de vectores latentes generados permitió estabilizar las fronteras de decisión en las clases minoritarias, incrementando notablemente metricas como \textit{Recall} o la \textit{Accuracy} general del sistema sin degradar la precisión, dejandonos con metricas similares a los modelos entrenados en el dataset original.
 \end{itemize}
 \section{Impacto de cada mejora introducida}
 Texto del impacto...
