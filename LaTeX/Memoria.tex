@@ -1063,6 +1063,9 @@ En este bloque experimental se evalúa la capacidad de generalización y extracc
 
 Las tablas sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica.
 
+\begin{comment}
+
+
 \subsection{Codigos}
 \begin{table}[htbp]
 \small
@@ -1164,17 +1167,75 @@ Las tablas sintetizan el rendimiento global obtenido por cada modelo según la v
 \caption{Comparativa de rendimiento de los modelos Transformers en el dataset combinado de códigos y descripciones.}
 \label{tab:comparativa_nlp_combinado}
 \end{table}
+\end{comment}
+
+
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Estrategia} & \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+
+\multirow{3}{*}{\textbf{Original}} 
+ & Códigos & \texttt{BETO cased} & 0,7775 & 0,6691 & 0,6164 & 0,7317 \\
+ & Combinado & \texttt{BETO cased} & 0,7950 & 0,7029 & 0,6340 & 0,7886 \\
+ & Descripciones & \texttt{BETO uncased} & 0,8225 & 0,6900 & 0,7315 & 0,6529 \\ \hline
+
+\multirow{3}{*}{\textbf{Undersampling}} 
+ & Códigos & \texttt{BETO uncased} & 0,5000 & 0,2348 & 0,2409 & 0,2453 \\
+ & Combinado & \texttt{BETO cased} & 0,5223 & 0,2489 & 0,2717 & 0,2511 \\
+ & Descripciones & \texttt{bert-multilingual} & 0,5223 & 0,2599 & 0,2984 & 0,2629 \\ \hline
+
+\multirow{3}{*}{\textbf{RUS + VAE}} 
+ & Códigos & \texttt{BETO cased} & 0,7020 & 0,6615 & 0,6420 & 0,7020 \\
+ & Combinado & \texttt{BETO cased} & 0,7285 & 0,6857 & 0,6670 & 0,7285 \\
+ & Descripciones & \texttt{BETO cased} & 0,6932 & 0,6754 & 0,6629 & 0,6932 \\ \hline
+\end{tabular}
+\caption{Métricas de rendimiento de los mejores modelos Transformers según la variante de dataset y tipo de entrada.}
+\label{tab:comparativa_nlp_metricas}
+\end{table}
 
 \subsection{Análisis Cualitativo e Interpretación de Resultados}
 
 Esta gran cantidad de datos y métricas permite extraer varias conclusiones de interés clínico y metodológico, especialmente destacando cual de los modelos y estrategias de preprocesamiento ofrecen un rendimiento superior, confirmado aun mas por los resultados de un Grid Search. Entre los hallazgos más relevantes se encuentran:
 
 \begin{itemize}
-    \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura especializada \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) ha superado de forma consistente a otros modelos multilingües como \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las locuciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos.
+    \item \textbf{Dominio de la información combinada:} La integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (el dataset "combinado") obtiene de forma sistemática los mejores valores de \textit{F1-Score} tanto en la variante Original ($0,7029$) como en la reconstruida con VAE ($0,6857$). Esto evidencia que los códigos de antecedentes ofrecen un contexto estructurado que complementa las sutilezas lingüísticas descritas en el texto narrativo.
+        
+    \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura especializada \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) ha superado de forma consistente a otros modelos multilingües como \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las especifiaciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos.
     
     \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, el modelo \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score Macro} y su aparicion continua en el Grid Search. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas dentro de la historia de salud.
     
-    \item \textbf{Efecto de la generación sintética con VAE:} Mientras que el conjunto de datos reducido con \textit{undersampling} (RUS) provocó una caída drastica en todas las metricas debido a la pérdida de diversidad textual, la integración de vectores latentes generados permitió estabilizar las fronteras de decisión en las clases minoritarias, incrementando notablemente metricas como \textit{Recall} o la \textit{Accuracy} general del sistema sin degradar la precisión, dejandonos con metricas similares a los modelos entrenados en el dataset original.
+    \item \textbf{Efecto de la generación sintética con VAE:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrio una caída drastica en todas las metricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atencion de Transformers, visible en las metricas pobres como la precision por debajo del $30\%$ o el F1-Score en un rango de $0,2348 - 0,2599$. Aunque la integración de muestras sintéticas generados permitió estabilizar las fronteras de decisión en las clases minoritarias, incrementando notablemente metricas como \textit{Recall} o la \textit{Accuracy} general del sistema sin degradar la precisión, dejandonos con metricas similares a los modelos entrenados en el dataset original en un espacio de clases completamente balanceado. Esta version del dataset brilla con metricas mas positivas, como el \textit{F1-Score} alcanzando $0,6857$ y la precisión y recall se equilibran en torno a $0,6670$ y $0,7285$ respectivamente.
+    
+\end{itemize}
+
+\subsection{Análisis de Hiperparámetros y Patrones de Configuración}
+
+El estudio de las combinaciones óptimas de hiperparámetros revela patrones recurrentes que justifican la estabilidad de los mejores modelos[cite: 1]:
+\begin{comment}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$):} Las pruebas con valores de \textit{learning rate} extremadamente bajos (como $2\cdot 10^{-5}$ o $3\cdot 10^{-5}$) dominaron los mejores resultados[cite: 1]. En el *fine-tuning* de Transformers, una tasa de aprendizaje baja previene el olvido catastrófico (*catastrophic forgetting*), permitiendo adaptar los pesos de la cabeza de clasificación sin destruir las representaciones sintáctico-semánticas abstraídas durante el preentrenamiento del modelo.
+
+    \item \textbf{Tamaño de lote acotado (\textit{Batch Size} = 16):} En 7 de las 9 mejores configuraciones, el tamaño de lote óptimo fue de 16 muestras[cite: 1]. Un \textit{batch size} pequeño introduce un ruido estocástico beneficioso en el descenso de gradiente que ayuda a la convergencia en paisajes de pérdida complejos, además de ajustarse óptimamente al consumo de memoria VRAM de la GPU.
+
+    \item \textbf{Pocas épocas de entrenamiento (3 a 5 épocas):} Salvo la excepción del dataset RUS sobre códigos (7 épocas)[cite: 1], la convergencia óptima se alcanzó entre la tercera y quinta época[cite: 1]. Las arquitecturas basadas en BERT tienden a memorizar rápidamente conjuntos de datos de tamaño medio; limitar las épocas actúa como un mecanismo implícito de parada temprana (*early stopping*), evitando el sobreajuste (*overfitting*).
+
+    \item \textbf{Regularización y calentamiento (\textit{Weight Decay} = 0.01 / 0.001 y \textit{Warmup} = 0.1):} La presencia constante de decaimiento de pesos (*weight decay*) aplicó una penalización $L_2$ necesaria para restringir la magnitud de los parámetros[cite: 1]. Por su parte, la tasa de *warmup* de $0,1$ reservó el primer $10\%$ de los pasos de entrenamiento para incrementar gradualmente la tasa de aprendizaje desde cero[cite: 1], evitando desestabilizaciones iniciales en los gradientes cuando los pesos de las capas superiores aún eran aleatorios.
+
+    \item \textbf{Preservación de caja (\textit{Cased}):} La variante \texttt{BETO cased} predominó frente a \texttt{uncased}[cite: 1]. Mantener la distinción entre mayúsculas y minúsculas resulta determinante en el dominio clínico, donde las siglas, acrónimos médicos o inicios de códigos normativos aportan un valor discriminativo que se pierde al Convertir todo el texto a minúsculas.
+\end{itemize}
+\end{comment}
+
+\begin{itemize}
+    \item Tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$): Permite adaptar la capa de clasificación sin destruir el conocimiento preentrenado del Transformer.  
+    \item Tamaño de lote acotado (Batch Size = 16): Optimiza el consumo de VRAM e introduce el ruido estocástico adecuado para favorecer la convergencia en el descenso de gradiente.
+    \item Entrenamiento corto (3 a 5 épocas): Actúa como parada temprana implícita para evitar que BERT memorice en exceso un dataset de tamaño medio.  
+    \item Regularización (Weight Decay de $0,001$-$0,01$ y Warmup de $0,1$): Limita la magnitud de los pesos y estabiliza los gradientes iniciales durante el entrenamiento.  
 \end{itemize}
 \section{Impacto de cada mejora introducida}
 Texto del impacto...
