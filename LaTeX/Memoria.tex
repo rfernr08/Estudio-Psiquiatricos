@@ -1054,9 +1054,60 @@ A continuación, se describen y justifican las métricas utilizadas:
 Para garantizar la robustez de estas métricas, los resultados expuestos en el siguiente capítulo se han obtenido promediando los valores sobre el conjunto de test (\textit{weighted average}), teniendo en cuenta el peso relativo de cada patología en la población de estudio.
 
 \chapter{Resultados}
-\section{Comparativa de modelos tradicionales}
-Texto de comparativa...
+\section{Evaluación y Comparativa de Modelos de Aprendizaje Automático Tradicional}
 
+En este apartado se examina el rendimiento de los algoritmos de aprendizaje automático tradicional  aplicados sobre los vectores de características estructuradas. La Tabla~\ref{tab:comparativa_ml_tradicional} presenta el mejor modelo seleccionado para cada escenario junto con sus métricas clave.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Estrategia} & \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+
+\multirow{3}{*}{\textbf{Original}} 
+ & Códigos & XGBoost / CatBoost & 0,XX & 0,XX & 0,XX & 0,XX \\
+ & Combinado & XGBoost / LightGBM & \textbf{0,XX} & \textbf{0,XX} & 0,XX & 0,XX \\
+ & Descripciones & Random Forest & 0,XX & 0,XX & 0,XX & 0,XX \\ \hline
+
+\multirow{3}{*}{\textbf{Undersampling}} 
+ & Códigos & Decision Tree & 0,XX & 0,XX & 0,XX & 0,XX \\
+ & Combinado & XGBoost & 0,XX & 0,XX & 0,XX & 0,XX \\
+ & Descripciones & CatBoost & 0,XX & 0,XX & 0,XX & 0,XX \\ \hline
+
+\multirow{3}{*}{\textbf{RUS + VAE}} 
+ & Códigos & CatBoost & 0,XX & 0,XX & 0,XX & 0,XX \\
+ & Combinado & XGBoost / CatBoost & \textbf{0,XX} & \textbf{0,XX} & 0,XX & 0,XX \\
+ & Descripciones & LightGBM & 0,XX & 0,XX & 0,XX & 0,XX \\ \hline
+\end{tabular}
+\caption{Métricas de rendimiento de los mejores clasificadores de ML tradicional según el escenario.}
+\label{tab:comparativa_ml_tradicional}
+\end{table}
+
+\subsubsection{Análisis Cualitativo e Interpretación de Resultados}
+
+El análisis comparativo de las familias de modelos tabulares permite extraer las siguientes conclusiones principales:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Superioridad del ensamblado por \textit{Boosting}:} Los algoritmos basados en aumento de gradiente (\textbf{XGBoost}, \textbf{CatBoost} y \textbf{LightGBM}) superaron de forma consistente a los árboles individuales (\textit{Decision Tree}) y a los ensambles por embolsado (\textit{Random Forest}). Su capacidad para construir árboles de forma secuencial corrigiendo los errores de los anteriores permitió captar interacciones complejas en los datos tabulares.
+    
+    \item \textbf{Rendimiento con datos categóricos (CatBoost):} En las pruebas centradas exclusivamente en la representación de \textit{códigos}, CatBoost ofreció un rendimiento superior o más estable sin requerir una codificación dispersa (\textit{one-hot encoding}) agresiva, gracias a su tratamiento nativo de variables categóricas.
+
+    \item \textbf{Impacto de la reconstrucción con VAE:} Al igual que se observó en los modelos de *Deep Learning*, el submuestreo severo (\textit{RUS}) redujo significativamente la capacidad de generalización de los clasificadores. La incorporación de datos sintéticos (\textbf{RUS + VAE}) restituyó el volumen muestral manteniendo la separación de clases, lo que permitió a XGBoost y CatBoost alcanzar un equilibrio óptimo entre \textit{Precisión} y \textit{Recall}.
+\end{enumerate}
+
+\subsubsection{Resumen del Análisis de Hiperparámetros}
+
+Las búsquedas en rejilla (\textit{Grid Search}) sobre los clasificadores tabulares mostraron patrones claros orientados a prevenir el sobreajuste sobre las características más frecuentes:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Profundidad de árbol acotada (\texttt{max\_depth} $= 4 - 6$):} Profundidades moderadas evitaron que los árboles memorizaran ruido específico de la muestra de entrenamiento, favoreciendo fronteras de decisión más suaves.
+    \item \textbf{Tasa de aprendizaje moderada (\texttt{learning\_rate} $= 0,01 - 0,1$):} Un valor bajo combinado con un número suficiente de estimadores (\texttt{n\_estimators} $= 100 - 300$) garantizó una convergencia progresiva del gradiente.
+    \item \textbf{Submuestreo de características y filas (\texttt{subsample} / \texttt{colsample\_bytree} $\approx 0,8$):} Introducir aleatoriedad en la selección de atributos por árbol redujo la dominancia de las variables categóricas más prevalentes.
+    \item \textbf{Regularización $L_1/L_2$ (\texttt{reg\_alpha} y \texttt{reg\_lambda}):} La aplicación de penalizaciones en XGBoost y LightGBM penalizó la complejidad de las hojas, estabilizando las predicciones en las clases minoritarias.
+\end{itemize}
 \section{Evaluación y Comparativa de Modelos de Aprendizaje Profundo}
 
 En este bloque experimental se evalúa la capacidad de generalización y extracción de patrones textuales sintomáticos mediante el \textit{fine-tuning} de cuatro arquitecturas basadas en Transformers sobre las tres variantes del conjunto de datos (Original, RUS y RUS+VAE). 
@@ -1175,28 +1226,54 @@ Las tablas sintetizan el rendimiento global obtenido por cada modelo según la v
 \centering
 \small
 \renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+
+Códigos & \texttt{BETO cased} & 0,7775 & 0,6691 & 0,6164 & 0,7317 \\
+Combinado & \texttt{BETO cased} & 0,7950 & 0,7029 & 0,6340 & 0,7886 \\
+Descripciones & \texttt{BETO uncased} & 0,8225 & 0,6900 & 0,7315 & 0,6529 \\ \hline
+
+\end{tabular}
+\caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset original.}
+\label{tab:comparativa_nlp_metricas_original}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
 \begin{tabular}{|l|l|l|c|c|c|c|}
 \hline
 \rowcolor[RGB]{239,239,239}
-\textbf{Estrategia} & \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+\textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
-\multirow{3}{*}{\textbf{Original}} 
- & Códigos & \texttt{BETO cased} & 0,7775 & 0,6691 & 0,6164 & 0,7317 \\
- & Combinado & \texttt{BETO cased} & 0,7950 & 0,7029 & 0,6340 & 0,7886 \\
- & Descripciones & \texttt{BETO uncased} & 0,8225 & 0,6900 & 0,7315 & 0,6529 \\ \hline
+Códigos & \texttt{BETO uncased} & 0,5000 & 0,2348 & 0,2409 & 0,2453 \\
+Combinado & \texttt{BETO cased} & 0,5223 & 0,2489 & 0,2717 & 0,2511 \\
+Descripciones & \texttt{bert-multilingual} & 0,5223 & 0,2599 & 0,2984 & 0,2629 \\ \hline
 
-\multirow{3}{*}{\textbf{Undersampling}} 
- & Códigos & \texttt{BETO uncased} & 0,5000 & 0,2348 & 0,2409 & 0,2453 \\
- & Combinado & \texttt{BETO cased} & 0,5223 & 0,2489 & 0,2717 & 0,2511 \\
- & Descripciones & \texttt{bert-multilingual} & 0,5223 & 0,2599 & 0,2984 & 0,2629 \\ \hline
-
-\multirow{3}{*}{\textbf{RUS + VAE}} 
- & Códigos & \texttt{BETO cased} & 0,7020 & 0,6615 & 0,6420 & 0,7020 \\
- & Combinado & \texttt{BETO cased} & 0,7285 & 0,6857 & 0,6670 & 0,7285 \\
- & Descripciones & \texttt{BETO cased} & 0,6932 & 0,6754 & 0,6629 & 0,6932 \\ \hline
 \end{tabular}
-\caption{Métricas de rendimiento de los mejores modelos Transformers según la variante de dataset y tipo de entrada.}
-\label{tab:comparativa_nlp_metricas}
+\caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset undersampling.}
+\label{tab:comparativa_nlp_metricas_undersampling}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+
+Códigos & \texttt{BETO cased} & 0,7020 & 0,6615 & 0,6420 & 0,7020 \\
+Combinado & \texttt{BETO cased} & 0,7285 & 0,6857 & 0,6670 & 0,7285 \\
+Descripciones & \texttt{BETO cased} & 0,6932 & 0,6754 & 0,6629 & 0,6932 \\ \hline
+
+\end{tabular}
+\caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset expandido con VAE.}
+\label{tab:comparativa_nlp_metricas_undersampling_vae}
 \end{table}
 
 \subsection{Análisis Cualitativo e Interpretación de Resultados}
@@ -1250,7 +1327,7 @@ Texto del análisis...
 
 \section{Estudio de mapas}
 
-El estudio en profundidad de comunidades y mapas se centro en la identificación de patrones geoespaciales y la segmentación territorial de los diagnósticos psiquiátricos. Para ello, ee han empleado técnicas de análisis de redes y visualización geográfica para comprender cómo se distribuyen las patologías del espectro esquizofrénico en la provincia de León, junto a la elaboracion de hipotesis sobre los factores que influyen en su distribución.
+El estudio en profundidad de comunidades y mapas se centro en la identificación de patrones geoespaciales y la segmentación territorial de los diagnósticos psiquiátricos. Para ello, se han empleado técnicas de análisis de redes y visualización geográfica para comprender cómo se distribuyen las patologías del espectro esquizofrénico en la provincia de León, junto a la elaboracion de hipotesis sobre los factores que influyen en su distribución.
 
 \subsection{Segmentación Geográfica mediante K-Means ($K=4$)}
 Para el correcto desempeño del algoritmo K-Means, las variables diagnósticas fueron estandarizadas mediante \textit{StandardScaler}:
@@ -1265,6 +1342,13 @@ SSE = \sum_{k=1}^{K} \sum_{x \in C_k} ||x - \mu_k||^2
 
 Como se observa en la curva de inercia, el punto de inflexión decisivo se sitúa en $K=4$. A partir de dicho valor, las reducciones en la inercia resultan marginales, garantizando un modelo con alta parsimonia y máxima capacidad explicativa.
 
+\begin{figure}
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Elbow.png}}
+    \caption{Curva de Inercia para la Determinación del Número Óptimo de Clústeres.}
+    \label{fig:mapa_kmeans}
+\end{figure}
+
 
 
 \subsection{Análisis de Dominancia Clínica}
@@ -1273,7 +1357,15 @@ Para evaluar la "identidad clínica" de cada código postal independientemente d
 \text{Patología Predominante}_i = \arg\max_{j} (\text{Frecuencia}_{i,j})
 \end{equation}
 
-Los resultados muestran una especialización espacial marcada dentro del mapa urbano: ciertos códigos postales presentan una clara hegemonía de diagnósticos del espectro de la esquizofrenia ($F20$), mientras que en barrios contiguos el perfil virante hacia trastornos delirantes ($F22$) o esquizoafectivos ($F25$). Esta segregación diagnóstica sugiere la influencia de determinantes ambientales locales o diferencias en los criterios de derivación asistencial.
+Los resultados muestran una especialización espacial marcada dentro del mapa urbano: ciertos códigos postales presentan una clara hegemonía de diagnósticos del espectro de la esquizofrenia ($F20$), mientras que en barrios contiguos el perfil virante hacia trastornos delirantes ($F22$) o esquizoafectivos ($F25$). Esta segregación diagnóstica sugiere la influencia de determinantes ambientales locales o diferencias en los criterios de derivación asistencial, como podemos observar en la figura\ref{fig:mapa_dominancia}.
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_dominancia.png}}
+    \caption{Mapa de Dominancia Clínica de Códigos Postales.}
+    \label{fig:mapa_dominancia}
+\end{figure}
+
 
 \subsection{Índice de Comorbilidad y Complejidad Asistencial}
 Se definió el \textbf{Índice de Comorbilidad Media} ($\bar{C}_{CP}$) por código postal a partir de la suma de diagnósticos secundarios activos:
@@ -1282,8 +1374,17 @@ Se definió el \textbf{Índice de Comorbilidad Media} ($\bar{C}_{CP}$) por códi
 \end{equation}
 Donde $N_{CP}$ es el número de pacientes en el código postal y $\mathbb{I}$ es una función indicadora que adopta el valor $1$ si existe un diagnóstico secundario registrado y $0$ en caso contrario.
 
+
+
 \subsubsection{Identificación de Zonas Frágiles}
 El mapa de comorbilidad permite cartografiar la \textbf{carga real de cuidados} en cada micro-área geográfica, donde se identificaron códigos postales con medias superiores a $4.5$ diagnósticos secundarios por paciente. Estas "zonas calientes" señalan comunidades con un alto grado de cronicidad y fragilidad física/mental simultánea, requiriendo un abordaje asistencial intensivo y multidisciplinar por parte de los servicios sanitarios.
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_cormobilidad.jpg}}
+    \caption{Mapa de Comorbilidad Media por Código Postal.}
+    \label{fig:mapa_comorbilidad}
+\end{figure}
 
 
 \subsection{Efecto de Proximidad y Sesgo de Detección}
@@ -1298,10 +1399,11 @@ Los resultados cartográficos revelan un patrón estructural claro:
 
 \begin{figure}
     \centering
-    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_clusters.png}}
-    \caption{Mapa de Clústeres de Códigos Postales.}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Mapa_clusters.jpg}}
+    \caption{Mapa de clústeres geográficos.}
     \label{fig:mapa_clusters}
 \end{figure}
+
 
 \section{Conversión de códigos}
 
