@@ -701,9 +701,7 @@ El último hito del preprocesamiento consistió en resolver la brecha temporal e
 
 En el contexto del aprendizaje automático, un nivel excesivo de detalle en la codificación puede resultar contraproducente, provocando la fragmentación artificial de las muestras y la aparición de clases escasas sin casi representatividad estadística.
 
-Con el objetivo de optimizar el espacio de características y consolidar la fuerza predictiva de la variable objetivo, se aplicó una regla de generalización y truncado de códigos. Tras realizar la inspección empírica de la matriz de datos, se identificó el código \texttt{F20.89} (\textit{Otras esquizofrenias}) como el único registro en todo el histórico que presentaba esta especificación decimal o extra. Mediante esta transformación, las instancias etiquetadas bajo \texttt{F20.89} fueron reasignadas y consolidadas de forma transparente dentro de la clase principal \texttt{F20} (\textit{Esquizofrenia}).
-
-Esta operación de normalización aportó una \textbf{Prevención de la dispersión de clase (\textit{Class Sparsity})} en el que se evitó la creación de una subclase minoritaria marginal que hubiera agravado el problema de desbalanceo abordado en las etapas posteriores.
+Con el objetivo de optimizar el espacio de características y consolidar la fuerza predictiva de la variable objetivo, se aplicó una regla de generalización y truncado de códigos. Tras realizar una inspección sobre las distintas variantes de diagnosticos psiquiatricos finales, se identificó el código \texttt{F20.89} (\textit{Otras esquizofrenias}) como el único registro en todo el histórico que presentaba esta especificación decimal o extra. Mediante esta transformación, las instancias etiquetadas bajo \texttt{F20.89} fueron reasignadas y consolidadas de forma transparente dentro de la clase principal \texttt{F20} (\textit{Esquizofrenia}), evitando así la creación de una subcategoría marginal en los diagnosticos objetivo que carecía de relevancia clínica y estadística.
 
 \section{División del Conjunto de Datos: Entrenamiento, Validación y Test}
 
@@ -772,6 +770,8 @@ La comparación sistemática del rendimiento de los modelos sobre estos tres esc
 \section{Mapas y Frecuencias Geoespaciales}
 
 Como último eslabón del tratamiento del \textit{dataset}, se diseñó un módulo de geoprocesamiento orientado a la representación espacial de la prevalencia diagnóstica. El objetivo de este apartado es describir la arquitectura de datos y las herramientas de \textit{software} utilizadas para la generación de los mapas epidemiológicos, postergando la interpretación clínica y el análisis de los hallazgos para el capítulo de resultados de esta memoria.
+
+Los mapas divididos por Codigo Postal se extrayeron de un repositorio público de GitHub \cite{github_geojson}, que contiene la delimitación vectorial de los códigos postales de España en formato GeoJSON. Estos archivo se utilizaron como base generar mapas interactivos.
 
 El pipeline de desarrollo cartográfico se estructuró en dos etapas técnicas independientes: la agregación matricial de frecuencias y la renderización geomorfológica interactiva.
 
@@ -1054,60 +1054,7 @@ A continuación, se describen y justifican las métricas utilizadas:
 Para garantizar la robustez de estas métricas, los resultados expuestos en el siguiente capítulo se han obtenido promediando los valores sobre el conjunto de test (\textit{weighted average}), teniendo en cuenta el peso relativo de cada patología en la población de estudio.
 
 \chapter{Resultados}
-\section{Evaluación y Comparativa de Modelos de Aprendizaje Automático Tradicional}
 
-En este apartado se examina el rendimiento de los algoritmos de aprendizaje automático tradicional  aplicados sobre los vectores de características estructuradas. La Tabla~\ref{tab:comparativa_ml_tradicional} presenta el mejor modelo seleccionado para cada escenario junto con sus métricas clave.
-
-\begin{table}[htbp]
-\centering
-\small
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{|l|l|l|c|c|c|c|}
-\hline
-\rowcolor[RGB]{239,239,239}
-\textbf{Estrategia} & \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
-
-\multirow{3}{*}{\textbf{Original}} 
- & Códigos & XGBoost / CatBoost & 0,XX & 0,XX & 0,XX & 0,XX \\
- & Combinado & XGBoost / LightGBM & \textbf{0,XX} & \textbf{0,XX} & 0,XX & 0,XX \\
- & Descripciones & Random Forest & 0,XX & 0,XX & 0,XX & 0,XX \\ \hline
-
-\multirow{3}{*}{\textbf{Undersampling}} 
- & Códigos & Decision Tree & 0,XX & 0,XX & 0,XX & 0,XX \\
- & Combinado & XGBoost & 0,XX & 0,XX & 0,XX & 0,XX \\
- & Descripciones & CatBoost & 0,XX & 0,XX & 0,XX & 0,XX \\ \hline
-
-\multirow{3}{*}{\textbf{RUS + VAE}} 
- & Códigos & CatBoost & 0,XX & 0,XX & 0,XX & 0,XX \\
- & Combinado & XGBoost / CatBoost & \textbf{0,XX} & \textbf{0,XX} & 0,XX & 0,XX \\
- & Descripciones & LightGBM & 0,XX & 0,XX & 0,XX & 0,XX \\ \hline
-\end{tabular}
-\caption{Métricas de rendimiento de los mejores clasificadores de ML tradicional según el escenario.}
-\label{tab:comparativa_ml_tradicional}
-\end{table}
-
-\subsubsection{Análisis Cualitativo e Interpretación de Resultados}
-
-El análisis comparativo de las familias de modelos tabulares permite extraer las siguientes conclusiones principales:
-
-\begin{enumerate}[leftmargin=*]
-    \item \textbf{Superioridad del ensamblado por \textit{Boosting}:} Los algoritmos basados en aumento de gradiente (\textbf{XGBoost}, \textbf{CatBoost} y \textbf{LightGBM}) superaron de forma consistente a los árboles individuales (\textit{Decision Tree}) y a los ensambles por embolsado (\textit{Random Forest}). Su capacidad para construir árboles de forma secuencial corrigiendo los errores de los anteriores permitió captar interacciones complejas en los datos tabulares.
-    
-    \item \textbf{Rendimiento con datos categóricos (CatBoost):} En las pruebas centradas exclusivamente en la representación de \textit{códigos}, CatBoost ofreció un rendimiento superior o más estable sin requerir una codificación dispersa (\textit{one-hot encoding}) agresiva, gracias a su tratamiento nativo de variables categóricas.
-
-    \item \textbf{Impacto de la reconstrucción con VAE:} Al igual que se observó en los modelos de *Deep Learning*, el submuestreo severo (\textit{RUS}) redujo significativamente la capacidad de generalización de los clasificadores. La incorporación de datos sintéticos (\textbf{RUS + VAE}) restituyó el volumen muestral manteniendo la separación de clases, lo que permitió a XGBoost y CatBoost alcanzar un equilibrio óptimo entre \textit{Precisión} y \textit{Recall}.
-\end{enumerate}
-
-\subsubsection{Resumen del Análisis de Hiperparámetros}
-
-Las búsquedas en rejilla (\textit{Grid Search}) sobre los clasificadores tabulares mostraron patrones claros orientados a prevenir el sobreajuste sobre las características más frecuentes:
-
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Profundidad de árbol acotada (\texttt{max\_depth} $= 4 - 6$):} Profundidades moderadas evitaron que los árboles memorizaran ruido específico de la muestra de entrenamiento, favoreciendo fronteras de decisión más suaves.
-    \item \textbf{Tasa de aprendizaje moderada (\texttt{learning\_rate} $= 0,01 - 0,1$):} Un valor bajo combinado con un número suficiente de estimadores (\texttt{n\_estimators} $= 100 - 300$) garantizó una convergencia progresiva del gradiente.
-    \item \textbf{Submuestreo de características y filas (\texttt{subsample} / \texttt{colsample\_bytree} $\approx 0,8$):} Introducir aleatoriedad en la selección de atributos por árbol redujo la dominancia de las variables categóricas más prevalentes.
-    \item \textbf{Regularización $L_1/L_2$ (\texttt{reg\_alpha} y \texttt{reg\_lambda}):} La aplicación de penalizaciones en XGBoost y LightGBM penalizó la complejidad de las hojas, estabilizando las predicciones en las clases minoritarias.
-\end{itemize}
 \section{Evaluación y Comparativa de Modelos de Aprendizaje Profundo}
 
 En este bloque experimental se evalúa la capacidad de generalización y extracción de patrones textuales sintomáticos mediante el \textit{fine-tuning} de cuatro arquitecturas basadas en Transformers sobre las tres variantes del conjunto de datos (Original, RUS y RUS+VAE). 
@@ -1329,7 +1276,7 @@ Texto del análisis...
 
 El estudio en profundidad de comunidades y mapas se centro en la identificación de patrones geoespaciales y la segmentación territorial de los diagnósticos psiquiátricos. Para ello, se han empleado técnicas de análisis de redes y visualización geográfica para comprender cómo se distribuyen las patologías del espectro esquizofrénico en la provincia de León, junto a la elaboracion de hipotesis sobre los factores que influyen en su distribución.
 
-\subsection{Segmentación Geográfica mediante K-Means ($K=4$)}
+\subsection{Segmentación Geográfica mediante K-Means}
 Para el correcto desempeño del algoritmo K-Means, las variables diagnósticas fueron estandarizadas mediante \textit{StandardScaler}:
 \begin{equation}
 z = \frac{x - \mu}{\sigma}
@@ -1407,9 +1354,25 @@ Los resultados cartográficos revelan un patrón estructural claro:
 
 \section{Conversión de códigos}
 
+\begin{comment}
+
 Uno de los resultados más relevantes y diferenciadores de este trabajo, más allá del ámbito estrictamente predictivo, ha sido la construcción y validación de un recurso de datos estructurado para la conversión y correspondencia bidireccional entre las codificaciones CIE-9 y CIE-10 (\textit{ICD-9-CM} e \textit{ICD-10-CM}) adaptado al contexto clínico en español.
 
 Durante la fase de revisión del estado del arte e inspección de recursos disponibles, se identificó una clara limitación en las fuentes abiertas actuales: los portales oficiales, como el motor de búsqueda del Ministerio de Sanidad de España, están orientados a la consulta puntual e individualizada por parte del usuario a través de interfaces web. Tampoco existía, hasta la fecha, un conjunto de datos tabular completo, unificado y de libre acceso que mapeara de forma directa, masiva e interoperable ambos sistemas normativos incorporando la descripción clínica completa en castellano, dandonos un nicho que rellenar.
+
+\end{comment}
+
+Uno de los resultados más relevantes y diferenciadores de este trabajo, más allá del ámbito estrictamente predictivo, ha sido la construcción y validación de un recurso de datos estructurado para la conversión y correspondencia bidireccional entre las codificaciones CIE-9 y CIE-10 (\textit{ICD-9-CM} e \textit{ICD-10-CM}) adaptado íntegramente al contexto clínico en español.
+
+Durante la fase de revisión del estado del arte e inspección de recursos disponibles, se identificó una clara fragmentación en el ecosistema actual. Por un lado, los portales oficiales, como el motor de búsqueda del Ministerio de Sanidad de España, están concebidos exclusivamente para consultas puntuales e individualizadas a través de interfaces web, lo que impide su integración directa en analítica masiva de datos. Por otro lado, aunque existen en la literatura y repositorios abiertos diversos recursos de mapeo, como pueden ser la especificación oficial de equivalencias de la CMS (\textit{Centers for Medicare \& Medicaid Services}) \cite{cms_icd10_codes}, las tablas cruzadas del NBER \cite{nber_icd_crosswalk}, archivos de mapeo histórico \cite{nzhis_mapping}, repositorios comunitarios en GitHub \cite{clark_icd9to10, bhanratt_icd9to10, atlas_cumc_conversion} o conjuntos de datos aislados en Hugging Face \cite{huggingface_cie10}, todos ellos presentan limitaciones críticas como:
+
+\begin{itemize}
+    \item Se encuentran orientados de forma casi exclusiva al idioma inglés.
+    \item Aparecen incompletos, fragmentados, desactualizados o limitados a un subconjunto específico de patologías.
+    \item Carecen de una estructura unificada, limpia e interoperable lista para su ingesta en entornos modernos de ciencia de datos.
+\end{itemize}
+
+El recurso público más extenso y prometedor localizado en español fue el dataset alojado en Hugging Face por Martín García \cite{huggingface_cie10}, el cual destacaba por incluir las descripciones diagnósticas nativas en castellano y un volumen amplio de registros. Sin embargo, este archivo presentaba serias limitaciones técnicas para su uso directo: carecía de una estructura tabular limpia, contenía inconsistencias de formato, errores de parseo y vacíos en las equivalencias normativas entre ambas versiones del CIE. Para arreglar estos fallos, se procedió a una depuración y reestructuración inicial del dataset, saneando los errores de codificación de texto y normalizando su formato, combinandolo e integrandolo con el resto de recursos publicos disponibles \cite{nber_icd_crosswalk, cms_icd10_codes, clark_icd9to10, bhanratt_icd9to10, atlas_cumc_conversion, nzhis_mapping}.
 
 El dataset resultante, se ha estructurado en un formato tabular de 3 columnas y 108054 filas, donde cada fila representa una correspondencia única entre códigos de ambas normativas. Las columnas incluyen:
 
@@ -1426,11 +1389,31 @@ Este dataset universal nos da 2 aplicacions muy importantes:
 \end{enumerate}
 
 \chapter{Aplicación desarrollada}
-\section{Visualizaciones}
+\section{Objetivo y Visualización}
 
-El módulo de visualización de la aplicación se ha diseñado bajo el principio de simplicidad y eficiencia en la interfaz de usuario (\textit{UI/UX}). El objetivo principal es evitar la sobrecarga cognitiva del personal sanitario, transformando los resultados numéricos de los modelos predictivos y las consultas complejas de la base de datos de grafos en representaciones visuales intuitivas y directamente interpretables durante la práctica clínica.
+\section{Objetivo y Justificación del Módulo de Visualización}
+\label{sec:objetivo_visualizacion}
 
-Visualización de la red relacional de comorbilidades: Utilizando las capacidades de consulta de Neo4j, la aplicación genera una representación interactiva de la red de diagnósticos. El facultativo no observa una tabla de datos abstracta, sino un grafo donde los nodos representan patologías (clasificadas por sus códigos ICD) y las aristas reflejan la coexistencia de estos trastornos en el histórico de pacientes. El grosor o la disposición de estas conexiones permite identificar de un vistazo las trayectorias clínicas más frecuentes y las relaciones de comorbilidad asociadas a la esquizofrenia.
+El módulo de visualización de la aplicación se ha diseñado bajo el principio de simplicidad y eficiencia en la interfaz de usuario (\textit{UI/UX}). El objetivo principal es evitar la sobrecarga cognitiva del personal sanitario, transformando los resultados numéricos de los modelos predictivos y las consultas complejas a la base de datos de grafos en representaciones visuales intuitivas y directamente interpretables durante la práctica clínica.
+
+Esta decisión de desarrollar una plataforma web propia responde no solo a la necesidad de integrar los algoritmos de IA, sino también a las severas limitaciones que presentan las herramientas de conversión y consulta disponibles actualmente en la web:
+
+\begin{itemize}
+    \item \textbf{Limitación del portal oficial español (eCIEMaps):} El navegador del Ministerio de Sanidad \cite{eciemaps_sanidad} está diseñado como un catálogo jerárquico estático. Su interfaz resulta rígida y lenta, estando orientada exclusivamente a la búsqueda puntual e individualizada de un único código cada vez, lo que imposibilita la traducción masiva o por lotes (\textit{batch processing}) de historiales clínicos.
+    
+    \item \textbf{Plataformas comerciales anglosajonas (ICD10Data y AAPC):} Portales de referencia internacional como \textit{ICD10Data} \cite{icd10data_convert} o \textit{AAPC} \cite{aapc_icd10} están fuertemente orientados al sistema de facturación médica estadounidense. Presentan interfaces sobrecargadas de elementos emergentes y publicidad, operan únicamente en idioma inglés y no permiten procesar conjuntos de datos completos en un solo flujo.
+
+    \item \textbf{Fragmentación de funcionalidades:} Ninguna de las soluciones existentes en el mercado combina la conversión normativo-clínica en español con capacidades analíticas avanzadas, obligando al facultativo a alternar entre múltiples pestañas, conversores externos y herramientas de consulta.
+\end{itemize}
+
+Frente a estas carencias, la aplicación web desarrollada en \textbf{Streamlit} consolida en un único entorno centralizado tres pilares funcionales:
+\begin{enumerate}
+    \item \textbf{Procesamiento por lotes e instantáneo:} Permite la conversión individual y masiva entre CIE-9 y CIE-10 en castellano sin restricciones de volumen ni publicidad.
+    \item \textbf{Exploración gráfica de comorbilidades:} Renderiza de forma interactiva las redes relacionales almacenadas en Neo4j, permitiendo al clínico navegar visualmente por las asociaciones entre diagnósticos.
+    \item \textbf{Cuadro de mando predictivo e interpretable:} Presenta las probabilidades diagnósticas de los modelos de \textit{Machine Learning} y \textit{Deep Learning} de forma clara, complementándolas con gráficos relacionales y mapas de distribución espacial.
+\end{enumerate}
+
+
 
 \section{Requisitos}
 
@@ -1926,6 +1909,36 @@ En este apartado se consolida el análisis económico del proyecto, integrando l
 
 \subsubsection{Costes de personal (Mano de obra)}
 
+
+\subsubsection{Costes de personal (Mano de obra)}
+
+El volumen de trabajo estimado para la consecución de los objetivos de este Trabajo de Fin de Grado se alinea con la carga lectiva oficial de 12 créditos ECTS, lo que equivale a un total de 300 horas de dedicación. Dado que el proyecto se ha gestionado mediante una metodología ágil \textbf{Scrum adaptado}, el esfuerzo temporal se ha dividido formalmente entre las tareas técnicas de ingeniería de \textit{software}/IA y las labores de gestión del proceso ágil:
+
+\begin{itemize}
+    \item \textbf{Ingeniero de Datos / Desarrollador Junior (85\% de la carga temporal - 255 horas):} Comprende las tareas técnicas de preprocesamiento, modelado en grafos (Neo4j), formar el conversor de codigos, entrenamiento de modelos ML/DL, desarrollo de la aplicación web en Streamlit y validación de requisitos.
+    \item \textbf{Scrum Master Junior (15\% de la carga temporal - 45 horas):} Asume la gestión del marco ágil, incluyendo la planificación y estimación de los 8 \textit{Sprints}, las sesiones de revisión/retrospectiva y la mitigación de bloqueos técnicos.
+\end{itemize}
+
+Cabe señalar que el rol de \textbf{Product Owner} es asumido conceptualmente por el tutor del proyecto, por lo que no genera costes salariales adicionales imputables a este presupuesto.
+
+Atendiendo a las tarifas de mercado actuales y convenios colectivos para perfiles tecnológicos de nivel de entrada, se fija una tarifa de 14,00 €/hora para el perfil técnico y de 16,00 €/hora para las labores de gestión ágil (incluyendo costes salariales y cargas sociales) \cite{salario-ingeniero-datos}. El desglose detallado del coste de personal se presenta en la Tabla \ref{tab:coste_personal}.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|c|c|r|}
+\hline
+\textbf{Perfil / Rol Funcional} & \textbf{Horas Dedicadas} & \textbf{Precio/Hora (€)} & \textbf{Coste Total (€)} \\ \hline
+Ingeniero de Datos Junior & 255 & 14,00 & 3.570,00 \\ \hline
+Scrum Master Junior & 45 & 16,00 & 720,00 \\ \hline
+\multicolumn{3}{|l|}{\textbf{Total Mano de Obra}} & \textbf{4.290,00 €} \\ \hline
+\end{tabular}
+\caption{Desglose del coste de personal directo según roles metodológicos.}
+\label{tab:coste_personal}
+\end{table}
+
+\begin{comment}
 El volumen de trabajo estimado para la consecución de los objetivos de este TFG se alinea con la carga lectiva oficial de 12 créditos ECTS, lo que equivale a un total de 300 horas de dedicación. Atendiendo a los convenios colectivos actuales estandar y las tarifas de mercado para perfiles tecnológicos de nivel de entrada, se fija un coste horario de 14,00 €/hora (incluyendo costes salariales y cargas sociales) \cite{salario-ingeniero-datos}. El cálculo del coste total de personal se detalla en la Tabla \ref{tab:coste_personal}.
 
 \begin{table}[htbp]
@@ -1940,13 +1953,14 @@ Ingeniero de Datos Junior & 300 & 14,00 & 4.200,00 \\ \hline
 \caption{Desglose del coste de personal directo.}
 \label{tab:coste_personal}
 \end{table}
+\end{comment}
 
 \subsubsection{Costes indirectos y gastos generales}
 
 Los costes indirectos estaran compuestos por aquellos gastos que, sin estar ligados directamente a la programación o análisis, son indispensables para el desarrollo de la actividad física. Esto incluye el consumo de energía eléctrica de la estación de trabajo, la conexión a internet de banda ancha para la descarga de librerías o subida de modelos o codigo a Github, y el gasto logístico del espacio de oficina. Para simplificar y generalizar el modelo contable, se aplica un estándar industrial del 15\% sobre el coste total de la mano de obra directa:
 
 \begin{equation}
-\text{Costes Indirectos} = 4.200,00 \times 0,15 = 630,00 \text{ €}
+\text{Costes Indirectos} = 4.290,00 \times 0,15 = 643,50 \text{ €}
 \end{equation}
 
 \subsubsection{Resumen del presupuesto total}
@@ -1954,11 +1968,11 @@ Los costes indirectos estaran compuestos por aquellos gastos que, sin estar liga
 Para concluir el análisis financiero, unificaremos todos los conceptos económicos desglosados a lo largo de este capítulo (como recursos hardware amortizados, licencias de software, mano de obra e indirectos) en una tabla \ref{tab:presupuesto_total}, ofreciendo la valoración económica global del proyecto. Además, se incorpora un \textbf{margen de beneficio industrial} del 10\% sobre el coste total calculado, con el fin de cubrir posibles cambios de alcance, ajustes técnicos o imprevistos durante el desarrollo sin generar sobrecostes significativos para garantizar la viabilidad económica del proyecto.
 
 \begin{equation}
-\text{Margen de beneficio industrial} = 0{,}10 \times 4.830,00 = 483,00 \text{ €}
+\text{Margen de beneficio industrial} = 0{,}10 \times 5.322,00 = 532,20 \text{ €}
 \end{equation}
 
 \begin{equation}
-\text{Presupuesto total con margen} = 4.830,00 + 483,00 = 5.313,00 \text{ €}
+\text{Presupuesto total con margen} = 5.322,00 + 532,20 = 5.854,20 \text{ €}
 \end{equation}
 
 \begin{table}[htbp]
@@ -1969,10 +1983,10 @@ Para concluir el análisis financiero, unificaremos todos los conceptos económi
 \textbf{Concepto Presupuestario} & \textbf{Coste Imputable (€)} \\ \hline
 Recursos Hardware (Amortización lineal) & 317,71 \\ \hline
 Software y Librerías de Código Abierto & 0,00 \\ \hline
-Costes de Personal (Mano de Obra Directa) & 4.200,00 \\ \hline
-Costes Indirectos (15\% sobre mano de obra) & 630,00 \\ \hline
-Margen de Beneficio Industrial (10\%) & 483,00 \\ \hline
-\textbf{PRESUPUESTO TOTAL DEL PROYECTO} & \textbf{5.313,00} \\ \hline
+Costes de Personal (Mano de Obra Directa) & 4.290,00 \\ \hline
+Costes Indirectos (15\% sobre mano de obra) & 643,50 \\ \hline
+Margen de Beneficio Industrial (10\%) & 532,20 \\ \hline
+\textbf{PRESUPUESTO TOTAL DEL PROYECTO} & \textbf{5.854,20} \\ \hline
 \end{tabular}
 \caption{Resumen consolidado del presupuesto general del TFG.}
 \label{tab:presupuesto_total}

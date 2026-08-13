@@ -1,0 +1,45 @@
+Cosas que cambiar TFG Raúl:
+
+- Completar las partes faltantes del capítulo 8 y el capítulo 5.
+? En la versión que nos has mandado no incluyes información sobre la planificación del proyecto a pesar de utilizar una metodología ágil ni defines las tareas a realizar en el proyecto, esto es importante dado que si utilizas una metodología scrum por ejemplo, debes de explicar la duración de los sprints, las tareas o historias de usuario que realizas en cada sprint e incluir un diagrama de Gantt.
+- Por último, no he visto una planificación de riesgos del proyecto, como pueden ser incompatibilidades entre tecnologías o librerías ni defines el impacto que se produce sobre el proyecto
+- Pocas referencias comenzaría comentando en el estado del arte algunas estadísticas sobre enfermedades mentales y luego ya me centraría en el ámbito España y la esquizofrenia en concreto
+- En el capítulo del estado del arte fundamentas todo en base a 3 referencias siendo algo pobre, cuando utilizas frases como varios estudios demuestran tal o cual cítalos para que se vea que no inventas las cosas, en la revisión de la literatura es muy importante que incluyas bastantes referencias.
+
+
+? Las conclusiones del estado del arte las llevaría al final del trabajo y las combinaría con las conclusiones globales del trabajo
+? En todas las tablas y figuras debes indicar en la parte inferior la tabla o figura que es e incluir una breve descripción.
+? La tabla 3.1 está bien pero sería conveniente hacer una breve introducción a la misma. El principal problema que le veo es que es muy larga y creo que se podría representar cada una de las filas como una especie de tarjeta con los datos de la tabla y una explicación de todo el contenido (Realmente sería como hacer varias tablas pequeñas para cada uno de los elementos Nombre de la columna y sus características. Previamente a estas figuras haría una pequeña introducción del tipo. A continuación, en las siguientes figuras se representa una descripción detallada de cada una de las columnas que presenta el dataset utilizado en este proyecto.
+? Procura evitar expresiones con ; y que utilicen muchos adjetivos, al igual que expresiones con - para delimitarlas u otros símbolos tales como la doble flecha, no abusar tampoco entre expresiones en negrita o cursiva para resaltar algo, procura hacer el resaltado o siempre en negrita o en cursiva porque los detectores de IA lo suelen marcar como GPT
+
+X En el 3.3.4 completar la parte del INCISO
+X Para el tema de los costes de personal tendrías que indicar la fuente de dónde sacas los salarios y al ser un proyecto desarrollado mediante una metodología ágil debes incluir costes de como mínimo el scrum máster en el caso de la metodología scrum, dado que el Project manager y el Project owner son la misma persona en este caso no implicaría costes adicionales
+X Cambiar la parte de la reticencia de los especialista a adoptar estas nuevas medidas y quitar la parte de entre paréntesis en la que dices que es entendible porque son valoraciones personales que no es recomendable incluir
+X Falta incluir una descripción de la arquitectura del sistema con un diagrama que ayude a ilustrar la arquitectura del mismo y cómo se conectan los distintos componentes o tecnologías entre sí.
+X Mención de comités de ética en los datos clínicos utilizados
+X Tema de figuras, imágenes y tablas busca que queden bastante justificadas en el espacio sin tener paginas a medio completar o excesivos márgenes en blanco, juega con los tamaños de las mismas para intentar cuadrarlo (Sobre todo las del final del capítulo 3)
+X Revisar que a veces el compilador de latex falla con los márgenes
+X En el capítulo 6 cuando describes la aplicación y los flujos también es necesario incluir su especificación técnica en cuanto a requisitos funcionales, no funcionales y otra medidas adicionales adoptadas.
+X No incluyes historias de usuario que ayuden a definir adecuadamente las tareas a realizar, es importante incluirlas como tablas individuales e indicar las dependencias entre ellas, así como condiciones de aceptación y demás.
+X Falta la referencia del ENS en el real decreto de 311/2022
+X También en el apartado de presupuestos totales debes comentar que aplicas un margen de beneficio o beneficio industrial que lo obtienes aplicando a los costes un porcentaje adicional de entre un 10% a un 12%, este concepto se utiliza para cubrir cambios en caso de problemas o modificaciones a lo largo del proyecto sin incurrir en sobrecostes.
+X Segundo apellido del cotutor es Álvaro no Álvarez
+X El tipo de letra que usa no es la más adecuada porque cansa al leer y debería sustituirse por algo como Latin Modern Roman o tipografía tipo arial o calibri
+X Tablas resumen tienen que quedar en 1 página, una para español y otra para inglés
+X El apartado de listings no sé muy bien para qué lo incluyes si no aporta nada de información adicional
+X Tunear cambiarlo por afinar modelos de IA
+X desientificación o cambiar por anonimización
+X Apartado estructura de la memoria Separar a nuevo párrafo capitulo 4, capitulo 5 y en adelante.
+X Cambiar profusamente por comúnmente.
+X Cambiar denseificados por densificados o mejor todavía embeddings semánticos densos
+X Cambiar caos o caotico y expresiones similares por la variabilidad de la jerga médica o alta diversidad
+X Cuando haces mención a ciertos papers o publicaciones en los que indicas el nombre del autor x et al. hay que añadir la referencia en la bibliografía
+X En el capitulo 3.1 cuando mencionas la fuente de los datos cambia Hospital universitario de León por Complejo Asistencial Universitario de León (CAULE) e incluye que dichos datos anonimizados han sido sometidos a un comité de ética del propio CAULE
+X Cambia la palabra facultó por desencadenó.
+X Incluir la tilde en observó, inglés y Descripción
+X Cambiar en 3.3.1 desidentificación por anonimización o anonimato de la muestra
+X En el 3.4 al final del primer párrafo cuando comentas que deriva en un problema de sobreajuste no es exactamente eso lo que pasa, se produce sobreajuste con los datos de entrenamiento, pero el principal problema es que todas las métricas están artefactadas porque evaluamos el modelo con los datos que ya ha visto y con nuevos datos de test nunca vistos muy probablemente no generalizará bien.
+X En la división del dataset clarifica los porcentajes de cada cosa bien sobre el total de datos
+X Cuando mencionas los modelos que utilizas es interesante que incluyas su referencia a Hugginface en su caso o de donde lo saques, es decir, añade a la bibliografía la cita y lo mencionas
+X En la parte de las métricas es interesante añadir sus fórmulas y citar brevemente de donde las sacas (es añadir una referencia en la que indicas de dónde sale la definición y la fórmula que la calcula) y no olvides definir los TP, FP, FN y TN
+X Cuando mencionas todas las librerías y software utilizado está bien incluir referencias a sus páginas oficiales, dado que esa información que comentas sale en ellas, con lo cual añadir una cita con dicha referencia es recomendable

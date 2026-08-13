@@ -1,3 +1,5 @@
+Codigos:
+
 🏆 Mejores resultados por F1:
                                      modelo  learning_rate  batch_size  \
 12    dccuchile/bert-base-spanish-wwm-cased        0.00002          16   
