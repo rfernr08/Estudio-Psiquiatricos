@@ -1178,9 +1178,10 @@ Las tablas sintetizan el rendimiento global obtenido por cada modelo según la v
 \rowcolor[RGB]{239,239,239}
 \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
-Códigos & \texttt{BETO cased} & 0,7775 & 0,6691 & 0,6164 & 0,7317 \\
-Combinado & \texttt{BETO cased} & 0,7950 & 0,7029 & 0,6340 & 0,7886 \\
-Descripciones & \texttt{BETO uncased} & 0,8225 & 0,6900 & 0,7315 & 0,6529 \\ \hline
+Códigos & \texttt{BETO cased} & 0,7020 & 0,6615 & 0,6420 & 0,7020 \\
+Descripciones & \texttt{BETO cased} & 0,6932 & 0,6754 & 0,6629 & 0,6932 \\ 
+Combinado & \texttt{BETO cased} & 0,7285 & 0,6857 & 0,6670 & 0,7285 \\ \hline
+
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset original.}
@@ -1197,8 +1198,8 @@ Descripciones & \texttt{BETO uncased} & 0,8225 & 0,6900 & 0,7315 & 0,6529 \\ \hl
 \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
 Códigos & \texttt{BETO uncased} & 0,5000 & 0,2348 & 0,2409 & 0,2453 \\
-Combinado & \texttt{BETO cased} & 0,5223 & 0,2489 & 0,2717 & 0,2511 \\
-Descripciones & \texttt{bert-multilingual} & 0,5223 & 0,2599 & 0,2984 & 0,2629 \\ \hline
+Descripciones & \texttt{bert-multilingual} & 0,5223 & 0,2599 & 0,2984 & 0,2629 \\
+Combinado & \texttt{BETO cased} & 0,5223 & 0,2489 & 0,2717 & 0,2511 \\ \hline
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset undersampling.}
@@ -1214,9 +1215,7 @@ Descripciones & \texttt{bert-multilingual} & 0,5223 & 0,2599 & 0,2984 & 0,2629 \
 \rowcolor[RGB]{239,239,239}
 \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
-Códigos & \texttt{BETO cased} & 0,7020 & 0,6615 & 0,6420 & 0,7020 \\
-Combinado & \texttt{BETO cased} & 0,7285 & 0,6857 & 0,6670 & 0,7285 \\
-Descripciones & \texttt{BETO cased} & 0,6932 & 0,6754 & 0,6629 & 0,6932 \\ \hline
+
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset expandido con VAE.}
@@ -1391,13 +1390,10 @@ Este dataset universal nos da 2 aplicacions muy importantes:
 \chapter{Aplicación desarrollada}
 \section{Objetivo y Visualización}
 
-\section{Objetivo y Justificación del Módulo de Visualización}
-\label{sec:objetivo_visualizacion}
-
 El módulo de visualización de la aplicación se ha diseñado bajo el principio de simplicidad y eficiencia en la interfaz de usuario (\textit{UI/UX}). El objetivo principal es evitar la sobrecarga cognitiva del personal sanitario, transformando los resultados numéricos de los modelos predictivos y las consultas complejas a la base de datos de grafos en representaciones visuales intuitivas y directamente interpretables durante la práctica clínica.
 
 Esta decisión de desarrollar una plataforma web propia responde no solo a la necesidad de integrar los algoritmos de IA, sino también a las severas limitaciones que presentan las herramientas de conversión y consulta disponibles actualmente en la web:
-
+\begin{comment}
 \begin{itemize}
     \item \textbf{Limitación del portal oficial español (eCIEMaps):} El navegador del Ministerio de Sanidad \cite{eciemaps_sanidad} está diseñado como un catálogo jerárquico estático. Su interfaz resulta rígida y lenta, estando orientada exclusivamente a la búsqueda puntual e individualizada de un único código cada vez, lo que imposibilita la traducción masiva o por lotes (\textit{batch processing}) de historiales clínicos.
     
@@ -1405,7 +1401,7 @@ Esta decisión de desarrollar una plataforma web propia responde no solo a la ne
 
     \item \textbf{Fragmentación de funcionalidades:} Ninguna de las soluciones existentes en el mercado combina la conversión normativo-clínica en español con capacidades analíticas avanzadas, obligando al facultativo a alternar entre múltiples pestañas, conversores externos y herramientas de consulta.
 \end{itemize}
-
+\end{comment}
 Frente a estas carencias, la aplicación web desarrollada en \textbf{Streamlit} consolida en un único entorno centralizado tres pilares funcionales:
 \begin{enumerate}
     \item \textbf{Procesamiento por lotes e instantáneo:} Permite la conversión individual y masiva entre CIE-9 y CIE-10 en castellano sin restricciones de volumen ni publicidad.
@@ -1585,7 +1581,7 @@ Las características funcionales clave integradas en este panel son las siguient
     
     \item \textbf{Mapeo relacional de correspondencias:} Al seleccionar un diagnóstico específico —como, por ejemplo, la \textit{Esquizofrenia paranoide} (F20.0)—, la aplicación realiza una consulta indexada y presenta los resultados estructurados en tres tarjetas de datos diferenciadas por contraste cromático. Este panel revela visualmente la relación de correspondencia compleja (de uno a muchos) entre el estándar actual y el histórico, listando todos los códigos ICD-9 asociados (como 295.30 a 295.35).
     
-    \item \textbf{Interoperabilidad internacional vía API externa:} Como característica de valor añadido, la interfaz incorpora un mecanismo de consulta externa integrado con la API de la \textit{National Library of Medicine} (NLM) de los Estados Unidos. Mediante un evento de activación asíncrono, el facultativo puede recuperar la descripción clínica oficializada en lengua inglesa, expandiendo la utilidad de la herramienta hacia entornos de investigación internacional o codificación cruzada global.
+    \item \textbf{Interoperabilidad internacional vía API externa:} Como característica de valor añadido, la interfaz incorpora un mecanismo de consulta externa integrado con la API de la \textit{National Library of Medicine} (NLM) \cite{clinicaltables_icd10cm} de los Estados Unidos. Mediante un evento de activación asíncrono, el facultativo puede recuperar la descripción clínica oficializada en lengua inglesa, expandiendo la utilidad de la herramienta hacia entornos de investigación internacional o codificación cruzada global.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -1906,9 +1902,6 @@ Sistema Operativo & Ubuntu Linux 24.04.4 LTS & GPL & 0,00 \\ \hline
 \section{Estimación de costes}
 
 En este apartado se consolida el análisis económico del proyecto, integrando los costes directos de mano de obra invertidos en el proyecto y los costes indirectos derivados de la actividad. Al tratarse de un proyecto de carácter individual, el factor humano constaria de la contratación de un único perfil de Ingeniero de Datos o Científico de Datos Junior encargado de todas las fases del ciclo de vida del software y la investigación.
-
-\subsubsection{Costes de personal (Mano de obra)}
-
 
 \subsubsection{Costes de personal (Mano de obra)}
 

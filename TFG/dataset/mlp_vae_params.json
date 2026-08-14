@@ -1,0 +1,26 @@
+{
+  "codigos": {
+    "learning_rate": 2e-5,
+    "batch_size": 16,
+    "epochs": 5,
+    "weight_decay": 0.01,
+    "hidden_dim": 128,
+    "dropout_rate": 0.2
+  },
+  "descripciones": {
+    "learning_rate": 2e-5,
+    "batch_size": 16,
+    "epochs": 4,
+    "weight_decay": 0.001,
+    "hidden_dim": 128,
+    "dropout_rate": 0.2
+  },
+  "combinado": {
+    "learning_rate": 3e-5,
+    "batch_size": 16,
+    "epochs": 4,
+    "weight_decay": 0.001,
+    "hidden_dim": 128,
+    "dropout_rate": 0.2
+  }
+}

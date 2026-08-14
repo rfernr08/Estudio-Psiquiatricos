@@ -8,7 +8,7 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 
-dataset =  "recursos/otros/BERT/diagnosticos_F20_F20.89_sin_dups_limpio.csv"
+dataset =  r"C:\Users\Usuario\Documents\Workspace\Mirage\TFG\dataset\dataset_finales\Desbalance\Dataset_procesable.csv"
 df = pl.read_csv(dataset, separator="|")
 
 seed = int(time.time_ns() % (2**32))
@@ -23,8 +23,9 @@ le = LabelEncoder()
 for col in X.columns:
     X[col] = le.fit_transform(X[col].astype(str))
 
+codes = sorted(["F20", "F21", "F22", "F23", "F25", "F29", "F60.1"])
 y = df.select(
-    pl.col("DIAG PSQ").str.contains("F20.89").cast(pl.Int32).alias("target")
+    pl.col("DIAG PSQ").str.contains("|".join(codes)).cast(pl.Int32).alias("target")
 ).to_pandas()["target"]
 
 
