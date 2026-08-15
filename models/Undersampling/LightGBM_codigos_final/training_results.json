@@ -1,0 +1,20 @@
+{
+  "modelo": "LightGBM",
+  "dataset": "codigos",
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "colsample_bytree": 1.0,
+  "num_leaves": 31,
+  "learning_rate": 0.05,
+  "max_depth": 6,
+  "n_estimators": 100,
+  "subsample": 0.8,
+  "accuracy": 0.46875,
+  "f1": 0.43935519955305713,
+  "precision": 0.44051563124420035,
+  "recall": 0.46875,
+  "seed": 3670554632
+}

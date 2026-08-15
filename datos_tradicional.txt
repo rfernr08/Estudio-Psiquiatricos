@@ -1,0 +1,38 @@
+Codigos:
+🏆 MEJORES HIPERPARÁMETROS (GradientBoosting):
+{'learning_rate': 0.1, 'max_depth': 3, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 100, 'subsample': 0.8}
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 300, 'num_leaves': 15, 'subsample': 0.8}
+🏆 MEJORES HIPERPARÁMETROS (XGBoost):
+{'colsample_bytree': 0.9, 'gamma': 0, 'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 200, 'subsample': 0.9}
+
+Descripciones:
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_depth': -1, 'n_estimators': 100, 'num_leaves': 31, 'subsample': 0.8}
+🏆 MEJORES HIPERPARÁMETROS (XGBoost):
+{'colsample_bytree': 0.9, 'gamma': 0, 'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 200, 'subsample': 0.9}
+🏆 MEJORES HIPERPARÁMETROS (GradientBoosting):
+{'learning_rate': 0.1, 'max_depth': 3, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 100, 'subsample': 0.8}
+
+Combinado:
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': 0.8, 'learning_rate': 0.05, 'max_depth': -1, 'n_estimators': 200, 'num_leaves': 63, 'subsample': 0.8}
+🏆 MEJORES HIPERPARÁMETROS (XGBoost):
+{'colsample_bytree': 1.0, 'gamma': 0.1, 'learning_rate': 0.05, 'max_depth': 7, 'n_estimators': 300, 'subsample': 0.7}
+🏆 MEJORES HIPERPARÁMETROS (GradientBoosting):
+{'learning_rate': 0.1, 'max_depth': 7, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200, 'subsample': 0.8}
+
+Undersampling:
+Codigos:
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': 1.0, 'learning_rate': 0.05, 'max_depth': 6, 'n_estimators': 100, 'num_leaves': 31, 'subsample': 0.8}
+
+Descripciones:
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 100, 'num_leaves': 15, 'subsample': 0.8}
+
+Combinado:
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': 0.8, 'learning_rate': 0.05, 'max_depth': 6, 'n_estimators': 100, 'num_leaves': 31, 'subsample': 0.8}
+🏆 MEJORES HIPERPARÁMETROS (XGBoost):
+{'colsample_bytree': 0.7, 'gamma': 0, 'learning_rate': 0.05, 'max_depth': 5, 'n_estimators': 200, 'subsample': 0.9}

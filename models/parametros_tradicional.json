@@ -1,0 +1,126 @@
+{
+    "Original": {
+        "codigos":{
+            "modelo": "XGBoost",
+  "dataset": "codigos",
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "colsample_bytree": 0.9,
+  "gamma": 0,
+  "learning_rate": 0.1,
+  "max_depth": 5,
+  "n_estimators": 200,
+  "subsample": 0.9,
+  "accuracy": 0.7108167770419426,
+  "f1": 0.6518121313612556,
+  "precision": 0.6257012581515893,
+  "recall": 0.7108167770419426,
+  "seed": 1666990968
+        },
+        "descripciones":{
+            "modelo": "XGBoost",
+  "dataset": "descripciones",
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "colsample_bytree": 0.9,
+  "gamma": 0,
+  "learning_rate": 0.1,
+  "max_depth": 5,
+  "n_estimators": 200,
+  "subsample": 0.9,
+  "accuracy": 0.7350993377483444,
+  "f1": 0.6738794727259154,
+  "precision": 0.6572410224896476,
+  "recall": 0.7350993377483444,
+  "seed": 1932038264
+        },
+        "combinado":{
+            "modelo": "XGBoost",
+  "dataset": "combinados",
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "colsample_bytree": 1.0,
+  "gamma": 0.1,
+  "learning_rate": 0.05,
+  "max_depth": 7,
+  "n_estimators": 300,
+  "subsample": 0.7,
+  "accuracy": 0.7328918322295805,
+  "f1": 0.6663187158123299,
+  "precision": 0.6633488458590301,
+  "recall": 0.7328918322295805,
+  "seed": 3096334320
+        }
+    },
+    "Undersampling":{
+        "codigos":{
+            "modelo": "LightGBM",
+  "dataset": "codigos",
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "colsample_bytree": 1.0,
+  "num_leaves": 31,
+  "learning_rate": 0.05,
+  "max_depth": 6,
+  "n_estimators": 100,
+  "subsample": 0.8,
+  "accuracy": 0.46875,
+  "f1": 0.43935519955305713,
+  "precision": 0.44051563124420035,
+  "recall": 0.46875,
+  "seed": 3670554632
+        },
+        "descripciones":{
+            "modelo": "LightGBM",
+  "dataset": "descripciones",
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "colsample_bytree": 1.0,
+  "num_leaves": 15,
+  "learning_rate": 0.1,
+  "max_depth": 3,
+  "n_estimators": 100,
+  "subsample": 0.8,
+  "accuracy": 0.5178571428571429,
+  "f1": 0.4880155562146444,
+  "precision": 0.48048330019030516,
+  "recall": 0.5178571428571429,
+  "seed": 124812300
+        },
+        "combinado":{
+              "modelo": "XGBoost",
+  "dataset": "combinados",
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "colsample_bytree": 0.7,
+  "gamma": 0,
+  "learning_rate": 0.05,
+  "max_depth": 5,
+  "n_estimators": 200,
+  "subsample": 0.9,
+  "accuracy": 0.5758928571428571,
+  "f1": 0.5401097805492119,
+  "precision": 0.5370187672996304,
+  "recall": 0.5758928571428571,
+  "seed": 3259992144
+        }
+    }
+}

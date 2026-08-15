@@ -1057,9 +1057,7 @@ Para garantizar la robustez de estas métricas, los resultados expuestos en el s
 
 \section{Evaluación y Comparativa de Modelos de Aprendizaje Profundo}
 
-En este bloque experimental se evalúa la capacidad de generalización y extracción de patrones textuales sintomáticos mediante el \textit{fine-tuning} de cuatro arquitecturas basadas en Transformers sobre las tres variantes del conjunto de datos (Original, RUS y RUS+VAE). 
-
-Las tablas sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica.
+Las proximas tablas \ref{tab:comparativa_nlp_metricas_original}, \ref{tab:comparativa_nlp_metricas_undersampling} y \ref{tab:comparativa_nlp_metricas_undersampling_vae} sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset despues de un proceso de fine-tuning, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica.
 
 \begin{comment}
 
@@ -1260,6 +1258,82 @@ El estudio de las combinaciones óptimas de hiperparámetros revela patrones rec
     \item Entrenamiento corto (3 a 5 épocas): Actúa como parada temprana implícita para evitar que BERT memorice en exceso un dataset de tamaño medio.  
     \item Regularización (Weight Decay de $0,001$-$0,01$ y Warmup de $0,1$): Limita la magnitud de los pesos y estabiliza los gradientes iniciales durante el entrenamiento.  
 \end{itemize}
+
+\subsection{Análisis Cualitativo e Interpretación de Resultados}
+
+Esta gran cantidad de datos y métricas permite extraer varias conclusiones de interés clínico y metodológico, destacando especialmente qué modelos y estrategias de preprocesamiento ofrecen un rendimiento superior. Estos hallazgos, confirmados exhaustivamente por los resultados del \textit{Grid Search}, se sustentan en patrones de configuración de hiperparámetros muy específicos. Entre las conclusiones más relevantes se encuentran:
+
+\begin{itemize}
+    \item \textbf{Dominio de la información combinada:} La integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (el dataset "combinado") obtiene de forma sistemática los mejores valores de \textit{F1-Score} tanto en la variante Original ($0,7029$) como en la reconstruida con VAE ($0,6857$). Esto evidencia que los códigos de antecedentes ofrecen un contexto estructurado que complementa las sutilezas lingüísticas descritas en el texto narrativo. 
+    \begin{comment}
+    Este máximo rendimiento se alcanzó de forma recurrente empleando un tamaño de lote acotado (\textit{Batch Size} = 16), una decisión técnica que no solo optimizó el consumo de memoria VRAM, sino que introdujo el ruido estocástico adecuado para favorecer la convergencia en el descenso de gradiente al procesar estas entradas más densas.
+    \end{comment}
+        
+    \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura especializada \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) ha superado de forma consistente a otros modelos multilingües como \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las especificaciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos. El éxito de este proceso (\textit{fine-tuning}) fue posible gracias a la aplicación de tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$), lo cual permitió adaptar la capa de clasificación a la tarea predictiva sin destruir conocimiento lingüístico preentrenado del \textit{Transformer}.
+    
+    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score Macro} y su aparición continua como modelo ganador en el \textit{Grid Search}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas. Los modelos pudieron entender estos detalles a la vez por un entrenamiento controlado por decaimento de pesoos de $0,001$ a $0,01$  y una fase de calentamiento del $0,1$, evitando desajustes abruptos al comienzo del entrenamiento
+    
+    \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $30\%$ y un \textit{F1-Score} en el rango de $0,2348 - 0,2599$. Sin embargo, la integración de muestras sintéticas (\textbf{RUS + VAE}) permitió estabilizar las fronteras de decisión en las clases minoritarias, dejándonos con métricas competitivas en un espacio de clases completamente balanceado (\textit{F1-Score} de $0,6857$, con precisión y \textit{Recall} equilibrados en torno a $0,6670$ y $0,7285$ respectivamente). Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita (\textit{early stopping}), evitando que BERT memorizara en exceso un dataset.
+\end{itemize}
+
+\section{Evaluación y Comparativa de Modelos de Aprendizaje Tradicional}
+
+Las proximas tablas \ref{tab:comparativa_boost_metricas_original}, \ref{tab:comparativa_boost_metricas_undersampling} y \ref{tab:comparativa_nlp_metricas_undersampling_vae} sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset despues de un proceso de fine-tuning, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica, en el marco de estudio de modelos tradicionales de Maquine Learning.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+
+Códigos & \texttt{XGBoost} & 0.7108 & 0.6518 & 0.6257 & 0.7108 \\
+Descripciones & \texttt{XGBoost} & 0.7350 & 0.6738 & 0.6572 & 0.7350 \\ 
+Combinado & \texttt{XGBoost} & 0.7328 & 0.6663 & 0.6633 & 0.7328 \\ \hline
+
+
+\end{tabular}
+\caption{Métricas de rendimiento de los mejores modelos tradicionales para el dataset original.}
+\label{tab:comparativa_boost_metricas_original}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+
+Códigos & \texttt{LightGBM} & 0.4687 & 0.4393 & 0.4405 & 0.4687 \\
+Descripciones & \texttt{XGBoost} & 0.7350 & 0.6738 & 0.6572 & 0.7350 \\ 
+Combinado & \texttt{XGBoost} & 0.5178 & 0.4880 & 0.4804 & 0.5178 \\ \hline
+
+
+\end{tabular}
+\caption{Métricas de rendimiento de los mejores modelos tradicionales para el dataset reducido.}
+\label{tab:comparativa_boost_metricas_undersampling}
+\end{table}
+
+\subsection{Análisis Cualitativo e Interpretación de Resultados: Modelos Tradicionales}
+
+El análisis de las métricas obtenidas mediante los algoritmos tradicionales de \textit{Machine Learning}, destacaron los basados en ensambles de árboles de decisión (XGBoost y LightGBM), revelando dinámicas de aprendizaje distintas a las observadas en las arquitecturas de aprendizaje profundo. A partir de los resultados extraídos del ajuste de hiperparámetros (\textit{Grid Search}), se pueden extraer las siguientes conclusiones:
+
+\begin{itemize}
+    \item \textbf{Prevalencia del texto libre en el espacio original:} A diferencia de los modelos basados en \textit{Transformers}, donde la integración semántica dominaba, en el dataset original y desbalanceado, el modelo entrenado exclusivamente con la variante del dataset compuesta de descripciones clinicas obtuvo el mejor rendimiento global \ref{tab:comparativa_boost_metricas_original}. Empleando XGBoost, esta variante alcanzó una \textit{Accuracy} de $0,7351$ y un \textit{F1-Score} de $0,6739$ \ref{tab:comparativa_boost_metricas_original}. Este desempeño supera ligeramente a la versión del dataset "combinado", que registró un \textit{F1-Score} de $0,6663$, y al dataset basado únicamente en "códigos", que se situó en $0,6518$ \ref{tab:comparativa_boost_metricas_original}. Esto sugiere que, al utilizar técnicas clásicas de extracción de características (basadas en \textit{n-grams} de 1 a 2), el texto de las descripciones proporciona suficiente densidad informativa sin necesidad de los códigos estandarizados.
+    
+    \item \textbf{Hegemonía del algoritmo XGBoost en entornos completos:} En el escenario sin balancear ("Original"), la arquitectura XGBoost demostró ser consistentemente la opción más robusta para los tres conjuntos de datos (códigos, descripciones y combinado). Las configuraciones óptimas convergieron en parámetros conservadores, destacando una profundidad máxima (\textit{max\_depth}) de 5 a 7, tasas de aprendizaje entre $0,05$ y $0,1$, y un rango de 200 a 300 estimadores (\textit{n\_estimators}).
+    
+    \item \textbf{Impacto del balanceo mediante \textit{Undersampling}:} La aplicación de técnicas de submuestreo para balancear las clases provocó una degradación drástica en el rendimiento general de los modelos tradicionales. La reducción masiva de ejemplos en las clases mayoritarias restó capacidad de generalización a los árboles de decisión. Esto es especialmente notorio en el dataset de "códigos", donde el modelo LightGBM colapsó hasta alcanzar un \textit{F1-Score} de $0,4393$ y una precisión del $0,4405$.
+    
+    \item \textbf{Resiliencia de la información combinada en escenarios empobrecidos:} Si bien el dataset "combinado" no fue el líder indiscutible en el conjunto original, demostró ser la estrategia más robusta frente a la drástica pérdida de datos ocasionada por el \textit{undersampling}. En este escenario adverso, el modelo XGBoost entrenado con datos combinados logró retener el mayor poder predictivo del bloque, alcanzando un \textit{F1-Score} de $0,5401$, una precisión de $0,5370$ y un \textit{Recall} de $0,5759$. Esto confirma que, cuando escasea el volumen de datos, la fusión de características tabulares (códigos) y textuales (descripciones) ayuda a estabilizar las fronteras de decisión.
+\end{itemize}
+
+
+
 \section{Impacto de cada mejora introducida}
 Texto del impacto...
 \section{Análisis de resultados}
