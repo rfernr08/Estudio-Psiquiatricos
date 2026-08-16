@@ -1,6 +1,8 @@
 import streamlit as st
 import polars as pl
-import logica  # Importamos tu motor
+import logica 
+import os # Nueva: Para comprobar si los archivos existen
+import streamlit.components.v1 as components # Nueva: Para renderizar HTML
 
 # 1. Configuración de página y caché de datos
 st.set_page_config(page_title="Conversor ICD", layout="wide")
@@ -12,15 +14,14 @@ def cargar_datos():
 
 df_maestro = cargar_datos()
 
-st.title("⚕️ Conversor y Buscador de Diagnósticos (ICD-9 / ICD-10)")
+st.title("Conversor y Buscador de Diagnósticos (ICD-9 / ICD-10)")
 
 # 2. Creación de las Pestañas
-tab_buscador, tab_lotes = st.tabs(["🔍 Buscador Individual", "📁 Conversor por Lotes"])
+tab_buscador, tab_lotes, tab_mapas = st.tabs(["Buscador Individual", "Conversor por Lotes", "Mapas de Investigacion"])
 
 # --- PESTAÑA 1: BUSCADOR INDIVIDUAL ---
-# --- PESTAÑA 1: BUSCADOR INDIVIDUAL ---
 with tab_buscador:
-    st.header("🔍 Búsqueda y Traducción de Diagnósticos")
+    st.header("Búsqueda y Traducción de Diagnósticos")
     
     # Añadimos "Descripción" a las opciones
     tipo_busqueda = st.radio("Buscar a partir de:", ["ICD10", "ICD9", "Descripción"], horizontal=True)
@@ -45,7 +46,7 @@ with tab_buscador:
                 opciones = opciones[:100]
             
             # 2. El usuario selecciona la coincidencia exacta de la lista de sugerencias
-            seleccion_exacta = st.selectbox("🎯 Sugerencias encontradas (Selecciona una):", opciones)
+            seleccion_exacta = st.selectbox("Sugerencias encontradas (Selecciona una):", opciones)
             
             if seleccion_exacta:
                 st.divider()
@@ -68,7 +69,7 @@ with tab_buscador:
                 if icd9_vals_limpios:
                     str_icd9 = "\n".join([f"• {val}" for val in icd9_vals_limpios])
                 else:
-                    str_icd9 = "❌ No disponible en ICD-9"
+                    str_icd9 = "No disponible en ICD-9"
                 
                 # 3. Presentación visual (UI) en formato "Ficha" para múltiples resultados
                 st.subheader("Datos del Diagnóstico")
@@ -83,7 +84,7 @@ with tab_buscador:
                 
                 # 4. Botón de la API en inglés
                 st.write("") 
-                if st.button("🌐 Obtener descripción en Inglés (API NLM)"):
+                if st.button("Obtener descripción en Inglés (API NLM)"):
                     with st.spinner('Consultando base de datos internacional...'):
                         # Usamos el primer ICD-10 de la lista para buscar en la API
                         texto_ingles = logica.obtener_ingles_api(icd10_vals[0])
@@ -95,7 +96,7 @@ with tab_buscador:
 
 # --- PESTAÑA 2: CONVERSOR POR LOTES ---
 with tab_lotes:
-    st.header("📁 Procesador de archivos CSV")
+    st.header("Procesador de archivos CSV")
     st.markdown("Sube un archivo con tus códigos o descripciones y añade las columnas equivalentes automáticamente.")
     
     archivo_subido = st.file_uploader("Sube tu archivo CSV", type=["csv"])
@@ -128,10 +129,10 @@ with tab_lotes:
                 )
                 
                 if "Inglés (API)" in tipos_destino:
-                    st.caption("⚠️ *Nota: Solicitar el inglés requiere conexión externa y aumentará el tiempo de procesamiento.*")
+                    st.caption("*Nota: Solicitar el inglés requiere conexión externa y aumentará el tiempo de procesamiento.*")
             
             # Botón de ejecución
-            if st.button("🚀 Procesar Archivo", type="primary"):
+            if st.button("Procesar Archivo", type="primary"):
                 if not tipos_destino:
                     st.error("Debes seleccionar al menos un formato de destino.")
                 else:
@@ -160,8 +161,68 @@ with tab_lotes:
                         
                         # Descarga
                         st.download_button(
-                            label="📥 Descargar Archivo Convertido",
+                            label="Descargar Archivo Convertido",
                             data=df_final.write_csv(),
                             file_name="diagnosticos_estandarizados.csv",
                             mime="text/csv"
                         )
+
+with tab_mapas:
+    st.header("Mapas de Investigacion")
+    st.markdown("Selecciona uno de los mapas interactivos generados durante el estudio para explorarlo.")
+    
+    # Inicializamos la variable en la "memoria" si no existe
+    if 'mapa_seleccionado' not in st.session_state:
+        st.session_state.mapa_seleccionado = None
+
+    directorio_actual = os.path.dirname(os.path.abspath(__file__))
+    carpeta_mapas = os.path.join(directorio_actual, "mapas")
+
+    # 1. Comprobamos si la carpeta existe. Si no, la creamos para evitar errores.
+    if not os.path.exists(carpeta_mapas):
+        os.makedirs(carpeta_mapas)
+        st.warning(f"He creado la carpeta '{carpeta_mapas}/'. Por favor, mete ahí tus archivos .html.")
+    else:
+        # 2. Escaneamos la carpeta buscando solo archivos .html
+        archivos_html = [f for f in os.listdir(carpeta_mapas) if f.endswith('.html')]
+        
+        if not archivos_html:
+            st.info(f"La carpeta '{carpeta_mapas}' está vacía. Añade archivos .html para verlos aquí.")
+        else:
+            # 3. Generamos los botones dinámicamente en filas de 3 columnas
+            columnas_por_fila = 3
+            
+            # Recorremos la lista de archivos dando "saltos" de 3 en 3
+            for i in range(0, len(archivos_html), columnas_por_fila):
+                cols = st.columns(columnas_por_fila) # Creamos 3 columnas vacías
+                
+                # Llenamos las columnas de esta fila
+                for j, col in enumerate(cols):
+                    indice_actual = i + j
+                    # Comprobamos que no nos salimos de la lista de archivos
+                    if indice_actual < len(archivos_html):
+                        archivo_actual = archivos_html[indice_actual]
+                        
+                        # Limpiamos el nombre para el botón: quitamos ".html", cambiamos "_" por espacios y ponemos mayúsculas
+                        nombre_bonito = archivo_actual.replace(".html", "").replace("_", " ").title()
+                        
+                        with col:
+                            # Usamos el nombre del archivo como 'key' para que Streamlit no se confunda con botones iguales
+                            if st.button(f"{nombre_bonito}", key=archivo_actual, use_container_width=True):
+                                st.session_state.mapa_seleccionado = os.path.join(carpeta_mapas, archivo_actual)
+
+    st.divider()
+
+    # 4. Lógica para mostrar el mapa seleccionado (igual que antes)
+    if st.session_state.mapa_seleccionado:
+        ruta_mapa = st.session_state.mapa_seleccionado
+        
+        if os.path.exists(ruta_mapa):
+            with st.spinner("Cargando mapa interactivo..."):
+                with open(ruta_mapa, 'r', encoding='utf-8') as archivo:
+                    codigo_html = archivo.read()
+                
+                # Renderizamos el HTML
+                components.html(codigo_html, height=750, scrolling=True)
+        else:
+            st.error("El archivo seleccionado ya no existe.")

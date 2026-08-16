@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:214", "label": "Hipotiroidismo, no especi...", "shape": "dot", "title": "\u003cb\u003eHipotiroidismo, no especificado\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:243", "label": "Diabetes mellitus tipo 2 ...", "shape": "dot", "title": "\u003cb\u003eDiabetes mellitus tipo 2 sin complicaciones\u003c/b\u003e\u003cbr\u003eDegree: 0.167\u003cbr\u003eBetweenness: 0.000", "value": 88.33333333333333}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:266", "label": "Obesidad, no especificada", "shape": "dot", "title": "\u003cb\u003eObesidad, no especificada\u003c/b\u003e\u003cbr\u003eDegree: 0.067\u003cbr\u003eBetweenness: 0.000", "value": 38.333333333333336}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:269", "label": "Hipercolesterolemia pura", "shape": "dot", "title": "\u003cb\u003eHipercolesterolemia pura\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:273", "label": "Otros tipos de hiperlipid...", "shape": "dot", "title": "\u003cb\u003eOtros tipos de hiperlipidemia\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:274", "label": "Hiperlipidemia, no especi...", "shape": "dot", "title": "\u003cb\u003eHiperlipidemia, no especificada\u003c/b\u003e\u003cbr\u003eDegree: 0.067\u003cbr\u003eBetweenness: 0.000", "value": 38.333333333333336}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:310", "label": "Abuso de alcohol, sin com...", "shape": "dot", "title": "\u003cb\u003eAbuso de alcohol, sin complicaciones\u003c/b\u003e\u003cbr\u003eDegree: 0.067\u003cbr\u003eBetweenness: 0.000", "value": 38.333333333333336}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:324", "label": "Abuso de cannabis, sin co...", "shape": "dot", "title": "\u003cb\u003eAbuso de cannabis, sin complicaciones\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:350", "label": "Dependencia de nicotina n...", "shape": "dot", "title": "\u003cb\u003eDependencia de nicotina no especificada, sin complicaciones\u003c/b\u003e\u003cbr\u003eDegree: 0.133\u003cbr\u003eBetweenness: 0.000", "value": 71.66666666666667}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:351", "label": "Dependencia de nicotina, ...", "shape": "dot", "title": "\u003cb\u003eDependencia de nicotina, cigarrillos, sin complicaciones\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#e74c3c", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "label": "Esquizofrenia", "shape": "dot", "title": "\u003cb\u003eEsquizofrenia\u003c/b\u003e\u003cbr\u003eDegree: 0.400\u003cbr\u003eBetweenness: 0.126", "value": 205.0}, {"color": "#e74c3c", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "label": "Esquizofrenia paranoide", "shape": "dot", "title": "\u003cb\u003eEsquizofrenia paranoide\u003c/b\u003e\u003cbr\u003eDegree: 0.433\u003cbr\u003eBetweenness: 0.149", "value": 221.66666666666669}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:368", "label": "Esquizofrenia residual", "shape": "dot", "title": "\u003cb\u003eEsquizofrenia residual\u003c/b\u003e\u003cbr\u003eDegree: 0.067\u003cbr\u003eBetweenness: 0.000", "value": 38.333333333333336}, {"color": "#e74c3c", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "label": "Otros tipos de esquizofre...", "shape": "dot", "title": "\u003cb\u003eOtros tipos de esquizofrenia\u003c/b\u003e\u003cbr\u003eDegree: 0.867\u003cbr\u003eBetweenness: 0.880", "value": 438.33333333333337}, {"color": "#e74c3c", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "label": "Esquizofrenia, no especif...", "shape": "dot", "title": "\u003cb\u003eEsquizofrenia, no especificada\u003c/b\u003e\u003cbr\u003eDegree: 0.367\u003cbr\u003eBetweenness: 0.067", "value": 188.33333333333331}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:373", "label": "Trastornos delirantes", "shape": "dot", "title": "\u003cb\u003eTrastornos delirantes\u003c/b\u003e\u003cbr\u003eDegree: 0.133\u003cbr\u003eBetweenness: 0.000", "value": 71.66666666666667}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:375", "label": "Trastornos esquizoafectiv...", "shape": "dot", "title": "\u003cb\u003eTrastornos esquizoafectivos\u003c/b\u003e\u003cbr\u003eDegree: 0.100\u003cbr\u003eBetweenness: 0.000", "value": 55.0}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:376", "label": "Trastorno esquizoafectivo...", "shape": "dot", "title": "\u003cb\u003eTrastorno esquizoafectivo, tipo bipolar\u003c/b\u003e\u003cbr\u003eDegree: 0.100\u003cbr\u003eBetweenness: 0.000", "value": 55.0}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:378", "label": "Trastorno esquizoafectivo...", "shape": "dot", "title": "\u003cb\u003eTrastorno esquizoafectivo, no especificado\u003c/b\u003e\u003cbr\u003eDegree: 0.167\u003cbr\u003eBetweenness: 0.000", "value": 88.33333333333333}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "label": "Hipertensi\u00f3n esencial (pr...", "shape": "dot", "title": "\u003cb\u003eHipertensi\u00f3n esencial (primaria)\u003c/b\u003e\u003cbr\u003eDegree: 0.267\u003cbr\u003eBetweenness: 0.002", "value": 138.33333333333334}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:739", "label": "Neumon\u00eda, microorganismo ...", "shape": "dot", "title": "\u003cb\u003eNeumon\u00eda, microorganismo no especificado\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:784", "label": "Insuficiencia respiratori...", "shape": "dot", "title": "\u003cb\u003eInsuficiencia respiratoria aguda no especificada si con hipoxia o con hipercapnia\u003c/b\u003e\u003cbr\u003eDegree: 0.133\u003cbr\u003eBetweenness: 0.000", "value": 71.66666666666667}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:803", "label": "Otros trastornos respirat...", "shape": "dot", "title": "\u003cb\u003eOtros trastornos respiratorios especificados\u003c/b\u003e\u003cbr\u003eDegree: 0.100\u003cbr\u003eBetweenness: 0.000", "value": 55.0}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1085", "label": "Fallo renal agudo, no esp...", "shape": "dot", "title": "\u003cb\u003eFallo renal agudo, no especificado\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1105", "label": "Infecci\u00f3n de tracto urina...", "shape": "dot", "title": "\u003cb\u003eInfecci\u00f3n de tracto urinario, localizaci\u00f3n no especificada\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "label": "Contacto para reconocimie...", "shape": "dot", "title": "\u003cb\u003eContacto para reconocimiento m\u00e9dico psiqui\u00e1trico general, solicitado por la autoridad\u003c/b\u003e\u003cbr\u003eDegree: 0.233\u003cbr\u003eBetweenness: 0.000", "value": 121.66666666666667}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1552", "label": "Problemas relacionados co...", "shape": "dot", "title": "\u003cb\u003eProblemas relacionados con la vida en una instituci\u00f3n residencial\u003c/b\u003e\u003cbr\u003eDegree: 0.200\u003cbr\u003eBetweenness: 0.000", "value": 105.0}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1556", "label": "Problemas relacionados co...", "shape": "dot", "title": "\u003cb\u003eProblemas relacionados con vivir solo\u003c/b\u003e\u003cbr\u003eDegree: 0.167\u003cbr\u003eBetweenness: 0.000", "value": 88.33333333333333}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1606", "label": "Historia familiar de otro...", "shape": "dot", "title": "\u003cb\u003eHistoria familiar de otros trastornos mentales y del comportamiento\u003c/b\u003e\u003cbr\u003eDegree: 0.200\u003cbr\u003eBetweenness: 0.000", "value": 105.0}, {"color": "#3498db", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1658", "label": "Historia personal de depe...", "shape": "dot", "title": "\u003cb\u003eHistoria personal de dependencia a nicotina\u003c/b\u003e\u003cbr\u003eDegree: 0.033\u003cbr\u003eBetweenness: 0.000", "value": 21.666666666666668}, {"color": "#e74c3c", "font": {"color": "#111111"}, "id": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "label": "Incumplimiento del pacien...", "shape": "dot", "title": "\u003cb\u003eIncumplimiento del paciente con otro tratamiento y r\u00e9gimen m\u00e9dico\u003c/b\u003e\u003cbr\u003eDegree: 0.267\u003cbr\u003eBetweenness: 0.057", "value": 138.33333333333334}]);
+                  edges = new vis.DataSet([{"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:214", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 47}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:243", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "value": 78}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:243", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "value": 59}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:243", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "value": 56}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:243", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "value": 59}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:243", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 100}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:266", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "value": 41}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:266", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 56}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:269", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 43}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:273", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 63}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:274", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "value": 40}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:274", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "value": 55}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:310", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 72}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:310", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "value": 42}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:324", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 48}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:350", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "value": 70}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:350", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "value": 77}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:350", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:784", "value": 46}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:350", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 143}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:351", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "value": 55}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "value": 184}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "value": 75}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 85}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "value": 265}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1552", "value": 77}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 161}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1606", "value": 42}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "value": 55}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:363", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:368", "value": 55}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 419}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "value": 55}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1552", "value": 80}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1556", "value": 50}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 164}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "value": 74}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:784", "value": 45}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1606", "value": 88}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:364", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "value": 113}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:368", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "value": 75}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:378", "value": 134}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 201}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "value": 299}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "value": 96}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:784", "value": 87}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:376", "value": 42}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "value": 140}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1556", "value": 73}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:375", "value": 52}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1105", "value": 48}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1606", "value": 127}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:739", "value": 49}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:803", "value": 67}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1552", "value": 134}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:370", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1658", "value": 40}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "value": 87}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:803", "value": 49}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:784", "value": 53}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1552", "value": 82}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:371", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1085", "value": 43}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:373", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "value": 55}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:373", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 60}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:373", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "value": 52}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:373", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1556", "value": 46}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:375", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:376", "value": 71}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:375", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:378", "value": 72}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:376", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:378", "value": 45}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:378", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 45}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:378", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1606", "value": 45}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:570", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1552", "value": 45}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:803", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1552", "value": 46}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 136}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1606", "value": 66}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1516", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1556", "value": 50}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1556", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 66}, {"color": "#cccccc", "from": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1606", "to": "4:90c38f6b-b92e-449f-835e-bd1b95aa4168:1701", "value": 90}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 13, "face": "arial", "strokeWidth": 3, "strokeColor": "#ffffff"}}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -80, "centralGravity": 0.01, "springLength": 120, "springConstant": 0.08, "avoidOverlap": 1}, "maxVelocity": 50, "solver": "forceAtlas2Based", "timestep": 0.35, "stabilization": {"iterations": 200}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
