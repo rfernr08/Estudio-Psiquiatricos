@@ -269,8 +269,6 @@
 \listoffigures % Índice de figuras 
 \newpage
 \listoftables % Índice de cuadros y tablas 
-\newpage
-\lstlistoflistings % Índice de codigos
 
 \newpage
 \chapter*{Glosario y Acrónimos}
@@ -499,7 +497,7 @@ En el panorama actual de la psiquiatría computacional, el \textit{Machine Learn
 A continuación, se presenta una comparativa técnica de los algoritmos identificados en la tabla:
 \begin{table}[h]
     \centering
-    \begin{tabular}{|l|p{3cm}|p{5cm}|p{4cm}|}
+    \begin{tabular}{|p{2cm}|p{3cm}|p{5cm}|p{4cm}|}
         \hline
         \textbf{Algoritmo} & \textbf{Fortalezas} & \textbf{Limitaciones} & \textbf{Necesidad de Procesamiento}\\
         \hline
@@ -511,7 +509,7 @@ A continuación, se presenta una comparativa técnica de los algoritmos identifi
         \hline
         CNN / RNN & Capacidad para procesar tensores de imagen y señales temporales. & Menor representación en meta-análisis clínicos \cite{Tyagi}. & Requiere selección rigurosa de hiperparámetros.\\
         \hline
-        DL & Potencial para modelar relaciones no lineales complejas. & Riesgo de sobreajuste y falta de interpretabilidad \cite{Amleshi}. & Requiere grandes conjuntos de datos y técnicas de regularización. \\
+        DL & Potencial para modelar relaciones no lineales complejas. & Riesgo de sobreajuste y falta de interpretabilidad \cite{Amleshi}. & Requiere grandes conjuntos de datos y técnicas de regularización. \\ \hline
     \end{tabular}
     \caption{Comparativa de algoritmos de IA aplicados a la predicción de resultados en esquizofrenia.}
 \end{table}
@@ -999,9 +997,9 @@ Tras el análisis exhaustivo de los diferentes paradigmas tecnológicos y los re
 La arquitectura propuesta se fundamenta en los siguientes tres pilares técnicos:
 
 \begin{enumerate}
-\item \textbf{Motor Predictivo basado en Ensamblados (ML Tradicional):} A pesar de la sofisticación semántica y la capacidad de atención de los modelos basados en Transformers (BERT), la experimentación empírica determinó que, para la naturaleza tabular y la alta dimensionalidad de las 20 columnas de diagnósticos clínicos, los algoritmos \textbf{XGBoost} y \textbf{Random Forest} ofrecen un rendimiento superior. Por ello, la propuesta final selecciona estos modelos entrenados sobre el \textbf{Dataset 3 (Híbrido RUS + VAE)}, garantizando una frontera de decisión robusta, equilibrada frente al desbalanceo de clases y con un coste computacional significativamente menor en tiempo de inferencia.
-\item \textbf{Capa de Contexto Relacional (Neo4j):} Como complemento a la predicción probabilística del motor de \textit{Machine Learning}, se integra de forma permanente el \textbf{Grafo de Conocimiento}. Esta capa permite al clínico no solo recibir una predicción numérica, sino visualizar la red de comorbilidades y la cercanía topológica del paciente dentro de la comunidad de diagnósticos del \textit{dataset} regional. Esta integración aporta una dimensión de interpretabilidad relacional necesaria en entornos médicos, permitiendo validar las predicciones del modelo mediante la observación de patrones de co-ocurrencia clínica.
-\item \textbf{Motor de Interoperabilidad Semántica (Conversor ICD):} Se propone la integración nativa de un motor de traducción que actúe como la puerta de enlace (\textit{gateway}) de la información. Esto garantiza que la propuesta final sea agnóstica al sistema de codificación del historial original (ICD-9 o ICD-10) y que pueda transformar texto libre en códigos estandarizados, permitiendo una ingesta de datos limpia hacia los clasificadores y una salida bilingüe orientada a la investigación internacional.
+    \item \textbf{Motor Predictivo basado en Ensamblados (ML Tradicional):} A pesar de la sofisticación semántica y la capacidad de atención de los modelos basados en Transformers (BERT), la experimentación empírica determinó que, para la naturaleza tabular y la alta dimensionalidad de las 20 columnas de diagnósticos clínicos, los algoritmos \textbf{XGBoost} y \textbf{Random Forest} ofrecen un rendimiento superior. Por ello, la propuesta final selecciona estos modelos entrenados sobre el \textbf{Dataset 3 (Híbrido RUS + VAE)}, garantizando una frontera de decisión robusta, equilibrada frente al desbalanceo de clases y con un coste computacional significativamente menor en tiempo de inferencia.
+    \item \textbf{Capa de Contexto Relacional (Neo4j):} Como complemento a la predicción probabilística del motor de \textit{Machine Learning}, se integra de forma permanente el \textbf{Grafo de Conocimiento}. Esta capa permite al clínico no solo recibir una predicción numérica, sino visualizar la red de comorbilidades y la cercanía topológica del paciente dentro de la comunidad de diagnósticos del \textit{dataset} regional. Esta integración aporta una dimensión de interpretabilidad relacional necesaria en entornos médicos, permitiendo validar las predicciones del modelo mediante la observación de patrones de co-ocurrencia clínica.
+    \item \textbf{Motor de Interoperabilidad Semántica (Conversor ICD):} Se propone la integración nativa de un motor de traducción que actúe como la puerta de enlace (\textit{gateway}) de la información. Esto garantiza que la propuesta final sea agnóstica al sistema de codificación del historial original (ICD-9 o ICD-10) y que pueda transformar texto libre en códigos estandarizados, permitiendo una ingesta de datos limpia hacia los clasificadores y una salida bilingüe orientada a la investigación internacional.
 \end{enumerate}
 En conclusión, la propuesta metodológica definitiva de este trabajo consiste en un \textbf{Sistema de Soporte Híbrido} que orquesta estos tres componentes bajo una interfaz web unificada. El flujo de trabajo propuesto comienza con la normalización y conversión de los diagnósticos, continúa con la clasificación del espectro esquizofrénico mediante árboles de decisión optimizados y finaliza con la validación visual de la trayectoria del paciente a través del análisis de comunidades en el grafo de conocimiento. Esta sinergia tecnológica permite transformar un listado plano de registros en un marco de decisión clínica estructurado, transparente y funcional.
 
@@ -1487,7 +1485,7 @@ Este dataset universal nos da 2 aplicacions muy importantes:
 
 El módulo de visualización de la aplicación se ha diseñado bajo el principio de simplicidad y eficiencia en la interfaz de usuario (\textit{UI/UX}). El objetivo principal es evitar la sobrecarga cognitiva del personal sanitario, transformando los resultados numéricos de los modelos predictivos y las consultas complejas a la base de datos de grafos en representaciones visuales intuitivas y directamente interpretables durante la práctica clínica.
 
-Esta decisión de desarrollar una plataforma web propia responde no solo a la necesidad de integrar los algoritmos de IA, sino también a las severas limitaciones que presentan las herramientas de conversión y consulta disponibles actualmente en la web:
+Esta decisión de desarrollar una plataforma web propia responde  a las severas limitaciones que presentan las herramientas de conversión y consulta disponibles actualmente en el internet.
 \begin{comment}
 \begin{itemize}
     \item \textbf{Limitación del portal oficial español (eCIEMaps):} El navegador del Ministerio de Sanidad \cite{eciemaps_sanidad} está diseñado como un catálogo jerárquico estático. Su interfaz resulta rígida y lenta, estando orientada exclusivamente a la búsqueda puntual e individualizada de un único código cada vez, lo que imposibilita la traducción masiva o por lotes (\textit{batch processing}) de historiales clínicos.
@@ -1500,16 +1498,15 @@ Esta decisión de desarrollar una plataforma web propia responde no solo a la ne
 Frente a estas carencias, la aplicación web desarrollada en \textbf{Streamlit} consolida en un único entorno centralizado tres pilares funcionales:
 \begin{enumerate}
     \item \textbf{Procesamiento por lotes e instantáneo:} Permite la conversión individual y masiva entre CIE-9 y CIE-10 en castellano sin restricciones de volumen ni publicidad.
-    \item \textbf{Exploración gráfica de comorbilidades:} Renderiza de forma interactiva las redes relacionales almacenadas en Neo4j, permitiendo al clínico navegar visualmente por las asociaciones entre diagnósticos.
-    \item \textbf{Cuadro de mando predictivo e interpretable:} Presenta las probabilidades diagnósticas de los modelos de \textit{Machine Learning} y \textit{Deep Learning} de forma clara, complementándolas con gráficos relacionales y mapas de distribución espacial.
+    \item \textbf{Exploración gráfica de comorbilidades y mapas de estudio:} Renderiza de forma interactiva las redes relacionales almacenadas en Neo4j y mapas de frecuencias, permitiendo al clínico navegar visualmente por las asociaciones entre diagnósticos o estudiar la distribucion de diagnosticos.
+    \item \textbf{Consulta de diagnosticos:} Facil visualizacion de las distintas formas y lenguajes con los que se pueden representar diagnosticos clinicos.
 \end{enumerate}
 
 
 
 \section{Requisitos}
 
-Para garantizar un desarrollo de \textit{software} riguroso y alineado con las metodologías ágiles de ingeniería, la herramienta web desarrollada en \textbf{Streamlit} se ha diseñado a partir de una fase previa de especificación técnica. Este apartado formaliza el comportamiento del sistema mediante el catálogo de Requisitos Funcionales (RF), Requisitos No Funcionales (RNF) y las Historias de Usuario (HU) asociadas.
-Los requisitos del sistema delimitan las capacidades operativas y las restricciones de calidad que debe satisfacer la plataforma:
+Para garantizar un desarrollo de software riguroso y alineado con las metodologías ágiles de ingeniería, la herramienta web desarrollada en \textbf{Streamlit} se ha diseñado suigiendo unas especifiaciones y requisiots a cumplir, recopilados entre Requisitos Funcionales (RF), Requisitos No Funcionales (RNF) y las Historias de Usuario (HU) asociadas.
 
 \subsection{Requisitos Funcionales}
 \begin{table}[htbp]
@@ -1521,15 +1518,8 @@ Los requisitos del sistema delimitan las capacidades operativas y las restriccio
 \textbf{Código} & \textbf{Descripción del Requisito Funcional (RF)} \\ \hline
 \textbf{RF-01} & \textbf{Mapeo normativo CIE-9 / CIE-10:} El sistema debe realizar la conversión automática y bidireccional entre las codificaciones diagnósticas antiguas e independientes. \\
 \textbf{RF-02} & \textbf{Múltiples conversiones:} El sistema debe permitir la conversión simultánea de varios códigos a un formato deseado. \\
-\textbf{RF-03} & \textbf{Exportación de informes y analítica:} El sistema debe permitir descargar los resultados de las conversiones en lote en formatos estándar (PDF/CSV). \\
-\begin{comment}
-\textbf{RF-02} & \textbf{Inferencia predictiva multiclase:} El sistema debe procesar sintomatología o historiales clínicos y devolver la probabilidad diagnóstica dentro del espectro esquizofrénico mediante los modelos entrenados. \\
-\textbf{RF-03} & \textbf{Exploración de grafos clínicos:} El sistema debe consultar la base de datos Neo4j mediante lenguaje \textit{Cypher} para renderizar visualmente las comorbilidades y trayectorias de pacientes. \\
-\textbf{RF-04} & \textbf{Visualización epidemiológica espacial:} El sistema debe generar mapas coropléticos interactivos cruzando datos de densidad poblacional (CSV) con límites vectoriales (GeoJSON). \\
-\textbf{RF-05} & \textbf{Procesamiento de texto libre (NLP):} El sistema debe tokenizar y evaluar descripciones médicas en lenguaje natural en español mediante la arquitectura BERT. \\ \hline
-\textbf{RF-07} & \textbf{Filtrado avanzado en la red de grafos:} El sistema debe ofrecer controles interactivos para filtrar el subgrafo de Neo4j según variables sociodemográficas (rango de edad, sexo) o por umbrales de densidad de la relación de comorbilidad. \\
-\textbf{RF-08} & \textbf{Trazabilidad y registro de inferencias (Logs):} El sistema debe almacenar un registro local desidentificado de los diagnósticos inferidos y parámetros utilizados para permitir auditorías técnicas posteriores. \\ \hline
-\end{comment}
+\textbf{RF-03} & \textbf{Exportación de informes y analítica:} El sistema debe permitir descargar los resultados de las conversiones en lote en formatos estándar CSV. \\
+\textbf{RF-04} & \textbf{Visualizacion de mapas y grafos} El sistema debe permitir al usuario mostrar en pantalla y permitir interactuar con los graficos y mapas generados durante el estudio. \\ \hline
 
 \end{tabular}
 \caption{Catálogo de Requisitos Funcionales del sistema.}
@@ -1545,12 +1535,11 @@ Los requisitos del sistema delimitan las capacidades operativas y las restriccio
 \begin{tabular}{lp{10cm}}
 \hline
 \textbf{Código} & \textbf{Descripción del Requisito No Funcional (RNF)} \\ \hline
-\textbf{RNF-01} & \textbf{Tiempo de respuesta (Rendimiento):} El tiempo de inferencia de las conversiones individuales no superará los 5 segundos y las conversiones en lote no excederán los 30 segundos. \\
+\textbf{RNF-01} & \textbf{Tiempo de respuesta (Rendimiento):} El tiempo de inferencia de las conversiones individuales no superará los 5 segundos y las conversiones en lote no excederán los 30 segundos. El tiempo de carga de los mapas no superará los 30 segundos. \\
 \textbf{RNF-02} & \textbf{Usabilidad (UX/UI):} La interfaz debe ser intuitiva, accesible desde navegadores web convencionales y no requerir conocimientos de programación por parte del clínico. \\
 \textbf{RNF-03} & \textbf{Seguridad y Privacidad (ENS/RGPD):} El sistema debe garantizar la anonimización absoluta de la información tratada, operando bajo el principio de mínimo privilegio. \\
 \textbf{RNF-04} & \textbf{Interoperabilidad y Portabilidad:} El \textit{backend} debe basarse en formatos abiertos y estándar (CSV, GeoJSON, ejecutable de Python). \\
-\textbf{RNF-05} & \textbf{Mantenibilidad y Modularidad:} La arquitectura del \textit{software} debe estar desacoplada en capas independientes (interfaz, pipelines de IA y conector Neo4j) para facilitar el reemplazo o actualización de modelos sin alterar la interfaz. \\
-\textbf{RNF-06} & \textbf{Escalabilidad del almacenamiento:} La base de datos orientada a grafos debe estar optimizada en índices de nodos para mantener tiempos de consulta eficientes ante futuros incrementos en el número de pacientes o conexiones diagnósticas. \\ \hline
+\textbf{RNF-05} & \textbf{Escalabilidad del sistema:} La seleccion de mapas y figuras a mostrar o las opciones de conversion de codigos se tienen que actualizar de forma dinamica sin tener que modificar el codigo de la pagina web. \\ \hline
 \end{tabular}
 \caption{Catálogo de Requisitos No Funcionales del sistema.}
 \label{tab:requisitos_no_funcionales}
@@ -1569,16 +1558,16 @@ Los requisitos del sistema delimitan las capacidades operativas y las restriccio
 \textbf{Código: HU-01} & \textbf{Título: Conversión e Interoperabilidad CIE-9 / CIE-10} \\ \hline
 \textbf{Rol del usuario} & Personal Administrativo / Clínico. \\ \hline
 \textbf{Descripción} & Como usuario del sistema, quiero consultar la equivalencia exacta entre códigos históricos CIE-9 y modernos CIE-10 para mantener la integridad documental. \\ \hline
-\textbf{Prioridad} & Media (\textit{Should Have}). \\ \hline
-\textbf{Dependencias} & RF-02, Tabla relacional CSV de mapeos normativos. \\ \hline
+\textbf{Prioridad} & Alta. \\ \hline
+\textbf{Dependencias} & RF-01, RF-02, Tabla relacional CSV de mapeos normativos. \\ \hline
 \textbf{Criterios de Aceptación} & 
 \begin{itemize}[leftmargin=*]
-    \item \textbf{CA-4.1:} El módulo debe permitir búsquedas bidireccionales por código o por texto descriptivo.
-    \item \textbf{CA-4.2:} Debe mostrarse de forma clara la correspondencia oficial y su descripción en español.
+    \item \textbf{CA-1.1:} El módulo debe permitir búsquedas bidireccionales por código o por texto descriptivo.
+    \item \textbf{CA-1.2:} Debe mostrarse de forma clara la correspondencia oficial y su descripción en español.
 \end{itemize} \\ \hline
 \end{tabular}
-\caption{Especificación de la Historia de Usuario HU-04: Mapeo CIE.}
-\label{tab:hu_04}
+\caption{Especificación de la Historia de Usuario HU-01: Mapeo CIE.}
+\label{tab:hu_01}
 \end{table}
 
 \begin{table}[htbp]
@@ -1589,18 +1578,40 @@ Los requisitos del sistema delimitan las capacidades operativas y las restriccio
 \hline
 \rowcolor[RGB]{239,239,239} 
 \textbf{Código: HU-02} & \textbf{Título: Análisis Espacial e Inspección Cartográfica} \\ \hline
-\textbf{Rol del usuario} & Gestor Sanitario / Epidemiólogo. \\ \hline
+\textbf{Rol del usuario} & Epidemiólogo / Investigador. \\ \hline
 \textbf{Descripción} & Como epidemiólogo, quiero visualizar la distribución geográfica de los casos por código postal para detectar focos de prevalencia poblacional. \\ \hline
-\textbf{Prioridad} & Alta. \\ \hline
-\textbf{Dependencias} & Ficheros GeoJSON y CSV de frecuencias agregadas. \\ \hline
+\textbf{Prioridad} & Media. \\ \hline
+\textbf{Dependencias} & RF-04, Ficheros GeoJSON y CSV de frecuencias agregadas. \\ \hline
 \textbf{Criterios de Aceptación} & 
 \begin{itemize}[leftmargin=*]
-    \item \textbf{CA-3.1:} El mapa coroplético debe renderizar un gradiente de color proporcional a la frecuencia de casos.
-    \item \textbf{CA-3.2:} Al pasar el cursor (\textit{tooltip}) sobre un código postal, debe mostrarse el número de afectados.
-    \item \textbf{CA-3.3:} El visor debe permitir hacer \textit{zoom} y desplazamiento fluido por todo el territorio.
+    \item \textbf{CA-2.1:} El mapa coroplético debe renderizar un gradiente de color proporcional a la frecuencia de casos.
+    \item \textbf{CA-2.2:} Al pasar el cursor sobre un código postal, debe mostrarse el número de afectados o datos sobre la zona.
+    \item \textbf{CA-2.3:} El visor debe permitir hacer zoom y desplazamiento fluido por todo el territorio.
 \end{itemize} \\ \hline
 \end{tabular}
-\caption{Especificación de la Historia de Usuario HU-03: Análisis Espacial.}
+\caption{Especificación de la Historia de Usuario HU-02: Análisis Espacial.}
+\label{tab:hu_02}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Código: HU-03} & \textbf{Título: Exportación de Códigos Convertidos CIE-9 a CIE-10} \\ \hline
+\textbf{Rol del usuario} & Facultativo / Gestor de Datos Clínicos. \\ \hline
+\textbf{Descripción} & Como gestor de datos, quiero poder descargar los resultados de la conversión normativa en un archivo CSV para integrar masivamente las equivalencias en el sistema de historia clínica o tratarlos en herramientas de análisis externas. \\ \hline
+\textbf{Prioridad} & Media. \\ \hline
+\textbf{Dependencias} & RF-02, RF-03, Dataset estructurado de conversión CIE, Módulo conversor de Streamlit. \\ \hline
+\textbf{Criterios de Aceptación} & 
+\begin{itemize}[leftmargin=*]
+    \item \textbf{CA-3.1:} La interfaz debe incorporar un botón visible que permita la descarga directa de la tabla de resultados en formato estandarizado \texttt{.csv}, sin tener que recargar la página web ni exponer datos.
+    \item \textbf{CA-3.2:} El archivo descargado debe incluir correctamente las columnas mapeadas que se han seleccionado, respetando la codificación UTF-8 para evitar errores en caracteres especiales.
+\end{itemize} \\ \hline
+\end{tabular}
+\caption{Especificación de la Historia de Usuario HU-03: Exportación de Códigos Convertidos.}
 \label{tab:hu_03}
 \end{table}
 
@@ -1608,7 +1619,7 @@ Los requisitos del sistema delimitan las capacidades operativas y las restriccio
 
 Mi aplicación web centra su potencial visual en la estructuración limpia de formularios de texto, tablas de datos dinámicas y paneles interactivos. Dado que el objetivo primordial del sistema es la conversión ágil de códigos ICD y la clasificación semántica en tiempo real, el diseño da prioridad absoluta al texto y a la legibilidad de los diagnósticos frente a las representaciones gráficas convencionales.
 
-La interfaz de usuario se articula en torno a dos bloques visuales fundamentales que constan de un campo de texto libre optimizado donde el facultativo introduce la descripción clínica o el diagnóstico en lenguaje natural. Visualmente, el sistema responde de forma síncrona, eliminando elementos distractores y presentando el resultado del conversor ICD-9 a ICD-10 de manera jerárquica mediante cajas de texto contrastadas, permitiendo una validación visual inmediata.
+Coomo ejemplo de la sencillez y facilidad de uso de la web, la interfaz de usuario en la pestalla de Buscador Individual se articula en torno a dos bloques visuales fundamentales que constan de un campo de texto libre optimizado donde el facultativo introduce la descripción clínica o el diagnóstico en lenguaje natural. Visualmente, el sistema responde de forma síncrona, eliminando elementos distractores y presentando el resultado del conversor ICD-9 a ICD-10 de manera jerárquica mediante cajas de texto contrastadas, permitiendo una validación visual inmediata.
 
 \begin{figure}[htbp]
     \centering
@@ -1619,14 +1630,14 @@ La interfaz de usuario se articula en torno a dos bloques visuales fundamentales
 
 \section{Navegación}
 
-La arquitectura de navegación de la aplicación web se ha concebido bajo el paradigma de jerarquía plana, minimizando la profundidad de los menús para reducir drásticamente el número de interacciones necesarias para obtener la información. En el entorno de una consulta psiquiátrica real, la eficiencia temporal es crítica; por lo tanto, el flujo de usuario se ha modelado para ser lineal, rápido y completamente libre de distracciones.
+La arquitectura de navegación de la aplicación web se ha concebido bajo el paradigma de jerarquía plana, minimizando la profundidad de los menús para reducir drásticamente el número de interacciones necesarias para obtener la información. En el entorno de una consulta psiquiátrica real, la eficiencia temporal y la simpleza es crítica; por lo tanto, el flujo de usuario se ha modelado para ser lineal, rápido y completamente libre de distracciones.
 
 El recorrido del profesional médico a través de la herramienta sigue una secuencia lógica que emula su propio proceso clínico:
 
 \begin{enumerate}
-    \item \textbf{Punto de entrada y selección contextual:} Mediante un menú de navegación simplificado (ubicado en un panel lateral o barra superior), el facultativo puede alternar de manera instantánea entre las funcionalidades principales del sistema (como el conversor de códigos ICD individual o el conversor de archivos), sin necesidad de recargar la plataforma ni perder el contexto de la sesión.
+    \item \textbf{Punto de entrada y selección contextual:} Mediante un menú de navegación simplificado (ubicado en una barra superior), el facultativo puede alternar de manera instantánea entre las funcionalidades principales del sistema (como el conversor de códigos ICD individual o el conversor de archivos), sin necesidad de recargar la plataforma ni perder el contexto de la sesión.
     
-    \item \textbf{Introducción directa de parámetros:} Al acceder al módulo deseado, el centro de la pantalla presenta de forma exclusiva los campos de entrada de texto, para el conversor individual, o de archivos, para el conversor por lotes. Esta ausencia de submenús obliga al sistema a guiar visualmente al usuario hacia la acción principal: introducir la descripción clínica/código de diagnóstico del paciente o el archivo que se desea convertir.
+    \item \textbf{Introducción directa de parámetros:} Al acceder al módulo deseado, el centro de la pantalla presenta de forma exclusiva los campos de entrada de texto, para el conversor individual, o de archivos, para el conversor por lotes. o la seleccion de figuras, en el visualizador. Esta ausencia de submenús obliga al sistema a guiar visualmente al usuario hacia la acción principal: introducir la descripción clínica/código de diagnóstico del paciente o el archivo que se desea convertir.
     
     \item \textbf{Despliegue dinámico de resultados:} Una vez ejecutada la consulta, la navegación evita deliberadamente el uso de ventanas emergentes (\textit{pop-ups}) o redirecciones a nuevas páginas. 
 \end{enumerate}
@@ -1635,17 +1646,9 @@ Este diseño de un solo nivel garantiza que cualquier miembro del personal sanit
 
 Por otro lado, cuando el usuario conmuta la interfaz hacia la pestaña de \textit{Conversor por Lotes}, la arquitectura de la aplicación cambia hacia un modelo de flujo de trabajo guiado por estados secuenciales (\textit{State-driven Workflow}). Este diseño impide que el usuario cometa errores de configuración al bloquear las opciones avanzadas hasta que se verifiquen con éxito los pasos previos:
 
-\begin{enumerate}
-    \item \textbf{Fase de Ingesta e Inspección Estructural:} El flujo se inicia en un componente de arrastre de archivos (\textit{Drag and Drop}) optimizado para archivos CSV, proporcionado por Streamlit. Tras la carga del fichero por parte del usuario, el sistema realiza de forma asíncrona un \textit{parsing} primario y renderiza una previsualización interactiva limitada a las primeras 5 filas. Esto permite al facultativo comprobar visualmente si la estructura del archivo cargado coincide con sus expectativas antes de iniciar cualquier cómputo.
-    
-    \item \textbf{Fase de Parametrización Dinámica:} Una vez validada la presencia del archivo, la interfaz desbloquea dinámicamente el panel de <<Configuración de la conversión>>. En este punto, la navegación es puramente selectiva: el sistema lee las cabeceras del CSV original y rellena automáticamente un menú desplegable para que el usuario elija qué columna exacta contiene los datos a convertir, el formato de origen (ICD-9, ICD-10 o descripción) y las conversiones deseadas para el conjunto de datos resultante (códigos cruzados, descripciones en castellano o descripciones internacionales).
-    
-    \item \textbf{Ejecución, Validación y Persistencia:} Tras presionar el botón de procesamiento, el sistema ejecuta las transformaciones en segundo plano, notificando el éxito de la operación mediante una alerta visual integrada de éxito. Finalmente, el flujo concluye revelando una tabla de resultados enriquecida y habilitando de forma síncrona el botón de descarga, cerrando el ciclo de vida del dato dentro de la sesión web sin provocar disrupciones en la pantalla principal.
-\end{enumerate}
-
 \begin{figure}
     \centering
-    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Diagrama_navegacion.png}}
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Diagrama_Navegacion.png}}
     \caption{Diagrama de flujo de la aplicación web, mostrando la secuencia de interacción del usuario desde la selección de funcionalidad hasta la obtención de resultados.}
     \label{fig:flujo_app}
 \end{figure}
@@ -1663,6 +1666,7 @@ Este enfoque se consolida a través de tres pilares fundamentales de diseño:
     
     \item \textbf{Eficiencia y ligereza tecnológica:} Al estar construida sobre un marco de trabajo web ágil, la aplicación prescinde de animaciones pesadas o elementos flotantes que dificulten la navegación a usuarios con habilidades digitales básicas. Esta ligereza técnica asegura también que la plataforma sea accesible desde ordenadores antiguos o clientes ligeros (\textit{thin clients}) integrados en la red hospitalaria local, garantizando un tiempo de respuesta rápido e independiente de las capacidades del \textit{hardware} del puesto de trabajo.
 \end{itemize}
+
 \section{Conversor de ICD}
 
 El módulo denominado <<Conversor y Buscador de Diagnósticos>> constituye el núcleo operativo de la interfaz de usuario. Su propósito principal es resolver la brecha de interoperabilidad semántica existente entre los sistemas de registro históricos (basados en la clasificación ICD-9) y los estándares de codificación modernos (ICD-10), proporcionando un entorno de traducción simétrica y consulta ágil para el facultativo.
@@ -1690,17 +1694,16 @@ Las características funcionales clave integradas en este panel son las siguient
 
 La segunda funcionalidad de la herramienta es el módulo de procesamiento masivo, diseñado específicamente para dar respuesta a flujos de trabajo orientados a la investigación epidemiológica o a la migración a gran escala de bases de datos hospitalarias locales. Esta funcionalidad traslada la lógica de traducción semántica individualizada a un motor de transformación de conjuntos de datos tabulares en memoria.
 
-Las características arquitectónicas y de diseño técnico que definen este panel se desglosan a continuación:
+Las características arquitectónicas y funcionamiento que definen este panel se desglosan a continuación:
 
-\begin{itemize}
-    \item \textbf{Aislamiento y tipado dinámico de columnas:} El motor de la aplicación web lee de forma nativa el esquema del archivo CSV suministrado por el usuario. Al automatizar la extracción de las etiquetas de las columnas (como se ilustra en el campo \textit{Codigo\_Entrada}), el sistema independiza al profesional de la necesidad de adaptar o renombrar la estructura de sus archivos de origen, garantizando la compatibilidad con cualquier volcado de datos crudos proveniente de un sistema de historia clínica ajeno.
+\begin{enumerate}
+    \item \textbf{Fase de Ingesta e Inspección Estructural: \ref{fig:conversor_lotes_1}} El flujo se inicia en un componente de arrastre de archivos (\textit{Drag and Drop}) optimizado para archivos CSV, proporcionado por Streamlit. Tras la carga del fichero por parte del usuario, el sistema realiza de forma asíncrona un \textit{parsing} primario y renderiza una previsualización interactiva limitada a las primeras 5 filas. Esto permite al facultativo comprobar visualmente si la estructura del archivo cargado coincide con sus expectativas antes de iniciar cualquier cómputo.
     
-    \item \textbf{Modularidad bajo demanda y gestión de latencia:} El panel de selección de nuevas columnas permite configurar la carga de la consulta de forma granular. El usuario puede determinar si desea limitar la conversión al cruce estricto de códigos locales o si prefiere enriquecer el dataset con semántica lingüística. El sistema incluye una advertencia explícita respecto al coste computacional de activar la opción <<Inglés (API)>>; esto refleja un diseño consciente de la latencia informática, puesto que la traducción local basada en el \textit{dataset} curado opera en milisegundos, mientras que la concatenación de llamadas asíncronas externas a la API de la NLM introduce cuellos de botella de red que el usuario debe conocer.
+    \item \textbf{Fase de Parametrización Dinámica: \ref{fig:conversor_lotes_2}} Una vez validada la presencia del archivo, la interfaz desbloquea dinámicamente el panel de <<Configuración de la conversión>>. En este punto, la navegación es puramente selectiva: el sistema lee las cabeceras del CSV original y rellena automáticamente un menú desplegable para que el usuario elija qué columna exacta contiene los datos a convertir, el formato de origen (ICD-9, ICD-10 o descripción) y las conversiones deseadas para el conjunto de datos resultante (códigos cruzados, descripciones en castellano o descripciones internacionales).
     
-    \item \textbf{Previsualización síncrona del dataset transformado:} Una vez completado el algoritmo de combinación y mapeo relacional, la aplicación despliega un \textit{dataframe} dinámico integrado en la propia vista. Esta visualización presenta de forma transparente el resultado de la transformación cruzada: un código de entrada genérico (por ejemplo, el código clínico \textit{E11.9} o \textit{M54.5}) se descompone horizontalmente indexando su equivalencia en el estándar opuesto, acoplando a la vez sus respectivas descripciones diagnósticas en castellano e inglés (si es pedido).
-    
-    \item \textbf{Persistencia y exportación limpia:} El módulo concluye su pipeline operativo exponiendo un botón de acción dedicado a la descarga del recurso enriquecido. El archivo resultante mantiene intacto el orden secuencial y los identificadores originales del usuario, añadiendo estrictamente las columnas configuradas. Esta salida estandarizada garantiza que el archivo generado pueda reintroducirse directamente en herramientas de análisis estadístico posteriores o motores de bases de datos corporativos.
-\end{itemize}
+    \item \textbf{Ejecución, Validación y Persistencia \ref{fig:conversor_lotes_3}:} Tras presionar el botón de procesamiento, el sistema ejecuta las transformaciones en segundo plano, notificando el éxito de la operación mediante una alerta visual integrada de éxito. Finalmente, el flujo concluye revelando una tabla de resultados enriquecida y habilitando de forma síncrona el botón de descarga, cerrando el ciclo de vida del dato dentro de la sesión web sin provocar disrupciones en la pantalla principal.
+\end{enumerate}
+
 
 \begin{figure}[htbp]
     \centering
@@ -1721,6 +1724,27 @@ Las características arquitectónicas y de diseño técnico que definen este pan
     \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Web_lotes_3.png}}
     \caption{Módulo del Conversor por Lotes: Resultados de la conversión seleccionada, con opción de descarga en formato CSV.}
     \label{fig:conversor_lotes_3}
+\end{figure}
+
+\section{Visualizador de Mapas}
+
+Este modulo constituye la herramienta de exploración analítica y representación gráfica de los multiples mapas y graficos generados durante la investigacion de este trabajo, mediante un entorno interactivo que facilita el estudio de estas figuras.
+
+Como se observa en la captura \ref{fig:visualizador_mapas}, la interfaz se estructura en una seccion principal de un panel superior de selección de mapas a visualizar configurado mediante una cuadrícula adaptativa de botones de acceso rápido. Bajo de este se renderizara los modelos espaciales y relacionales en un contenedor.
+
+Las características funcionales clave integradas en este panel son las siguientes:
+
+\begin{itemize}
+    \item \textbf{Carga y navegación dinámica de recursos visuales:} La arquitectura del sistema integra un mecanismo de detección automática en el sistema de archivos local que escanea el directorio de almacenamiento en tiempo real. Esta característica permite que cualquier nuevo mapa o red exportada en formato HTML por librerías analíticas especializadas (como \textit{Folium} o \textit{Pyvis}) sea reconocido e incorporado de forma transparente a la interfaz de forma dinámica, eliminando la necesidad de modificar el código fuente.
+    
+    \item \textbf{Renderizado interactivo mediante encapsulamiento HTML/JS:} Haciendo uso de componentes de incrustación avanzada, la interfaz ejecuta los paquetes HTML/JavaScript en un contender, permitiendo que los graficos y mapas sean interactuables por su programacion de JavaScript.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Web_mapas.png}}
+    \caption{Módulo de Visualizador de Mapas.}
+    \label{fig:visualizador_mapas}
 \end{figure}
 
 \chapter{Planificación y Gestión del Proyecto}
@@ -1750,57 +1774,48 @@ A continuación, se detalla el alcance funcional y técnico desarrollado en cada
     Fase inicial orientada a la ingesta, auditoría y sanitización de la matriz de datos clínica.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Descarte de 12 variables irrelevantes para evitar ruido, filtrado de nulos, estandarización del texto descriptivo para modelos de lenguaje y generalización de los códigos. Auditoría inicial de seguridad (ENS/RGPD).
-        \item \textit{Requisitos asociados:} \texttt{RNF-03}.
     \end{itemize}
 
     \item[Sprint 2: Conversor de Códigos ICD] \hfill \\
     Diseño del archivo de equivalencias entre los estándares ICD-9, ICD-10 y descripciones clínicas.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Mapeo bidireccional ICD-9 $\rightarrow$ ICD-10, estructuración de descripciones clínicas en español e inglés y generación de equivalencias en el dataset.
-        \item \textit{Historias de Usuario y Requisitos:} \texttt{HU-04}, \texttt{RF-02}.
     \end{itemize}
 
     \item[Sprint 3: Creación y Estudio de Mapas de Prevalencia] \hfill \\
     Elaboración de mapas de prevalencia para visualizar la distribución geográfica de los casos del espectro esquizofrénico en la provincia.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Agregación de frecuencias por código postal, integración de cartografía vectorial en formato GeoJSON de España y generación de visores coropléticos mediante la librería \textit{Folium}.
-        \item \textit{Historias de Usuario y Requisitos:} \texttt{HU-03}, \texttt{RF-04}, \texttt{RNF-04}.
     \end{itemize}
     
     \item[Sprint 4: Formación de la Base de Datos de Grafos] \hfill \\
     Migración del paradigma tabular del dataset a un modelo NoSQL orientado a grafos para la exploración de comorbilidades.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Instalación y configuración de \textbf{Neo4j}, modelado del esquema de entidades (\textit{Paciente}, \textit{Diagnóstico}) y relaciones clínicas, y escritura de consultas avanzadas en lenguaje \textit{Cypher}.
-        \item \textit{Historias de Usuario y Requisitos:} \texttt{HU-02}, \texttt{RF-03}, \texttt{RNF-06}.
     \end{itemize}
     
     \item[Sprint 5: Entrenamiento de Modelos ML y DL] \hfill \\
     Construcción del núcleo predictivo mediante la experimentación sobre los 3 datasets (Original, RUS y VAE) mediante la división estratificada.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Entrenamiento de 6 clasificadores tabulares (\textit{Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM, CatBoost}) y ajuste fino (\textit{fine-tuning}) de 4 modelos de lenguaje basados en Transformers (\texttt{bert-base-multilingual-cased}, \texttt{BETO} \textit{cased/uncased}, \texttt{xlm-roberta-base}).
-        \item \textit{Requisitos asociados:} \texttt{RF-01}, \texttt{RF-05}.
     \end{itemize}
         
     \item[Sprint 6: Evaluación y Comparación de Resultados] \hfill \\
     Comparacion técnica del rendimiento y resultados de los modelos entrenados.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Ejecución de la Búsqueda en Rejilla (\textit{Grid Search}), cálculo de métricas de rendimiento (F1-Score, Precisión, Sensibilidad, AUC) y selección del modelo ganador.
-        \item \textit{Requisitos asociados:} \texttt{RNF-01}, \texttt{RF-08}.
     \end{itemize}
     
     \item[Sprint 7: Desarrollo de la aplicación web] \hfill \\
     Construcción de una pagina web unificando los módulos desarrollados en los Sprints anteriores.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Programación de la interfaz interactiva en \textbf{Streamlit}.
-% integración de los archivos de pesos de IA (\texttt{.pkl}/\texttt{PyTorch}), conexión con Neo4j y renderizado del visor geográfico. 
-        \item \textit{Requisitos asociados:} \texttt{RNF-02}, \texttt{RNF-05}.
     \end{itemize}
     
     \item[Sprint 8: Evaluación, Pruebas e Integración de la Memoria] \hfill \\
     Cierre del proyecto, verificación de calidad y documentación formal.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Pruebas de integración, auditoría final del cumplimiento del ENS y redacción de la memoria del TFG.
-        \item \textit{Requisitos asociados:} \texttt{RNF-01}, \texttt{RNF-03}, \texttt{RNF-07}.
     \end{itemize}
 \end{description}
 
@@ -1815,7 +1830,7 @@ A continuación, se detalla el alcance funcional y técnico desarrollado en cada
 
 \section{Gestión y Mitigación de Riesgos}
 
-En cualquier proyecto de ingeniería enfocado en la Inteligencia Artificial y los sistemas de información clínica, existen factores de incertidumbre técnica, operativa y de infraestructura que pueden comprometer los plazos de entrega o la calidad de las soluciones. Para mitigar estos imprevistos, se ha llevado a cabo una evaluación probabilística de riesgos, clasificándolos según su probabilidad de ocurrencia ($P$) e impacto ($I$) sobre el proyecto, y definiendo estrategias previas de prevención y planes de contingencia.
+En cualquier proyecto de ingeniería enfocado en la Inteligencia Artificial y los sistemas de información clínica, existen factores de incertidumbre técnica, operativa y de infraestructura que pueden comprometer los plazos de entrega o la calidad de las soluciones, llevandome a preparar un estudio de estos posibles riesgos, clasificándolos según su probabilidad de ocurrencia ($P$) e impacto ($I$), y definiendo estrategias previas de prevención y planes de contingencia.
 
 \subsection{Matriz de Evaluación de Riesgos}
 
@@ -1879,16 +1894,15 @@ A continuación, se justifican técnicamente las acciones adoptadas para solvent
 \subsection{Justificación Técnica y Gestión del Entorno Virtual mediante Mamba}
 \label{subsec:justificacion_mamba}
 
-El desarrollo de sistemas basados en Inteligencia Artificial aplicada exige la convivencia de múltiples librerías complejas con dependencias nativas en C/C++, controladores de GPU (CUDA) y marcos de trabajo heterogéneos (\texttt{PyTorch}, \texttt{HuggingFace Transformers}, \texttt{Scikit-Learn}, \texttt{XGBoost}, \texttt{LightGBM}, \texttt{CatBoost} y los conectores de \texttt{Neo4j}). En proyectos de esta envergadura, el uso de gestores de paquetes convencionales basados exclusivamente en \textit{pip} suele derivar en un jaleo y caos de dependencias, donde la actualización o instalación de una librería corrompe los binarios compilados de otra.
+El desarrollo de sistemas basados en Inteligencia Artificial  exige la convivencia de múltiples librerías complejas con dependencias nativas en C/C++, controladores de GPU (CUDA) y marcos de trabajo heterogéneos (\texttt{PyTorch}, \texttt{HuggingFace Transformers}, \texttt{Scikit-Learn}, \texttt{XGBoost}, \texttt{LightGBM}, \texttt{CatBoost} y los conectores de \texttt{Neo4j}). En proyectos de esta envergadura, el uso de gestores de paquetes convencionales basados exclusivamente en \textit{pip} suele derivar en un jaleo y caos de dependencias, donde la actualización o instalación de una librería corrompe los binarios compilados de otra.
 
-Para prevenir este riesgo y garantizar la reproducibilidad absoluta del código, se descartó el gestor tradicional de \textit{Conda} en favor de \textbf{Mamba} (un motor de gestión de paquetes de alto rendimiento reimplementado en C++, basandose en la misma Conda). La adopción de Mamba como eje de la infraestructura de desarrollo se justifica bajo cuatro pilares técnicos fundamentales:
+Para prevenir este riesgo y garantizar la reproducibilidad absoluta del código, se descartó el gestor tradicional de \textit{Conda} en favor de \textbf{Mamba} (un motor de gestión de paquetes de alto rendimiento reimplementado en C++, basandose en la misma Conda). La adopción de Mamba como eje de la infraestructura de desarrollo se justifica bajo 3 pilares técnicos fundamentales:
 
 \begin{itemize}
-    \item \textbf{Motor de resolución C++ (\textit{libsolv}):} A diferencia de Conda (cuyo motor de resolución en Python puede tardar decenas de minutos o bloquearse al calcular el árbol de dependencias de entornos complejos), Mamba utiliza la librería \texttt{libsolv} basada en algoritmos SAT (\textit{Boolean Satisfiability Problem}). Esto reduce el tiempo de resolución del grafo de dependencias de minutos a escasos segundos, garantizando un estado coherente en todo momento.
+    \item \textbf{Motor de resolución C++ (\textit{libsolv}):} A diferencia de Conda (cuyo motor de resolución en Python puede tardar decenas de minutos o bloquearse al calcular el árbol de dependencias de entornos complejos), Mamba utiliza la librería \texttt{libsolv} basada en algoritmos SAT. Esto reduce el tiempo de resolución del grafo de dependencias de minutos a escasos segundos, garantizando un estado coherente en todo momento.
     
-    \item \textbf{Manejo nativo de binarios pesados y aceleración GPU:} Mamba gestiona con precisión quirúrgica las dependencias a nivel de sistema operativo y controladores CUDA. Esto permitió enlazar las versiones exactas de las librerías C++ requeridas por \texttt{PyTorch} para la GPU sin conflictos con las extensiones optimizadas de la CPU utilizadas por los algoritmos de ensambles tabulares.
+    \item \textbf{Manejo nativo de binarios pesados y aceleración GPU:} Mamba gestiona con precisión quirúrgica las dependencias a nivel de sistema operativo y controladores CUDA. Esto permitió enlazar las versiones exactas de las librerías C++ requeridas por PyTorch para la GPU sin conflictos con las extensiones optimizadas de la CPU utilizadas por los algoritmos de ensambles tabulares.
 
-    
     \item \textbf{Garantía de reproducibilidad científica:} La totalidad del entorno virtual fue congelada en un archivo de especificación declarativa (\texttt{environment.yml}). Esto asegura que cualquier investigador o tribunal puede replicar el entorno de ejecución exacto (mismas versiones de Python, compiladores C++ y librerías de IA) en cualquier máquina sin variaciones en el comportamiento de los modelos.
 \end{itemize}
 
@@ -2081,7 +2095,7 @@ Margen de Beneficio Industrial (10\%) & 532,20 \\ \hline
 \end{table}
 \section{Viabilidad de implantación o escalado}
 
-La solución tecnológica desarrollada en este trabajo ha sido diseñada bajo un paradigma modular y desacoplado, lo que facilita enormemente su transición desde un entorno de desarrollo local hacia un \textit{entorno de producción} real dentro de la infraestructura de un servicio de salud pública, especialmente locales como el Servicio de Salud de Castilla y León (SACYL). A continuación, se evalúa la viabilidad de este sistema atendiendo a criterios de escalabilidad técnica, seguridad normativa y sostenibilidad económica.
+La solución tecnológica desarrollada en este trabajo ha sido diseñada bajo un paradigma modular y desacoplado, lo que facilita enormemente su transición desde un entorno de desarrollo local hacia unentorno de producción real dentro de la infraestructura de un servicio de salud pública, especialmente locales como el Servicio de Salud de Castilla y León (SACYL). A continuación, se evalúa la viabilidad de este sistema atendiendo a criterios de escalabilidad técnica, seguridad normativa y sostenibilidad económica.
 
 Desde el punto de vista de la escalabilidad técnica, la elección de una base de datos NoSQL orientada a grafos como Neo4j garantiza un rendimiento óptimo incluso ante incrementos masivos en el volumen de datos. Si el sistema pasara de los 3134 registros analizados en esta memoria a gestionar el histórico completo de pacientes de la comunidad autónoma, las consultas relacionales de caminos cortos y la detección de comorbilidades mantendrían una complejidad temporal altamente eficiente gracias al principio de adyacencia libre de índices inherente a los grafos. Asimismo, para asegurar un despliegue ágil y homogéneo en la infraestructura servidores de la red sanitaria, el código de la interfaz y los modelos predictivos se han diseñado para ser empaquetados mediante tecnologías de contenedorización como Docker. Esto permite mitigar los conflictos de dependencias y replicar la aplicación de forma inmediata en cualquier nodo hospitalario.
 
