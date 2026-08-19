@@ -1,8 +1,6 @@
 Cosas que cambiar TFG Raúl:
 
 - Completar las partes faltantes del capítulo 8 y el capítulo 5.
-? En la versión que nos has mandado no incluyes información sobre la planificación del proyecto a pesar de utilizar una metodología ágil ni defines las tareas a realizar en el proyecto, esto es importante dado que si utilizas una metodología scrum por ejemplo, debes de explicar la duración de los sprints, las tareas o historias de usuario que realizas en cada sprint e incluir un diagrama de Gantt.
-- Por último, no he visto una planificación de riesgos del proyecto, como pueden ser incompatibilidades entre tecnologías o librerías ni defines el impacto que se produce sobre el proyecto
 - Pocas referencias comenzaría comentando en el estado del arte algunas estadísticas sobre enfermedades mentales y luego ya me centraría en el ámbito España y la esquizofrenia en concreto
 - En el capítulo del estado del arte fundamentas todo en base a 3 referencias siendo algo pobre, cuando utilizas frases como varios estudios demuestran tal o cual cítalos para que se vea que no inventas las cosas, en la revisión de la literatura es muy importante que incluyas bastantes referencias.
 
@@ -12,6 +10,8 @@ Cosas que cambiar TFG Raúl:
 ? La tabla 3.1 está bien pero sería conveniente hacer una breve introducción a la misma. El principal problema que le veo es que es muy larga y creo que se podría representar cada una de las filas como una especie de tarjeta con los datos de la tabla y una explicación de todo el contenido (Realmente sería como hacer varias tablas pequeñas para cada uno de los elementos Nombre de la columna y sus características. Previamente a estas figuras haría una pequeña introducción del tipo. A continuación, en las siguientes figuras se representa una descripción detallada de cada una de las columnas que presenta el dataset utilizado en este proyecto.
 ? Procura evitar expresiones con ; y que utilicen muchos adjetivos, al igual que expresiones con - para delimitarlas u otros símbolos tales como la doble flecha, no abusar tampoco entre expresiones en negrita o cursiva para resaltar algo, procura hacer el resaltado o siempre en negrita o en cursiva porque los detectores de IA lo suelen marcar como GPT
 
+X Por último, no he visto una planificación de riesgos del proyecto, como pueden ser incompatibilidades entre tecnologías o librerías ni defines el impacto que se produce sobre el proyecto
+X En la versión que nos has mandado no incluyes información sobre la planificación del proyecto a pesar de utilizar una metodología ágil ni defines las tareas a realizar en el proyecto, esto es importante dado que si utilizas una metodología scrum por ejemplo, debes de explicar la duración de los sprints, las tareas o historias de usuario que realizas en cada sprint e incluir un diagrama de Gantt.
 X En el 3.3.4 completar la parte del INCISO
 X Para el tema de los costes de personal tendrías que indicar la fuente de dónde sacas los salarios y al ser un proyecto desarrollado mediante una metodología ágil debes incluir costes de como mínimo el scrum máster en el caso de la metodología scrum, dado que el Project manager y el Project owner son la misma persona en este caso no implicaría costes adicionales
 X Cambiar la parte de la reticencia de los especialista a adoptar estas nuevas medidas y quitar la parte de entre paréntesis en la que dices que es entendible porque son valoraciones personales que no es recomendable incluir

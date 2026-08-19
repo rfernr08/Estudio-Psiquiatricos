@@ -1,0 +1,69 @@
+🚀 Iniciando Randomized Search para LIGHTGBM...
+Fitting 5 folds for each of 50 candidates, totalling 250 fits
+
+⏱️ Búsqueda completada en 2013.74 segundos.
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': np.float64(0.6958569088243757), 'learning_rate': np.float64(0.030816079969931), 'max_depth': -1, 'n_estimators': 300, 'num_leaves': 21, 'subsample': np.float64(0.8631619434953541)}
+
+📊 REPORTE DE CLASIFICACIÓN EN TEST (LightGBM):
+              precision    recall  f1-score   support
+
+         F20       0.53      0.83      0.65       100
+         F21       0.00      0.00      0.00         1
+         F22       0.40      0.31      0.35        54
+         F23       0.11      0.07      0.09        14
+         F25       0.43      0.14      0.21        22
+         F29       0.20      0.07      0.10        30
+       F60.1       0.00      0.00      0.00         3
+
+    accuracy                           0.47       224
+   macro avg       0.24      0.20      0.20       224
+weighted avg       0.41      0.47      0.41       
+
+descripciones:
+
+Iniciando Randomized Search para LIGHTGBM...
+Fitting 5 folds for each of 50 candidates, totalling 250 fits
+
+⏱️ Búsqueda completada en 1781.81 segundos.
+🏆 MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': np.float64(0.7491932439908457), 'learning_rate': np.float64(0.07638785688389557), 'max_depth': 3, 'n_estimators': 200, 'num_leaves': 45, 'subsample': np.float64(0.9265884307357256)}
+
+📊 REPORTE DE CLASIFICACIÓN EN TEST (LightGBM):
+              precision    recall  f1-score   support
+
+         F20       0.52      0.77      0.62       100
+         F21       0.00      0.00      0.00         1
+         F22       0.36      0.33      0.35        54
+         F23       0.00      0.00      0.00        14
+         F25       0.25      0.09      0.13        22
+         F29       0.31      0.17      0.22        30
+       F60.1       0.00      0.00      0.00         3
+
+    accuracy                           0.46       224
+   macro avg       0.21      0.19      0.19       224
+weighted avg       0.39      0.46      0.40       224
+
+combinados:
+
+ 🚀 Iniciando Randomized Search para LIGHTGBM...
+Fitting 5 folds for each of 50 candidates, totalling 250 fits
+
+⏱️ Búsqueda completada en 1895.88 segundos.
+🏆MEJORES HIPERPARÁMETROS (LightGBM):
+{'colsample_bytree': np.float64(0.9653464306377026), 'learning_rate': np.float64(0.07641310303996815), 'max_depth': -1, 'n_estimators': 100, 'num_leaves': 46, 'subsample': np.float64(0.9385635955629523)}
+
+📊 REPORTE DE CLASIFICACIÓN EN TEST (LightGBM):
+              precision    recall  f1-score   support
+
+         F20       0.51      0.82      0.63       100
+         F21       0.00      0.00      0.00         1
+         F22       0.43      0.33      0.38        54
+         F23       0.00      0.00      0.00        14
+         F25       1.00      0.05      0.09        22
+         F29       0.27      0.13      0.18        30
+       F60.1       0.00      0.00      0.00         3
+
+    accuracy                           0.47       224
+   macro avg       0.31      0.19      0.18       224
+weighted avg       0.46      0.47      0.40       224

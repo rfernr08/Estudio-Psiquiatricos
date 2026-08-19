@@ -534,17 +534,9 @@ El conjunto de datos que constituye la base analítica y experimental de este Tr
 
 Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible realizado por un comité de ética del propio CAULE. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. El dataset esta conformado por ingresos desde el año 2007 al 2019.
 
-Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas que recogen diferentes dimensiones del perfil del paciente, mas unas 7 columnas adicionales que añaden información recopilatoria. Para facilitar su análisis técnico, estas variables se han categorizado en 5 bloques principales, descritos a continuación y resumidos en la Tabla \ref{tab:esquema_dataset}:
+Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas que recogen diferentes dimensiones del perfil del paciente, mas unas 7 columnas adicionales que añaden información recopilatoria. Para facilitar su análisis técnico, estas variables o clumnas se han categorizado en 5 bloques principales descritos en las siguientes figuras.
 
-\begin{itemize}
-    \item \textbf{Información del Paciente:} Datos relacionados con la edad, sexo y nacionalidad del paciente, que pueden ser relevantes para el análisis epidemiológico y la identificación de patrones demográficos asociados a la esquizofrenia. 
-    \item \textbf{Información del Ingreso:} Datos relacionados con la fecha de ingreso, duración de la estancia hospitalaria, motivo de ingreso y tipo de alta, que pueden ser útiles para analizar la evolución clínica y los factores asociados a la hospitalización.
-    \item \textbf{Historial Clínico:} Representan el núcleo del estudio, una recopilacion de todos los diagnósticos previos y posteriores al diagnóstico de esquizofrenia del paciente, incluyendo tanto trastornos mentales como enfermedades físicas, mediante los codigos medicos ICD-9 e ICD-10.
-    \item \textbf{Diagnóstico final:} Nuestra metrica mas importante y la pieza central, información sobre el diagnóstico definitivo del paciente, que puede incluir el subtipo de esquizofrenia o cualquier otra condición diagnóstica relevante.
-    \item \textbf{Recopilación de Datos:} Información sobre cómo se recopilaron los datos, incluyendo los métodos de recolección y cualquier procedimiento específico utilizado para garantizar la calidad y consistencia de los registros clínicos.
-\end{itemize}
-
-A continuación, en las siguientes figuras se representa una descripción detallada de cada una de las columnas que presenta el dataset utilizado en este proyecto.
+\begin{comment}
 
 % Reduce pre/post spacing for longtable to avoid infinite glue shrinkage on page breaks
 \setlength\LTpre{0pt}
@@ -593,6 +585,271 @@ A continuación, en las siguientes figuras se representa una descripción detall
 \texttt{Conjunto Dx Descripción Español} & Cadena (String) & Recopilación de Datos & Agrupación de descripciones en español del historial clínico. \\ \hline
 \texttt{Conjunto Dx Descripción Inglés} & Cadena (String) & Recopilación de Datos & Agrupación de descripciones en inglés del historial clínico. \\ \hline
 \end{longtable}
+\end{comment}
+
+\subsubsection{Información del Paciente}
+Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del paciente, que pueden ser relevantes para el análisis epidemiológico y la identificación de patrones demográficos asociados a la esquizofrenia
+
+\vspace{0.3cm}
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Nº Historia}} \\ \hline
+\textbf{Tipo de Dato} & Alfanumérico \\ \hline
+\textbf{Descripción} & Identificador único anonimizado del historial clínico del paciente. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Fecha Nacimiento}} \\ \hline
+\textbf{Tipo de Dato} & Fecha \\ \hline
+\textbf{Descripción} & Fecha de nacimiento del paciente. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Edad en años}} \\ \hline
+\textbf{Tipo de Dato} & Entero \\ \hline
+\textbf{Descripción} & Edad del paciente calculada en años en el momento del registro. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Sexo (Desc)}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Descripción textual del sexo biológico del paciente. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{País de Nacimiento}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & País de origen o nacimiento del individuo. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Provincia}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Provincia de residencia asociada al registro. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Municipio Residencia (Cód)}} \\ \hline
+\textbf{Tipo de Dato} & Alfanumérico \\ \hline
+\textbf{Descripción} & Código numérico oficial del municipio de residencia. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Municipio Residencia (Des)}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Nombre del municipio de residencia. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Código Postal}} \\ \hline
+\textbf{Tipo de Dato} & Alfanumérico \\ \hline
+\textbf{Descripción} & Código postal del domicilio del paciente. \\ \hline
+\end{tabular}
+\vspace{0.6cm}
+
+% ---------------------------------------------------------
+\subsubsection{Información del Ingreso}
+Este categoria junta datos relacionados con la fecha de ingreso, duración de la estancia hospitalaria, motivo de ingreso y tipo de alta, que pueden ser útiles para analizar la evolución clínica y los factores asociados a la hospitalización
+
+\vspace{0.3cm}
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Fecha Ingreso}} \\ \hline
+\textbf{Tipo de Dato} & Fecha \\ \hline
+\textbf{Descripción} & Fecha en la que se produce el ingreso hospitalario. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Año}} \\ \hline
+\textbf{Tipo de Dato} & Entero \\ \hline
+\textbf{Descripción} & Año de registro del alta o del proceso clínico. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Fecha Alta}} \\ \hline
+\textbf{Tipo de Dato} & Fecha \\ \hline
+\textbf{Descripción} & Fecha de alta del paciente. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Servicio Alta (Código)}} \\ \hline
+\textbf{Tipo de Dato} & Alfanumérico \\ \hline
+\textbf{Descripción} & Código del servicio médico que gestiona el alta. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Sección Alta (Código)}} \\ \hline
+\textbf{Tipo de Dato} & Alfanumérico \\ \hline
+\textbf{Descripción} & Código de la sección específica encargada del alta. \\ \hline
+\end{tabular}
+\vspace{0.6cm}
+
+% ---------------------------------------------------------
+\subsubsection{Historial Clínico}
+Bloque central del dataset que recopila todo el historial medicos del paciente mediante los codigos medicos ICD-9 e ICD-10, incluyendo tanto trastornos mentales como enfermedades físicas.
+
+\vspace{0.3cm}
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Diag 01 Principal (cod)}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Código identificador del diagnóstico principal que motivó el ingreso o atención. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Diag 02 al Diag 20 (cod)}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Bloque secuencial de 19 variables opcionales que registran las comorbilidades secundarias del paciente según la complejidad de su caso. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\subsubsection{Diagnóstico final}
+Nuestra metrica mas importante y la pieza central, información sobre el diagnóstico definitivo del paciente, que puede incluir el subtipo de esquizofrenia o cualquier otra condición diagnóstica relevante.
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{DIAG PSQ}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Código del diagnóstico psiquiátrico de control definitivo propuesto por un especialista. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\subsubsection{Recopilación de Datos}
+Categoria dedicada a la recopilaron los datos en distintos formatos para el enriquecimiento de la investigación.
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Conjunto Dx}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Agrupación de diagnósticos asociados al paciente en una única columna. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{DIAG PSQ ICD-9}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Código equivalente en la clasificación ICD-9 para la patología psiquiátrica principal. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{DIAG PSQ Des. Español}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Descripción literal en castellano del diagnóstico psiquiátrico principal. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{DIAG PSQ Des. Inglés}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Descripción literal en inglés del diagnóstico psiquiátrico principal. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Conjunto Dx ICD-9}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Agrupación de los códigos equivalentes en ICD-9 para el historial clínico. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Conjunto Dx Des. Español}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Agrupación de descripciones en español del historial clínico. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Variable} & \textbf{\texttt{Conjunto Dx Des. Inglés}} \\ \hline
+\textbf{Tipo de Dato} & Cadena (String) \\ \hline
+\textbf{Descripción} & Agrupación de descripciones en inglés del historial clínico. \\ \hline
+\end{tabular}
+\vspace{0.4cm}
+
+
+
+
 
 \section{Variables utilizadas}
 \subsection{Variables predictoras o características (\textit{Features})}
@@ -1209,9 +1466,11 @@ Combinado & \texttt{BETO cased} & 0,5223 & 0,2489 & 0,2717 & 0,2511 \\ \hline
 \begin{tabular}{|l|l|l|c|c|c|c|}
 \hline
 \rowcolor[RGB]{239,239,239}
-\textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+\textbf{Entrada} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
-
+Códigos & 0.3392 & 0.3186 & 0.3585 & 0.3392 \\
+Descripciones & 0.2946 & 0.3074 & 0.4949 & 0.2946 \\
+Combinado & 0.3705 & 0.3339 & 0.3194 & 0.3705 \\ \hline
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset expandido con VAE.}
@@ -1315,6 +1574,27 @@ Combinado & \texttt{XGBoost} & 0.5178 & 0.4880 & 0.4804 & 0.5178 \\ \hline
 \caption{Métricas de rendimiento de los mejores modelos tradicionales para el dataset reducido.}
 \label{tab:comparativa_boost_metricas_undersampling}
 \end{table}
+
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+
+Códigos & \texttt{LightGBM} & 0.4687 & 0.4393 & 0.4405 & 0.4687 \\
+Descripciones & \texttt{LightGBM} & 0.7350 & 0.6738 & 0.6572 & 0.7350 \\ 
+Combinado & \texttt{LightGBM} & 0.5178 & 0.4880 & 0.4804 & 0.5178 \\ \hline
+
+
+\end{tabular}
+\caption{Métricas de rendimiento de los mejores modelos tradicionales para el dataset expandido.}
+\label{tab:comparativa_boost_metricas_vae}
+\end{table}
+
 
 \subsection{Análisis Cualitativo e Interpretación de Resultados: Modelos Tradicionales}
 
@@ -1830,66 +2110,136 @@ A continuación, se detalla el alcance funcional y técnico desarrollado en cada
 
 \section{Gestión y Mitigación de Riesgos}
 
-En cualquier proyecto de ingeniería enfocado en la Inteligencia Artificial y los sistemas de información clínica, existen factores de incertidumbre técnica, operativa y de infraestructura que pueden comprometer los plazos de entrega o la calidad de las soluciones, llevandome a preparar un estudio de estos posibles riesgos, clasificándolos según su probabilidad de ocurrencia ($P$) e impacto ($I$), y definiendo estrategias previas de prevención y planes de contingencia.
+El desarrollo de un sistema de soporte a la decisión clínica basado en IA e infraestructura de grafos conlleva incertidumbres técnicas, operativas y normativas \cite{Kraguljac}. Siguiendo una metodología de gestión proactiva, se han identificado y evaluado los riesgos que podrían comprometer la integridad de los datos de salud o los plazos del proyecto.
 
-\subsection{Matriz de Evaluación de Riesgos}
+\subsection{Identificación de Riesgos}
 
-La Tabla~\ref{tab:matriz_riesgos} resume los principales riesgos identificados en el ciclo de vida del proyecto, evaluados en una escala cualitativa (Baja, Media, Alta, Crítica).
+La Tabla~\ref{tab:resumen_riesgos} categoriza los riesgos detectados según su naturaleza y el área del proyecto a la que afectan.
 
 \begin{table}[htbp]
 \centering
 \small
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{|l|p{3.8cm}|c|c|p{4.8cm}|}
+\begin{tabular}{|l|p{6.5cm}|c|c|}
 \hline
 \rowcolor[RGB]{239,239,239}
-\textbf{Código} & \textbf{Riesgo Identificado} & \textbf{Prob.} & \textbf{Impacto} & \textbf{Estrategia de Mitigación} \\ \hline
-\textbf{RSG-01} & Incompatibilidad de librerías y dependencias software. & Alta & Alto & Creación de entornos aislados mediante el gestor de paquetes \textbf{Mamba}. \\ \hline
-\textbf{RSG-02} & Restricción de memoria GPU/RAM en modelos BERT. & Media & Alto & Optimización de \textit{batch size}, \textit{gradient accumulation} y precisión FP16. \\ \hline
-\textbf{RSG-03} & Sesgo extremo por desbalanceo de clases clínicas. & Alta & Alto & Enfoque experimental tripartito (Dataset Original, RUS y VAE). \\ \hline
-\textbf{RSG-04} & Latencia en consultas complejas de grafos (Neo4j). & Media & Medio & Indexación de propiedades en Neo4j y uso de almacenamiento en caché (\texttt{@st.cache}). \\ \hline
-\textbf{RSG-05} & Riesgo de fuga de información de salud (ENS/RGPD). & Baja & Crítico & Anonimización estricta en el Sprint 1 y descarte de variables identificativas. \\ \hline
+\textbf{ID} & \textbf{Descripción del Riesgo} & \textbf{Categoría} & \textbf{Tipo de Riesgo} \\ \hline
+\textbf{R1} & Incompatibilidad crítica de librerías y dependencias software. & Infraestructura & Técnico \\ \hline
+\textbf{R2} & Agotamiento de memoria GPU/RAM durante el uso de LLMs. & Rendimiento & Técnico \\ \hline
+\textbf{R3} & Sesgo de predicción derivado del desbalanceo de clases clínicas. & Calidad de Datos & Técnico \\ \hline
+\textbf{R4} & Latencia excesiva en consultas relacionales complejas (Neo4j). & Escalabilidad & Técnico \\ \hline
+\textbf{R5} & Fuga o acceso no autorizado a datos de salud anonimizados. & Seguridad & Regulatorio \\ \hline
+\textbf{R6} & Sesgo de automatización: confianza excesiva del clínico en la IA. & Usabilidad & Ético/Social \\ \hline
 \end{tabular}
-\caption{Matriz de evaluación y mitigación de riesgos del proyecto.}
-\label{tab:matriz_riesgos}
+\caption{Resumen de riesgos identificados en el ciclo de vida del proyecto.}
+\label{tab:resumen_riesgos}
 \end{table}
 
 
 \subsection{Detalle de Riesgos y Acciones de Contención}
 
-A continuación, se justifican técnicamente las acciones adoptadas para solventar cada uno de los riesgos identificados:
+A continuación, se desglosan los riesgos mediante fichas técnicas que definen su origen, impacto y el plan de mitigación aplicado.
 
-\begin{enumerate}[leftmargin=*]
-    \item \textbf{RSG-01: Incompatibilidad de librerías y dependencias del entorno (Riesgo Técnico)}
-    \begin{itemize}
-        \item \textit{Descripción:} La integración simultánea de marcos de trabajo pesados como \texttt{PyTorch}, \texttt{HuggingFace Transformers}, \texttt{Scikit-Learn}, librerías de ensambles (\texttt{XGBoost}, \texttt{LightGBM}, \texttt{CatBoost}) y los conectores de \texttt{Neo4j} suele provocar conflictos críticos de versiones de C++ / Python y colisiones en los árboles de dependencias.
-        \item \textit{Solución adoptada:} Se empleó el gestor de paquetes \textbf{Mamba} (reimplementación en C++ de Conda). Mediante el uso de Mamba se garantizó la resolución determinista de dependencias complejas a alta velocidad, congelando el entorno virtual en un archivo manifiesto de especificación técnica (\texttt{environment.yml}). Esto garantizó la reproducibilidad del proyecto entre distintas plataformas de entrenamiento.
-    \end{itemize}
+% Ficha Riesgo 01
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R1} & \textbf{Incompatibilidad de dependencias del entorno} \\ \hline
+\textbf{Descripción} & Conflictos de versiones entre PyTorch, Transformers y conectores de Neo4j. \\ \hline
+\textbf{Categoría} & Infraestructura / Entorno de desarrollo. \\ \hline
+\textbf{Precondición} & Instalación simultánea de marcos de trabajo con dependencias nativas en C++. \\ \hline
+\textbf{Consecuencia} & Inestabilidad del sistema y fallos en tiempo de ejecución de los modelos. \\ \hline
+\textbf{Mitigación} & Uso del gestor de paquetes \textbf{Mamba} para la resolución determinista y creación de entornos aislados mediante archivos \texttt{environment.yml}. Desarrollado la decision en el proximo apartado. \\ \hline
+\end{tabular}
+\label{tab:R1}
+\end{table}
 
-    \item \textbf{RSG-02: Insuficiencia de memoria en GPU/RAM durante el Deep Learning (Riesgo de Cómputo)}
-    \begin{itemize}
-        \item \textit{Descripción:} El entrenamiento y ajuste fino (\textit{fine-tuning}) de arquitecturas Transformers de gran tamaño (\texttt{xlm-roberta-base} o \texttt{BETO}) sobre GPUs con memoria limitada puede provocar errores de desbordamiento (\textit{CUDA Out Of Memory}).
-        \item \textit{Solución adoptada:} Se acotó el espacio de búsqueda de hiperparámetros reduciendo el tamaño de lote (\textit{batch size} a 16 o 32 muestras) e implementando acumulación de gradiente (\textit{gradient accumulation}) y entrenamiento en precisión mixta (FP16), logrando estabilizar la convergencia sin agotar los recursos del hardware.
-    \end{itemize}
+% Ficha Riesgo 02
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R2} & \textbf{Insuficiencia de recursos hardware (GPU/RAM)} \\ \hline
+\textbf{Descripción} & Errores de \textit{CUDA Out Of Memory} durante el \textit{fine-tuning} de BERT. \\ \hline
+\textbf{Categoría} & Rendimiento computacional. \\ \hline
+\textbf{Precondición} & Entrenamiento de modelos de lenguaje masivos sobre hardware limitado. \\ \hline
+\textbf{Consecuencia} & Interrupción de la fase de experimentación y pérdida de progreso de cómputo. \\ \hline
+\textbf{Mitigación} & Optimización mediante \textit{gradient accumulation}, precisión mixta y reducción del \textit{batch size} a 16 muestras. \\ \hline
+\end{tabular}
+\label{tab:R2}
+\end{table}
 
-    \item \textbf{RSG-03: Degradación del rendimiento predictivo por desbalanceo de datos (Riesgo de Datos)}
-    \begin{itemize}
-        \item \textit{Descripción:} La elevada disparidad entre patologías (como la dominancia de la clase \texttt{F20} frente a la escasez de \texttt{F21}) corría el riesgo de hacer colapsar los algoritmos hacia la clase mayoritaria, obteniendo métricas engañosas.
-        \item \textit{Solución adoptada:} Se articuló la fase experimental en 3 matrices de datos independientes (Original, balanceo por submuestreo RUS y balanceo sintético mediante Generación de Autoencoders Variacionales - VAE), evaluando los modelos con métricas inmunes al desbalanceo como el \textit{F1-Score Macro}.
-    \end{itemize}
+% Ficha Riesgo 03
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R3} & \textbf{Sesgo extremo por desbalanceo de clases} \\ \hline
+\textbf{Descripción} & Colapso del modelo hacia la clase mayoritaria (Esquizofrenia F20). \\ \hline
+\textbf{Categoría} & Calidad de datos / Fiabilidad predictiva. \\ \hline
+\textbf{Precondición} & Diferencia drástica entre frecuencias (como 2277 casos de F20 vs. 5 casos de F21). \\ \hline
+\textbf{Consecuencia} & Incapacidad de detectar patologías minoritarias (F1-Score nulo). \\ \hline
+\textbf{Mitigación} & Estrategia experimental tripartita: uso del dataset original desbalanceado, uso de submuestreo (\textbf{RUS}) y generación de datos sintéticos mediante \textbf{VAE}. \\ \hline
 
-    \item \textbf{RSG-04: Cuellos de botella en la renderización de grafos (Riesgo de Rendimiento)}
-    \begin{itemize}
-        \item \textit{Descripción:} El lanzamiento repetitivo de consultas complejas en lenguaje \textit{Cypher} a la base de datos Neo4j desde la interfaz de Streamlit podía ralentizar la experiencia de usuario final.
-        \item \textit{Solución adoptada:} Se crearon índices explícitos sobre las propiedades de los nodos (\texttt{Paciente} y \texttt{Diagnóstico}) en Neo4j y se implementaron decoradores de caché en Streamlit (\texttt{@st.cache\_resource}), evitando la reejecución de consultas idénticas.
-    \end{itemize}
+\end{tabular}
+\label{tab:R3}
+\end{table}
 
-    \item \textbf{RSG-05: Vulneración de la privacidad y datos de salud (Riesgo Regulatorio/Seguridad)}
-    \begin{itemize}
-        \item \textit{Descripción:} El manejo inadvertido de identificadores directos del paciente durante el desarrollo o la visualización en la aplicación web incurriría en una falta grave respecto a la normativa RGPD y el Esquema Nacional de Seguridad (ENS).
-        \item \textit{Solución adoptada:} Se implementó una canalización estricta de sanitización en la primera fase del proyecto (Sprint 1), descartando 12 variables identificativas o irrelevantes y asegurando que los motores de IA y Neo4j operen exclusivamente sobre identificadores alfanuméricos anonimizados.
-    \end{itemize}
-\end{enumerate}
+% Ficha Riesgo 04
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R4} & \textbf{Cuellos de botella en la analítica de grafos} \\ \hline
+\textbf{Descripción} & Latencia elevada en la respuesta de la interfaz ante consultas Cypher complejas. \\ \hline
+\textbf{Categoría} & Escalabilidad / Experiencia de usuario. \\ \hline
+\textbf{Precondición} & Incremento del volumen de nodos y relaciones en la base de datos Neo4j. \\ \hline
+\textbf{Consecuencia} & Degradación de la usabilidad clínica por tiempos de espera superiores a 30 segundos. \\ \hline
+\textbf{Mitigación} & Indexación de propiedades críticas en Neo4j y uso de almacenamiento en caché (\texttt{@st.cache\_resource}) en Streamlit. \\ \hline
+
+\end{tabular}
+\label{tab:R4}
+\end{table}
+
+% Ficha Riesgo 05
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R5} & \textbf{Incumplimiento normativo de privacidad clínica} \\ \hline
+\textbf{Descripción} & Vulneración involuntaria del RGPD o el ENS por manejo de datos sensibles. \\ \hline
+\textbf{Categoría} & Seguridad / Regulatorio. \\ \hline
+\textbf{Precondición} & Presencia inadvertida de variables identificativas en el \textit{dataset} de investigación. \\ \hline
+\textbf{Consecuencia} & Sanciones legales graves y compromiso de la confidencialidad de los pacientes. \\ \hline
+\textbf{Mitigación} & Protocolo de anonimización irreversible previo al análisis y descarte de 12 variables demográficas/administrativas en el Sprint 1. \\ \hline
+
+\end{tabular}
+\label{tab:R5}
+\end{table}
+
+% Ficha Riesgo 06
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R6} & \textbf{Sesgo de automatización y error diagnóstico} \\ \hline
+\textbf{Descripción} & Tendencia del experto a confiar ciegamente en la probabilidad del sistema. \\ \hline
+\textbf{Categoría} & Usabilidad / Ética clínica. \\ \hline
+\textbf{Precondición} & Presentación de predicciones probabilísticas sin contexto explicativo. \\ \hline
+\textbf{Consecuencia} & Delegación indebida de la decisión clínica y posibles diagnósticos erróneos. \\ \hline
+\textbf{Mitigación} & Diseño del sistema exclusivamente como herramienta de apoyo (\textbf{CDSS}), integrando una capa visual de grafos para aportar interpretabilidad y varias advertencias. \\ \hline
+
+\end{tabular}
+\label{tab:R6}
+\end{table}
+
 
 \subsection{Justificación Técnica y Gestión del Entorno Virtual mediante Mamba}
 \label{subsec:justificacion_mamba}
