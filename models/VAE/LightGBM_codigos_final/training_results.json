@@ -1,0 +1,37 @@
+{
+  "modelo": "LightGBM",
+  "dataset": "codigos",
+  "features_shape": [
+    1092,
+    768
+  ],
+  "num_features": 768,
+  "num_classes": 7,
+  "classes": [
+    "F20",
+    "F21",
+    "F22",
+    "F23",
+    "F25",
+    "F29",
+    "F60.1"
+  ],
+  "feature_columns_file": "feature_columns.json",
+  "metrics": {
+    "accuracy": 0.4955357142857143,
+    "f1": 0.440094568257783,
+    "precision": 0.4458115473236441,
+    "recall": 0.4955357142857143
+  },
+  "seed": 42,
+  "lightgbm_params": {
+    "colsample_bytree": 0.6958,
+    "num_leaves": 21,
+    "learning_rate": 0.0308,
+    "max_depth": -1,
+    "n_estimators": 300,
+    "subsample": 0.8631,
+    "random_state": 42,
+    "n_jobs": -1
+  }
+}

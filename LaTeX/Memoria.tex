@@ -1258,7 +1258,7 @@ La arquitectura propuesta se fundamenta en los siguientes tres pilares técnicos
     \item \textbf{Capa de Contexto Relacional (Neo4j):} Como complemento a la predicción probabilística del motor de \textit{Machine Learning}, se integra de forma permanente el \textbf{Grafo de Conocimiento}. Esta capa permite al clínico no solo recibir una predicción numérica, sino visualizar la red de comorbilidades y la cercanía topológica del paciente dentro de la comunidad de diagnósticos del \textit{dataset} regional. Esta integración aporta una dimensión de interpretabilidad relacional necesaria en entornos médicos, permitiendo validar las predicciones del modelo mediante la observación de patrones de co-ocurrencia clínica.
     \item \textbf{Motor de Interoperabilidad Semántica (Conversor ICD):} Se propone la integración nativa de un motor de traducción que actúe como la puerta de enlace (\textit{gateway}) de la información. Esto garantiza que la propuesta final sea agnóstica al sistema de codificación del historial original (ICD-9 o ICD-10) y que pueda transformar texto libre en códigos estandarizados, permitiendo una ingesta de datos limpia hacia los clasificadores y una salida bilingüe orientada a la investigación internacional.
 \end{enumerate}
-En conclusión, la propuesta metodológica definitiva de este trabajo consiste en un \textbf{Sistema de Soporte Híbrido} que orquesta estos tres componentes bajo una interfaz web unificada. El flujo de trabajo propuesto comienza con la normalización y conversión de los diagnósticos, continúa con la clasificación del espectro esquizofrénico mediante árboles de decisión optimizados y finaliza con la validación visual de la trayectoria del paciente a través del análisis de comunidades en el grafo de conocimiento. Esta sinergia tecnológica permite transformar un listado plano de registros en un marco de decisión clínica estructurado, transparente y funcional.
+En conclusión, la propuesta metodológica definitiva de este trabajo consiste en un \textbf{Sistema de Soporte Híbrido} que orquesta estos tres componentes bajo una interfaz web unificada. El flujo de trabajo propuesto comienza con la normalización y conversión de los diagnósticos, continúa con la clasificación del espectro esquizofrénico mediante árboles de decisión optimizados y finaliza con la validación visual de la trayectoria del paciente a través del análisis de comunidades en el grafo de conocimiento. Esta sinergia tecnológica permite transformar un listado plano de registros en un marco de decisión clínica estructurado, transparente y funcional. La arquitectura resultante se puede ver dibujada en la figura \ref{fig:diagrama_arquitectura}
 
 \begin{figure}
     \centering
@@ -1477,9 +1477,12 @@ Combinado & 0.3705 & 0.3339 & 0.3194 & 0.3705 \\ \hline
 \label{tab:comparativa_nlp_metricas_undersampling_vae}
 \end{table}
 
+\begin{comment}
 \subsection{Análisis Cualitativo e Interpretación de Resultados}
 
 Esta gran cantidad de datos y métricas permite extraer varias conclusiones de interés clínico y metodológico, especialmente destacando cual de los modelos y estrategias de preprocesamiento ofrecen un rendimiento superior, confirmado aun mas por los resultados de un Grid Search. Entre los hallazgos más relevantes se encuentran:
+
+
 
 \begin{itemize}
     \item \textbf{Dominio de la información combinada:} La integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (el dataset "combinado") obtiene de forma sistemática los mejores valores de \textit{F1-Score} tanto en la variante Original ($0,7029$) como en la reconstruida con VAE ($0,6857$). Esto evidencia que los códigos de antecedentes ofrecen un contexto estructurado que complementa las sutilezas lingüísticas descritas en el texto narrativo.
@@ -1495,7 +1498,7 @@ Esta gran cantidad de datos y métricas permite extraer varias conclusiones de i
 \subsection{Análisis de Hiperparámetros y Patrones de Configuración}
 
 El estudio de las combinaciones óptimas de hiperparámetros revela patrones recurrentes que justifican la estabilidad de los mejores modelos[cite: 1]:
-\begin{comment}
+
 \begin{itemize}[leftmargin=*]
     \item \textbf{Tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$):} Las pruebas con valores de \textit{learning rate} extremadamente bajos (como $2\cdot 10^{-5}$ o $3\cdot 10^{-5}$) dominaron los mejores resultados[cite: 1]. En el *fine-tuning* de Transformers, una tasa de aprendizaje baja previene el olvido catastrófico (*catastrophic forgetting*), permitiendo adaptar los pesos de la cabeza de clasificación sin destruir las representaciones sintáctico-semánticas abstraídas durante el preentrenamiento del modelo.
 
@@ -1507,7 +1510,7 @@ El estudio de las combinaciones óptimas de hiperparámetros revela patrones rec
 
     \item \textbf{Preservación de caja (\textit{Cased}):} La variante \texttt{BETO cased} predominó frente a \texttt{uncased}[cite: 1]. Mantener la distinción entre mayúsculas y minúsculas resulta determinante en el dominio clínico, donde las siglas, acrónimos médicos o inicios de códigos normativos aportan un valor discriminativo que se pierde al Convertir todo el texto a minúsculas.
 \end{itemize}
-\end{comment}
+
 
 \begin{itemize}
     \item Tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$): Permite adaptar la capa de clasificación sin destruir el conocimiento preentrenado del Transformer.  
@@ -1515,6 +1518,7 @@ El estudio de las combinaciones óptimas de hiperparámetros revela patrones rec
     \item Entrenamiento corto (3 a 5 épocas): Actúa como parada temprana implícita para evitar que BERT memorice en exceso un dataset de tamaño medio.  
     \item Regularización (Weight Decay de $0,001$-$0,01$ y Warmup de $0,1$): Limita la magnitud de los pesos y estabiliza los gradientes iniciales durante el entrenamiento.  
 \end{itemize}
+\end{comment}
 
 \subsection{Análisis Cualitativo e Interpretación de Resultados}
 
@@ -1566,8 +1570,8 @@ Combinado & \texttt{XGBoost} & 0.7328 & 0.6663 & 0.6633 & 0.7328 \\ \hline
 \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
 Códigos & \texttt{LightGBM} & 0.4687 & 0.4393 & 0.4405 & 0.4687 \\
-Descripciones & \texttt{XGBoost} & 0.7350 & 0.6738 & 0.6572 & 0.7350 \\ 
-Combinado & \texttt{XGBoost} & 0.5178 & 0.4880 & 0.4804 & 0.5178 \\ \hline
+Descripciones & \texttt{LightGBM} & 0.5178 & 0.4880 & 0.4804 & 0.5178 \\ 
+Combinado & \texttt{XGBoost} & 0.5758 & 0.5401 & 0.5370 & 0.5758 \\ \hline
 
 
 \end{tabular}
@@ -1585,10 +1589,9 @@ Combinado & \texttt{XGBoost} & 0.5178 & 0.4880 & 0.4804 & 0.5178 \\ \hline
 \rowcolor[RGB]{239,239,239}
 \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
-Códigos & \texttt{LightGBM} & 0.4687 & 0.4393 & 0.4405 & 0.4687 \\
-Descripciones & \texttt{LightGBM} & 0.7350 & 0.6738 & 0.6572 & 0.7350 \\ 
-Combinado & \texttt{LightGBM} & 0.5178 & 0.4880 & 0.4804 & 0.5178 \\ \hline
-
+Códigos & \texttt{LightGBM} & 0.4955 & 0.4400 & 0.4458 & 0.4955 \\
+Descripciones & \texttt{LightGBM} & 0.45535 & 0.3952 & 0.3896 & 0.4553 \\ 
+Combinado & \texttt{LightGBM} & 0.45535 &  0.38210 & 0.4391 & 0.45535 \\ \hline
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos tradicionales para el dataset expandido.}
@@ -1605,6 +1608,8 @@ El análisis de las métricas obtenidas mediante los algoritmos tradicionales de
     
     \item \textbf{Hegemonía del algoritmo XGBoost en entornos completos:} En el escenario sin balancear ("Original"), la arquitectura XGBoost demostró ser consistentemente la opción más robusta para los tres conjuntos de datos (códigos, descripciones y combinado). Las configuraciones óptimas convergieron en parámetros conservadores, destacando una profundidad máxima (\textit{max\_depth}) de 5 a 7, tasas de aprendizaje entre $0,05$ y $0,1$, y un rango de 200 a 300 estimadores (\textit{n\_estimators}).
     
+    \item \textbf{Predominio del algoritmo LightGBM en el escenario expandido con VAE:} Para la variante balanceada artificialmente mediante Autoencoders Variacionales (VAE), la arquitectura \texttt{LightGBM} demostró ser consistentemente la opción más adaptativa y robusta para las tres modalidades de entrada (códigos, descripciones y combinado). Esta hegemonía frente a los vectores de comorbilidades sintéticos se atribuye a su estrategia de crecimiento de árboles por hojas (\textit{leaf-wise}) en lugar de por niveles (\textit{level-wise}). Esta característica le otorga una flexibilidad matemática muy superior para trazar fronteras de decisión complejas e identificar patrones sutiles dentro del espacio latente continuo e interpolado que genera el VAE . Además, su óptima gestión de matrices dispersas y de alta dimensionalidad mitigó con éxito el riesgo de sobreajuste (\textit{overfitting}) ante la replicación de las clases minoritarias, liderando el rendimiento tradicional con un $F1\text{-}Score$ de $0,4400$ para la entrada de códigos y de $0,3952$ para la de descripciones clínicas.
+    
     \item \textbf{Impacto del balanceo mediante \textit{Undersampling}:} La aplicación de técnicas de submuestreo para balancear las clases provocó una degradación drástica en el rendimiento general de los modelos tradicionales. La reducción masiva de ejemplos en las clases mayoritarias restó capacidad de generalización a los árboles de decisión. Esto es especialmente notorio en el dataset de "códigos", donde el modelo LightGBM colapsó hasta alcanzar un \textit{F1-Score} de $0,4393$ y una precisión del $0,4405$.
     
     \item \textbf{Resiliencia de la información combinada en escenarios empobrecidos:} Si bien el dataset "combinado" no fue el líder indiscutible en el conjunto original, demostró ser la estrategia más robusta frente a la drástica pérdida de datos ocasionada por el \textit{undersampling}. En este escenario adverso, el modelo XGBoost entrenado con datos combinados logró retener el mayor poder predictivo del bloque, alcanzando un \textit{F1-Score} de $0,5401$, una precisión de $0,5370$ y un \textit{Recall} de $0,5759$. Esto confirma que, cuando escasea el volumen de datos, la fusión de características tabulares (códigos) y textuales (descripciones) ayuda a estabilizar las fronteras de decisión.
@@ -1619,7 +1624,11 @@ Texto del análisis...
 
 \section{Estudio de grafos}
 
-\subsection{Comunidades}
+A continuación, se presentan los hallazgos derivados de la aplicación de algoritmos de detección de comunidades y de centralidad sobre la red relacional, para ofrecer una perspectiva topológica de la salud mental de la muestra de Castilla y León.
+
+\subsection{Análisis de Comunidades}
+
+La detección de comunidades se ejecutó aplicando el \textbf{algoritmo de Louvain}, un algoritmo heurístico que agrupa de forma iterativa los nodos con una alta densidad de conexión interna. El resultado de este análisis se visualiza en la Figura \ref{fig:mapa_comunidades}, donde la red general se divide en clústeres diferenciados por gradientes cromáticos.
 
 \begin{figure}
 \centering
@@ -1628,6 +1637,14 @@ Texto del análisis...
     \label{fig:mapa_comunidades}
 \end{figure}
 
+La alta modularidad de la red confirma que las comorbilidades asociadas a los trastornos del espectro esquizofrénico no se distribuyen de manera aleatoria en la población. Por el contrario, se estructuran en módulos clínicos bien definidos:
+\begin{itemize}
+    \item \textbf{Módulo Psiquiátrico Nuclear (Espectro Psicótico):} Concentra las distintas variantes de la esquizofrenia (F20.0, F20.1, F20.3) y trastornos delirantes o esquizoafectivos (F22, F25), evidenciando la proximidad diagnóstica y la continuidad de síntomas dentro del propio espectro.
+    \item \textbf{Módulo de Patología Somática y de Conducta:} Agrupa enfermedades físicas crónicas y hábitos nocivos que suelen coexistir con el trastorno mental severo, como enfermedades cardiovasculares, respiratorias y metabólicas.
+\end{itemize}
+
+Para facilitar la interpretación médica y eliminar el ruido relacional de la red total, se generó un filtro topológico para conservar únicamente aquellos diagnósticos con más de dos conexiones \ref{fig:mapa_comunidades_limpiado}. Esta simplificación permite al personal médico identificar los núcleos comórbidos más estables y recurrentes, aislando conexiones esporádicas o anecdóticas dentro del histórico de 12 años analizado.
+
 \begin{figure}
 \centering
     \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/Comunidades-2.png}}
@@ -1635,7 +1652,17 @@ Texto del análisis...
     \label{fig:mapa_comunidades_limpiado}
 \end{figure}
 
-\subsection{Centralidad}
+\subsection{Análisis de Centralidad y Comorbilidades}
+
+Para identificar los diagnósticos que actúan como "puentes" en el historial de los pacientes, se evaluó la red mediante métricas de centralidad, centrándose en el grado de conexión (\textit{Degree Centrality}) y la intermediación (\textit{Betweenness Centrality}). La Figura \ref{fig:mapa_centralidad} ilustra con claridad este fenómeno relacional, filtrando por los diagnósticos con más de 50 apariciones en el dataset.
+
+Siguiendo su relevancia y centralidad, los nodos que representan variantes de la esquizofrenia aparecen con el color rojo, siendo los puntos principales del grafo. Aunque a la vez los nodos azules, asociados a los diagnosticos secundarios, nos aportan informacion y conexiones de gran valor clínico:
+
+\begin{enumerate}
+    \item \textbf{El Síndrome Metabólico como comorbilidad física dominante:} Se observa una fuerte adyacencia y aristas gruesas que conectan la \textit{Esquizofrenia paranoide} y \textit{Otros tipos de esquizofrenia} con la \textit{Hipertensión esencial}, la \textit{Diabetes mellitus tipo 2} y la \textit{Hipercolesterolemia pura}. Este hallazgo topológico nos confirma que los pacientes con esquizofrenia presentan un riesgo metabólico drásticamente elevado, inducido tanto por el estilo de vida como por los efectos adversos de los fármacos antipsicóticos atípicos suministrados a los pacientes.
+    \item \textbf{La alta prevalencia de trastornos por uso de sustancias (TUS):} El nodo de \textit{Dependencia de nicotina} y el \textit{Abuso de alcohol} presentan una centralidad de intermediación crítica, actuando como puentes de conexión relacional entre los clústeres psiquiátricos y las patologías pulmonares o hepáticas. El \textit{Abuso de cannabis} también se muestra estrechamente conectado a los núcleos psicóticos activos, sugiriendo su rol como catalizador o factor desencadenante de brotes agudos.
+    \item \textbf{Factores Psicosociales y de Apoyo:} Nodos como \textit{Problemas relacionados con el apoyo social y el entorno} e \textit{Incumplimiento del tratamiento} demuestran una alta intermediación. Topológicamente, actúan como conectores entre las variantes graves del trastorno y las recaídas hospitalarias, subrayando la importancia de un enfoque terapéutico que trascienda lo puramente farmacológico.
+\end{enumerate}
 
 \begin{figure}
 \centering
