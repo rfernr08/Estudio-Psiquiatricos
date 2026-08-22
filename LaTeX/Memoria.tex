@@ -1616,11 +1616,45 @@ El análisis de las métricas obtenidas mediante los algoritmos tradicionales de
 \end{itemize}
 
 
-
-\section{Impacto de cada mejora introducida}
-Texto del impacto...
 \section{Análisis de resultados}
-Texto del análisis...
+
+El análisis cuantitativo de los resultados obtenidos a lo largo de las distintas fases experimentales proporciona una perspectiva crítica de las capacidades y límites de la Inteligencia Artificial aplicada a la psiquiatría clínica. El estudio comparativo multicapa, estructurado sobre dos familias algorítmicas claramente diferenciadas, clasificadores tradicionales basados en ensamble de árboles (\textit{Machine Learning}) y modelos de lenguaje basados en atención contextual bidireccional (\textit{Deep Learning} con \textit{Transformers}), revela dinámicas de aprendizaje complejas que varían de manera drástica según la técnica de balanceo aplicada y la modalidad de entrada seleccionada.
+
+A continuación, se discuten los tres hallazgos cardinales que fundamentan la selección del modelo óptimo para el sistema de soporte propuesto.
+
+\subsection{Hegemonía del Enfoque Combinado y de los Modelos de Lenguaje en el Espacio Original}
+
+En el escenario base sin balancear (\textbf{Dataset Original}), que reproduce con fidelidad la distribución epidemiológica real del entorno hospitalario, se observa que la integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (entrada \textbf{Combinada}) alcanza el rendimiento óptimo global \ref{tab:comparativa_nlp_metricas_original}. La arquitectura especializada \textbf{BETO cased} lidera este bloque con un $F1\text{-}Score$ de $0,6857$ y una precisión general de $0,7285$. Este comportamiento nos confirma que las descripciones narrativas en texto libre albergan matices semánticos que, al fusionarse con el contexto estructurado de los códigos de comorbilidades secundarias, proporcionan una firma diagnóstica mucho más robusta y tolerante al ruido textual. 
+
+No obstante, la evaluación revela que los algoritmos tradicionales de \textit{Machine Learning} representan una alternativa de extraordinaria solidez. El modelo \textbf{XGBoost} entrenado exclusivamente con las \textbf{Descripciones clínicas} \ref{tab:comparativa_boost_metricas_original} alcanzó una exactitud ($Accuracy$) de $0,7350$ y un $F1\text{-}Score$ de $0,6738$, situándose a una diferencia marginal de apenas un $1,19\%$ del mejor modelo profundo. Este hito demuestra que el texto de las descripciones procesado mediante técnicas clásicas de extracción de características ($n$-gramas) provee una alta densidad informativa por sí mismo, permitiendo a los árboles secuenciales de XGBoost trazar fronteras de decisión estables sin requerir costosos mapas vectoriales multidimensionales de \textit{embeddings}.
+
+\subsection{El Colapso del Submuestreo (RUS) y la Resiliencia de la Entrada Combinada}
+
+La aplicación de técnicas de submuestreo aleatorio (\textbf{RUS}) para equiparar artificialmente las frecuencias de la variable objetivo provocó una degradación drástica en el rendimiento general de ambos paradigmas tecnológicos \ref{tab:comparativa_boost_metricas_undersampling} \ref{tab:comparativa_nlp_metricas_undersampling}. Al reducir de manera agresiva la presencia de la clase mayoritaria (Esquizofrenia paranoide, F20), se sustrajo una parte fundamental de la variabilidad clínica y de las trayectorias de comorbilidad del histórico de pacientes, impidiendo que tanto las neuronas de BETO como las ramas de los árboles generalizaran correctamente.
+
+Este colapso es especialmente visible en los modelos de lenguaje, donde las métricas de precisión se desplomaron por debajo del $30\%$ \ref{tab:comparativa_nlp_metricas_undersampling}, evidenciando que el mecanismo de auto-atención de los \textit{Transformers} requiere corpus masivos y diversos para ajustar sus pesos de forma consistente. En el bloque tradicional, la reducción extrema de muestras provocó que el modelo de códigos basado en LightGBM colapsara hasta un $F1\text{-}Score$ de $0,4393$. Ante este escenario adverso de escasez de datos, la modalidad \textbf{Combinada} demostró ser la más resiliente y robusta, logrando estabilizar las fronteras de decisión y retener un poder predictivo significativamente mayor que las variables aisladas, con un $F1\text{-}Score$ de $0,5401$ utilizando XGBoost \ref{tab:comparativa_boost_metricas_undersampling}.
+
+\subsection{La Reconstrucción con VAE y la Especialización de LightGBM}
+La inyección de muestras sintéticas en las clases minoritarias mediante el uso de redes generativas continuas (\textbf{VAE}) permitió estabilizar las fronteras de decisión y mitigar el sesgo hacia la clase mayoritaria sin incurrir en la pérdida de información que penaliza al submuestreo clásico. Sin embargo, este escenario expuso una clara divergencia en la compatibilidad de los algoritmos con los datos sintéticos:
+\begin{itemize}
+    \item \textbf{La inadaptación de los Transformers al espacio latente continuo:} Los modelos basados en BERT sufrieron una pérdida notable de rendimiento, registrando exactitudes por debajo del $37\%$ \ref{tab:comparativa_nlp_metricas_undersampling_vae}. Esto se debe a que la generación probabilística del VAE actúa a nivel de vectores de características matemáticas continuas, lo que altera las sutilezas morfosintácticas y la coherencia semántica del texto lineal que la capa del tokenizador de BERT necesita para realizar la codificación lingüística .
+    \item \textbf{La hegemonía matemática de LightGBM frente a variables artificiales:} Por el contrario, la arquitectura tradicional \textbf{LightGBM} se alzó como la ganadora indiscutible para las tres variantes de entrada en este escenario expandido \ref{tab:comparativa_boost_metricas_vae}. Este predominio se atribuye a su estrategia de crecimiento de árboles por hojas (\textit{leaf-wise}), la cual le confiere una flexibilidad excepcional para segmentar el espacio latente continuo e interpolado que genera el VAE, trazando límites de división asimétricos sumamente precisos sin llegar a memorizar el ruido sintético ni incurrir en sobreajuste (\textit{overfitting}).
+\end{itemize}
+
+\section{Justificación de la Propuesta Final y Transferencia Tecnológica}
+
+Para consolidar un Sistema de Soporte a la Decisión Clínica (\textbf{CDSS}) que resulte verdaderamente viable y adoptable en la rutina asistencial del Servicio de Salud de Castilla y León (\textbf{SACYL}), el diseño del proyecto debe equilibrar con rigor la precisión teórica con el coste de implantación y la latencia del sistema. 
+
+Aunque la arquitectura profunda BETO Combinado entrenada sobre el conjunto original ofrece la métrica de $F1\text{-}Score$ más elevada ($0,6857$), la ejecución de inferencias en tiempo real con modelos lingüísticos de cientos de millones de parámetros exige disponer de aceleración por hardware (GPU). Los terminales informáticos de las consultas psiquiátricas reales (que operan con clientes ligeros y sistemas de historia clínica como MEDORA) carecen de estos recursos de cómputo. Ejecutar dichos modelos en CPU generaría una latencia de respuesta inasumible en la práctica clínica diaria, vulnerando los requisitos no funcionales de usabilidad y rendimiento del sistema.
+
+Por lo tanto, la \textbf{Propuesta Final} de este trabajo se decanta por el uso de los clasificadores basados en ensamble de árboles (\textbf{XGBoost} y \textbf{LightGBM}) entrenados sobre el dataset balanceado sintéticamente con \textbf{VAE}. Esta arquitectura híbrida garantiza:
+\begin{enumerate}
+    \item \textbf{Robustez frente al desbalanceo extremo:} Protegiendo la capacidad de detección de patologías críticas de baja frecuencia (como F21) mediante un espacio de clases perfectamente balanceado.
+    \item \textbf{Inferencia ultrarrápida y local:} Reduciendo la latencia a milisegundos sin requerir GPUs ni conexión asíncrona a servidores externos, facilitando su encapsulamiento nativo y modular en la interfaz ágil de Streamlit desarrollada.
+    \item \textbf{Interpretabilidad Relacional Directa:} Sustentando la probabilidad matemática del predictor tabular con la inspección visual de las comorbilidades activas en el grafo de Neo4j.
+\end{enumerate}
+
+En síntesis, las métricas del proyecto confirman que el uso complementario de grafos de conocimiento y clasificadores tabulares tradicionales constituye la opción de ingeniería más solvente, económica y viable para la modernización tecnológica del diagnóstico de la esquizofrenia en entornos hospitalarios reales.
 
 \section{Estudio de grafos}
 
@@ -2126,14 +2160,7 @@ A continuación, se detalla el alcance funcional y técnico desarrollado en cada
     \end{itemize}
 \end{description}
 
-\begin{landscape}
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=\linewidth, keepaspectratio]{imagenes/Gantt.png}
-        \caption{Cronograma del Proyecto - Diagrama de Gantt}
-        \label{fig:diagrama_gantt}
-    \end{figure}
-\end{landscape}
+La Figura \ref{fig:diagrama_gantt} ilustra la evolucion temporal de los Sprints.
 
 \section{Gestión y Mitigación de Riesgos}
 
@@ -2547,3 +2574,12 @@ A partir de las conclusiones obtenidas y las limitaciones identificadas en este 
 En caso de tener información adicional (código fuente extenso, tablas de datos crudos, etc.), se coloca en esta sección.
 
 \end{document}
+
+\begin{landscape}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=\linewidth, keepaspectratio]{imagenes/Gantt.png}
+        \caption{Cronograma del Proyecto - Diagrama de Gantt}
+        \label{fig:diagrama_gantt}
+    \end{figure}
+\end{landscape}
