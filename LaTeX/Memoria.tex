@@ -199,7 +199,7 @@
     \hline
     \textbf{TUTORA}: Sergio Rubio Martín \\
     \hline
-    \textbf{CO-TUTOR}: Arturo Crespo Alvarez \\
+    \textbf{CO-TUTOR}: Arturo Crespo Álvaro \\
     \hline
     \textbf{TÍTULO}: Predicción de diagnósticos psiquiátricos mediante modelos de aprendizaje automático \\
     \hline
@@ -238,7 +238,7 @@
     \hline
     \textbf{TUTOR}: Sergio Rubio Martín \\
     \hline
-    \textbf{CO-TUTOR}: Arturo Crespo Alvarez \\
+    \textbf{CO-TUTOR}: Arturo Crespo Álvaro \\
     \hline
     \textbf{TITLE}: Prediction of psychiatric diagnoses using machine learning models \\
     \hline
@@ -1853,19 +1853,24 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \begin{table}[htbp]
 \centering
 \small
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{0.9}
 \begin{tabular}{lp{10cm}}
 \hline
 \textbf{Código} & \textbf{Descripción del Requisito Funcional (RF)} \\ \hline
-\textbf{RF-01} & \textbf{Mapeo normativo CIE-9 / CIE-10:} El sistema debe realizar la conversión automática y bidireccional entre las codificaciones diagnósticas antiguas e independientes. \\
-\textbf{RF-02} & \textbf{Múltiples conversiones:} El sistema debe permitir la conversión simultánea de varios códigos a un formato deseado. \\
-\textbf{RF-03} & \textbf{Exportación de informes y analítica:} El sistema debe permitir descargar los resultados de las conversiones en lote en formatos estándar CSV. \\
-\textbf{RF-04} & \textbf{Visualizacion de mapas y grafos} El sistema debe permitir al usuario mostrar en pantalla y permitir interactuar con los graficos y mapas generados durante el estudio. \\ \hline
-
+\textbf{RF-01} & \textbf{Búsqueda polivalente individual:} El sistema debe permitir la consulta de diagnósticos mediante tres criterios de entrada conmutables: código CIE-10, código CIE-9 o descripción textual libre en castellano. \\
+\textbf{RF-02} & \textbf{Sugerencias dinámicas y autocompletado:} La interfaz de búsqueda debe pre-filtrar y mostrar un listado de sugerencias segun lo escrito en la busqueda por el usuario, mitigando errores tipográficos manuales. \\
+\textbf{RF-03} & \textbf{Mapeo relacional de correspondencias:} Al seleccionar un diagnóstico, el sistema debe recuperar y presentar de forma estructurada todas sus equivalencias de forma bidireccional. \\
+\textbf{RF-04} & \textbf{Consulta asíncrona internacional:} El sistema debe incorporar un botón para realizar peticiones asíncronas a la API externa de la \textit{National Library of Medicine} y recuperar la descripción oficial en inglés del diagnóstico seleccionado. \\
+\textbf{RF-05} & \textbf{Ingesta de archivos por lotes:} El sistema debe permitir al usuario arrastrar y cargar ficheros estructurados en formato CSV para su traducción masiva. \\
+\textbf{RF-07} & \textbf{Parametrización dinámica del mapeo:} El usuario debe poder seleccionar dinámicamente qué columna del CSV contiene los datos, su formato de origen y qué nuevas columnas de mapeo (CIE-9, CIE-10, inglés o castellano) desea añadir al archivo resultante. \\
+\textbf{RF-08} & \textbf{Exportación persistente de informes:} El sistema debe habilitar un botón de descarga para persistir la tabla resultante del procesamiento masivo en un archivo CSV local codificado en UTF-8 \\
+\textbf{RF-09} & \textbf{Renderizado interactivo de mapas y redes:} El sistema debe encapsular y renderizar mapas coropléticos (Folium) y grafos de comunidades (Pyvis) interactivos en contenedores web, soportando acciones de zoom, arrastre y burbujas informativas. \\ \hline
 \end{tabular}
 \caption{Catálogo de Requisitos Funcionales del sistema.}
 \label{tab:requisitos_funcionales}
 \end{table}
+
+
 
 \newpage
 \subsection{Requisitos No Funcionales}
@@ -1876,11 +1881,13 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \begin{tabular}{lp{10cm}}
 \hline
 \textbf{Código} & \textbf{Descripción del Requisito No Funcional (RNF)} \\ \hline
-\textbf{RNF-01} & \textbf{Tiempo de respuesta (Rendimiento):} El tiempo de inferencia de las conversiones individuales no superará los 5 segundos y las conversiones en lote no excederán los 30 segundos. El tiempo de carga de los mapas no superará los 30 segundos. \\
-\textbf{RNF-02} & \textbf{Usabilidad (UX/UI):} La interfaz debe ser intuitiva, accesible desde navegadores web convencionales y no requerir conocimientos de programación por parte del clínico. \\
-\textbf{RNF-03} & \textbf{Seguridad y Privacidad (ENS/RGPD):} El sistema debe garantizar la anonimización absoluta de la información tratada, operando bajo el principio de mínimo privilegio. \\
-\textbf{RNF-04} & \textbf{Interoperabilidad y Portabilidad:} El \textit{backend} debe basarse en formatos abiertos y estándar (CSV, GeoJSON, ejecutable de Python). \\
-\textbf{RNF-05} & \textbf{Escalabilidad del sistema:} La seleccion de mapas y figuras a mostrar o las opciones de conversion de codigos se tienen que actualizar de forma dinamica sin tener que modificar el codigo de la pagina web. \\ \hline
+\textbf{RNF-01} & \textbf{Tiempo de respuesta y latencia:} El tiempo de inferencia del buscador individual no superará los 3 segundos; el procesamiento por lotes no excederá los 30 segundos para archivos de hasta 10.000 registros; y la carga de mapas interactivos no superará los 15 segundos en CPU local. \\
+\textbf{RNF-02} & \textbf{Navegación plana (UI/UX):} La interfaz web debe cumplir con el paradigma de jerarquía plana, permitiendo conmutar entre los módulos principales (conversor individual, por lotes y mapas) con un máximo de dos clics. \\
+\textbf{RNF-03} & \textbf{Usabilidad (UX/UI):} La interfaz debe ser intuitiva, accesible desde navegadores web convencionales y no requerir conocimientos de programación por parte del clínico. \\
+\textbf{RNF-04} & \textbf{Privacidad y seguridad por diseño (RGPD):} La aplicación operará estrictamente sobre datos anonimizados sin persistir información personal identificativa (como IP, nombres, etc.) de forma local o en bases de datos temporales. \\
+\textbf{RNF-05} & \textbf{Tolerancia a fallos de red:} Si la API externa de la NLM no está disponible o presenta un retardo superior a 5 segundos, el sistema debe capturar el error sin colapsar la interfaz, notificando al clínico y deshabilitando temporalmente dicha opción de traducción. \\
+\textbf{RNF-06} & \textbf{Portabilidad y despliegue modular:} El backend debe estar desarrollado de forma modular en Python, permitiendo su encapsulamiento y despliegue inmediato en la intranet hospitalaria mediante contenedores Docker. \\
+\textbf{RNF-07} & \textbf{Interoperabilidad y Portabilidad:} El backend debe basarse en formatos abiertos y estándar (CSV, GeoJSON, ejecutable de Python). \\
 \end{tabular}
 \caption{Catálogo de Requisitos No Funcionales del sistema.}
 \label{tab:requisitos_no_funcionales}
@@ -2184,6 +2191,8 @@ La Tabla~\ref{tab:resumen_riesgos} categoriza los riesgos detectados según su n
 \textbf{R4} & Latencia excesiva en consultas relacionales complejas (Neo4j). & Escalabilidad & Técnico \\ \hline
 \textbf{R5} & Fuga o acceso no autorizado a datos de salud anonimizados. & Seguridad & Regulatorio \\ \hline
 \textbf{R6} & Sesgo de automatización: confianza excesiva del clínico en la IA. & Usabilidad & Ético/Social \\ \hline
+\textbf{R7} & Incumplimiento de presupuesto y plazos por mala definición del problema. & Planificación & Gestión \\ \hline
+\textbf{R8} & Cambios imprevistos en el alcance del proyecto. & Alcance & Gestión \\ \hline
 \end{tabular}
 \caption{Resumen de riesgos identificados en el ciclo de vida del proyecto.}
 \label{tab:resumen_riesgos}
@@ -2267,7 +2276,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \begin{tabular}{|p{2.5cm}|p{10.5cm}|}
 \hline
 \rowcolor[RGB]{230,230,230} \textbf{ID: R5} & \textbf{Incumplimiento normativo de privacidad clínica} \\ \hline
-\textbf{Descripción} & Vulneración involuntaria del RGPD o el ENS por manejo de datos sensibles. \\ \hline
+\textbf{Descripción} & Vulneración involuntaria del RGPD \cite{rgpd2016} o el ENS\cite{lopdgdd2018} por manejo de datos sensibles. \\ \hline
 \textbf{Categoría} & Seguridad / Regulatorio. \\ \hline
 \textbf{Precondición} & Presencia inadvertida de variables identificativas en el \textit{dataset} de investigación. \\ \hline
 \textbf{Consecuencia} & Sanciones legales graves y compromiso de la confidencialidad de los pacientes. \\ \hline
@@ -2277,7 +2286,6 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \label{tab:R5}
 \end{table}
 
-% Ficha Riesgo 06
 \begin{table}[htbp]
 \centering
 \small
@@ -2292,6 +2300,36 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 
 \end{tabular}
 \label{tab:R6}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R7} & \textbf{Desviación de plazos y presupuesto por mala definición inicial} \\ \hline
+\textbf{Descripción} & Retrasos significativos en las entregas de los Sprints o sobrecostes indirectos debido a la ambigüedad en la delimitación del problema o los objetivos clínicos. \\ \hline
+\textbf{Categoría} & Gestión de Proyectos / Planificación. \\ \hline
+\textbf{Precondición} & Falta de hitos intermedios claros, escasa comunicación con la dirección del trabajo o subestimación de la complejidad técnica de la analítica relacional. \\ \hline
+\textbf{Consecuencia} & Prolongación del desarrollo más allá de las 24 semanas planificadas, incremento de los costes indirectos calculados en el presupuesto y retraso en la entrega final del TFG. \\ \hline
+\textbf{Mitigación} & Adopción de la metodología ágil Scrum adaptada con la definición clara de 8 Sprints y el mantenimiento de un canal de comunicación continuo con el tutor para validar las tareas técnicas y ajustar el rumbo de la investigación. \\ \hline
+\end{tabular}
+\label{tab:R7}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R8} & \textbf{Cambios imprevistos en el alcance del proyecto} \\ \hline
+\textbf{Descripción} & Inclusión de nuevos requisitos funcionales, herramientas de modelado o fuentes de datos durante las fases intermedias o de resultados. \\ \hline
+\textbf{Categoría} & Gestión de Proyectos / Alcance. \\ \hline
+\textbf{Precondición} & Entusiasmo técnico excesivo por parte del desarrollador al descubrir nuevas tecnologías o redefinición tardía del alcance funcional del sistema. \\ \hline
+\textbf{Consecuencia} & Desbordamiento de las horas estimadas para el TFG, retraso en la fase de pruebas y desestabilización en la integración de la interfaz Streamlit con Neo4j o el clasificador final. \\ \hline
+\textbf{Mitigación} & Congelación y delimitación estricta del catálogo de Requisitos Funcionales y No Funcionales. Cualquier mejora o propuesta detectada en fases posteriores se guardo para ser clasificada exclusivamente dentro del apartado de "Trabajos Futuros" de la memoria. \\ \hline
+\end{tabular}
+\label{tab:R8}
 \end{table}
 
 
@@ -2400,7 +2438,7 @@ A continuación, se clasifican y justifican los recursos lógicos e informático
 \textbf{Software / Librería} & \textbf{Función Principal} & \textbf{Tipo de Licencia} & \textbf{Coste (€)} \\ \hline
 Python v3.13.5 & Lenguaje de programación núcleo & Python Software Foundation & 0,00 \\ \hline
 Neo4j Community Ed. & Base de datos orientada a grafos & GPLv3 & 0,00 \\ \hline
-VS Code / Jupyter & Entorno de desarrollo integrado & MIT / BSD & 0,00 \\ \hline
+VS Code / Jupyter Notebook & Entorno de desarrollo integrado & MIT / BSD & 0,00 \\ \hline
 Scikit-Learn / XGBoost & Modelado predictivo y ML & BSD / Apache 2.0 & 0,00 \\ \hline
 Hugging Face / Transformers & Procesamiento de LLMs y NLP & Apache 2.0 & 0,00 \\ \hline
 Streamlit & Desarrollo de la interfaz web & Apache 2.0 & 0,00 \\ \hline
@@ -2416,13 +2454,13 @@ Sistema Operativo & Ubuntu Linux 24.04.4 LTS & GPL & 0,00 \\ \hline
 
 En este apartado se consolida el análisis económico del proyecto, integrando los costes directos de mano de obra invertidos en el proyecto y los costes indirectos derivados de la actividad. Al tratarse de un proyecto de carácter individual, el factor humano constaria de la contratación de un único perfil de Ingeniero de Datos o Científico de Datos Junior encargado de todas las fases del ciclo de vida del software y la investigación.
 
-\subsubsection{Costes de personal (Mano de obra)}
+\subsection{Costes de personal (Mano de obra)}
 
-El volumen de trabajo estimado para la consecución de los objetivos de este Trabajo de Fin de Grado se alinea con la carga lectiva oficial de 12 créditos ECTS, lo que equivale a un total de 300 horas de dedicación. Dado que el proyecto se ha gestionado mediante una metodología ágil \textbf{Scrum adaptado}, el esfuerzo temporal se ha dividido formalmente entre las tareas técnicas de ingeniería de \textit{software}/IA y las labores de gestión del proceso ágil:
+El volumen de trabajo estimado para la consecución de los objetivos de este Trabajo de Fin de Grado se alinea con la carga lectiva oficial de 12 créditos ECTS, lo que equivale a un total de 300 horas de dedicación. Dado que el proyecto se ha gestionado mediante una metodología ágil \textbf{Scrum adaptado}, el esfuerzo temporal se ha dividido formalmente entre las tareas técnicas de ingeniería de software/IA y las labores de gestión del proceso ágil:
 
 \begin{itemize}
     \item \textbf{Ingeniero de Datos / Desarrollador Junior (85\% de la carga temporal - 255 horas):} Comprende las tareas técnicas de preprocesamiento, modelado en grafos (Neo4j), formar el conversor de codigos, entrenamiento de modelos ML/DL, desarrollo de la aplicación web en Streamlit y validación de requisitos.
-    \item \textbf{Scrum Master Junior (15\% de la carga temporal - 45 horas):} Asume la gestión del marco ágil, incluyendo la planificación y estimación de los 8 \textit{Sprints}, las sesiones de revisión/retrospectiva y la mitigación de bloqueos técnicos.
+    \item \textbf{Scrum Master Junior (15\% de la carga temporal - 45 horas):} Asume la gestión del marco ágil, incluyendo la planificación y estimación de los 8 Sprints, las sesiones de revisión/retrospectiva y la mitigación de bloqueos técnicos.
 \end{itemize}
 
 Cabe señalar que el rol de \textbf{Product Owner} es asumido conceptualmente por el tutor del proyecto, por lo que no genera costes salariales adicionales imputables a este presupuesto.
@@ -2461,7 +2499,7 @@ Ingeniero de Datos Junior & 300 & 14,00 & 4.200,00 \\ \hline
 \end{table}
 \end{comment}
 
-\subsubsection{Costes indirectos y gastos generales}
+\subsection{Costes indirectos y gastos generales}
 
 Los costes indirectos estaran compuestos por aquellos gastos que, sin estar ligados directamente a la programación o análisis, son indispensables para el desarrollo de la actividad física. Esto incluye el consumo de energía eléctrica de la estación de trabajo, la conexión a internet de banda ancha para la descarga de librerías o subida de modelos o codigo a Github, y el gasto logístico del espacio de oficina. Para simplificar y generalizar el modelo contable, se aplica un estándar industrial del 15\% sobre el coste total de la mano de obra directa:
 
@@ -2469,7 +2507,7 @@ Los costes indirectos estaran compuestos por aquellos gastos que, sin estar liga
 \text{Costes Indirectos} = 4.290,00 \times 0,15 = 643,50 \text{ €}
 \end{equation}
 
-\subsubsection{Resumen del presupuesto total}
+\subsection{Resumen del presupuesto total}
 
 Para concluir el análisis financiero, unificaremos todos los conceptos económicos desglosados a lo largo de este capítulo (como recursos hardware amortizados, licencias de software, mano de obra e indirectos) en una tabla \ref{tab:presupuesto_total}, ofreciendo la valoración económica global del proyecto. Además, se incorpora un \textbf{margen de beneficio industrial} del 10\% sobre el coste total calculado, con el fin de cubrir posibles cambios de alcance, ajustes técnicos o imprevistos durante el desarrollo sin generar sobrecostes significativos para garantizar la viabilidad económica del proyecto.
 
@@ -2499,27 +2537,27 @@ Margen de Beneficio Industrial (10\%) & 532,20 \\ \hline
 \end{table}
 \section{Viabilidad de implantación o escalado}
 
-La solución tecnológica desarrollada en este trabajo ha sido diseñada bajo un paradigma modular y desacoplado, lo que facilita enormemente su transición desde un entorno de desarrollo local hacia unentorno de producción real dentro de la infraestructura de un servicio de salud pública, especialmente locales como el Servicio de Salud de Castilla y León (SACYL). A continuación, se evalúa la viabilidad de este sistema atendiendo a criterios de escalabilidad técnica, seguridad normativa y sostenibilidad económica.
+La solución tecnológica desarrollada en este trabajo ha sido diseñada bajo un paradigma modular y desacoplado, lo que facilita enormemente su transición desde un entorno de desarrollo local hacia un entorno de producción real dentro de la infraestructura de un servicio de salud pública, especialmente locales como el Servicio de Salud de Castilla y León (SACYL). A continuación, se evalúa la viabilidad de este sistema atendiendo a criterios de escalabilidad técnica, seguridad normativa y sostenibilidad económica.
 
 Desde el punto de vista de la escalabilidad técnica, la elección de una base de datos NoSQL orientada a grafos como Neo4j garantiza un rendimiento óptimo incluso ante incrementos masivos en el volumen de datos. Si el sistema pasara de los 3134 registros analizados en esta memoria a gestionar el histórico completo de pacientes de la comunidad autónoma, las consultas relacionales de caminos cortos y la detección de comorbilidades mantendrían una complejidad temporal altamente eficiente gracias al principio de adyacencia libre de índices inherente a los grafos. Asimismo, para asegurar un despliegue ágil y homogéneo en la infraestructura servidores de la red sanitaria, el código de la interfaz y los modelos predictivos se han diseñado para ser empaquetados mediante tecnologías de contenedorización como Docker. Esto permite mitigar los conflictos de dependencias y replicar la aplicación de forma inmediata en cualquier nodo hospitalario.
 
-En el marco de la seguridad y el cumplimiento legal, al tratarse de información de alta sensibilidad relacionada con la salud mental, la implantación real de la plataforma exige una alineación estricta con el Esquema Nacional de Seguridad (ENS) y el Reglamento General de Protección de Datos (RGPD). La aplicación no almacena credenciales ni datos biométricos directamente identificables de forma local; en su lugar, está concebida para desplegarse dentro de una Red Privada Virtual (VPN) corporativa y delegar la validación de usuarios en los sistemas de autenticación federada del propio servicio de salud (mediante certificados digitales del personal sanitario). De este modo, la consulta del conversor ICD y la ejecución de los módulos predictivos se realizan bajo un canal completamente cifrado, seguro y auditable.
+En el marco de la seguridad y el cumplimiento legal, al tratarse de información de alta sensibilidad relacionada con la salud mental, la implantación real de la plataforma exige una alineación estricta con el Esquema Nacional de Seguridad \cite{lopdgdd2018} y el Reglamento General de Protección de Datos \cite{rgpd2016}. La aplicación no almacena credenciales ni datos biométricos directamente identificables de forma local; en su lugar, está concebida para desplegarse dentro de una Red Privada Virtual (VPN) corporativa y delegar la validación de usuarios en los sistemas de autenticación federada del propio servicio de salud (mediante certificados digitales del personal sanitario). De este modo, la consulta del conversor ICD y la ejecución de los módulos predictivos se realizan bajo un canal completamente cifrado, seguro y auditable.
 
 Finalmente, la viabilidad económica representa una de las mayores fortalezas de la propuesta. Al haberse construido íntegramente sobre ecosistemas de código abierto, el coste de adquisición de licencias de \textit{software} para la administración pública es nulo (0,00 €). El único coste recurrente derivaría del mantenimiento operativo y el alojamiento en la nube corporativa o en un servicio gestionado (como Neo4j AuraDB). Una instancia en la nube con capacidades computacionales intermedias, suficiente para soportar las consultas concurrentes de los facultativos de la región, supondría un coste operativo estimado de entre 40,00 € y 80,00 € mensuales, haciendo destacar el proyecto como una opcion altamente rentable, eficiente y viable para el soporte a la decisión clínica.
 
 \chapter{Conclusiones y trabajo futuro} 
 \section{Principales aportaciones}
 
-El presente Trabajo de Fin de Grado ha permitido abordar de manera integral el análisis relacional y predictivo de comorbilidades en pacientes diagnosticados con trastornos del espectro esquizofrénico. Mediante un enfoque interdisciplinar que combina la ciencia de datos, los sistemas NoSQL y el desarrollo de \textit{software}, se han consolidado hitos que aportan valor tanto al ámbito técnico como al clínico. A continuación, se detallan las principales aportaciones generadas en este proyecto:
+El presente Trabajo de Fin de Grado ha permitido abordar de manera integral el análisis relacional y predictivo de comorbilidades en pacientes diagnosticados con trastornos del espectro esquizofrénico. Mediante un enfoque interdisciplinar que combina la ciencia de datos, los sistemas NoSQL y el desarrollo de software, se han consolidado hitos que aportan valor tanto al ámbito técnico como al clínico. A continuación, se detallan las principales aportaciones generadas en este proyecto:
 
 \begin{itemize}
-    \item \textbf{Construcción de un recurso relacional estandarizado:} Se ha diseñado y unificado un conjunto de datos en formato tabular (CSV) que mapea de forma bidireccional los diagnósticos, descripciones clínicas en español (y con opcion en inglés) y equivalencias entre las codificaciones ICD-9 e ICD-10. Esta aportación resuelve un problema crítico de intercambio de información de forma segura en la documentación psiquiátrica actual, facilitando la traducción ágil de términos médicos libres a códigos normativos.
+    \item \textbf{Construcción de un recurso relacional estandarizado:} Se ha diseñado y unificado un conjunto de datos en formato tabular (CSV) que mapea de forma bidireccional los diagnósticos, descripciones clínicas en español y equivalencias entre las codificaciones ICD-9 e ICD-10. Esta aportación resuelve un problema crítico de intercambio de información de forma segura en la documentación psiquiátrica actual, que faltaba en el campo, facilitando la traducción ágil de términos médicos libres a códigos normativos. A la vez, se ha buscado una opción con la que obetner las descripciones clínicas en ingles
     
     \item \textbf{Modelado avanzado del entorno clínico mediante grafos:} La migración del paradigma tabular tradicional hacia una base de datos orientada a grafos en \textbf{Neo4j} representa una aportación metodológica clave. Este enfoque ha permitido estructurar las complejas redes de interconexión entre pacientes, sintomatologías y comorbilidades psiquiátricas, optimizando la eficiencia computacional en la exploración de caminos clínicos y vecindades diagnósticas.
     
-    \item \textbf{Evaluación y validación de arquitecturas de aprendizaje automático:} Se ha implementado y comparado un flujo experimental con diversos modelos predictivos. Entre las alternativas evaluadas, el algoritmo \textbf{|| COMPLETAR CON EL MODELO GANADOR, Ej: XGBoost / Random Forest / LLM fine-tuned ||} ha demostrado ser la solución más robusta para este escenario clínico, alcanzando un rendimiento destacado con un \textbf{|| COMPLETAR CON MÉTRICA DE RENDIMIENTO, Ej: F1-score del X\% o Precisión del X\% ||} en las fases de testeo.
+    \item \textbf{Evaluación y validación de arquitecturas de aprendizaje automático:} Se ha implementado y comparado un flujo experimental multicapa que contrasta clasificadores tradicionales frente a modelos de lenguaje profundo. En el escenario original sin balancear, el modelo \textbf{BETO (modalidad Combinada)} demostró el mayor potencial teórico de clasificación, alcanzando un \textbf{F1-Score de 0,6857} y una exactitud del \textbf{72,85\%}. Sin embargo, atendiendo a los requisitos no funcionales de latencia y viabilidad de despliegue local en la infraestructura de CPU del SACYL, el clasificador \textbf{LightGBM} entrenado sobre el espacio balanceado sintéticamente mediante un Autoencoder Variacional (\textbf{VAE}) se consolida como la solución final de soporte más robusta, registrando un \textbf{F1-Score de 0,4400} en la entrada de códigos y garantizando una inferencia ágil y libre de sesgos predictivos.
     
-    \item \textbf{Desarrollo de una herramienta de transferencia tecnológica:} Como elemento diferenciador y complementario, se ha diseñado y desplegado una aplicación web interactiva basada en \textbf{Streamlit}. Esta interfaz traduce los modelos abstractos y las consultas de grafos en una herramienta visual, intuitiva y accesible para los profesionales de la psiquiatría, acercando los resultados de la investigación a la práctica clínica real en la consulta.
+    \item \textbf{Desarrollo de una herramienta de transferencia tecnológica:} Como elemento diferenciador y complementario, se ha diseñado y desplegado una aplicación web interactiva basada en \textbf{Streamlit}. Esta interfaz traduce las conversiones de codigos y las consultas de grafos en una herramienta visual, intuitiva y accesible para los profesionales de la psiquiatría, acercando los resultados de la investigación a la práctica clínica real en la consulta.
 \end{itemize}
 
 
@@ -2536,15 +2574,15 @@ El futuro de la disciplina debe priorizar el desarrollo de modelos longitudinale
 A pesar de los resultados satisfactorios obtenidos en el desarrollo del proyecto, es fundamental adoptar una postura crítica y reconocer las restricciones intrínsecas asociadas tanto a los datos disponibles como a las metodologías tecnológicas aplicadas. La identificación de estas limitaciones es clave para interpretar correctamente el alcance del estudio:
 
 \begin{itemize}
-    \item \textbf{Restricción geográfica y representatividad de la muestra:} El \textit{dataset} analizado refleja la realidad clínica y los patrones de diagnóstico de una provincia concreta. Por tanto, las frecuencias observadas y los mapas de distribución geográfica podrían estar influenciados por dinámicas socioInformación del Paciente
-s locales o por los criterios de codificación específicos del personal médico de la región. Esto limita la generalización inmediata de los modelos predictivos a otros entornos hospitalarios nacionales o internacionales sin un proceso previo de reentrenamiento.
+    \item \textbf{Restricción geográfica y representatividad de la muestra:} El \textit{dataset} analizado refleja la realidad clínica y los patrones de diagnóstico casi exclusivamente de la provincia de León. Por tanto, las frecuencias observadas y los mapas de distribución geográfica podrían estar influenciados por dinámicas socios locales o por los criterios de codificación específicos del personal médico de la región. Esto limita la generalización inmediata de los modelos predictivos a otros entornos hospitalarios nacionales o internacionales sin un proceso previo de reentrenamiento.
     
-    \item \textbf{Desequilibrio severo de clases (\textit{Class Imbalance}):} En el ámbito de la salud mental, la prevalencia de ciertos trastornos es dispar. Durante el diseño del flujo predictivo ,especialmente en las fases iniciales focalizadas en la esquizofrenia (F20 y F20.89) y en la posterior expansión multiclase, el desequilibrio en la cantidad de registros por patología supuso un desafío técnico importante. Los algoritmos basados en árboles (XGBoost y Random Forest) y los modelos lingüísticos (BERT) tienden a verse penalizados por las clases minoritarias, requiriendo un esfuerzo extra de computación y ajuste de pesos, que no consigue combatir completamente el sesgo.
+    \item \textbf{Desequilibrio severo de clases:} En el ámbito de la salud mental, la prevalencia de ciertos trastornos es usual. Durante el diseño del flujo predictivo ,especialmente en las fases iniciales focalizadas en la esquizofrenia (F20 y F20.89) y en la posterior expansión multiclase, el desequilibrio en la cantidad de registros por patología supuso un desafío técnico importante. Los algoritmos basados en árboles (XGBoost y Random Forest) y los modelos lingüísticos (BERT) tienden a verse penalizados por las clases minoritarias, requiriendo un esfuerzo extra de computación y ajuste de pesos, que no consigue combatir completamente el sesgo.
     
     \item \textbf{Calidad y ruido en las descripciones textuales:} El entrenamiento de los modelos BERT para clasificar diagnósticos a partir de texto libre se enfrenta a la naturaleza caótica de la jerga médica. Las descripciones clínicas reales a menudo contienen abreviaturas no estandarizadas, errores tipográficos o expresiones ambiguas. Aunque el proceso de limpieza y el conversor ICD mitigaron este problema, el ruido remanente en el lenguaje clínico introduce una barrera natural en la precisión absoluta de los transformadores.
     
     \item \textbf{Carácter exploratorio del análisis topológico:} Las métricas de análisis de grafos en Neo4j, tales como las técnicas de centralidad (\textit{eigenvector}, \textit{degree}) y los algoritmos preliminares de detección de comunidades, se ejecutaron con un enfoque exploratorio. Debido a las limitaciones de cómputo de la infraestructura local y al uso de la versión \textit{Community} de la base de datos, no se profundizaron en dinámicas de grafos dinámicos o temporales, quedando estos estudios como una primera radiografía relacional del mapa de comorbilidades.
 \end{itemize}
+
 \section{Posibles mejoras futuras}
 
 A partir de las conclusiones obtenidas y las limitaciones identificadas en este trabajo, se abren diversas líneas de investigación y desarrollo tecnológico que permitirían expandir las capacidades del sistema y mejorar su precisión analítica. Las propuestas de trabajo futuro se estructuran en los siguientes vectores esenciales:
@@ -2552,9 +2590,11 @@ A partir de las conclusiones obtenidas y las limitaciones identificadas en este 
 \begin{itemize}
     \item \textbf{Evolución hacia arquitecturas de lenguaje médicas especializadas:} Aunque los modelos BERT estándar entrenados para clasificación multiclase han ofrecido un rendimiento sólido, una evolución natural consistiría en el \textit{fine-tuning} de Modelos de Lenguaje Grandes (LLMs) especializados en el dominio biomédico (tales como \textit{BioBERT} o \textit{ClinicalBERT}). Estas arquitecturas están preentrenadas con corpus de textos clínicos y farmacéuticos, lo que permitiría una comprensión semántica mucho más precisa de las abreviaturas, la jerga médica local y la sintomatología compleja de la esquizofrenia.
     
-    \item \textbf{Profundización en la minería de grafos y detección de comunidades:} El estudio topológico inicial realizado en Neo4j mediante métricas de centralidad sienta las bases para un análisis predictivo basado en topología. Como trabajo futuro, se propone explotar el algoritmo de detección de comunidades (\textit{Louvain} o \textit{Infomap}) para agrupar automáticamente a los pacientes según patrones de comorbilidad ocultos. Asimismo, se plantea la implementación de Redes Neuronales de Grafos (\textit{Graph Neural Networks}, GNNs) para combinar los \textit{embeddings} textuales de BERT con los \textit{embeddings} estructurales de la red, prediciendo así la aparición de futuras patologías asociadas.
+    \item \textbf{Profundización en la minería de grafos y detección de comunidades:} El estudio topológico inicial realizado en Neo4j mediante métricas de centralidad sienta las bases para un análisis predictivo basado en topología. Como trabajo futuro, se propone explotar el algoritmo de detección de comunidades por algoritmo de Louvain para agrupar automáticamente a los pacientes según patrones de comorbilidad ocultos. Asimismo, se plantea la implementación de Redes Neuronales de Grafos (\textit{Graph Neural Networks}, GNNs) para combinar los \textit{embeddings} textuales de BERT con los \textit{embeddings} estructurales de la red, prediciendo así la aparición de futuras patologías asociadas.
     
     \item \textbf{Escalado multi-provincial y análisis geo-epidemiológico avanzado:} Para superar la restricción geográfica actual, se plantea expandir el \textit{dataset} integrando los registros clínicos de las restantes provincias de la comunidad autónoma. Esto permitiría correlacionar los mapas de frecuencia de diagnósticos con variables socioeconómicas, climatológicas o de acceso a recursos sanitarios, transformando la herramienta actual en un sistema de vigilancia epidemiológica predictivo de gran utilidad para la gestión de la salud pública, no solo de León, sino de toda la región.
+    
+    \item \textbf{Transición y escalabilidad a la normativa CIE-11:} Ampliar el módulo conversor y el sistema predictivo para dar soporte a la undécima revisión de la OMS. Esto implicaría aplicar un \textit{fine-tuning} adicional a los modelos de lenguaje con este nuevo corpus terminológico, y extender la herramienta web para habilitar una pasarela de conversión cruzada entre CIE-9, CIE-10 y CIE-11, garantizando así la interoperabilidad y vigencia tecnológica de la aplicación a largo plazo.
     
     \item \textbf{Integración modular en sistemas de historia clínica electrónica (HCE):} Finalmente, el objetivo definitivo de la aplicación web desarrollada es su despliegue real. Una línea de desarrollo clave será transformar la interfaz actual en un módulo integrable (mediante APIs estándar de interoperabilidad médica como HL7 o FHIR) dentro de los sistemas informáticos de salud utilizados por los facultativos (por ejemplo, el sistema MEDORA en Castilla y León). Esto permitiría al psiquiatra consultar el conversor ICD y obtener las predicciones probabilísticas directamente durante la consulta, automatizando el flujo de trabajo clínico.
 \end{itemize}
