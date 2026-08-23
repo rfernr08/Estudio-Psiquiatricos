@@ -3,45 +3,45 @@
     "Original": {
         "codigos": {
         "modelo": "dccuchile/bert-base-spanish-wwm-cased",
-        "dataset": "codigos",
-        "learning_rate": 2e-05,
-        "batch_size": 16,
-        "epochs": 5,
-        "weight_decay": 0.01,
-        "warmup_ratio": 0.1,
-        "accuracy": 0.7775,
-        "f1": 0.6691449814126395,
-        "precision": 0.6164383561643836,
-        "recall": 0.7317073170731707,
-        "seed": 2308274372
+  "dataset": "codigos",
+  "learning_rate": 2e-05,
+  "batch_size": 16,
+  "epochs": 5,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "accuracy": 0.7019867549668874,
+  "f1": 0.6614797396992269,
+  "precision": 0.6419904243836649,
+  "recall": 0.7019867549668874,
+  "seed": 122950364
         },
         "combinado": {
         "modelo": "dccuchile/bert-base-spanish-wwm-cased",
-        "dataset": "combinado",
-        "learning_rate": 3e-05,
-        "batch_size": 16,
-        "epochs": 4,
-        "weight_decay": 0.001,
-        "warmup_ratio": 0.1,
-        "accuracy": 0.795,
-        "f1": 0.7028985507246377,
-        "precision": 0.6339869281045751,
-        "recall": 0.7886178861788617,
-        "seed": 3373704800
+  "dataset": "combinado",
+  "learning_rate": 3e-05,
+  "batch_size": 16,
+  "epochs": 4,
+  "weight_decay": 0.001,
+  "warmup_ratio": 0.1,
+  "accuracy": 0.7284768211920529,
+  "f1": 0.6856524153223994,
+  "precision": 0.6669746906925406,
+  "recall": 0.7284768211920529,
+  "seed": 1709978056
         },
         "descripciones": {
-        "modelo": "dccuchile/bert-base-spanish-wwm-uncased",
-        "dataset": "descripciones",
-        "learning_rate": 5e-05,
-        "batch_size": 32,
-        "epochs": 3,
-        "weight_decay": 0.01,
-        "warmup_ratio": 0.1,
-        "accuracy": 0.8225,
-        "f1": 0.6899563318777293,
-        "precision": 0.7314814814814815,
-        "recall": 0.6528925619834711,
-        "seed": 2518300740
+        "modelo": "dccuchile/bert-base-spanish-wwm-cased",
+  "dataset": "descripciones",
+  "learning_rate": 3e-05,
+  "batch_size": 16,
+  "epochs": 4,
+  "weight_decay": 0.001,
+  "warmup_ratio": 0.0,
+  "accuracy": 0.6931567328918322,
+  "f1": 0.6754197284361475,
+  "precision": 0.6628846871634088,
+  "recall": 0.6931567328918322,
+  "seed": 193550488
         }
     },
     "Undersampling": {
@@ -90,46 +90,64 @@
     },
     "Undersampling + VAE": {
         "codigos": {
-        "modelo": "dccuchile/bert-base-spanish-wwm-cased",
+        "modelo": "MLP_Classifier",
   "dataset": "codigos",
+  "input_dim": 768,
+  "hidden_dims": [
+    256,
+    128,
+    64
+  ],
+  "dropout_rate": 0.2,
   "learning_rate": 2e-05,
   "batch_size": 16,
   "epochs": 5,
   "weight_decay": 0.01,
-  "warmup_ratio": 0.1,
-  "accuracy": 0.7019867549668874,
-  "f1": 0.6614797396992269,
-  "precision": 0.6419904243836649,
-  "recall": 0.7019867549668874,
-  "seed": 122950364
+  "accuracy": 0.3392857142857143,
+  "f1": 0.3186909733784734,
+  "precision": 0.3585563393656836,
+  "recall": 0.3392857142857143,
+  "seed": 2862320720
         },
         "combinado": {
-        "modelo": "dccuchile/bert-base-spanish-wwm-cased",
+        "modelo": "MLP_Classifier",
   "dataset": "combinado",
+  "input_dim": 768,
+  "hidden_dims": [
+    256,
+    128,
+    64
+  ],
+  "dropout_rate": 0.2,
   "learning_rate": 3e-05,
   "batch_size": 16,
   "epochs": 4,
   "weight_decay": 0.001,
-  "warmup_ratio": 0.1,
-  "accuracy": 0.7284768211920529,
-  "f1": 0.6856524153223994,
-  "precision": 0.6669746906925406,
-  "recall": 0.7284768211920529,
-  "seed": 1709978056
+  "accuracy": 0.3705357142857143,
+  "f1": 0.3339575374091123,
+  "precision": 0.3194374293969413,
+  "recall": 0.3705357142857143,
+  "seed": 4123330340
         },
         "descripciones": {
-        "modelo": "dccuchile/bert-base-spanish-wwm-cased",
+        "modelo": "MLP_Classifier",
   "dataset": "descripciones",
-  "learning_rate": 3e-05,
+  "input_dim": 768,
+  "hidden_dims": [
+    256,
+    128,
+    64
+  ],
+  "dropout_rate": 0.2,
+  "learning_rate": 2e-05,
   "batch_size": 16,
   "epochs": 4,
   "weight_decay": 0.001,
-  "warmup_ratio": 0.0,
-  "accuracy": 0.6931567328918322,
-  "f1": 0.6754197284361475,
-  "precision": 0.6628846871634088,
-  "recall": 0.6931567328918322,
-  "seed": 193550488
+  "accuracy": 0.29464285714285715,
+  "f1": 0.3074445783200323,
+  "precision": 0.4949971454445232,
+  "recall": 0.29464285714285715,
+  "seed": 1261270812
         }
     }
 }

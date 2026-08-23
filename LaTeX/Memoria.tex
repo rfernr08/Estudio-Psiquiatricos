@@ -52,6 +52,7 @@
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{pdflscape}
+\usepackage{tcolorbox}
 \emergencystretch=3em
 
 % Opciones del paquete caption para los pies de imágenes y tablas:
@@ -1021,6 +1022,10 @@ Con el propósito de evaluar empíricamente el impacto del desequilibrio de clas
     \item \textbf{Dataset 3: Enfoque Híbrido Avanzado (RUS + \textit{Variational Autoencoders - VAE}):} Representa la propuesta metodológica más compleja del proyecto. A partir del dataset submuestreado, se diseñó e implementó una red neuronal generativa de tipo Autoencoder Variacional (VAE). Este modelo probabilístico aprende la distribución del espacio latente de las características clínicas de las clases minoritarias (como \texttt{F23}, \texttt{F60.1} o \texttt{F21}) para posteriormente generar vectores de comorbilidades sintéticos pero clínicamente plausibles (\textit{Data Augmentation}). 
 \end{enumerate}
 
+\begin{tcolorbox}[colback=gray!5,colframe=gray!60,title=\textbf{Nota Metodológica: Extracción de Embeddings para VAE}]
+Para garantizar la máxima consistencia semántica en la generación de datos sintéticos, la expansióm del dataset clínico reducido con entradas sinteticas mediante el Autoencoder Variacional (VAE) se realizó utilizando el modelo lingüístico preentrenado \texttt{dccuchile/bert-base-spanish-wwm-cased} (BETO). Este modelo actuó como el codificador de referencia para procesar tanto las descripciones clínicas de texto libre como las agrupaciones de códigos normalizados, proyectando el conocimiento de Castilla y León en el espacio geométrico de 768 dimensiones sobre el cual se entrenó la red probabilística generativa.
+\end{tcolorbox}
+
 La comparación sistemática del rendimiento de los modelos sobre estos tres escenarios compositivos permite determinar si el uso de arquitecturas generativas profundas (VAE) penaliza o beneficia la frontera de decisión del clasificador multiclase frente a las aproximaciones estadísticas tradicionales.
 \section{Mapas y Frecuencias Geoespaciales}
 
@@ -1184,12 +1189,17 @@ El segundo bloque metodológico cambia el paradigma tabular por el Procesamiento
 
 Con el propósito de hallar la arquitectura óptima para la clasificación del espectro esquizofrénico, se ha planteado un diseño experimental que cubre diez algoritmos diferenciados. Esta selección no es arbitraria; busca comparar la eficiencia de los modelos basados en particionamiento del espacio (árboles) frente a la potencia de los modelos basados en atención contextual (BERT).
 
+\subsubsection{Tratamiento del dataset sinteticos mediante Perceptrón Multicapa (MLP)}
+Un desafío de diseño crítico surgido durante la fase experimental fue el procesamiento de la variante de datos balanceada sintéticamente mediante el Autoencoder Variacional (VAE), ya que se representaban mediante un espacio latente continuo de 768 dimensiones. El pipeline de clasificación semántica estándar diseñado para las arquitecturas de la familia BERT exige una secuencia textual cruda en lenguaje natural, la cual es procesada dinámicamente por el tokenizador del modelo para generar los índices de atención correspondientes.
+
+Esto nos llevo a que, para evaluar el potencial semántico en la variante VAE, se diseñó un pipeline de clasificación alternativo desacoplado de la capa de atención de BERT. En su lugar, se implementó un clasificador basado en una red neuronal feed-forward de tipo \textbf{Perceptrón Multicapa} (\textit{MLP Classifier}). Este modelo se encarga de ingestar directamente los vectores de embeddings densos de 768 dimensiones generados y mapear sus características a través de una arquitectura profunda de tres capas ocultas de tamaño decreciente ($[4-6]$) con regularización mediante \textit{Dropout} al 20\%, optimizando el gradiente de forma óptima para la inferencia multiclase.
+
 \section{Búsqueda de hiperparámetros y optimización de modelos}
 \label{sec:busqueda_hiperparametros}
 
 El rendimiento final de los algoritmos de aprendizaje automático no solo depende de la calidad de los datos de entrada, sino también del ajuste fino de sus hiperparámetros. Los hiperparámetros son las variables de configuración estructural del modelo que no se aprenden de forma automática durante el proceso de entrenamiento, sino que deben ser predefinidas por el diseñador del sistema antes de iniciar el cómputo.
 
-Para identificar la configuración óptima de cada uno de los diez modelos evaluados, se implementó un flujo de optimización basado principalmente en la técnica de \textbf{Búsqueda en Rejilla (\textit{Grid Search})}, apoyada de forma preliminar por la estrategia de \textbf{Búsqueda Aleatoria (\textit{Randomized Search})} en las fases iniciales de exploración de los modelos tabulares.
+Para identificar la configuración óptima de cada uno de los modelos evaluados, se implementó un flujo de optimización basado principalmente en la técnica de \textbf{Búsqueda en Rejilla (\textit{Grid Search})}, apoyada de forma preliminar por la estrategia de \textbf{Búsqueda Aleatoria (\textit{Randomized Search})} en las fases iniciales de exploración de los modelos tabulares o en casos particulares.
 
 \subsection{Impacto y justificación metodológica de Grid Search}
 
@@ -1206,7 +1216,7 @@ La adopción de \textit{Grid Search} (ejecutada a través del módulo \texttt{Gr
 El diseño de la rejilla de optimización se estructuró de forma diferenciada atendiendo a la naturaleza tecnológica y conceptual de los dos bloques de modelos:
 
 \subsubsection{Modelos tabulares y algoritmos de ensamble}
-Para los modelos basados en particionamiento del espacio (árboles de decisión y algoritmos de \textit{boosting}), la calibración se orientó al control de la complejidad estructural de los estimadores y a la velocidad de convergencia de las funciones de pérdida. Las variables y rangos evaluados se resumen en la Tabla~\ref{tab:hiperparametros_ml}.
+Para los modelos tradicionales basados en particionamiento del espacio (árboles de decisión y algoritmos de \textit{boosting}), la calibración se orientó al control de la complejidad estructural de los estimadores y a la velocidad de convergencia de las funciones de pérdida. Las variables y rangos evaluados se resumen en la Tabla~\ref{tab:hiperparametros_ml}.
 
 \begin{table}[htbp]
 \centering
@@ -1221,7 +1231,9 @@ Para los modelos basados en particionamiento del espacio (árboles de decisión 
         Algoritmos de Gradiente & \texttt{learning\_rate} ($\eta$) & $[0.01, 0.05, 0.1, 0.2]$  \\
         \textit{(XGBoost, LightGBM,} & \texttt{max\_depth} & $[3, 6, 8, 10]$  \\
         \textit{CatBoost)} & \texttt{subsample} & $[0.7, 0.8, 1.0]$ \\
-        & \texttt{reg\_lambda} ($\lambda$) & $[0, 1, 10]$ \\ \hline
+        & \texttt{colsample\_bytree} & $[0.7, 0.8, 1.0]$ \\ 
+        & \texttt{n\_estimators} & $[50, 100, 200, 500]$ \\ 
+        & \texttt{num\_leaves} & $[15, 31, 63]$ \\ \hline
     \end{tabular}
     \caption{Espacio de búsqueda de hiperparámetros para el ecosistema de Machine Learning tradicional.}
     \label{tab:hiperparametros_ml}
@@ -1239,16 +1251,185 @@ Para el ajuste fino (\textit{fine-tuning}) de las arquitecturas profundas (\text
     \item \textbf{Regularización y Estabilización:} A diferencia de los modelos tabulares, se incorporó el decaimiento de pesos (\textit{weight decay})  y un ratio de calentamiento (\textit{warmup ratio}) de $0.1$ para suavizar la actualización de los gradientes en las iteraciones iniciales mediante el optimizador \texttt{AdamW}.
 \end{itemize}
 
-En resumen, los rangos técnicos seleccionados para la optimización de los modelos BERT fueron los siguientes:
-\begin{itemize}
-    \item \textbf{Tasa de aprendizaje (\textit{Learning Rate}):} $[1\cdot10^{-5}, 2\cdot10^{-5}, 3\cdot10^{-5}, 5\cdot10^{-5}]$.
-    \item \textbf{Tamaño de lote (\textit{Batch Size}):} $[16, 32]$ muestras.
-    \item \textbf{Épocas:} $[3, 4, 5]$ ciclos completos sobre el conjunto de entrenamiento.
-    \item \textbf{Decaimiento de pesos (\textit{Weight Decay}):} $[0.0, 0.001, 0.01]$.
-    \item \textbf{Ratio de calentamiento (\textit{Warmup Ratio}):} $[0.0, 0.1]$.
-\end{itemize}
+En resumen, los rangos técnicos seleccionados para la optimización y el ajuste fino de los modelos BERT se detallan en la Tabla \ref{tab:parametros_bert}:
 
-\section{Propuesta final}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{5.5cm}|p{8.5cm}|}
+\hline
+\rowcolor[RGB]{239,239,239} 
+\textbf{Hiperparámetro} & \textbf{Espacio de Búsqueda (Valores explorados)} \\ \hline
+\textbf{Tasa de aprendizaje} (\textit{Learning Rate}) & $1 \cdot 10^{-5}$, $2 \cdot 10^{-5}$, $3 \cdot 10^{-5}$, $5 \cdot 10^{-5}$ \\ \hline
+\textbf{Tamaño de lote} (\textit{Batch Size}) & 16, 32 (muestras) \\ \hline
+\textbf{Épocas} & 3, 4, 5 (ciclos completos sobre el conjunto de entrenamiento) \\ \hline
+\textbf{Decaimiento de pesos} (\textit{Weight Decay}) & 0.0, 0.001, 0.01 \\ \hline
+\textbf{Ratio de calentamiento} (\textit{Warmup Ratio}) & 0.0, 0.1 \\ \hline
+\end{tabular}
+\caption{Espacio de búsqueda de hiperparámetros para la optimización de modelos BERT.}
+\label{tab:parametros_bert}
+\end{table}
+
+
+\subsubsection{Reproducibilidad Experimental}
+
+Para asegurar la completa replicabilidad científica de las métricas, se ha ido recopilando las semillas determinista de control para la ejecución de la validación cruzada estratificada y el entrenamiento de los modelos para todos los casos probados, el particionamiento de los subconjuntos del dataset y la inyección de comorbilidades sintéticas por el autoencoder variacional (VAE). Esta en ocasiones era generada de forma aleatoria o era asignada una usual como 42.
+
+\subsubsection{Control del Entorno} 
+
+El entrenamiento de los modelos tradicionales se priorizó en la CPU debido a su óptima eficiencia en memoria, mientras que el ajuste de los Transformers se derivó a la GPU de manera nativa mediante controladores CUDA utilizando una precisión mixta de punto flotante de 16 bits (FP16), reduciendo drásticamente la latencia y previniendo colapsos por falta de memoria RAM sin degradar la precisión predictiva del sistema. Esto llevo a optimizar los tiempos de ejecucion y entrenamiento de todos los modelos abordados.
+
+\section{Propuesta final de experimentación}
+
+Una vez caracterizados los espacios de búsqueda y definida la metodología de validación estratificada, se consolidan en este apartado las configuraciones de entrenamiento definitivas y los hiperparámetros óptimos seleccionados para cada arquitectura predictiva. Estas configuraciones representan los puntos de convergencia matemática identificados durante el proceso de optimización mediante \textit{Grid Search} sobre el conjunto de validación, garantizando el equilibrio necesario entre la capacidad de generalización del sistema y la prevención del sobreajuste (\textit{overfitting}).
+
+\subsection{Configuración Definitiva del Ecosistema Tabular (Machine Learning)}
+\begin{comment}
+ \cite{memoria}. En el caso del algoritmo \textbf{XGBoost}, las variables de optimización clave se centraron en controlar la profundidad máxima de los árboles secuenciales (\textit{max\_depth}), la tasa de aprendizaje ($\eta$), la penalización por complejidad del árbol ($\gamma$) y las fracciones de muestreo tanto de filas (\textit{subsample}) como de columnas (\textit{colsample\_bytree}) \cite{memoria}. En el caso de \textbf{LightGBM}, se introduce el control del número máximo de hojas en un solo árbol (\textit{num\_leaves}) debido a su estrategia de división asimétrica (\textit{leaf-wise}) \cite{memoria}.
+
+Ambos clasificadores tradicionales comparten variables fijas de extracción de texto para homogenizar el vector de entrada clínica: un rango de n-gramas de palabras de 1 a 2 (\textit{ngram\_range} = [1, 4]) y un límite de características máximas de 5000 términos (\textit{max\_features} = 5000) \cite{memoria}.
+\end{comment}
+
+Dentro del ambito de aprendizaje tradicional, han destacado completamente los clasificados basado en ensambles de árboles de decisión, los cuales se parametrizan de forma independiente, tendiendo que respetar sus respectivas arquitecturas de crecimiento de ramas. Por tanto este apartado esta dividido en 2 trozos segun el modelo usado.
+
+\subsubsection{Parámetros Óptimos de XGBoost}
+La Tabla~\ref{tab:parametros_xgboost} detalla los hiperparámetros ganadores para el algoritmo XGBoost, el cual demostró una hegemonía absoluta al entrenarse con el conjunto de datos original y con la entrada combinada del escenario de submuestreo.
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Hiperparámetro} & \textbf{\begin{tabular}[c]{@{}c@{}}Original\\ (Códigos)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Original\\ (Descripciones)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Original\\ (Combinado)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Undersampling\\ (Combinado)\end{tabular}} \\ \hline
+\textbf{n\_estimators} & 200 & 200 & 300 & 200 \\ \hline
+\textbf{max\_depth} & 5 & 5 & 7 & 5 \\ \hline
+\textbf{learning\_rate ($\eta$)} & 0,10 & 0,10 & 0,05 & 0,05 \\ \hline
+\textbf{subsample} & 0,90 & 0,90 & 0,70 & 0,90 \\ \hline
+\textbf{colsample\_bytree} & 0,90 & 0,90 & 1,00 & 0,70 \\ \hline
+\textbf{gamma ($\gamma$)} & 0,00 & 0,00 & 0,10 & 0,00 \\ \hline
+\textbf{Semilla (\textit{seed})} & 1666990968 & 1932038264 & 3096334320 & 3259992144 \\ \hline
+\end{tabular}
+}%
+\caption{Configuración óptima de hiperparámetros para el algoritmo XGBoost.}
+\label{tab:parametros_xgboost}
+\end{table}
+
+\subsubsection{Parámetros Óptimos de LightGBM}
+La Tabla~\ref{tab:parametros_lightgbm} recoge las especificaciones óptimas para LightGBM, algoritmo que destacó por su adaptabilidad frente al escenario balanceado sintéticamente (VAE) y en las variables aisladas del submuestreo.
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Hiperparámetro} & \textbf{\begin{tabular}[c]{@{}c@{}}RUS\\ (Códigos)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}RUS\\ (Descripciones)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}VAE\\ (Códigos)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}VAE\\ (Descripciones)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}VAE\\ (Combinado)\end{tabular}} \\ \hline
+\textbf{n\_estimators} & 100 & 100 & 300 & 200 & 300 \\ \hline
+\textbf{max\_depth} & 6 & 3 & 7 & 5 & 6 \\ \hline
+\textbf{num\_leaves} & 31 & 15 & 63 & 31 & 31 \\ \hline
+\textbf{learning\_rate} & 0,05 & 0,10 & 0,05 & 0,05 & 0,05 \\ \hline
+\textbf{subsample} & 0,80 & 0,80 & 0,80 & 0,80 & 0,80 \\ \hline
+\textbf{colsample\_bytree} & 1,00 & 1,00 & 0,90 & 0,80 & 0,90 \\ \hline
+\textbf{Semilla (\textit{seed})} & 3670554632 & 124812300 & 42 & 42 & 42 \\ \hline
+\end{tabular}
+}%
+\caption{Configuración óptima de hiperparámetros para el algoritmo LightGBM.}
+\label{tab:parametros_lightgbm}
+\end{table}
+
+\subsection{Ajuste Fino (Fine-Tuning) del Ecosistema Semántico (Transformers)}
+
+El entrenamiento de las arquitecturas de aprendizaje profundo basadas en la red neuronal de atención bidireccional se unifica bajo un pipeline común de hiperparámetros debido a que todas las variantes de BERT evaluadas comparten la misma naturaleza estructural de optimización, por el cual este apartado se dividira segun las variantes del dataset. 
+\begin{comment}
+Para prevenir el olvido catastrófico (\textit{catastrophic forgetting}) y estabilizar los gradientes multidimensionales, el ajuste fino de la capa de clasificación se limitó a tasas de aprendizaje sumamente bajas, controladas por el optimizador de gradiente AdamW con decaimiento de pesos (\textit{weight decay}) y un ratio de calentamiento lineal (\textit{warmup ratio}) del 10\% para suavizar el arranque del entrenamiento en las iteraciones iniciales.
+\end{comment}
+
+\subsubsection{Entrenamiento en el dataset desbalanceado}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Parámetro de Entrenamiento} & \textbf{Códigos} & \textbf{Descripciones} & \textbf{Combinado} \\ \hline
+\textbf{Modelo base} & \texttt{BETO cased} & \texttt{BETO cased} & \texttt{BETO cased} \\ \hline
+\textbf{Tasa de Aprendizaje ($LR$)} & $2 \cdot 10^{-5}$ & $3 \cdot 10^{-5}$ & $3 \cdot 10^{-5}$ \\ \hline
+\textbf{Tamaño de Lote (\textit{Batch Size})} & 16 muestras & 16 muestras & 16 muestras \\ \hline
+\textbf{Ciclos de Entrenamiento (\textit{Epochs})} & 5 & 4 & 4 \\ \hline
+\textbf{Decaimiento de Pesos (\textit{Weight Decay})} & 0,01 & 0,001 & 0,001 \\ \hline
+\textbf{Ratio de Calentamiento (\textit{Warmup Ratio})} & 0,1 & 0,0 & 0,1 \\ \hline
+\textbf{Semilla determinista (\textit{Seed})} & 122950364 & 193550488 & 1709978056 \\ \hline
+\end{tabular}
+}%
+\caption{Hiperparámetros óptimos de entrenamiento para los modelos Transformers en el escenario Original.}
+\label{tab:parametros_deep_original}
+\end{table}
+
+\subsubsection{Entrenamiento en el dataset reducido}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Parámetro de Entrenamiento} & \textbf{Códigos} & \textbf{Descripciones} & \textbf{Combinado} \\ \hline
+\textbf{Modelo base} & \texttt{BETO uncased} & \texttt{mBERT cased} & \texttt{BETO cased} \\ \hline
+\textbf{Tasa de Aprendizaje ($LR$)} & $2 \cdot 10^{-5}$ & $3 \cdot 10^{-5}$ & $3 \cdot 10^{-5}$ \\ \hline
+\textbf{Tamaño de Lote (\textit{Batch Size})} & 32 muestras & 16 muestras & 16 muestras \\ \hline
+\textbf{Ciclos de Entrenamiento (\textit{Epochs})} & 7 & 4 & 4 \\ \hline
+\textbf{Decaimiento de Pesos (\textit{Weight Decay})} & 0,01 & 0,01 & 0,001 \\ \hline
+\textbf{Ratio de Calentamiento (\textit{Warmup Ratio})} & 0,1 & 0,0 & 0,0 \\ \hline
+\textbf{Semilla determinista (\textit{Seed})} & 2958780100 & 2136009712 & 2444050356 \\ \hline
+\end{tabular}
+}%
+\caption{Hiperparámetros óptimos de entrenamiento para los modelos Transformers en el escenario con submuestreo (RUS).}
+\label{tab:parametros_deep_rus}
+\end{table}
+
+\subsubsection{Entrenamiento en el dataset sintetico}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Parámetro de Entrenamiento} & \textbf{Códigos} & \textbf{Descripciones} & \textbf{Combinado} \\ \hline
+\textbf{Modelo base} & \texttt{MLP Classifier} & \texttt{MLP Classifier} & \texttt{MLP Classifier} \\ \hline
+\textbf{Dimensión de Entrada (\textit{Input Dim})} & 768 & 768 & 768 \\ \hline
+\textbf{Capas Ocultas (\textit{Hidden Dims})} & [5-7] & [5-7] & [5-7] \\ \hline
+\textbf{Ratio de Abandono (\textit{Dropout Rate})} & 0,2 & 0,2 & 0,2 \\ \hline
+\textbf{Tasa de Aprendizaje ($LR$)} & $2 \cdot 10^{-5}$ & $2 \cdot 10^{-5}$ & $3 \cdot 10^{-5}$ \\ \hline
+\textbf{Tamaño de Lote (\textit{Batch Size})} & 16 muestras & 16 muestras & 16 muestras \\ \hline
+\textbf{Ciclos de Entrenamiento (\textit{Epochs})} & 5 & 4 & 4 \\ \hline
+\textbf{Decaimiento de Pesos (\textit{Weight Decay})} & 0,01 & 0,001 & 0,001 \\ \hline
+\textbf{Semilla determinista (\textit{Seed})} & 2862320720 & 1261270812 & 4123330340 \\ \hline
+\end{tabular}
+}%
+\caption{Hiperparámetros de entrenamiento del clasificador MLP en el escenario expandido con VAE.}
+\label{tab:parametros_deep_vae}
+\end{table}
+
+\begin{comment}
 Tras el análisis exhaustivo de los diferentes paradigmas tecnológicos y los resultados obtenidos en las fases preliminares de experimentación, se define la \textbf{Propuesta Final} de este sistema de soporte a la decisión clínica. Esta propuesta no se limita a la selección de un único algoritmo, sino que se articula como una arquitectura híbrida que integra la potencia predictiva del aprendizaje automático, la riqueza estructural de los grafos de conocimiento y la interoperabilidad semántica de los conversores de códigos.
 
 La arquitectura propuesta se fundamenta en los siguientes tres pilares técnicos:
@@ -1259,13 +1440,7 @@ La arquitectura propuesta se fundamenta en los siguientes tres pilares técnicos
     \item \textbf{Motor de Interoperabilidad Semántica (Conversor ICD):} Se propone la integración nativa de un motor de traducción que actúe como la puerta de enlace (\textit{gateway}) de la información. Esto garantiza que la propuesta final sea agnóstica al sistema de codificación del historial original (ICD-9 o ICD-10) y que pueda transformar texto libre en códigos estandarizados, permitiendo una ingesta de datos limpia hacia los clasificadores y una salida bilingüe orientada a la investigación internacional.
 \end{enumerate}
 En conclusión, la propuesta metodológica definitiva de este trabajo consiste en un \textbf{Sistema de Soporte Híbrido} que orquesta estos tres componentes bajo una interfaz web unificada. El flujo de trabajo propuesto comienza con la normalización y conversión de los diagnósticos, continúa con la clasificación del espectro esquizofrénico mediante árboles de decisión optimizados y finaliza con la validación visual de la trayectoria del paciente a través del análisis de comunidades en el grafo de conocimiento. Esta sinergia tecnológica permite transformar un listado plano de registros en un marco de decisión clínica estructurado, transparente y funcional. La arquitectura resultante se puede ver dibujada en la figura \ref{fig:diagrama_arquitectura}
-
-\begin{figure}
-    \centering
-    \makebox[\textwidth]{\includegraphics[width=1.0\textwidth]{imagenes/Diagrama_Arquitectura.png}}
-    \caption{Arquitectura final propuesta para el Sistema de Soporte a la Decisión Clínica, integrando el motor predictivo basado en ensambles.}
-    \label{fig:diagrama_arquitectura}
-\end{figure}
+\end{comment}
 
 \section{Métricas empleadas y su justificación}
 
@@ -1419,7 +1594,6 @@ Las proximas tablas \ref{tab:comparativa_nlp_metricas_original}, \ref{tab:compar
 \label{tab:comparativa_nlp_combinado}
 \end{table}
 \end{comment}
-
 
 
 \begin{table}[htbp]
@@ -1822,6 +1996,31 @@ Este dataset universal nos da 2 aplicacions muy importantes:
 \end{enumerate}
 
 \chapter{Aplicación desarrollada}
+
+\section{Ecosistema Tecnológico Integrado y Flujo de Datos}
+Para comprender el alcance práctico de esta investigación y la base en la que se sustenta la aplicación web, es preciso analizar cómo interactúan y se retroalimentan las múltiples tecnologías evaluadas a lo largo del proyecto. En lugar de concebir el resultado como un sistema de producción monolítico y cerrado, este trabajo se consolida como un \textbf{ecosistema experimental interconectado}. En él, cada herramienta de software y modelo matemático asume un rol específico para transformar un registro clínico plano en una estructura de conocimiento interpretable.
+
+La Figura \ref{fig:sinergia_tecnologica} ilustra este mapa de sinergia tecnológica, estructurado en cuatro niveles de abstracción que guían el recorrido del dato clínico desde su ingesta hasta su explotación visual:
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.0\textwidth]{imagenes/Diagrama_Arquitectura.png}}
+    \caption{Mapa de sinergia tecnológica y flujo de información del proyecto.}
+    \label{fig:sinergia_tecnologica}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{Capa de Datos y Persistencia:} Constituye los cimientos del estudio. Aquí coexisten los ficheros estructurados (el \textit{dataset} original de 3134 registros de Castilla y León, junto a sus variantes, el recurso unificado de traducción semántica de 108.054 correspondencias ICD) junto con la base de datos relacional \textbf{Neo4j} y el almacén físico de modelos entrenado.
+    
+    \item \textbf{Capa de Inteligencia Artifical e Inferencia:} Es el núcleo predictivo del flujo. Representa la fase experimental donde las técnicas de balanceo sintético (\textbf{VAE}) alimentan los clasificadores de aprendizaje automático tradicional (como \textbf{LightGBM}, \textbf{XGBoost} o \textbf{RandomForest}) y donde se evalúa el potencial semántico de los modelos basados en \textit{Transformers} (como \textbf{BETO} o \textbf{roBERTa}).
+    \
+    \item \textbf{Capa de Lógica de Negocio y Entorno (Backend):} Actúa como el motor del ecosistema, programado íntegramente en \textbf{Python}. Este nivel gestiona de manera determinista las dependencias de bajo nivel mediante entornos aislados en \textbf{Mamba}, canaliza el \textit{pipeline} de limpieza y preprocesamiento de variables, y orquesta las consultas en lenguaje \textbf{Cypher} hacia el servidor de grafos de Neo4j.
+    
+    \item \textbf{Capa de Presentación e Interacción (Frontend):} Representado por la interfaz ligera construida en \textbf{Streamlit}. Este nivel nos permite unificar y dar representacion a 3 de los hitos mas importantes de este trabajo en forma de un conversor de códigos ICD individual y por lotes (interoperabilidad semántica), la renderización de la conectividad de comorbilidades (analítica de grafos con Pyvis) y la representación de la dominancia patológica provincial (visualización cartográfica interactiva con Folium).
+\end{enumerate}
+
+Este enfoque modular y desacoplado garantiza que, aunque se trate de tecnologías con naturalezas de diseño radicalmente distintas (bases de datos NoSQL, clasificadores tabulares y modelos de lenguaje profundos), todas ellas cooperen de forma armónica para aportar valor al campo de estudio clinico.
+
 \section{Objetivo y Visualización}
 
 El módulo de visualización de la aplicación se ha diseñado bajo el principio de simplicidad y eficiencia en la interfaz de usuario (\textit{UI/UX}). El objetivo principal es evitar la sobrecarga cognitiva del personal sanitario, transformando los resultados numéricos de los modelos predictivos y las consultas complejas a la base de datos de grafos en representaciones visuales intuitivas y directamente interpretables durante la práctica clínica.
@@ -1871,8 +2070,6 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \end{table}
 
 
-
-\newpage
 \subsection{Requisitos No Funcionales}
 \begin{table}[htbp]
 \centering
@@ -1887,13 +2084,13 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \textbf{RNF-04} & \textbf{Privacidad y seguridad por diseño (RGPD):} La aplicación operará estrictamente sobre datos anonimizados sin persistir información personal identificativa (como IP, nombres, etc.) de forma local o en bases de datos temporales. \\
 \textbf{RNF-05} & \textbf{Tolerancia a fallos de red:} Si la API externa de la NLM no está disponible o presenta un retardo superior a 5 segundos, el sistema debe capturar el error sin colapsar la interfaz, notificando al clínico y deshabilitando temporalmente dicha opción de traducción. \\
 \textbf{RNF-06} & \textbf{Portabilidad y despliegue modular:} El backend debe estar desarrollado de forma modular en Python, permitiendo su encapsulamiento y despliegue inmediato en la intranet hospitalaria mediante contenedores Docker. \\
-\textbf{RNF-07} & \textbf{Interoperabilidad y Portabilidad:} El backend debe basarse en formatos abiertos y estándar (CSV, GeoJSON, ejecutable de Python). \\
+\textbf{RNF-07} & \textbf{Interoperabilidad y Portabilidad:} El backend debe basarse en formatos abiertos y estándar (CSV, GeoJSON, ejecutable de Python). \\ \hline
 \end{tabular}
 \caption{Catálogo de Requisitos No Funcionales del sistema.}
 \label{tab:requisitos_no_funcionales}
 \end{table}
 
-\newpage
+
 \subsection{Historias de Usuario}
 
 \begin{table}[htbp]
@@ -1905,13 +2102,15 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \rowcolor[RGB]{239,239,239} 
 \textbf{Código: HU-01} & \textbf{Título: Conversión e Interoperabilidad CIE-9 / CIE-10} \\ \hline
 \textbf{Rol del usuario} & Personal Administrativo / Clínico. \\ \hline
-\textbf{Descripción} & Como usuario del sistema, quiero consultar la equivalencia exacta entre códigos históricos CIE-9 y modernos CIE-10 para mantener la integridad documental. \\ \hline
+\textbf{Descripción} & Como usuario del sistema, quiero consultar la equivalencia exacta entre códigos históricos CIE-9 y modernos CIE-10, utilizando autocompletado y traducciones internacionales en inglés, para agilizar el flujo de documentación médica \\ \hline
 \textbf{Prioridad} & Alta. \\ \hline
-\textbf{Dependencias} & RF-01, RF-02, Tabla relacional CSV de mapeos normativos. \\ \hline
+\textbf{Dependencias} & RF-01, RF-02, RF-03, RF-04, RNF-01, RNF-02, RNF-05, RNF-07. \\ \hline
 \textbf{Criterios de Aceptación} & 
 \begin{itemize}[leftmargin=*]
     \item \textbf{CA-1.1:} El módulo debe permitir búsquedas bidireccionales por código o por texto descriptivo.
-    \item \textbf{CA-1.2:} Debe mostrarse de forma clara la correspondencia oficial y su descripción en español.
+    \item \textbf{CA-1.2:} Debe mostrarse de forma clara la correspondencia oficial y su descripción en español, en tarjetas de alto contraste.
+    \item \textbf{CA-1.3:} El botón de consulta asíncrona a la API de la NLM debe recuperar la descripción oficial en inglés en menos de 3 segundos.
+    \item \textbf{CA-1.4:} El buscador interactivo debe tolerar errores tipográficos mediante un listado síncrono de sugerencias dinámicas a medida que se escribe.
 \end{itemize} \\ \hline
 \end{tabular}
 \caption{Especificación de la Historia de Usuario HU-01: Mapeo CIE.}
@@ -1927,14 +2126,15 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \rowcolor[RGB]{239,239,239} 
 \textbf{Código: HU-02} & \textbf{Título: Análisis Espacial e Inspección Cartográfica} \\ \hline
 \textbf{Rol del usuario} & Epidemiólogo / Investigador. \\ \hline
-\textbf{Descripción} & Como epidemiólogo, quiero visualizar la distribución geográfica de los casos por código postal para detectar focos de prevalencia poblacional. \\ \hline
+\textbf{Descripción} & Como epidemiólogo, quiero explorar mapas coropléticos interactivos y grafos relacionales de comunidades para estudiar la dominancia y la cronicidad compleja de los trastornos del espectro esquizofrénico en Castilla y León. \\ \hline
 \textbf{Prioridad} & Media. \\ \hline
-\textbf{Dependencias} & RF-04, Ficheros GeoJSON y CSV de frecuencias agregadas. \\ \hline
+\textbf{Dependencias} & RF-09, RF-10, RNF-01, RNF-02, RNF-06 \\ \hline
 \textbf{Criterios de Aceptación} & 
 \begin{itemize}[leftmargin=*]
-    \item \textbf{CA-2.1:} El mapa coroplético debe renderizar un gradiente de color proporcional a la frecuencia de casos.
+    \item \textbf{CA-2.1:} El mapa coroplético debe renderizar un gradiente de color proporcional a la frecuencia de casos sobre la geometria.
     \item \textbf{CA-2.2:} Al pasar el cursor sobre un código postal, debe mostrarse el número de afectados o datos sobre la zona.
     \item \textbf{CA-2.3:} El visor debe permitir hacer zoom y desplazamiento fluido por todo el territorio.
+    \item \textbf{CA-2.4:} El sistema debe detectar automáticamente cualquier nuevo archivo interactivo HTML guardado en el servidor para actualizar el panel de acceso rápido sin requerir alteraciones en el código fuente de Streamlit.
 \end{itemize} \\ \hline
 \end{tabular}
 \caption{Especificación de la Historia de Usuario HU-02: Análisis Espacial.}
@@ -1950,16 +2150,18 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \rowcolor[RGB]{239,239,239} 
 \textbf{Código: HU-03} & \textbf{Título: Exportación de Códigos Convertidos CIE-9 a CIE-10} \\ \hline
 \textbf{Rol del usuario} & Facultativo / Gestor de Datos Clínicos. \\ \hline
-\textbf{Descripción} & Como gestor de datos, quiero poder descargar los resultados de la conversión normativa en un archivo CSV para integrar masivamente las equivalencias en el sistema de historia clínica o tratarlos en herramientas de análisis externas. \\ \hline
-\textbf{Prioridad} & Media. \\ \hline
-\textbf{Dependencias} & RF-02, RF-03, Dataset estructurado de conversión CIE, Módulo conversor de Streamlit. \\ \hline
+\textbf{Descripción} & Como gestor de datos, quiero cargar archivos masivos de diagnósticos para automatizar su traducción semántica e interoperabilidad documental, descargando de forma segura los resultados en un archivo estructurado independiente. \\ \hline
+\textbf{Prioridad} & Alta. \\ \hline
+\textbf{Dependencias} & RF-05, RF-06, RF-07, RF-08, RNF-01, RNF-02, RNF-03, RNF-07 \\ \hline
 \textbf{Criterios de Aceptación} & 
 \begin{itemize}[leftmargin=*]
     \item \textbf{CA-3.1:} La interfaz debe incorporar un botón visible que permita la descarga directa de la tabla de resultados en formato estandarizado \texttt{.csv}, sin tener que recargar la página web ni exponer datos.
-    \item \textbf{CA-3.2:} El archivo descargado debe incluir correctamente las columnas mapeadas que se han seleccionado, respetando la codificación UTF-8 para evitar errores en caracteres especiales.
+    \item \textbf{CA-3.2:} El usuario debe poder mapear dinámicamente qué columnas desea traducir, el formato de entrada, y qué atributos adicionales desea inyectar al archivo final procesado.
+    \item \textbf{CA-3.3:} El archivo descargado debe incluir correctamente las columnas mapeadas que se han seleccionado, respetando la codificación UTF-8 para evitar errores en caracteres especiales.
+    \item \textbf{CA-3.4:} La interfaz debe habilitar un área de arrastre (\textit{Drag \& Drop}) que valide de forma asíncrona la estructura del CSV, renderizando una vista previa estricta de las primeras 5 filas para verificación del usuario
 \end{itemize} \\ \hline
 \end{tabular}
-\caption{Especificación de la Historia de Usuario HU-03: Exportación de Códigos Convertidos.}
+\caption{Especificación de la Historia de Usuario HU-03: Exportación de Códigos Convertidos por Lotes.}
 \label{tab:hu_03}
 \end{table}
 
