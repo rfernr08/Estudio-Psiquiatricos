@@ -526,7 +526,7 @@ A estos obstáculos metodológicos se suma la denominada "Paradoja Multimodal". 
 Finalmente, la validez externa y la generalización de los modelos predictivos se ven críticamente comprometidas por dos factores: la marcada heterogeneidad muestral —derivada de criterios clínicos dispares, como el uso de umbrales PANSS variables para definir la "respuesta al tratamiento" y el reducido tamaño de las muestras en modalidades electrofisiológicas como el EEG \cite{Amleshi}.
 
 \chapter{Datos y preparación del dataset}
-Este capítulo aborda de manera pormenorizada el origen, la estructura y el ciclo de transformación técnica al que fueron sometidos los datos clínicos utilizados en este proyecto. Dado que el éxito de los modelos de aprendizaje automático y la fiabilidad de la analítica de grafos dependen directamente de la calidad del dato de entrada, las siguientes secciones detallan desde la naturaleza inicial de la fuente hasta los procesos críticos de curación y el posterior modelado relacional.
+Este capítulo aborda el origen, la estructura y el ciclo de transformación técnica al que fueron sometidos los datos clínicos utilizados en este proyecto. Dado que el éxito de los modelos de aprendizaje automático y la fiabilidad de la analítica de grafos dependen directamente de la calidad del dato de entrada, las siguientes secciones detallan desde la naturaleza inicial de la fuente hasta los procesos críticos de curación y el posterior modelado relacional.
 
 
 \section{Fuente de datos}
@@ -864,7 +864,7 @@ Las características operativas que constituyen el vector de entrada del modelo 
     
     \item \textbf{Historial de Diagnósticos Secundarios (\texttt{Diag 02} al \texttt{Diag 20}):} Este bloque, compuesto por 19 variables indexadas, encapsula el perfil pluripatológico del paciente. Clínicamente, representa las comorbilidades concomitantes, trastornos crónicos subyacentes o manifestaciones secundarias que presenta el sujeto de estudio de manera simultánea. 
 \end{itemize}
-Desde el punto de vista del procesamiento de datos, la inclusión de este bloque de 20 variables en paralelo permite a los modelos de árboles de decisión evaluar interacciones complejas de características (\textit{feature interactions}). El algoritmo no analiza el impacto de una patología de forma aislada, sino que es capaz de ponderar cómo la coexistencia de determinados diagnósticos secundarios altera drásticamente la probabilidad probabilística de las diferentes variantes del espectro esquizofrénico, maximizando la precisión del clasificador multiclase.
+Desde el punto de vista del procesamiento de datos, la inclusión de este bloque de 20 variables en paralelo permite a los modelos de árboles de decisión evaluar interacciones complejas de características. El algoritmo no analiza el impacto de una patología de forma aislada, sino que es capaz de ponderar cómo la coexistencia de determinados diagnósticos secundarios altera drásticamente la probabilidad probabilística de las diferentes variantes del espectro esquizofrénico, maximizando la precisión del clasificador multiclase.
 
 \subsection{Variable objetivo (\textit{Target})}
 
@@ -1006,7 +1006,7 @@ El análisis de la distribución real de la variable objetivo (\texttt{DIAG PSQ}
 \label{tab:frecuencias_target}
 \end{table}
 
-Entrenar un modelo predictivo bajo esta asimetría estadística provocaría que los algoritmos desarrollaran un sesgo de la clase mayoritaria (\textit{majority class bias}). El clasificador tendería a optimizar su función de pérdida prediciendo sistemáticamente la clase \texttt{F20}, obteniendo una precisión general falsamente elevada pero una capacidad de detección nula (\textit{F1-Score} de $0$) sobre las patologías minoritarias.
+Entrenar un modelo predictivo bajo esta asimetría estadística provocaría que los algoritmos desarrollaran un sesgo de la clase mayoritaria. El clasificador tendería a optimizar su función de pérdida prediciendo sistemáticamente la clase \texttt{F20}, obteniendo una precisión general falsamente elevada pero una capacidad de detección nula (\textit{F1-Score} de $0$) sobre las patologías minoritarias.
 
 \subsection{El Rol de la Estratificación}
 Para mitigar el riesgo de exclusión de las clases críticas durante las fases de partición, se implementó una división estratificada estricta. La estratificación actúa como una salvaguarda matemática que fuerza al algoritmo de partición a respetar las proporciones relativas de la Tabla~\ref{tab:frecuencias_target} de forma idéntica en los subconjuntos de entrenamiento, validación y test. Esto garantiza que incluso la clase \texttt{F21} (con solo 5 muestras) cuente con representación proporcional supervisada en todas las etapas, permitiendo que el modelo sea evaluado de manera justa.
@@ -1036,7 +1036,7 @@ Los mapas divididos por Codigo Postal se extrayeron de un repositorio público d
 El pipeline de desarrollo cartográfico se estructuró en dos etapas técnicas independientes: la agregación matricial de frecuencias y la renderización geomorfológica interactiva.
 
 \subsection{Extracción y Agregación de Frecuencias Espaciales}
-Los modelos predictivos operan a nivel de registro individual (paciente por paciente); sin embargo, el análisis geoespacial requiere una estructura de datos indexada por partición geográfica. Para ello, se desarrolló un script en Python que transformó el \textit{dataset} original mediante operaciones de agrupación masiva (\textit{clustering} estadístico).
+Los modelos predictivos operan a nivel de registro individual (paciente por paciente); sin embargo, el análisis geoespacial requiere una estructura de datos indexada por partición geográfica. Para ello, se desarrolló un script en Python que transformó el \textit{dataset} original mediante operaciones de agrupación masiva en clusters.
 
 El proceso consistió en aislar las variables \texttt{Código Postal} y la variable objetivo \texttt{DIAG PSQ}, aplicando una función de agregación para calcular la frecuencia absoluta de afectados. El resultado de esta transformación se consolidó en archivos estructurados en formato CSV, cuya matriz de datos sigue el siguiente esquema relacional:
 
@@ -1055,11 +1055,11 @@ Para la construcción de los mapas interactivos se optó por un enfoque basado e
     \item \textbf{Motor de Visualización (Folium) \cite{folium}:} Utilizando la librería \textit{Folium} (el \textit{wrapper} oficial de Python para la biblioteca JavaScript \textit{Leaflet}), se programó el motor de renderizado. El algoritmo realiza un cruce de datos (\textit{merge}) en tiempo de ejecución entre el código postal del archivo GeoJSON y la clave primaria del CSV de frecuencias generado previamente.
 \end{itemize}
 
-Gracias a esta arquitectura, el sistema es capaz de inyectar dinámicamente el número de afectados por diagnóstico en las capas del mapa, generando una interfaz interactiva que permite hacer \textit{zoom}, consultar burbujas de información (\textit{tooltips}) por distrito y observar la distribución macroscópica de las comunidades de pacientes de forma ágil y computacionalmente liviana.
+Gracias a esta arquitectura, el sistema es capaz de inyectar dinámicamente el número de afectados por diagnóstico en las capas del mapa, generando una interfaz interactiva que permite hacer \textit{zoom}, consultar burbujas de información por distrito y observar la distribución macroscópica de las comunidades de pacientes de forma ágil y computacionalmente liviana.
 
 Se crearon 3 mapas coropléticos independientes, para mostrar la presencia de los diagnosticos no solo en la zona central del estudio, León, sino también teniendo en cuenta el resto de España, ya que el dataset incluye pacientes de otras provincias.
 \begin{itemize}    
-    \item Mapa 1: Distribución de la frecuencia de casos diagnosticados con cualquier trastorno del espectro esquizofrénico (F20, F22, F23, F25, F29) encontrados en el dataset por código postal en León. Figura~\ref{fig:mapa_leon} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos en determinadas zonas de la provincia.
+    \item Mapa 1: Distribución de la frecuencia de casos diagnosticados con cualquier trastorno del espectro esquizofrénico (F20, F22, F23, F25, F29, etc) encontrados en el dataset por código postal en León. Figura~\ref{fig:mapa_leon} muestra un ejemplo de este mapa, donde se puede observar la distribucion y prevalencia de casos en determinadas zonas de la provincia.
     \item Mapa 2: Distribución de la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal en León. Figura~\ref{fig:mapa_frecuencia_leon} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos diagnosticados con esquizofrenia en determinadas zonas de la provincia.
     \item Mapa 3: Distribución de la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal en España. Figura~\ref{fig:mapa_frecuencia_espana} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos diagnosticados con esquizofrenia en determinadas zonas de España que se encuentran en el dataset.
 \end{itemize}
@@ -1708,8 +1708,19 @@ Esta gran cantidad de datos y métricas permite extraer varias conclusiones de i
     
     \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score Macro} y su aparición continua como modelo ganador en el \textit{Grid Search}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas. Los modelos pudieron entender estos detalles a la vez por un entrenamiento controlado por decaimento de pesoos de $0,001$ a $0,01$  y una fase de calentamiento del $0,1$, evitando desajustes abruptos al comienzo del entrenamiento
     
-    \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $30\%$ y un \textit{F1-Score} en el rango de $0,2348 - 0,2599$. Sin embargo, la integración de muestras sintéticas (\textbf{RUS + VAE}) permitió estabilizar las fronteras de decisión en las clases minoritarias, dejándonos con métricas competitivas en un espacio de clases completamente balanceado (\textit{F1-Score} de $0,6857$, con precisión y \textit{Recall} equilibrados en torno a $0,6670$ y $0,7285$ respectivamente). Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita (\textit{early stopping}), evitando que BERT memorizara en exceso un dataset.
+    \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $30\%$ y un \textit{F1-Score} en el rango de $0,2348 - 0,2599$. Sin embargo, la integración de muestras sintéticas (\textbf{RUS + VAE}) permitió estabilizar las fronteras de decisión en las clases minoritarias, dejándonos con métricas competitivas en un espacio de clases completamente balanceado (\textit{F1-Score} de $0,6857$, con precisión y \textit{Recall} equilibrados en torno a $0,6670$ y $0,7285$ respectivamente). Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita , evitando que BERT memorizara en exceso un dataset.
 \end{itemize}
+
+La tabla \ref{fig:comparacion-profundo} compara los resultados de cada uno de los modelos de aprendizaje profundo segun su F1-Score.
+
+
+\begin{figure}
+\centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/comparacion-f1-profundo.png}}
+    \caption{Grafico por columnas comparando los resultados de los modelos de aprendizaje profundo segun su F1-Score}
+    \label{fig:comparacion-profundo}
+\end{figure}
+
 
 \section{Evaluación y Comparativa de Modelos de Aprendizaje Tradicional}
 
@@ -1789,6 +1800,17 @@ El análisis de las métricas obtenidas mediante los algoritmos tradicionales de
     \item \textbf{Resiliencia de la información combinada en escenarios empobrecidos:} Si bien el dataset "combinado" no fue el líder indiscutible en el conjunto original, demostró ser la estrategia más robusta frente a la drástica pérdida de datos ocasionada por el \textit{undersampling}. En este escenario adverso, el modelo XGBoost entrenado con datos combinados logró retener el mayor poder predictivo del bloque, alcanzando un \textit{F1-Score} de $0,5401$, una precisión de $0,5370$ y un \textit{Recall} de $0,5759$. Esto confirma que, cuando escasea el volumen de datos, la fusión de características tabulares (códigos) y textuales (descripciones) ayuda a estabilizar las fronteras de decisión.
 \end{itemize}
 
+La tabla \ref{fig:comparacion-tradicional} compara los resultados de cada uno de los modelos de aprendizaje tradicional segun su F1-Score.
+
+
+\begin{figure}
+\centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/comparacion-f1-tradicional.png}}
+    \caption{Grafico por columnas comparando los resultados de los modelos de aprendizaje tradicional segun su F1-Score.}
+    \label{fig:comparacion-tradicional}
+\end{figure}
+
+
 
 \section{Análisis de resultados}
 
@@ -1829,6 +1851,22 @@ Por lo tanto, la \textbf{Propuesta Final} de este trabajo se decanta por el uso 
 \end{enumerate}
 
 En síntesis, las métricas del proyecto confirman que el uso complementario de grafos de conocimiento y clasificadores tabulares tradicionales constituye la opción de ingeniería más solvente, económica y viable para la modernización tecnológica del diagnóstico de la esquizofrenia en entornos hospitalarios reales.
+
+Al marcar los modelos que han mostrado el mayor potencial y las mejores metricas, las figuras \ref{fig:curva-beto} y \ref{fig:curva-light} nos muestran la evolucion del entrenamiento de los 2 modelos que mas han destacado por sus resultados mediante una curva ROC. Los modelos son el BETO-cased en el dataset desbalanceado combinado y el clasificador LIGHTBGM para el dataset sintetico por codigos, respectivamente.
+
+\begin{figure}
+\centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/curva-beto.png}}
+    \caption{Curva ROC para el modelo BETO-cased en el dataset desbalanceado combinado}
+    \label{fig:curva-beto}
+\end{figure}
+
+\begin{figure}
+\centering
+    \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/curva-light.png}}
+    \caption{Curva ROC para el clasificador ROC en el dataset sintetico por codigos}
+    \label{fig:curva-light}
+\end{figure}
 
 \section{Estudio de grafos}
 
@@ -2395,6 +2433,7 @@ La Tabla~\ref{tab:resumen_riesgos} categoriza los riesgos detectados según su n
 \textbf{R6} & Sesgo de automatización: confianza excesiva del clínico en la IA. & Usabilidad & Ético/Social \\ \hline
 \textbf{R7} & Incumplimiento de presupuesto y plazos por mala definición del problema. & Planificación & Gestión \\ \hline
 \textbf{R8} & Cambios imprevistos en el alcance del proyecto. & Alcance & Gestión \\ \hline
+\textbf{R9} & Restricción de tamaño para pesos pesados de BERT en GitHub. & Configuración & Técnico \\ \hline
 \end{tabular}
 \caption{Resumen de riesgos identificados en el ciclo de vida del proyecto.}
 \label{tab:resumen_riesgos}
@@ -2534,6 +2573,23 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \label{tab:R8}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{10.5cm}|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{ID: R16} & \textbf{Límite de tamaño de archivos pesados en el repositorio de GitHub} \\ \hline
+\textbf{Descripción} & Imposibilidad de sincronizar con el repositorio remoto de GitHub los archivos de pesos optimizados de los modelos basados en BERT (\texttt{model.safetensors}), los cuales superan individualmente el límite estricto de 100~MB fijado por la plataforma. \\ \hline
+\textbf{Categoría} & Gestión de Configuración / Infraestructura técnica. \\ \hline
+\textbf{Precondición} & Intentar realizar un push al servidor remoto incluyendo los directorios locales de almacenamiento de checkpoints de Transformers (como el modelo \texttt{dccuchile/bert-base-spanish-wwm-cased}). \\ \hline
+\textbf{Consecuencia} & Bloqueo inmediato del comando de sincronización de Git, imposibilidad de realizar copias de seguridad de la lógica del código y potencial corrupción del árbol de cambios local por subidas incompletas. \\ \hline
+\textbf{Mitigación} & 
+1. Inclusión de las extensiones \texttt{*.safetensors}, \texttt{*.bin} y \texttt{*.pt} en el archivo de exclusión \texttt{.gitignore}. \newline
+2. Desacoplamiento total del código de los pesos binarios: los modelos BERT se configuran para descargarse dinámicamente de forma asíncrona en tiempo de ejecución desde el repositorio oficial de Hugging Face mediante la función \texttt{from\_pretrained()}, haciendo uso de la caché local del sistema operativo y garantizando que el código subido a GitHub sea ligero, portable e independiente de los pesos físicos entrenados. \\ \hline
+\end{tabular}
+\label{tab:R9}
+\end{table}
+
 
 \subsection{Justificación Técnica y Gestión del Entorno Virtual mediante Mamba}
 \label{subsec:justificacion_mamba}
@@ -2551,6 +2607,16 @@ Para prevenir este riesgo y garantizar la reproducibilidad absoluta del código,
 \end{itemize}
 
 Esta decisión de ingeniería garantiza que el \textit{pipeline} experimental del proyecto es invulnerable a la obsolescencia o cambios no retrocompatibles en las librerías de terceros.
+
+\section{Gestión de Configuración y Control de Versiones mediante GitHub}
+La reproducibilidad científica y la integridad del código fuente son pilares fundamentales en cualquier desarrollo de ingeniería de software contemporáneo. Para garantizar el cumplimiento de estos principios en este Trabajo de Fin de Grado, se ha implementado una estrategia estricta de gestión de configuración y control de versiones utilizando el sistema de control distribuido \textbf{Git}, respaldado por la plataforma en la nube \textbf{GitHub}.
+
+El uso de GitHub ha aportado múltiples beneficios metodológicos a lo largo de las 24 semanas de desarrollo del proyecto:
+\begin{itemize}
+    \item \textbf{Trazabilidad histórica y reversibilidad:} Cada hito técnico completado en los Sprints se ha consolidado mediante confirmaciones (\textit{commits}) atómicas y descriptivas, permitiendo auditar la evolución del código o revertir cambios ante la aparición de regresiones o conflictos de dependencias.
+    \item \textbf{Gestión de ramas por Sprints:} Se ha aplicado un flujo de trabajo simplificado basado en ramas (\textit{branching}), aislando el desarrollo de nuevas características (como la interfaz de Streamlit o los scripts de Neo4j) de la rama principal (\textit{main}), asegurando así un código siempre funcional para su demostración y evaluación.
+    \item \textbf{Desacoplamiento de código y datos binarios:} Para mantener la agilidad del repositorio remoto y respetar los límites de almacenamiento físico de GitHub, se ha configurado una política rigurosa de exclusión mediante el archivo \texttt{.gitignore}. De este modo, se evita subir archivos de datos sensibles (garantizando el RGPD), que se filtren contraseñas de bases de datos o binarios de gran peso, centralizando el repositorio exclusivamente en la lógica de negocio en Python.
+\end{itemize}
 
 \chapter{Presupuesto} 
 \section{Recursos hardware utilizados}
