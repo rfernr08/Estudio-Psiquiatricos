@@ -330,7 +330,7 @@ La génesis de este proyecto se fundamenta en la oportunidad de explotar un conj
 \subsection{Hipótesis clínicas y relacionales (El enfoque de grafos)}
     \textbf{Coexistencia patológica estructurada:} Se parte de la premisa de que las comorbilidades asociadas a los trastornos del espectro esquizofrénico (F20) no se distribuyen de manera aleatoria en la población de la provincia. Se hipotetiza que existen patrones relacionales ocultos y agrupaciones de síntomas que pueden ser descubiertos mediante el análisis topológico.
 
-    \textbf{Eficacia del paradigma NoSQL:} Se plantea que la migración de un modelo tabular tradicional a una base de datos orientada a grafos (Neo4j) no solo optimizará el almacenamiento, sino que permitirá usar métricas de centralidad y detección de comunidades para identificar patologías "núcleo" que actúan como puentes diagnósticos.
+    \textbf{Eficacia del paradigma NoSQL:} Se plantea que la migración de un modelo tabular tradicional a una base de datos orientada a grafos (Neo4j) no solo optimizará el almacenamiento, sino que permitirá usar métricas de centralidad y detección de comunidades para identificar patologías "núcleo" que actúan como puentes diagnósticos. Esto se justificara con las investigaciones analizadas en el estado del arte \cite{hidalgo2009dynamic}.
 
 \subsection{Hipótesis tecnológicas y predictivas (El enfoque de IA)}
 
@@ -486,8 +486,6 @@ Es en esta brecha del estado del arte donde se fundamenta el diseño de los Sist
 
 Este enfoque híbrido e integrador define la naturaleza experimental y el desarrollo de software plasmado en las siguientes secciones de esta memoria.
 
-
-
 \section{Modelado de Redes y Grafos de Conocimiento: El Rol de Neo4j en la Inteligencia Artificial Clínica}
 
 La representación de entidades biomédicas y sus dependencias relacionales mediante estructuras de red constituye una de las metodologías de vanguardia más robustas en la medicina de precisión contemporánea \cite{barabasi2011network}. La medicina de redes demuestra que las patologías humanas raramente son consecuencia de la perturbación aislada de un único gen o síntoma; por el contrario, representan fallos sistémicos distribuidos a lo largo de un complejo mapa de conexiones e interdependencias funcionales \cite{barabasi2011network}. En este marco, el modelado relacional de comorbilidades concurrentes mediante un \textit{Phenotypic Disease Network} (PDN) permite cuantificar el ecosistema clínico completo, demostrando empíricamente que la trayectoria patológica de un paciente progresa preferentemente a través de los caminos y vecindades adyacentes de la red, y que la centralidad y conectividad de un diagnóstico en el grafo actúa como un potente indicador clínico correlacionado directamente con la severidad del cuadro y la tasa de mortalidad esperada \cite{hidalgo2009dynamic}.
@@ -496,71 +494,19 @@ No obstante, la explotación efectiva de estas trayectorias relacionales exige s
 
 Para solventar esta paradoja relacional, las bases de datos orientadas a grafos NoSQL, con la plataforma de código abierto \textbf{Neo4j} posicionada como el estándar de facto en la industria, representan la opción de ingeniería de software más solvente \cite{yousif2025real, liu2019construction}. A diferencia de los esquemas planos tabulares, Neo4j organiza la información directamente como nodos y relaciones enriquecidas con atributos en un espacio vectorial orientado a propiedades. Esta flexibilidad arquitectónica permite que las interacciones clínicas se traten como objetos de primera clase, facilitando que los pacientes, comorbilidades, alertas clínicas e históricos se conecten de forma natural y adaptativa, soportando de manera óptima flujos de monitorización asistencial en tiempo real e ingestas masivas de datos de forma robusta y tolerante a fallos \cite{yousif2025real, liu2019construction}.
 
+En la analítica de redes sanitarias, el algoritmo de \textbf{Louvain} para la detección de comunidades se consolida en la literatura como el método óptimo para maximizar la modularidad, permitiendo agrupar de forma iterativa los diagnósticos que poseen una densidad de conexión interna significativamente alta. Asimismo, la literatura convalida el uso de la centralidad de intermediación (\textit{Betweenness Centrality}) y grado para identificar comorbilidades críticas que actúan como puentes o catalizadores epidemiológicos en el historial clínico \cite{raj2022predicting}.
+
 La eficiencia operativa de Neo4j frente a la analítica compleja de datos se asienta sobre su motor de consultas de grafos \textbf{Cypher}. Investigaciones previas sobre el rendimiento computacional de Neo4j confirman que la plataforma solventa con éxito el colapso que penaliza a las RDBMS debido a que el motor realiza recorridos topológicos (\textit{graph traversals}) a una velocidad constante que es independiente del volumen de datos total almacenado, garantizando un tiempo de respuesta de milisegundos en la recuperación de caminos y relaciones profundas de múltiples niveles \cite{yousif2025real}.
 
-Finalmente, la integración de Neo4j en la ciencia de datos psiquiátrica abre un canal de sinergia inédito para el entrenamiento de modelos predictivos de aprendizaje automático \cite{raj2022predicting}. Investigaciones recientes en la detección de patrones de comportamiento complejos han demostrado que la estructura de grafos de Neo4j puede ser aprovechada directamente como un extractor de características topológicas continuas para clasificadores tradicionales \cite{raj2022predicting}. Mediante el uso de la biblioteca de algoritmos de Neo4j, se han implementado métodos de incrustación de grafos como \textbf{Node2Vec} para transformar la conectividad y topología multidimensional de la red en vectores continuos de baja dimensión \cite{raj2022predicting}. Al combinar estas incrustaciones o embeddings topológicos de la red con conjuntos de datos tradicionales, los clasificadores predictivos experimentan un incremento drástico y consistente en sus métricas de precisión general, sensibilidad, especificidad y $F1\text{-}Score$ \cite{raj2022predicting}. En consecuencia, esta sinergia híbrida demuestra que el modelado relacional en grafos no se limita a ser una capa visual pasiva, sino que constituye un preprocesamiento semántico y predictivo de altísimo valor que justifica el diseño e integración del ecosistema híbrido propuesto en este Trabajo de Fin de Grado.
+Finalmente, la integración de Neo4j en la ciencia de datos psiquiátrica abre un canal de sinergia inédito para el entrenamiento de modelos predictivos de aprendizaje automático \cite{raj2022predicting}. Investigaciones recientes en la detección de patrones de comportamiento complejos han demostrado que la estructura de grafos de Neo4j puede ser aprovechada directamente como un extractor de características topológicas continuas para clasificadores tradicionales \cite{raj2022predicting}. Mediante el uso de 
+, se han implementado métodos de incrustación de grafos para transformar la conectividad y topología multidimensional de la red en vectores continuos de baja dimensión \cite{raj2022predicting}. Al combinar estas incrustaciones o embeddings topológicos de la red con conjuntos de datos tradicionales, los clasificadores predictivos experimentan un incremento drástico y consistente en sus métricas de precisión general, sensibilidad, especificidad y $F1\text{-}Score$ \cite{raj2022predicting}. En consecuencia, esta sinergia híbrida demuestra que el modelado relacional en grafos no se limita a ser una capa visual pasiva, sino que constituye un preprocesamiento semántico y predictivo de altísimo valor que justifica el diseño e integración del ecosistema híbrido propuesto en este Trabajo de Fin de Grado.
 
 
 \begin{comment}
 
-\subsection{Justificación, Aplicación y Desarrollo del Aprendizaje Automático en Esquizofrenia}
-
-La transición del diagnóstico clínico tradicional de la esquizofrenia hacia los sistemas de Diagnóstico Asistido por Computadora (CAD) exige una fundamentación metodológica rigurosa sobre el tipo de algoritmos aplicados \cite{gogeascoechea2025precision, lai2021schizophrenia}. En el ámbito de la psiquiatría computacional, el diseño de un Sistema de Soporte a la Decisión Clínica (CDSS) no debe basarse en la adopción ciega de las arquitecturas más complejas o de mayor tendencia mediática, sino en una evaluación crítica que pondere la naturaleza física de los datos de entrada, el coste computacional de inferencia local y la interpretabilidad de los resultados por parte de los facultativos médicos \cite{lopez2026ia, saboori2025predictive}.
-
-A continuación, se justifica y desarrolla el marco experimental de inteligencia artificial diseñado para este proyecto, estructurado sobre la dualidad analítica de clasificadores tabulares tradicionales y modelos de lenguaje profundos.
-
-\subsubsection{Justificación del Paradigma Tabular: Algoritmos de Ensamble de Árboles}
-
-Para el procesamiento del historial estructurado de comorbilidades clínicas (representado por las columnas de codificación diagnóstica CIE-9 y CIE-10), la literatura de ciencia de datos convalida la superioridad de los clasificadores basados en ensamble de árboles frente a las redes neuronales profundas convencionales \cite{grinsztajn2022why}. Este fenómeno, conocido como la brecha de rendimiento tabular, se asienta sobre tres propiedades matemáticas intrínsecas del particionamiento del espacio:
-
-\begin{itemize}
-    \item \textbf{Invarianza a transformaciones monótonas:} A diferencia de las redes neuronales (que requieren una normalización estricta y son muy sensibles al escalado de características), los árboles de decisión son inmunes a la distribución de variables de alta dispersión o cardinalidad, comunes al trabajar con miles de códigos diagnósticos posibles \cite{grinsztajn2022why, lai2021schizophrenia}.
-    \item \textbf{Inducción de fronteras de decisión discontinuas:} Las funciones de decisión clínicas suelen ser deterministas y escalonadas (e.g., la presencia o ausencia de un código umbral específico activa o descarta la hipótesis patológica). Los algoritmos de ensamble trazan estas fronteras abruptas de forma natural, mientras que las redes neuronales intentan aproximarlas mediante funciones de activación continuas y suaves, introduciendo un sesgo de suavizado que penaliza la exactitud en datos tabulares dispersos \cite{grinsztajn2022why}.
-    \item \textbf{Selección implícita de características críticas:} Algoritmos como \textbf{XGBoost} y \textbf{LightGBM} mitigan la presencia de variables redundantes o ruidosas en el vector de entrada clínica mediante mecanismos nativos de regularización $L1$ y $L2$, y particiones basadas en la ganancia de información, evitando que el ruido de las variables secundarias colapse el predictor principal \cite{saboori2025predictive, grinsztajn2022why}.
-\end{itemize}
-
-Además, la adopción de LightGBM resulta especialmente idónea tras el proceso de balanceo sintético mediante Autoencoders Variacionales (VAE) \cite{saboori2025predictive}. Su estrategia de crecimiento de árboles guiada por hojas (\textit{leaf-wise}) permite segmentar el espacio latente continuo y denso generado por el VAE con una precisión matemática muy superior a la división simétrica por niveles (\textit{level-wise}) de otros algoritmos tradicionales, reduciendo la latencia de inferencia a milisegundos en la CPU convencional de un terminal de consulta hospitalaria real \cite{saboori2025predictive}.
-
 \subsection{Algoritmos de Machine Learning y Deep Learning en Psiquiatría Computacional}
 
-La selección del paradigma algorítmico óptimo para el diagnóstico asistido de la esquizofrenia constituye un desafío crítico en la literatura actual, existiendo una marcada bifurcación entre el aprendizaje automático tradicional (\textit{Machine Learning}) y el aprendizaje profundo (\textit{Deep Learning}) \cite{gogeascoechea2025precision, lai2021schizophrenia}. Tradicionalmente, los clasificadores convencionales como las Máquinas de Vectores de Soporte (SVM) han dominado el espectro predictivo clínico debido a su probada estabilidad e inmunidad al sobreajuste en conjuntos de datos de tamaño moderado \cite{lai2021schizophrenia, saboori2025predictive}. Sin embargo, la creciente complejidad de los registros clínicos y el procesamiento masivo de datos multiseñal han impulsado el desarrollo de técnicas más sofisticadas \cite{lopez2026ia, saboori2025predictive}.
-
-En el procesamiento de datos tabulares estructurados (como los antecedentes de codificación de comorbilidades), los algoritmos basados en ensambles de árboles de decisión, tales como \textbf{Random Forest} y, especialmente, implementaciones optimizadas de \textit{Gradient Boosting} como \textbf{XGBoost} y \textbf{LightGBM}, representan el estándar de oro metodológico \cite{grinsztajn2022why, saboori2025predictive}. De acuerdo con el estudio de Grinsztajn et al. \cite{grinsztajn2022why}, los modelos basados en árboles superan sistemáticamente al \textit{Deep Learning} en datos tabulares debido a su capacidad para trazar fronteras de decisión discontinuas, su inmunidad a variables no normalizadas y su alta robustez frente a la presencia de características no informativas (\textit{uninformative features}), las cuales abundan en las historias clínicas hospitalarias.
-
 Por el contrario, ante señales biológicas crudas y continuas de alta resolución temporal o espacial (como la electroencefalografía o la neuroimagen), las redes neuronales convolucionales (\textbf{CNN}) y recurrentes (\textbf{RNN}) demuestran una capacidad extraordinaria de extracción automática de patrones jerárquicos sin intervención humana \cite{gogeascoechea2025precision}. No obstante, la literatura evidencia que las aproximaciones profundas unimodales presentan un comportamiento muy heterogéneo según el tipo de señal biológica \cite{gogeascoechea2025precision}. En el riguroso meta-análisis bivariado de Gogeascoechea \cite{gogeascoechea2025precision}, se constata que las CNN aplicadas a señales de \textbf{EEG} logran el rendimiento más alto y estable (Sensibilidad agrupada: $0,906$; Especificidad: $0,903$; AUC-SROC: $0,959$). En comparación, los modelos sobre resonancia magnética estructural (\textbf{sMRI}) arrojan métricas robustas pero más dispersas por la falta de estandarización instrumental (Sensibilidad: $0,894$; Especificidad: $0,885$; AUC: $0,946$), mientras que la resonancia magnética funcional (\textbf{fMRI}) presenta el desempeño más modesto y variable debido a la inestabilidad de la señal BOLD (Sensibilidad: $0,822$; Especificidad: $0,841$; AUC: $0,898$) \cite{gogeascoechea2025precision}.
-
-Finalmente, para superar la paradoja de la pérdida de rendimiento unimodal, la literatura de vanguardia propone la integración multimodal mediante técnicas de fusión e inferencia profunda en espacios latentes (\textit{Deep Multi-View Representation Learning}) \cite{qi2015deep}. Estudios como el de Qi \& Tejedor \cite{qi2015deep} demuestran que combinar características morfométricas de sMRI (SBM) y conectividades de fMRI (FNC) mediante autoencoders correlacionados canónicamente (\textbf{DCCAE}) y clasificadores SVM Gaussianos alcanza un $AUC\text{-}ROC$ sobresaliente de $0,950$, superando significativamente al sistema de referencia tradicional ($0,928$).
-
-La Tabla~\ref{tab:comparativa_algoritmos} presenta una síntesis técnica comparativa de los algoritmos de Inteligencia Artificial evaluados en el ámbito de la esquizofrenia.
-
-\begin{table}[htbp]
-\centering
-\tiny
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.0}
-\begin{tabularx}{\textwidth}{|p{2.6cm}|X|X|X|}
-\hline
-\rowcolor[RGB]{239,239,239}
-\textbf{Algoritmo} & \textbf{Fortalezas y Desempeño Clínico} & \textbf{Limitaciones Metodológicas} & \textbf{Requisitos de Procesamiento} \\ \hline
-\textbf{SVM} & Excelente generalización en problemas no lineales de neuroimagen con muestras moderadas \cite{lai2021schizophrenia}. Alcanza exactitudes superiores al $86\%$ en la predicción de transición psicótica temprana \cite{lai2021schizophrenia}. & Alta sensibilidad al diseño manual de características; no es escalable para conjuntos masivos de datos \cite{lai2021schizophrenia, grinsztajn2022why}. & Requiere escalado de variables y reducción de ruido previa (como PCA) \cite{lai2021schizophrenia}. \\ \hline
-\textbf{Random Forest / GBTs (XGBoost / LightGBM)} & Dominio absoluto sobre datos clínicos tabulares \cite{grinsztajn2022why}. XGBoost optimiza de manera eficiente la función de pérdida clínica \cite{saboori2025predictive}. RandomForest alcanza el $73,3\%$ de exactitud en sMRI \cite{lai2021schizophrenia}. & Los modelos de árboles no son diferenciables, dificultando su integración en pipelines extremo a extremo \cite{grinsztajn2022why}. & Requiere preprocesamiento tabular de nulos y control de la colinealidad de características \cite{lai2021schizophrenia}. \\ \hline
-\textbf{k-NN} & Simplicidad matemática extrema; útil para análisis relacional local de vecindades diagnósticas estables \cite{lai2021schizophrenia, jimenez2023xai}. & Rendimiento muy limitado en alta dimensionalidad y asimetría de clases \cite{lai2021schizophrenia}. & Requiere normalización estricta de variables y alta tolerancia al ruido \cite{lai2021schizophrenia}. \\ \hline
-\textbf{CNN / RNN (Deep Learning)} & Extracción automática de patrones espaciales y dinámicas temporales \cite{gogeascoechea2025precision}. Lidera el diagnóstico por EEG con un AUC agrupado de $0,959$ \cite{gogeascoechea2025precision}. & Elevado riesgo de sobreajuste (\textit{overfitting}) ante muestras clínicas de tamaño reducido \cite{gogeascoechea2025precision}. & Exige selección rigurosa de hiperparámetros, regularización y aceleración por GPU \cite{gogeascoechea2025precision}. \\ \hline
-\textbf{Modelos Multimodales (DCCAE / Transformers)} & Combina información anatómica y funcional reduciendo la pérdida de información. DCCAE alcanza un $AUC$ del $0,950$ \cite{qi2015deep}. & Sensible a la amplificación del ruido biológico inter-señal durante la normalización \cite{saboori2025predictive}. & Requiere una rigurosa alineación temporal y espacial de las fuentes de entrada \cite{saboori2025predictive, qi2015deep}. \\ \hline
-\end{tabularx}
-\caption{Comparativa técnica de algoritmos de IA aplicados a la predicción de resultados en esquizofrenia.}
-\label{tab:comparativa_algoritmos}
-\end{table}
-
-\subsubsection{Justificación del Paradigma Semántico: Procesamiento del Lenguaje con BETO}
-
-La narrativa clínica depositada de forma libre en los informes psiquiátricos alberga una riqueza diagnóstica que los códigos estructurados de comorbilidades no logran capturar en su totalidad \cite{lopez2026ia, vidal2023algoritmo}. Para explotar esta semántica latente, los modelos basados en la arquitectura de \textit{Transformers} y mecanismos de auto-atención bidireccional se consolidan como el estándar metodológico \cite{vidal2023algoritmo}. 
-
-La elección específica de la arquitectura \textbf{BETO} (\texttt{dccuchile/bert-base-spanish-wwm-cased}) como modelo lingüístico principal de este estudio se fundamenta en la superioridad de los modelos monolíticos nativos frente a los multilingües generalistas \cite{canete2020beto, vidal2023algoritmo}:
-\begin{enumerate}
-    \item \textbf{Efecto del Whole Word Masking (WWM):} Al enmascarar palabras completas durante el preentrenamiento (en lugar de sub-tokens o caracteres aislados), BETO aprende las relaciones de concordancia de género, número y terminología compleja de la jerga psiquiátrica en castellano con una cohesión semántica óptima \cite{canete2020beto}.
-    \item \textbf{Preservación de la capitalización (Cased):} En el registro clínico hospitalario manual, el uso de mayúsculas es crítico para identificar acrónimos médicos (e.g., PANSS, BPRS), siglas de escalas de gravedad o la codificación de variantes diagnósticas del espectro esquizofrénico. La evaluación empírica confirma que la variante \textit{cased} de BETO captura y retiene este valor semántico diferenciador frente a las variantes \textit{uncased} \cite{vidal2023algoritmo}.
-\end{enumerate}
 
 \end{comment}
 
@@ -577,10 +523,19 @@ Para el procesamiento de datos clínicos estructurados y matrices de comorbilida
     \item \textbf{LightGBM y el crecimiento orientado a hojas (\textit{leaf-wise}):} En escenarios de alta densidad informativa, la estrategia de división asimétrica de LightGBM le confiere una flexibilidad matemática muy superior para trazar fronteras de decisión discontinuas, optimizando sustancialmente la velocidad de convergencia y reduciendo el consumo de memoria en la CPU de terminales informáticos convencionales de consulta hospitalaria \cite{grinsztajn2022why, saboori2025predictive}.
 \end{itemize}
 
+Además, la adopción de LightGBM resulta especialmente idónea tras el proceso de balanceo sintético mediante Autoencoders Variacionales (VAE) \cite{saboori2025predictive}. Su estrategia de crecimiento de árboles guiada por hojas (\textit{leaf-wise}) permite segmentar el espacio latente continuo y denso generado por el VAE con una precisión matemática muy superior a la división simétrica por niveles (\textit{level-wise}) de otros algoritmos tradicionales, reduciendo la latencia de inferencia a milisegundos en la CPU convencional de un terminal de consulta hospitalaria real \cite{saboori2025predictive}.
+
 \subsection{El Paradigma Semántico: Arquitecturas de Atención Bidireccional (Transformers)}
 Para la explotación de la narrativa clínica desestructurada y las descripciones lingüísticas libres de los informes psiquiátricos, los algoritmos tradicionales de aprendizaje automático resultan insuficientes al ignorar las dependencias conceptuales de largo alcance y la polisemia clínica \cite{lopez2026ia, vidal2023algoritmo}. En este ámbito, las redes neuronales de aprendizaje profundo basadas en la arquitectura de \textit{Transformers} y mecanismos de auto-atención bidireccional (\textbf{BERT}) representan el estándar de oro en procesamiento del lenguaje natural (NLP) médico \cite{canete2020beto, vidal2023algoritmo}.
 
 La literatura en informática médica destaca que el preentrenamiento monolingüe en el idioma nativo de la práctica clínica, como el modelo \textbf{BETO} (\texttt{dccuchile/bert-base-spanish-wwm}), captura con una precisión infinitamente superior las sutilezas sintácticas, acrónimos de escalas psiquiátricas y la jerga médica local en español en comparación con los vocabularios dispersos de los modelos multilingües generalistas \cite{canete2020beto, vidal2023algoritmo}. El ajuste fino (\textit{fine-tuning}) de estas capas de atención permite proyectar el discurso libre del informe médico en un espacio vectorial continuo (\textit{embeddings}) donde la cercanía geométrica correlaciona directamente con la similitud diagnóstica, capturando patrones semánticos ocultos inaccesibles para el análisis estadístico convencional \cite{vidal2023algoritmo}.
+
+La elección específica de la arquitectura \textbf{BETO} (\texttt{dccuchile/bert-base-spanish-wwm-cased}) como modelo lingüístico principal de este estudio se fundamenta en la superioridad de los modelos monolíticos nativos frente a los multilingües generalistas \cite{canete2020beto, vidal2023algoritmo}:
+\begin{enumerate}
+    \item \textbf{Efecto del Whole Word Masking (WWM):} Al enmascarar palabras completas durante el preentrenamiento (en lugar de sub-tokens o caracteres aislados), BETO aprende las relaciones de concordancia de género, número y terminología compleja de la jerga psiquiátrica en castellano con una cohesión semántica óptima \cite{canete2020beto}.
+    \item \textbf{Preservación de la capitalización (Cased):} En el registro clínico hospitalario manual, el uso de mayúsculas es crítico para identificar acrónimos médicos (e.g., PANSS, BPRS), siglas de escalas de gravedad o la codificación de variantes diagnósticas del espectro esquizofrénico. La evaluación empírica confirma que la variante \textit{cased} de BETO captura y retiene este valor semántico diferenciador frente a las variantes \textit{uncased} \cite{vidal2023algoritmo}.
+\end{enumerate}
+
 
 \subsection{Clasificación en Espacios Latentes Continuos (Perceptrón Multicapa)}
 Un puente metodológico crítico entre ambos paradigmas surge al abordar técnicas de balanceo sintético mediante Autoencoders Variacionales (VAE) \cite{saboori2025predictive}. Dado que la red generativa del VAE proyecta y reconstruye las comorbilidades de los pacientes directamente en un espacio latente continuo y denso de 768 dimensiones, el uso de tokenizadores y modelos lingüísticos BERT estándar resulta físicamente incompatible al no disponer de una secuencia textual lineal de entrada \cite{saboori2025predictive, canete2020beto}. 
@@ -591,18 +546,36 @@ La Tabla~\ref{tab:comparativa_algoritmos} sintetiza las propiedades técnicas de
 
 \begin{table}[htbp]
 \centering
-\tiny
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.0}
-\begin{tabularx}{\textwidth}{|p{2.6cm}|X|X|X|}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
 \rowcolor[RGB]{239,239,239}
-\textbf{Algoritmo} & \textbf{Fortalezas y Desempeño Clínico} & \textbf{Limitaciones Metodológicas} & \textbf{Necesidades de Procesamiento} \\ \hline
-\textbf{Random Forest} & Excelente control de la varianza mediante \textit{bagging} \cite{grinsztajn2022why}. Ofrece una línea base de alta estabilidad y robustez frente a datos ruidosos o nulos habituales en el historial secundario \cite{lai2021schizophrenia, grinsztajn2022why}. & Menor capacidad para capturar dependencias secuenciales de largo alcance en texto libre o relaciones semánticas complejas \cite{vidal2023algoritmo}. & Requiere la imputación previa de valores faltantes y vectorización clásica del texto (como TF-IDF) \cite{lai2021schizophrenia}. \\ \hline
-\textbf{XGBoost} & Excelente optimización del gradiente regularizado ($L1$ y $L2$) para controlar la complejidad ante matrices de comorbilidades (CIE-9 y CIE-10) de alta dispersión \cite{grinsztajn2022why, saboori2025predictive}. & Algoritmo no diferenciable, lo que dificulta su integración directa en arquitecturas de redes extremo a extremo \cite{grinsztajn2022why}. & Exige control de la colinealidad de características secundarias y preprocesamiento de nulos tabulares \cite{lai2021schizophrenia}. \\ \hline
-\textbf{LightGBM} & Estrategia de crecimiento por hojas (\textit{leaf-wise}) que optimiza drásticamente la velocidad de convergencia y reduce el consumo de memoria en la CPU local de consulta \cite{grinsztajn2022why}. Alta flexibilidad para segmentar el espacio continuo del VAE \cite{saboori2025predictive}. & Alto riesgo de sobreajuste (\textit{overfitting}) en subconjuntos de datos muy pequeños si no se limitan las hojas y la profundidad máxima \cite{grinsztajn2022why}. & Sensible a la calibración fina de hiperparámetros de profundidad y cardinalidad de características \cite{saboori2025predictive}. \\ \hline
-\textbf{Transformers (BETO)} & Comprensión contextual bidireccional profunda de la jerga psiquiátrica mediante enmascaramiento de palabras completas (WWM) en castellano \cite{canete2020beto, vidal2023algoritmo}. Captura dependencias de largo alcance e ironías clínicas \cite{vidal2023algoritmo}. & Elevado coste computacional de entrenamiento e inferencia en tiempo real, requiriendo aceleración por GPU inasumible para terminales locales de consulta (MEDORA) \cite{lopez2026ia, saboori2025predictive}. & Requiere tokenización nativa especializada, normalización textual estricta y control de gradientes mediante AdamW con decaimiento de pesos \cite{canete2020beto, vidal2023algoritmo}. \\ \hline
-\textbf{Perceptrón Multicapa (MLP)} & Clasificación óptima de características vectoriales continuas y densas (como embeddings de 768 dimensiones del VAE) sin requerir tokenizadores de texto tradicionales \cite{saboori2025predictive, jimenez2023xai}. & Opacidad algorítmica inherente (caja negra) y propensión al sobreajuste si la red es profunda en relación con muestras escasas \cite{lopez2026ia, jimenez2023xai}. & Exige una regularización estricta mediante descarte (\textit{Dropout}) y el diseño \textit{ad hoc} de capas ocultas de tamaño decreciente \cite{jimenez2023xai}. \\ \hline
+\textbf{Algoritmo} & \textbf{Análisis Técnico y Metodológico} \\ \hline
+\textbf{Random Forest} & 
+\textbf{Fortalezas:} Excelente control de la varianza mediante \textit{bagging} \cite{grinsztajn2022why}. Línea base de alta estabilidad frente a datos ruidosos o nulos \cite{lai2021schizophrenia}.\newline
+\textbf{Limitaciones:} Menor capacidad para capturar dependencias de largo alcance o semántica compleja \cite{vidal2023algoritmo}.\newline
+\textbf{Procesamiento:} Requiere imputación de faltantes y vectorización clásica del texto \cite{lai2021schizophrenia}. \\ \hline
+
+\textbf{XGBoost} & 
+\textbf{Fortalezas:} Optimización del gradiente regularizado ($L1$ y $L2$) ante matrices dispersas (CIE-9/10) \cite{grinsztajn2022why, saboori2025predictive}.\newline
+\textbf{Limitaciones:} No diferenciable; dificulta su integración extremo a extremo \cite{grinsztajn2022why}.\newline
+\textbf{Procesamiento:} Control de colinealidad y preprocesamiento de nulos tabulares \cite{lai2021schizophrenia}. \\ \hline
+
+\textbf{LightGBM} & 
+\textbf{Fortalezas:} Crecimiento por hojas de alta velocidad y bajo consumo de memoria \cite{grinsztajn2022why}. Excelente para segmentar el espacio del VAE \cite{saboori2025predictive}.\newline
+\textbf{Limitaciones:} Riesgo de sobreajuste en subconjuntos pequeños sin restricciones \cite{grinsztajn2022why}.\newline
+\textbf{Procesamiento:} Sensible a la calibración de hiperparámetros de profundidad \cite{saboori2025predictive}. \\ \hline
+
+\textbf{Transformers (BETO)} & 
+\textbf{Fortalezas:} Comprensión contextual bidireccional de jerga psiquiátrica en castellano \cite{canete2020beto, vidal2023algoritmo}.\newline
+\textbf{Limitaciones:} Alto coste computacional; requiere GPU no disponible en terminales locales \cite{lopez2026ia}.\newline
+\textbf{Procesamiento:} Tokenización nativa, normalización y optimizador AdamW con decaimiento de pesos \cite{canete2020beto}. \\ \hline
+
+\textbf{Perceptrón Multicapa (MLP)} & 
+\textbf{Fortalezas:} Clasificación óptima de embeddings densos de 768 dimensiones del VAE \cite{saboori2025predictive}.\newline
+\textbf{Limitaciones:} Opacidad algorítmica (caja negra) y riesgo de sobreajuste \cite{lopez2026ia, jimenez2023xai}.\newline
+\textbf{Procesamiento:} Exige regularización estricta por descarte y capas de tamaño decreciente \cite{jimenez2023xai}. \\ \hline
 \end{tabularx}
 \caption{Comparativa técnica de algoritmos de IA aplicados a la predicción de resultados en esquizofrenia.}
 \label{tab:comparativa_algoritmos}
@@ -612,62 +585,18 @@ A partir de este marco metodológico de referencia, y dada la naturaleza dual de
 
 \section{La Paradoja Multimodal y la Solución de Ingeniería Propuesta}
 
-Un hallazgo crítico documentado en los meta-análisis de inteligencia artificial aplicada a la psiquiatría es la denominada **«Paradoja Multimodal»** \cite{saboori2025predictive}. A pesar de la presunción teórica de que fusionar fuentes de información heterogéneas (datos clínicos estructurados, texto libre, señales electrofisiológicas o neuroimagen) debería optimizar la precisión predictiva, los modelos multimodales reales suelen reportar rendimientos significativamente inferiores a las modalidades unimodales aisladas, registrando sensibilidades promedio de apenas el $63\%$ y especificidades del $65\%$ \cite{saboori2025predictive}. 
+Un hallazgo crítico documentado en los meta-análisis de inteligencia artificial aplicada a la psiquiatría es la denominada \textbf{Paradoja Multimodal} \cite{saboori2025predictive}. A pesar de la presunción teórica de que fusionar fuentes de información heterogéneas (datos clínicos estructurados, texto libre, señales electrofisiológicas o neuroimagen) debería optimizar la precisión predictiva, los modelos multimodales reales suelen reportar rendimientos significativamente inferiores a las modalidades unimodales aisladas, registrando sensibilidades promedio de apenas el $63\%$ y especificidades del $65\%$ \cite{saboori2025predictive}. 
 
 La literatura atribuye este colapso a dos factores: la amplificación del ruido estadístico intrínseco de cada señal durante las fases de normalización y la dificultad técnica para armonizar datos de naturalezas físicas e informáticas incompatibles (e.g., concatenación directa de variables continuas de alta dimensionalidad con códigos discretos dispersos) \cite{saboori2025predictive, lai2021schizophrenia}.
 
-Para sortear esta limitación del estado del arte, este proyecto propone una **arquitectura híbrida desacoplada** \cite{lopez2026ia}. En lugar de realizar una fusión temprana mediante la concatenación de variables en bruto, el sistema procesa cada flujo de información de forma independiente según su naturaleza óptima: el texto libre se codifica semánticamente mediante los embeddings densos de BETO \cite{vidal2023algoritmo}, los datos tabulares se entrenan con clasificadores de ensamble (LightGBM) \cite{saboori2025predictive}, y ambos vectores se integran de manera relacional y visual a través del Grafo de Conocimiento en Neo4j \cite{lopez2026ia}. Asimismo, la clasificación de los datos vectoriales generados por el VAE se delega en un Perceptrón Multicapa (MLP) diseñado ad hoc, el cual procesa las 768 dimensiones continuas de los embeddings de forma óptima sin requerir la intervención del tokenizador lingüístico \cite{saboori2025predictive}.
+Para sortear esta limitación del estado del arte, este proyecto propone una \textbf{arquitectura híbrida desacoplada} \cite{lopez2026ia}. En lugar de realizar una fusión temprana mediante la concatenación de variables en bruto, el sistema procesa cada flujo de información de forma independiente según su naturaleza óptima: el texto libre se codifica semánticamente mediante los embeddings densos de BETO \cite{vidal2023algoritmo}, los datos tabulares se entrenan con clasificadores de ensamble (LightGBM) \cite{saboori2025predictive}, y ambos vectores se integran de manera relacional y visual a través del Grafo de Conocimiento en Neo4j \cite{lopez2026ia}. Asimismo, la clasificación de los datos vectoriales generados por el VAE se delega en un Perceptrón Multicapa (MLP) diseñado ad hoc, el cual procesa las 768 dimensiones continuas de los embeddings de forma óptima sin requerir la intervención del tokenizador lingüístico \cite{saboori2025predictive}.
 
-A este obstáculo metodológico de carácter matemático se suma una limitación práctica fundamental en el estado del arte: la brecha en la transferencia tecnológica y el desarrollo de herramientas de soporte real \cite{lopez2026ia}. Una gran parte de las investigaciones analizadas en la psiquiatría computacional se desarrollan exclusivamente en entornos de laboratorio o mediante el uso de código aislado (como \textit{scripts} de investigación de un solo uso). Raras veces este conocimiento teórico se transfiere a soluciones de software funcionales, accesibles y adaptadas a la rutina diaria de una consulta psiquiátrica \cite{lopez2026ia}. Limitaciones como la falta de interfaces web interactivas o la ausencia de módulos utilitarios cotidianos, como un conversor automatizado entre sistemas de codificación como el ICD (CIE-9 y CIE-10), impiden que la ciencia de datos actúe como un verdadero Sistema de Soporte a la Decisión Clínica (CDSS) en el entorno hospitalario real \cite{lopez2026ia}.
-
-
-
-
-
-
-
-\begin{comment}
-
-\subsection{Evolución hacia los Sistemas de Diagnóstico Asistido por Ordenador (CAD)}
-La transición hacia sistemas de Diagnóstico Ayudado por Ordenador (CAD), integrados en el marco de los Sistemas de Soporte a la Decisión Clínica (CDSS), responde a la necesidad crítica de identificar biomarcadores objetivos mediante el Aprendizaje Automático (\textit{Machine Learning}) y el Aprendizaje Profundo (\textit{Deep Learning}) \cite{memoria}. Tradicionalmente, la literatura científica se ha enfocado en tres grandes familias de datos biomédicos:
-
-\subsubsection{Electroencefalografía (EEG)}
-La EEG destaca por ser una técnica no invasiva y de bajo coste que captura la dinámica temporal de la actividad eléctrica cerebral con una alta utilidad predictiva \cite{memoria}. En términos de rendimiento predictivo, según el meta-análisis de saboori2025predictive et al. \cite{memoria}, los modelos basados en EEG alcanzan una sensibilidad del 89\% y una especificidad del 94\% en la predicción de la respuesta terapéutica, consolidándose como una herramienta práctica pero limitada a la disponibilidad de equipamiento electrofisiológico en consulta \cite{memoria}.
-
-\subsubsection{Resonancia Magnética Estructural (sMRI) y Funcional (fMRI)}
-Las modalidades de neuroimagen permiten un análisis volumétrico detallado de la materia gris y blanca, así como la medición de la actividad metabólica durante el estado de reposo (rs-fMRI) \cite{memoria}. Sin embargo, a pesar de su alta resolución analítica, los modelos predictivos basados estrictamente en imagenología presentan un rendimiento inferior al EEG, registrando una sensibilidad combinada de entre el 76\% y el 80\% \cite{memoria}. Además, su elevado coste económico de adquisición y la necesidad de personal altamente especializado limitan drásticamente su viabilidad operativa diaria en los centros de atención primaria y especializada del SACYL \cite{memoria}.
-
-\subsubsection{La Paradoja Multimodal y la Justificación de los Datos Clínicos y de Codificación}
-La literatura describe la denominada ``Paradoja Multimodal'': a pesar de la intuición teórica de que la integración de fuentes heterogéneas (datos clínicos, genéticos e imagen) optimiza los resultados, el meta-análisis de saboori2025predictive et al. \cite{memoria} revela que los enfoques multimodales presentan un rendimiento inferior a modalidades aisladas, registrando una sensibilidad de apenas el 63\% y una especificidad del 65\% \cite{memoria}. Este fenómeno se atribuye a la amplificación de ruido y a las dificultades inherentes a la armonización de datos biológicos \cite{memoria}.
-
-Ante esta limitación del estado del arte, este proyecto se posiciona en una vía alternativa y de alta transferencia tecnológica: la explotación de las Historias Clínicas Electrónicas (EHR) y los registros de codificación diagnóstica (CIE-9 y CIE-10) \cite{memoria}. Esta modalidad de datos, a diferencia de la neuroimagen, es de coste nulo para la administración, ya está disponible en bases de datos hospitalarias y refleja directamente el histórico del paciente de forma longitudinal \cite{memoria}.
-
-\subsection{Justificación Teórica de la Selección de Algoritmos (Machine Learning)}
-En el ámbito del aprendizaje automático aplicado a datos estructurados de historias clínicas, los clasificadores basados en ensamblados de árboles de decisión representan el estándar de oro en la literatura \cite{memoria}:
-
-\begin{itemize}
-    \item \textbf{Random Forest:} Se utiliza de manera común debido a su robustez para manejar alta dimensionalidad y mitigar el sobreajuste (\textit{overfitting}) mediante el promediado de múltiples árboles de decisión independientes (\textit{bagging}), lo que proporciona una excelente línea base de control \cite{memoria}.
-    \item \textbf{XGBoost y LightGBM:} La literatura reciente destaca la superioridad de las técnicas de \textit{Gradient Boosting} en el tratamiento de matrices dispersas de datos, habituales al codificar comorbilidades clínicas secundarias \cite{memoria}. La optimización del gradiente y el uso de regularización L1 y L2 en XGBoost permiten ponderar de forma óptima variables diagnósticas altamente desbalanceadas \cite{memoria}. Por su parte, la estrategia de crecimiento por hojas (\textit{leaf-wise}) de LightGBM garantiza una convergencia matemática excepcionalmente rápida sobre espacios vectoriales densos de alta dimensionalidad, justificando su elección para nuestro marco experimental \cite{memoria}.
-\end{itemize}
-
-\subsection{El Enfoque Semántico y los Transformers en Informática Médica}
-Para la explotación de la narrativa clínica desestructurada, los métodos basados en arquitecturas de \textit{Transformers} y mecanismos de auto-atención dominan la literatura moderna de NLP médico \cite{memoria}. No obstante, la literatura clínica evidencia que los vocabularios lingüísticos genéricos o multilingües (como \texttt{bert-base-multilingual-cased}) presentan una dispersión semántica que penaliza la precisión ante la jerga médica local \cite{memoria}.
-
-Estudios previos con modelos monolíticos especializados de la familia BERT demuestran que el preentrenamiento en el idioma nativo bajo la estrategia de enmascaramiento de palabras completas (\textit{Whole Word Masking}), implementada en la arquitectura \textbf{BETO} (\texttt{dccuchile/bert-base-spanish-wwm-cased}), captura con una precisión infinitamente superior las sutilezas sintácticas, siglas y términos específicos de los informes psiquiátricos redactados en español \cite{memoria}. Este hallazgo del estado del arte fundamenta la incorporación de BETO como el núcleo de nuestro enfoque semántico \cite{memoria}.
-
-\subsection{Modelado de Redes Complejas y Grafos de Conocimiento}
-La literatura científica destaca que los análisis estadísticos tabulares tradicionales ignoran las complejas dependencias relacionales que existen entre diferentes patologías \cite{memoria}. El modelado basado en grafos de conocimiento mediante entornos NoSQL (donde \textbf{Neo4j} actúa como el estándar de facto en la industria médica) permite mapear de manera natural la realidad clínica, donde los pacientes y sus diagnósticos coexisten como nodos interconectados \cite{memoria}.
-
-En la analítica de redes sanitarias, el algoritmo de \textbf{Louvain} para la detección de comunidades se consolida en la literatura como el método óptimo para maximizar la modularidad, permitiendo agrupar de forma iterativa los diagnósticos que poseen una densidad de conexión interna significativamente alta \cite{memoria}. Asimismo, la literatura convalida el uso de la centralidad de intermediación (\textit{Betweenness Centrality}) y grado para identificar comorbilidades críticas que actúan como puentes o catalizadores epidemiológicos en el historial clínico \cite{memoria}.
+A este obstáculo metodológico de carácter matemático se suma una limitación práctica fundamental en el estado del arte: la brecha en la transferencia tecnológica y el desarrollo de herramientas de soporte real \cite{lopez2026ia}. Una gran parte de las investigaciones analizadas en la psiquiatría computacional se desarrollan exclusivamente en entornos de laboratorio o mediante el uso de código aislado (como \textit{scripts} de investigación de un solo uso). Raras veces este conocimiento teórico se transfiere a soluciones de software funcionales, accesibles y adaptadas a la rutina diaria de una consulta psiquiátrica \cite{lopez2026ia}. Limitaciones como la falta de interfaces web interactivas o la ausencia de módulos utilitarios cotidianos, como un conversor automatizado entre sistemas de codificación como el ICD (CIE-9 y CIE-10), impiden que la ciencia de datos actúe como un verdadero Sistema de Soporte a la Decisión Clínica (CDSS) en el entorno hospitalario real \cite{lopez2026ia}. Un ejemplo actual podrian ser los portales oficiales españoles (como eCIEMaps del Ministerio de Sanidad \cite{eciemaps_sanidad}) están diseñados exclusivamente para consultas individuales manuales, lo que impide su integración en flujos masivos de ciencia de datos
 
 \subsection{Gestión de Datos Sintéticos y el Desbalanceo en Psiquiatría}
-El desbalanceo de clases extremo es una barrera persistente en la psiquiatría computacional, provocado por la baja frecuencia epidemiológica de trastornos específicos frente a la alta prevalencia de otros (como la esquizofrenia paranoide) \cite{memoria}. 
+El desbalanceo de clases extremo es una barrera persistente en la psiquiatría computacional, provocado por la baja frecuencia epidemiológica de trastornos específicos frente a la alta prevalencia de otros (como la esquizofrenia paranoide), lleva a buscar soluciones. 
 
-A diferencia de las técnicas tradicionales de sobremuestreo estadístico lineal (como SMOTE), que generan duplicados artificiales introduciendo ruido o sobreajuste en los clasificadores, la literatura de vanguardia propone el uso de \textbf{Autoencoders Variacionales (VAE)} \cite{memoria}. Un VAE es una red neuronal generativa probabilística que aprende la distribución del espacio latente continuo de las características clínicas de las clases minoritarias, permitiendo generar vectores sintéticos de comorbilidades clínicamente plausibles y estables \cite{memoria}. Dado que el espacio generado por el VAE es continuo y denso (embeddings de 768 dimensiones), el estado del arte justifica que su clasificación final se delegue en un Perceptrón Multicapa (\textbf{MLP}), capaz de procesar estas características vectoriales directamente sin requerir tokenización de texto \cite{memoria}.
-
-\subsection{La Brecha de Interoperabilidad en la Codificación Clínica}
-La coexistencia histórica de los estándares de codificación CIE-9 y CIE-10 genera una fragmentación severa en las bases de datos de salud \cite{memoria}. La literatura actual carece de recursos de correspondencias bidireccionales unificados y estructurados en español \cite{memoria}. Los portales oficiales españoles (como eCIEMaps del Ministerio de Sanidad) están diseñados exclusivamente para consultas individuales manuales, lo que impide su integración en flujos masivos de ciencia de datos \cite{memoria}. Por otro lado, los escasos conjuntos de datos disponibles en repositorios comunitarios se encuentran incompletos, fragmentados o enfocados al idioma inglés \cite{memoria}. Esta deficiencia crítica del estado del arte fundamenta la necesidad de construir y validar, dentro de esta investigación, un recurso estandarizado de conversión masiva de 108.054 filas adaptado al español \cite{memoria}.
-\end{comment}
+La literatura de vanguardia propone el uso de \textbf{Autoencoders Variacionales (VAE)} \cite{saboori2025predictive}. Un VAE es una red neuronal generativa probabilística que aprende la distribución del espacio latente continuo de las características clínicas de las clases minoritarias, permitiendo generar vectores sintéticos de comorbilidades clínicamente plausibles y estables, en forma de embeddings de 768 dimensiones.
 
 
 \chapter{Datos y preparación del dataset}
@@ -1096,7 +1025,7 @@ Para preparar los campos de texto libre (las descripciones de los diagnósticos)
 \end{itemize}
 
 \subsection{Unificación Semántica mediante Mapeo de Códigos}
-El último hito del preprocesamiento consistió en resolver la brecha temporal entre las codificaciones ICD-9 e ICD-10 presentes en el histórico. Utilizando el motor del conversor desarrollado en este proyecto, se transformaron de forma masiva los códigos antiguos a sus equivalencias modernas estandarizadas. Este paso permitió unificar el criterio de comorbilidades en el bloque de las 20 columnas de diagnósticos, consolidando un \textit{dataset} simétrico donde cada fila comparte exactamente el mismo espacio semántico y normativo internacional.
+El último hito del preprocesamiento consistió en resolver la brecha temporal entre las codificaciones ICD-9 e ICD-10 presentes en el histórico. Utilizando el motor del conversor desarrollado en este proyecto, se transformaron de forma masiva los códigos antiguos a sus equivalencias modernas estandarizadas. Este paso permitió unificar el criterio de comorbilidades en el bloque de las 20 columnas de diagnósticos, consolidando un \textit{dataset} simétrico donde cada fila comparte exactamente el mismo espacio semántico y normativo internacional, rompiendo la brecha de interoperabilidad identificada en el estado del arte.
 
 \subsection{Generalización y Normalización de Diagnóstica}
 
@@ -1154,7 +1083,7 @@ El análisis de la distribución real de la variable objetivo (\texttt{DIAG PSQ}
 Entrenar un modelo predictivo bajo esta asimetría estadística provocaría que los algoritmos desarrollaran un sesgo de la clase mayoritaria. El clasificador tendería a optimizar su función de pérdida prediciendo sistemáticamente la clase \texttt{F20}, obteniendo una precisión general falsamente elevada pero una capacidad de detección nula (\textit{F1-Score} de $0$) sobre las patologías minoritarias.
 
 \subsection{El Rol de la Estratificación}
-Para mitigar el riesgo de exclusión de las clases críticas durante las fases de partición, se implementó una división estratificada estricta. La estratificación actúa como una salvaguarda matemática que fuerza al algoritmo de partición a respetar las proporciones relativas de la Tabla~\ref{tab:frecuencias_target} de forma idéntica en los subconjuntos de entrenamiento, validación y test. Esto garantiza que incluso la clase \texttt{F21} (con solo 5 muestras) cuente con representación proporcional supervisada en todas las etapas, permitiendo que el modelo sea evaluado de manera justa.
+Para mitigar el riesgo de exclusión de las clases críticas durante las fases de partición, se implementó una división estratificada estricta. La estratificación actúa como una salvaguarda matemática que fuerza al algoritmo de partición a respetar las proporciones relativas de la Tabla~\ref{tab:frecuencias_target} de forma idéntica en los subconjuntos de entrenamiento, validación y test. Esto garantiza que incluso la clase \texttt{F21} (con solo 5 muestras) cuente con representación proporcional supervisada en todas las etapas, permitiendo que el modelo sea evaluado de manera justa. Esta decisión responde directamente al desafío persistente de desbalanceo de clases extremo documentado en la literatura de psiquiatría computacional \cite{lai2021schizophrenia}.
 
 \subsection{Estrategia Experimental: Gestión del Desbalanceo Mediante Tres Datasets}
 Con el propósito de evaluar empíricamente el impacto del desequilibrio de clases en la capacidad de generalización de la IA, y siguiendo las directrices del equipo de tutoría académica, el flujo de trabajo se bifurcó en la gestión y entrenamiento de tres conjuntos de datos diferenciados:
@@ -1164,7 +1093,7 @@ Con el propósito de evaluar empíricamente el impacto del desequilibrio de clas
     
     \item \textbf{Dataset 2: Submuestreo Aleatorio (\textit{Random Undersampling - RUS}):} Construido a partir del dataset sanitizado, esta estrategia aplica un recorte agresivo sobre la clase dominante (\texttt{F20}) para aproximar su volumen al tamaño de las clases intermedias. Aunque el submuestreo equilibra las fuerzas del clasificador y reduce el coste computacional, presenta la contrapartida técnica de destruir información potencialmente valiosa del histórico de pacientes de la clase mayoritaria.
     
-    \item \textbf{Dataset 3: Enfoque Híbrido Avanzado (RUS + \textit{Variational Autoencoders - VAE}):} Representa la propuesta metodológica más compleja del proyecto. A partir del dataset submuestreado, se diseñó e implementó una red neuronal generativa de tipo Autoencoder Variacional (VAE). Este modelo probabilístico aprende la distribución del espacio latente de las características clínicas de las clases minoritarias (como \texttt{F23}, \texttt{F60.1} o \texttt{F21}) para posteriormente generar vectores de comorbilidades sintéticos pero clínicamente plausibles (\textit{Data Augmentation}). 
+    \item \textbf{Dataset 3: Enfoque Híbrido Avanzado (RUS + \textit{Variational Autoencoders - VAE}):} Representa la propuesta metodológica más compleja del proyecto. A partir del dataset submuestreado, se diseñó e implementó una red neuronal generativa de tipo Autoencoder Variacional (VAE). Este modelo probabilístico aprende la distribución del espacio latente de las características clínicas de las clases minoritarias (como \texttt{F23}, \texttt{F60.1} o \texttt{F21}) para posteriormente generar vectores de comorbilidades sintéticos pero clínicamente plausibles (\textit{Data Augmentation}). Esta es la mejor forma que tenemos para balancear y expandir nuestro dataset, como se establecio en el estado del arte\cite{saboori2025predictive}.
 \end{enumerate}
 
 \begin{tcolorbox}[colback=gray!5,colframe=gray!60,title=\textbf{Nota Metodológica: Extracción de Embeddings para VAE}]
@@ -1268,7 +1197,7 @@ El diseño del marco experimental se estructura en un enfoque incremental, dise�
 Para este estudio, el horizonte experimental se ha dividido en dos paradigmas tecnológicos claramente diferenciados, permitiendo una confrontación directa entre el Aprendizaje Automático clásico \textit{(Machine Learning)} y el Aprendizaje Profundo \textit{(Deep Learning)}
 
 \subsection{Paradigma Tabular (ML Tradicional)}
-Como modelos de referencia iniciales, se seleccionaron Random Forest y XGBoost (Extreme Gradient Boosting). La elección de estos dos algoritmos no es fortuita; ambos representan el estado del arte en el manejo de datos estructurados y tabulares.
+Como modelos de referencia iniciales, se seleccionaron Random Forest y XGBoost (Extreme Gradient Boosting). La elección de estos dos algoritmos no es cualquiera; ambos representan el estado del arte en el manejo de datos estructurados y tabulares \cite{grinsztajn2022why}.
 \begin{itemize}
     \item \textbf{Random Forest}: Actúa como el baseline estático fundamental. Al ser un modelo de ensamble basado en el promediado de múltiples árboles de decisión independientes (bagging), ofrece una excelente resistencia al sobreajuste y una alta estabilidad macroscópica, ideal para establecer el suelo mínimo de precisión del proyecto.
 
@@ -1325,7 +1254,7 @@ El segundo bloque metodológico cambia el paradigma tabular por el Procesamiento
 \begin{itemize}
 \item \textbf{\texttt{bert-base-multilingual-cased}\cite{bert_multilingual}: } Modelo fundacional de Google entrenado sobre corpus de más de 104 idiomas diferenciados. Se incluye de manera intencionada para comprobar si un conocimiento lingüístico global y masivo es capaz de capturar la jerga médica internacional, manteniendo la distinción de mayúsculas y minúsculas (\textit{cased}) que suele ser relevante en acrónimos clínicos.
 
-\item \textbf{\texttt{dccuchile/bert-base-spanish-wwm-uncased} (BETO) \cite{bert-base-spanish-wwm-uncased(BETO)}:} Adaptación de la arquitectura BERT preentrenada específicamente con un corpus masivo exclusivo en español por el Centro de Investigación de la Web de la Universidad de Chile. Utiliza la estrategia de \textit{Whole Word Masking} (enmascaramiento de palabras completas). Al ser la versión \textit{uncased} (ignora mayúsculas y acentos), simplifica el espacio de \textit{tokens} para el procesamiento de historias clínicas manuales que suelen arrastrar descuidos tipográficos.
+\item \textbf{\texttt{dccuchile/bert-base-spanish-wwm-uncased} (BETO) \cite{bert-base-spanish-wwm-uncased}:} Adaptación de la arquitectura BERT preentrenada específicamente con un corpus masivo exclusivo en español por el Centro de Investigación de la Web de la Universidad de Chile. Utiliza la estrategia de \textit{Whole Word Masking} (enmascaramiento de palabras completas). Al ser la versión \textit{uncased} (ignora mayúsculas y acentos), simplifica el espacio de \textit{tokens} para el procesamiento de historias clínicas manuales que suelen arrastrar descuidos tipográficos.
 
 \item \textbf{\texttt{dccuchile/bert-base-spanish-wwm-cased} \cite{bert-base-spanish-wwm-cased}:} Variante homóloga de la anterior pero sensible a la caja textual. Su evaluación comparativa directa frente a la versión \textit{uncased} permite determinar de forma empírica si la preservación de las mayúsculas aporta valor semántico o si, por el contrario, actúa como ruido informático en la clasificación psiquiátrica.
 
@@ -1337,7 +1266,7 @@ Con el propósito de hallar la arquitectura óptima para la clasificación del e
 \subsubsection{Tratamiento del dataset sinteticos mediante Perceptrón Multicapa (MLP)}
 Un desafío de diseño crítico surgido durante la fase experimental fue el procesamiento de la variante de datos balanceada sintéticamente mediante el Autoencoder Variacional (VAE), ya que se representaban mediante un espacio latente continuo de 768 dimensiones. El pipeline de clasificación semántica estándar diseñado para las arquitecturas de la familia BERT exige una secuencia textual cruda en lenguaje natural, la cual es procesada dinámicamente por el tokenizador del modelo para generar los índices de atención correspondientes.
 
-Esto nos llevo a que, para evaluar el potencial semántico en la variante VAE, se diseñó un pipeline de clasificación alternativo desacoplado de la capa de atención de BERT. En su lugar, se implementó un clasificador basado en una red neuronal feed-forward de tipo \textbf{Perceptrón Multicapa} (\textit{MLP Classifier}). Este modelo se encarga de ingestar directamente los vectores de embeddings densos de 768 dimensiones generados y mapear sus características a través de una arquitectura profunda de tres capas ocultas de tamaño decreciente ($[4-6]$) con regularización mediante \textit{Dropout} al 20\%, optimizando el gradiente de forma óptima para la inferencia multiclase.
+Esto nos llevo a que, para evaluar el potencial semántico en la variante VAE, se diseñó un pipeline de clasificación alternativo desacoplado de la capa de atención de BERT. En su lugar, se implementó un clasificador basado en una red neuronal feed-forward de tipo \textbf{Perceptrón Multicapa} (\textit{MLP Classifier}), siguiendo las recomendaciones extraídas de investigaciones previas en sensores de comportamiento continuo \cite{jimenez2023xai}. Este modelo se encarga de ingestar directamente los vectores de embeddings densos de 768 dimensiones generados y mapear sus características a través de una arquitectura profunda de tres capas ocultas de tamaño decreciente ($[4-6]$) con regularización mediante \textit{Dropout} al 20\%, optimizando el gradiente de forma óptima para la inferencia multiclase.
 
 \section{Búsqueda de hiperparámetros y optimización de modelos}
 \label{sec:busqueda_hiperparametros}
@@ -1430,11 +1359,6 @@ El entrenamiento de los modelos tradicionales se priorizó en la CPU debido a su
 Una vez caracterizados los espacios de búsqueda y definida la metodología de validación estratificada, se consolidan en este apartado las configuraciones de entrenamiento definitivas y los hiperparámetros óptimos seleccionados para cada arquitectura predictiva. Estas configuraciones representan los puntos de convergencia matemática identificados durante el proceso de optimización mediante \textit{Grid Search} sobre el conjunto de validación, garantizando el equilibrio necesario entre la capacidad de generalización del sistema y la prevención del sobreajuste (\textit{overfitting}).
 
 \subsection{Configuración Definitiva del Ecosistema Tabular (Machine Learning)}
-\begin{comment}
- \cite{memoria}. En el caso del algoritmo \textbf{XGBoost}, las variables de optimización clave se centraron en controlar la profundidad máxima de los árboles secuenciales (\textit{max\_depth}), la tasa de aprendizaje ($\eta$), la penalización por complejidad del árbol ($\gamma$) y las fracciones de muestreo tanto de filas (\textit{subsample}) como de columnas (\textit{colsample\_bytree}) \cite{memoria}. En el caso de \textbf{LightGBM}, se introduce el control del número máximo de hojas en un solo árbol (\textit{num\_leaves}) debido a su estrategia de división asimétrica (\textit{leaf-wise}) \cite{memoria}.
-
-Ambos clasificadores tradicionales comparten variables fijas de extracción de texto para homogenizar el vector de entrada clínica: un rango de n-gramas de palabras de 1 a 2 (\textit{ngram\_range} = [1, 4]) y un límite de características máximas de 5000 términos (\textit{max\_features} = 5000) \cite{memoria}.
-\end{comment}
 
 Dentro del ambito de aprendizaje tradicional, han destacado completamente los clasificados basado en ensambles de árboles de decisión, los cuales se parametrizan de forma independiente, tendiendo que respetar sus respectivas arquitecturas de crecimiento de ramas. Por tanto este apartado esta dividido en 2 trozos segun el modelo usado.
 
@@ -1493,9 +1417,6 @@ La Tabla~\ref{tab:parametros_lightgbm} recoge las especificaciones óptimas para
 \subsection{Ajuste Fino (Fine-Tuning) del Ecosistema Semántico (Transformers)}
 
 El entrenamiento de las arquitecturas de aprendizaje profundo basadas en la red neuronal de atención bidireccional se unifica bajo un pipeline común de hiperparámetros debido a que todas las variantes de BERT evaluadas comparten la misma naturaleza estructural de optimización, por el cual este apartado se dividira segun las variantes del dataset. 
-\begin{comment}
-Para prevenir el olvido catastrófico (\textit{catastrophic forgetting}) y estabilizar los gradientes multidimensionales, el ajuste fino de la capa de clasificación se limitó a tasas de aprendizaje sumamente bajas, controladas por el optimizador de gradiente AdamW con decaimiento de pesos (\textit{weight decay}) y un ratio de calentamiento lineal (\textit{warmup ratio}) del 10\% para suavizar el arranque del entrenamiento en las iteraciones iniciales.
-\end{comment}
 
 \subsubsection{Entrenamiento en el dataset desbalanceado}
 
@@ -1845,9 +1766,6 @@ Esta gran cantidad de datos y métricas permite extraer varias conclusiones de i
 
 \begin{itemize}
     \item \textbf{Dominio de la información combinada:} La integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (el dataset "combinado") obtiene de forma sistemática los mejores valores de \textit{F1-Score} tanto en la variante Original ($0,7029$) como en la reconstruida con VAE ($0,6857$). Esto evidencia que los códigos de antecedentes ofrecen un contexto estructurado que complementa las sutilezas lingüísticas descritas en el texto narrativo. 
-    \begin{comment}
-    Este máximo rendimiento se alcanzó de forma recurrente empleando un tamaño de lote acotado (\textit{Batch Size} = 16), una decisión técnica que no solo optimizó el consumo de memoria VRAM, sino que introdujo el ruido estocástico adecuado para favorecer la convergencia en el descenso de gradiente al procesar estas entradas más densas.
-    \end{comment}
         
     \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura especializada \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) ha superado de forma consistente a otros modelos multilingües como \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las especificaciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos. El éxito de este proceso (\textit{fine-tuning}) fue posible gracias a la aplicación de tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$), lo cual permitió adaptar la capa de clasificación a la tarea predictiva sin destruir conocimiento lingüístico preentrenado del \textit{Transformer}.
     
@@ -1965,7 +1883,7 @@ A continuación, se discuten los tres hallazgos cardinales que fundamentan la se
 
 \subsection{Hegemonía del Enfoque Combinado y de los Modelos de Lenguaje en el Espacio Original}
 
-En el escenario base sin balancear (\textbf{Dataset Original}), que reproduce con fidelidad la distribución epidemiológica real del entorno hospitalario, se observa que la integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (entrada \textbf{Combinada}) alcanza el rendimiento óptimo global \ref{tab:comparativa_nlp_metricas_original}. La arquitectura especializada \textbf{BETO cased} lidera este bloque con un $F1\text{-}Score$ de $0,6857$ y una precisión general de $0,7285$. Este comportamiento nos confirma que las descripciones narrativas en texto libre albergan matices semánticos que, al fusionarse con el contexto estructurado de los códigos de comorbilidades secundarias, proporcionan una firma diagnóstica mucho más robusta y tolerante al ruido textual. 
+En el escenario base sin balancear (\textbf{Dataset Original}), que reproduce con fidelidad la distribución epidemiológica real del entorno hospitalario, se observa que la integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (entrada \textbf{Combinada}) alcanza el rendimiento óptimo global \ref{tab:comparativa_nlp_metricas_original}. La arquitectura especializada \textbf{BETO cased} lidera este bloque con un $F1\text{-}Score$ de $0,6857$ y una precisión general de $0,7285$. Este comportamiento nos confirma que las descripciones narrativas en texto libre albergan matices semánticos que, al fusionarse con el contexto estructurado de los códigos de comorbilidades secundarias, proporcionan una firma diagnóstica mucho más robusta y tolerante al ruido textual, confimando nuestra propuesta de una \textbf{Paradoja Multimodal} que propusimos en el estado del arte, siguiendo los estudios de Saboori Amleshi  \cite{saboori2025predictive}.
 
 No obstante, la evaluación revela que los algoritmos tradicionales de \textit{Machine Learning} representan una alternativa de extraordinaria solidez. El modelo \textbf{XGBoost} entrenado exclusivamente con las \textbf{Descripciones clínicas} \ref{tab:comparativa_boost_metricas_original} alcanzó una exactitud ($Accuracy$) de $0,7350$ y un $F1\text{-}Score$ de $0,6738$, situándose a una diferencia marginal de apenas un $1,19\%$ del mejor modelo profundo. Este hito demuestra que el texto de las descripciones procesado mediante técnicas clásicas de extracción de características ($n$-gramas) provee una alta densidad informativa por sí mismo, permitiendo a los árboles secuenciales de XGBoost trazar fronteras de decisión estables sin requerir costosos mapas vectoriales multidimensionales de \textit{embeddings}.
 
@@ -2019,7 +1937,7 @@ A continuación, se presentan los hallazgos derivados de la aplicación de algor
 
 \subsection{Análisis de Comunidades}
 
-La detección de comunidades se ejecutó aplicando el \textbf{algoritmo de Louvain}, un algoritmo heurístico que agrupa de forma iterativa los nodos con una alta densidad de conexión interna. El resultado de este análisis se visualiza en la Figura \ref{fig:mapa_comunidades}, donde la red general se divide en clústeres diferenciados por gradientes cromáticos.
+La detección de comunidades se ejecutó aplicando el \textbf{algoritmo de Louvain}, un algoritmo heurístico que agrupa de forma iterativa los nodos con una alta densidad de conexión interna. La elección de este método se fundamenta en su consolidación en el estado del arte como el algoritmo de optimización de modularidad óptimo para el modelado relacional en bases de datos de salud orientadas a grafos, permitiendo segregar con total precisión computacional los perfiles de comorbilidades concurrentes sin requerir la inyección de sesgos manuales de agrupamiento previo \cite{yousif2025real, liu2019construction}. El resultado de este análisis se visualiza en la Figura \ref{fig:mapa_comunidades}, donde la red general se divide en clústeres diferenciados por gradientes cromáticos.
 
 \begin{figure}
 \centering
@@ -2050,7 +1968,7 @@ Para identificar los diagnósticos que actúan como "puentes" en el historial de
 Siguiendo su relevancia y centralidad, los nodos que representan variantes de la esquizofrenia aparecen con el color rojo, siendo los puntos principales del grafo. Aunque a la vez los nodos azules, asociados a los diagnosticos secundarios, nos aportan informacion y conexiones de gran valor clínico:
 
 \begin{enumerate}
-    \item \textbf{El Síndrome Metabólico como comorbilidad física dominante:} Se observa una fuerte adyacencia y aristas gruesas que conectan la \textit{Esquizofrenia paranoide} y \textit{Otros tipos de esquizofrenia} con la \textit{Hipertensión esencial}, la \textit{Diabetes mellitus tipo 2} y la \textit{Hipercolesterolemia pura}. Este hallazgo topológico nos confirma que los pacientes con esquizofrenia presentan un riesgo metabólico drásticamente elevado, inducido tanto por el estilo de vida como por los efectos adversos de los fármacos antipsicóticos atípicos suministrados a los pacientes.
+    \item \textbf{El Síndrome Metabólico como comorbilidad física dominante:} Se observa una fuerte adyacencia y aristas gruesas que conectan la \textit{Esquizofrenia paranoide} y \textit{Otros tipos de esquizofrenia} con la \textit{Hipertensión esencial}, la \textit{Diabetes mellitus tipo 2} y la \textit{Hipercolesterolemia pura}. Este hallazgo topológico nos confirma que los pacientes con esquizofrenia presentan un riesgo metabólico drásticamente elevado, inducido tanto por el estilo de vida como por los efectos adversos de los fármacos antipsicóticos atípicos suministrados a los pacientes, corroborando empíricamente la teoría de la medicina de redes analizada en el estado del arte \cite{barabasi2011network, hidalgo2009dynamic}.
     \item \textbf{La alta prevalencia de trastornos por uso de sustancias (TUS):} El nodo de \textit{Dependencia de nicotina} y el \textit{Abuso de alcohol} presentan una centralidad de intermediación crítica, actuando como puentes de conexión relacional entre los clústeres psiquiátricos y las patologías pulmonares o hepáticas. El \textit{Abuso de cannabis} también se muestra estrechamente conectado a los núcleos psicóticos activos, sugiriendo su rol como catalizador o factor desencadenante de brotes agudos.
     \item \textbf{Factores Psicosociales y de Apoyo:} Nodos como \textit{Problemas relacionados con el apoyo social y el entorno} e \textit{Incumplimiento del tratamiento} demuestran una alta intermediación. Topológicamente, actúan como conectores entre las variantes graves del trastorno y las recaídas hospitalarias, subrayando la importancia de un enfoque terapéutico que trascienda lo puramente farmacológico.
 \end{enumerate}
@@ -2143,14 +2061,6 @@ Los resultados cartográficos revelan un patrón estructural claro:
 
 
 \section{Conversión de códigos}
-
-\begin{comment}
-
-Uno de los resultados más relevantes y diferenciadores de este trabajo, más allá del ámbito estrictamente predictivo, ha sido la construcción y validación de un recurso de datos estructurado para la conversión y correspondencia bidireccional entre las codificaciones CIE-9 y CIE-10 (\textit{ICD-9-CM} e \textit{ICD-10-CM}) adaptado al contexto clínico en español.
-
-Durante la fase de revisión del estado del arte e inspección de recursos disponibles, se identificó una clara limitación en las fuentes abiertas actuales: los portales oficiales, como el motor de búsqueda del Ministerio de Sanidad de España, están orientados a la consulta puntual e individualizada por parte del usuario a través de interfaces web. Tampoco existía, hasta la fecha, un conjunto de datos tabular completo, unificado y de libre acceso que mapeara de forma directa, masiva e interoperable ambos sistemas normativos incorporando la descripción clínica completa en castellano, dandonos un nicho que rellenar.
-
-\end{comment}
 
 Uno de los resultados más relevantes y diferenciadores de este trabajo, más allá del ámbito estrictamente predictivo, ha sido la construcción y validación de un recurso de datos estructurado para la conversión y correspondencia bidireccional entre las codificaciones CIE-9 y CIE-10 (\textit{ICD-9-CM} e \textit{ICD-10-CM}) adaptado íntegramente al contexto clínico en español.
 
@@ -2489,14 +2399,6 @@ En el ámbito de la ingeniería de \textit{software} y la ciencia de datos, la a
 De cara a organizar el proyecto de manera eficiente, se ha seguido una metodología ágil basada en \textbf{Scrum adaptado} al contexto de investigación y desarrollo individual. Seguir esta metodología me permitira afrontar mejor las incertidumbres de un proyecto de investigación mediante ciclos iterativos e incrementales.
 
 El proyecto se organizó para una duración estimada de \textbf{24 semanas} (6 meses), estructurada en 8 Sprints de 3 semanas de duración cada uno (a excepción del último Sprint dedicado a la memoria final). 
-
-\begin{comment}
-Cada iteración integró las siguientes ceremonias adaptadas:
-\begin{itemize}
-    \item \textbf{Planificación del Sprint (\textit{Sprint Planning}):} Definición de las tareas técnicas y las Historias de Usuario (\textit{Product Backlog}) a abordar en el periodo.
-    \item \textbf{Revisión y Refactorización (\textit{Sprint Review}):} Evaluación de las métricas obtenidas por los modelos de IA y ajuste de los hiperparámetros o del \textit{pipeline} de datos.
-\end{itemize}
-\end{comment}
 
 \section{Desglose de Sprints y Asignación de Tareas}
 
@@ -2974,13 +2876,18 @@ El presente Trabajo de Fin de Grado ha permitido abordar de manera integral el a
 \end{itemize}
 
 
-\subsection{Contextualización en el Estado del Arte y Visión de Futuro}
+\section{Contextualización en el Estado del Arte}
 
-Las aportaciones de este trabajo se encuadran en un contexto donde la inteligencia artificial aplicada a la esquizofrenia se encuentra en un punto de inflexión. Si bien la literatura científica actual destaca el uso de electroencefalografía (EEG) y la neuroimagen estructural mediante radiómica por su notable precisión diagnóstica (alcanzando un AUC promedio de $0.84$ en la identificación de resultados terapéuticos \cite{saboori2025predictive}), la integración multimodal real aún requiere de algoritmos de fusión más sofisticados que eviten la degradación del rendimiento provocada por el ruido de las señales biológicas.
+La revisión exhaustiva de la literatura científica realizada en el Capítulo 2 ha evidenciado que el diagnóstico y monitoreo evolutivo de la esquizofrenia se encuentra en un punto de inflexión metodológico \cite{saboori2025predictive,Tyagi}. El análisis del estado del arte ha permitido consolidar unas conclusiones cardinales que fundamentan y validan cada una de las decisiones de ingeniería de software e inteligencia artificial adoptadas en este Trabajo de Fin de Grado:
 
-En este marco, este proyecto demuestra que el tratamiento de la información clínica estructurada y del lenguaje natural ofrece una vía accesible, interpretable y computacionalmente eficiente que complementa a las técnicas neuroimaginológicas de alto coste. La combinación de modelos predictivos tabulares/textuales con la arquitectura de grafos aporta un plano de interpretabilidad directa que responde a la demanda actual de Inteligencia Artificial Explicable (\textit{Explainable AI - XAI}) en el entorno hospitalario.
-
-El futuro de la disciplina debe priorizar el desarrollo de modelos longitudinales y marcos de XAI que no solo predigan el resultado clínico, sino que proporcionen al especialista una justificación biológica y contextual interpretable \cite{saboori2025predictive}. La convergencia entre el modelado de comorbilidades presentado en este trabajo, la analítica predictiva transparente y la futura integración de biomarcadores neuroimaginológicos marcará el camino definitivo en la transformación de la psiquiatría hacia una medicina de precisión personalizada.
+\begin{enumerate}
+    
+    \item \textbf{Solución a la Paradoja Multimodal y al Desbalanceo:} La literatura clínica describe con preocupación la denominada \textbf{Paradoja Multimodal}, donde la concatenación masiva y temprana de variables heterogéneas amplifica el ruido estadístico degradando la capacidad predictiva \cite{saboori2025predictive}. Este proyecto ha resuelto dicha limitación teórica mediante una \textit{arquitectura híbrida desacoplada}: se delega el procesamiento de comorbilidades discretas en modelos de ensamble basados en árboles (\textbf{LightGBM}), el análisis semántico de las descripciones clínicas en el modelo \textbf{BETO} \cite{canete2020beto, vidal2023algoritmo}, y la clasificación de las comorbilidades sintéticas densas generadas por el Autoencoder Variacional (\textbf{VAE}) en un clasificador \textbf{Perceptrón Multicapa (MLP)} \cite{saboori2025predictive, jimenez2023xai}.
+    
+    \item \textbf{Explicabilidad y Medicina de Redes:} El estado del arte convalidó que las bases de datos de grafos (\textbf{Neo4j}) y los algoritmos de detección de comunidades (\textbf{Louvain}) y centralidad (intermediación y grado) superan la rigidez tabular de las RDBMS tradicionales SQL \cite{yousif2025real}. Estas ofrecen al facultativo un plano relacional intuitivo para visualizar e interpretar cómo se interconectan el espectro psicótico con patologías somáticas dominantes \cite{barabasi2011network, hidalgo2009dynamic}.
+    
+    \item \textbf{Cierre de la brecha en la transferencia tecnológica:} Por último, la literatura evidencia un vacío crítico en la transferencia de los modelos analíticos desde entornos cerrados de laboratorio hacia herramientas de apoyo a la decisión clínica (CDSS) utilizables en tiempo real de consulta \cite{lopez2026ia}. El desarrollo de la interfaz interactiva en \textbf{Streamlit}, que incorpora un motor asíncrono para el autocompletado CIE, un conversor masivo para unificar el histórico regional CIE-9/10 y compatibilidad para operar de manera local, demuestra que es viable transferir la ciencia de datos avanzada a una solución de software intuitiva y robusta para el personal médico del SACYL \cite{lopez2026ia}.
+\end{enumerate}
 
 \section{Limitaciones}
 
@@ -3024,7 +2931,6 @@ A partir de las conclusiones obtenidas y las limitaciones identificadas en este 
 
 \appendix
 \chapter{Anexos}
-En caso de tener información adicional (código fuente extenso, tablas de datos crudos, etc.), se coloca en esta sección.
 
 \begin{landscape}
     \begin{figure}[htbp]
