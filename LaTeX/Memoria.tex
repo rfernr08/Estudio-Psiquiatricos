@@ -377,7 +377,7 @@ El desarrollo de soluciones tecnológicas aplicadas al ámbito de la salud menta
 El tratamiento del conjunto de datos de los 3134 pacientes de Castilla y León se rige por el Reglamento (UE) 2016/679 sobre protección de datos personales (RGPD) \cite{rgpd2016} y por la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD) \cite{lopdgdd2018}. Al clasificarse los datos de salud como <<categorías especiales de datos>> (Art. 9 del RGPD), se aplicó un protocolo estricto de anonimización irreversible previo al análisis. Esto garantiza la imposibilidad de reidentificar a los sujetos, protegiendo el secreto médico y los derechos fundamentales de los pacientes, salvaguardando simultáneamente la integridad estadística necesaria para el entrenamiento de los algoritmos.
 
 \subsection{Regulación de la Inteligencia Artificial de la Unión Europea}
-En consonancia con la normativa comunitaria actual, específicamente la Ley de Inteligencia Artificial de la Unión Europea (\textit{EU AI Act}), los sistemas de software destinados a actuar como herramientas de soporte al diagnóstico o cribado médico entran dentro de la consideración de sistemas de alto riesgo o requieren estrictas salvaguardas de transparencia. Este proyecto se ha diseñado respetando rigurosamente los requisitos de dicha ley:
+En consonancia con la normativa comunitaria actual, específicamente la Ley de Inteligencia Artificial de la Unión Europea (\textit{EU AI Act}) \cite{ai_act}, los sistemas de software destinados a actuar como herramientas de soporte al diagnóstico o cribado médico entran dentro de la consideración de sistemas de alto riesgo o requieren estrictas salvaguardas de transparencia. Este proyecto se ha diseñado respetando rigurosamente los requisitos de dicha ley:
 \begin{itemize}
     \item \textbf{Trazabilidad y calidad del dato:} Garantizada mediante el proceso documentado de curación en el Capítulo 3.
     \item \textbf{Transparencia e interpretabilidad:} Mitigando el efecto <<caja negra>> mediante la capa visual de grafos en Neo4j, permitiendo al clínico comprender la lógica relacional del sistema.
@@ -498,7 +498,7 @@ En la analítica de redes sanitarias, el algoritmo de \textbf{Louvain} para la d
 
 La eficiencia operativa de Neo4j frente a la analítica compleja de datos se asienta sobre su motor de consultas de grafos \textbf{Cypher}. Investigaciones previas sobre el rendimiento computacional de Neo4j confirman que la plataforma solventa con éxito el colapso que penaliza a las RDBMS debido a que el motor realiza recorridos topológicos (\textit{graph traversals}) a una velocidad constante que es independiente del volumen de datos total almacenado, garantizando un tiempo de respuesta de milisegundos en la recuperación de caminos y relaciones profundas de múltiples niveles \cite{yousif2025real}.
 
-Finalmente, la integración de Neo4j en la ciencia de datos psiquiátrica abre un canal de sinergia inédito para el entrenamiento de modelos predictivos de aprendizaje automático \cite{raj2022predicting}. Investigaciones recientes en la detección de patrones de comportamiento complejos han demostrado que la estructura de grafos de Neo4j puede ser aprovechada directamente como un extractor de características topológicas continuas para clasificadores tradicionales \cite{raj2022predicting}. Mediante el uso de 
+Finalmente, la integración de Neo4j en la ciencia de datos psiquiátrica abre un canal de sinergia inédito para el entrenamiento de modelos predictivos de aprendizaje automático \cite{raj2022predicting}. Investigaciones recientes en la detección de patrones de comportamiento complejos han demostrado que la estructura de grafos de Neo4j puede ser aprovechada directamente como un extractor de características topológicas continuas para clasificadores tradicionales \cite{raj2022predicting}. Mediante el uso de la biblioteca de algoritmos de Neo4j
 , se han implementado métodos de incrustación de grafos para transformar la conectividad y topología multidimensional de la red en vectores continuos de baja dimensión \cite{raj2022predicting}. Al combinar estas incrustaciones o embeddings topológicos de la red con conjuntos de datos tradicionales, los clasificadores predictivos experimentan un incremento drástico y consistente en sus métricas de precisión general, sensibilidad, especificidad y $F1\text{-}Score$ \cite{raj2022predicting}. En consecuencia, esta sinergia híbrida demuestra que el modelado relacional en grafos no se limita a ser una capa visual pasiva, sino que constituye un preprocesamiento semántico y predictivo de altísimo valor que justifica el diseño e integración del ecosistema híbrido propuesto en este Trabajo de Fin de Grado.
 
 
@@ -605,9 +605,9 @@ Este capítulo aborda el origen, la estructura y el ciclo de transformación té
 
 \section{Fuente de datos}
 
-El conjunto de datos que constituye la base analítica y experimental de este Trabajo de Fin de Grado proviene de una recopilación de registros clínicos en el Complejo Asistencial Universitario de León (CAULE), y después esta recopilación fue entregada al grupo de investigación ALBA de la Universidad de León para su posterior estudio. El \textit{dataset} original se presenta en un formato tabular Excel y consta de un total de 3134 registros independientes, donde cada fila representa una instancia clínica anonimizada asociada al ingreso de un paciente diagnosticado con esquizofrenia o alguna de sus variantes afines.
+El conjunto de datos que constituye la base analítica y experimental de este Trabajo de Fin de Grado proviene de una recopilación de registros clínicos en el Complejo Asistencial Universitario de León (CAULE), y después esta recopilación fue entregada al grupo de investigación ALBA de la Universidad de León para su posterior estudio. El \textit{dataset} original se presenta en un formato tabular Excel y consta de un total de 3134 registros independientes, donde cada fila representa una instancia clínica anonimizada asociada al ingreso de un paciente diagnosticado con esquizofrenia o alguna de sus variantes afines afines entre los años 2007 y 2019.
 
-Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible realizado por un comité de ética del propio CAULE. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real), garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. El dataset esta conformado por ingresos desde el año 2007 al 2019.
+Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible realizado por un comité de ética del propio CAULE antes de su entrega al equipo de investigación. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real) y se sustituyeron los datos identificativos por el campo ciego de \texttt{Nº Historia}, garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas. El dataset esta conformado por ingresos desde el año 2007 al 2019.
 
 Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas que recogen diferentes dimensiones del perfil del paciente, mas unas 7 columnas adicionales que añaden información recopilatoria. Para facilitar su análisis técnico, estas variables o clumnas se han categorizado en 5 bloques principales descritos en las siguientes figuras.
 
@@ -1000,6 +1000,16 @@ Tras una fase de filtrado analítico, se procedió a la exclusión definitiva de
     \item \textbf{Variables geográficas de baja calidad (\texttt{Provincia}, \texttt{Municipio Residencia (Cód)} y \texttt{Municipio Residencia (Des)}):} Tal y como se justificó en la sección anterior, el análisis de calidad detectó una tasa crítica de valores ausentes e inconsistencias en estos campos. El valor de estas variable ha sido eclipsado por la variable \texttt{Código Postal}, que se mantuvo como el único referente geográfico para el estudio espacial.
 \end{itemize}
 
+\subsection{Prevención del Sesgo de Autotautología}
+
+Un aspecto crítico en la validación metodológica de este sistema de soporte a la decisión clínica (CDSS) consiste en descartar la presencia de fugas de información o relaciones tautológicas entre las variables predictoras (\texttt{Diag 01 Principal} y el bloque de \texttt{Diag 02} a \texttt{Diag 20}) y la variable objetivo (\texttt{DIAG PSQ}) \cite{hansen2025predicting}.
+
+Clínicamente, el motivo de ingreso o sospecha clínica primaria (\texttt{Diag 01}) no se corresponde con el diagnóstico definitivo bajo examen especializado (\texttt{DIAG PSQ}) \cite{saboori2025predictive}. 
+
+Por ejemplo, un paciente puede ingresar en urgencias codificado con un \texttt{Diag 01} correspondiente a \textit{Trastornos delirantes persistentes} (F22) debido a una crisis paranoide aguda; sin embargo, tras semanas de monitorización especializada y análisis del patrón de comorbilidades secundarias (donde se observa abuso crónico de tóxicos o un deterioro progresivo de las funciones ejecutivas en \texttt{Diag 02-20}), el psiquiatra redefine el diagnóstico definitivo en el momento del alta como \textit{Esquizofrenia paranoide} (F20) o \textit{Trastorno esquizoafectivo} (F25) \cite{saboori2025predictive, hansen2025predicting}.
+
+Por lo tanto, el objetivo de nuestros modelos y clasificadores no es una mera correspondencia biunívoca o mapeo trivial de etiquetas equivalentes. El clasificador (e.g., LightGBM o XGBoost) actúa como un interpolador complejo que analiza cómo la presencia de antecedentes desestructurados y motivos de urgencia temporales se correlacionan con la confirmación diagnóstica especializada final. Para asegurar matemáticamente este aislamiento, se ha verificado que la variable objetivo \texttt{DIAG PSQ} (y sus derivadas semánticas) ha sido estrictamente excluida de las variables de entrada, garantizando un entorno experimental riguroso, explicable y libre de sesgo de tautología diagnóstica.
+
 \section{Limpieza y Preprocesamiento de Datos}
 
 Una vez definidas las variables de interés, se procedió a diseñar un pipeline de preprocesamiento y limpieza de datos empleando la librería Pandas en Python. El objetivo de esta fase es transformar un conjunto de registros administrativos crudos en una matriz de información limpia, homogénea y optimizada para los modelos de aprendizaje automático y la base de datos relacional de grafos. 
@@ -1007,7 +1017,7 @@ Una vez definidas las variables de interés, se procedió a diseñar un pipeline
 El flujo de depuración implementado se divide en cuatro bloques secuenciales:
 
 \subsection{Anonimización y Seguridad de la Información}
-Dado que se trabaja con datos médicos de alta sensibilidad sujetos al Reglamento General de Protección de Datos (RGPD), el primer paso crítico consistió en verificar la completa anonimización de la muestra. Se eliminó cualquier columna que pudiera contener datos nominativos directos, transformando el identificador del paciente en el campo alfanumérico ciego \texttt{Nº Historia}. Este proceso garantiza que es matemáticamente imposible revertir la identidad del paciente, permitiendo trabajar en un entorno de desarrollo seguro.
+Dado que se trabaja con datos médicos de alta sensibilidad sujetos al Reglamento General de Protección de Datos (RGPD), el primer paso crítico consistió en verificar y auditar la completa anonimización de la muestra. Al haber sido el conjunto de datos previamente anonimizado de forma irreversible por el comité de ética del CAULE, se comprobó que no existiera ninguna fuga de información nominativa directa, validando que el identificador del paciente se limitara exclusivamente al campo alfanumérico ciego \texttt{Nº Historia}.
 
 \subsection{Filtrado de Registros e Imputación de Valores Nulos}
 En lugar de recurrir a técnicas artificiales de imputación de datos (como la media o modas) que podrían alterar la realidad clínica de la muestra, se optó por una política de filtrado estricto basada en la calidad del dato:
@@ -1038,8 +1048,6 @@ Con el objetivo de optimizar el espacio de características y consolidar la fuer
 Para garantizar la capacidad de generalización de los modelos predictivos y evaluar su rendimiento ante escenarios clínicos reales con pacientes no vistos previamente, se diseñó un protocolo riguroso de partición del conjunto de datos. En el ámbito del aprendizaje automático (\textit{Machine Learning}) y el aprendizaje profundo (\textit{Deep Learning}), evaluar un modelo con los mismos datos con los que ha entrenado no solo puede favorecer un ajuste excesivo(\textit{overfitting}), sino que además produce métricas artificialmente optimistas. En la práctica, esto ocurre porque las medidas obtenidas sobre los datos ya vistos no reflejan adecuadamente el comportamiento del modelo ante nuevos registros clínicos, y con un conjunto de test independiente muy probablemente su capacidad de generalización sería considerablemente menor.
 
 Para mitigar este riesgo, el \textit{dataset} depurado se fragmentó en tres subconjuntos independientes y disjuntos. Esta operación se ejecutó de manera automatizada mediante el módulo \texttt{model\_selection} de la librería \textit{Scikit-Learn} en Python, empleando el método estandarizado \texttt{train\_test\_split}. 
-
-
 
 La distribución porcentual de la muestra y la función técnica de cada partición se detallan a continuación:
 
@@ -1085,16 +1093,64 @@ Entrenar un modelo predictivo bajo esta asimetría estadística provocaría que 
 \subsection{El Rol de la Estratificación}
 Para mitigar el riesgo de exclusión de las clases críticas durante las fases de partición, se implementó una división estratificada estricta. La estratificación actúa como una salvaguarda matemática que fuerza al algoritmo de partición a respetar las proporciones relativas de la Tabla~\ref{tab:frecuencias_target} de forma idéntica en los subconjuntos de entrenamiento, validación y test. Esto garantiza que incluso la clase \texttt{F21} (con solo 5 muestras) cuente con representación proporcional supervisada en todas las etapas, permitiendo que el modelo sea evaluado de manera justa. Esta decisión responde directamente al desafío persistente de desbalanceo de clases extremo documentado en la literatura de psiquiatría computacional \cite{lai2021schizophrenia}.
 
-\subsection{Estrategia Experimental: Gestión del Desbalanceo Mediante Tres Datasets}
+En casos de gran desbalance como nuestro dataset, las clases minoritarias pueden parecer imposibles de conservar sus proporciones exactas en la división, especialmente cuando se trabaja con muestras muy pequeñas, pero el propio algoritmo de estratificación de \textit{Scikit-Learn} aplica un redondeo entero discreto para garantizar que todas las clases cuenten con al menos una muestra supervisada en cada etapa de validación y test, evitando el colapso del cómputo de métricas, como podemos observar en la Tabla~\ref{tab:distribucion_particiones}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrrrr}
+\hline
+\textbf{Diagnóstico} & \textbf{Total} & \textbf{Train} & \textbf{Val.} & \textbf{Test} \\ \hline
+\textbf{F20} & 2277 & 1458 & 364 & 455 \\ 
+\textbf{F22} & 345 & 221 & 55 & 69 \\ 
+\textbf{F29} & 177 & 114 & 28 & 35 \\ 
+\textbf{F25} & 172 & 110 & 28 & 34 \\ 
+\textbf{F23} & 89 & 57 & 14 & 18 \\ 
+\textbf{F60.1} & 13 & 8 & 2 & 3 \\ 
+\textbf{F21} & 5 & 3 & 1 & 1 \\ 
+\textbf{Total} & \textbf{3078} & \textbf{1971} & \textbf{492} & \textbf{615} \\ \hline
+\end{tabular}
+\caption{Distribución numérica real de pacientes por clase diagnóstica en cada partición experimental tras el redondeo de estratificación.}
+\label{tab:distribucion_particiones}
+\end{table}
+
+\subsection{Gestión del Desbalanceo Mediante Tres Datasets}
 Con el propósito de evaluar empíricamente el impacto del desequilibrio de clases en la capacidad de generalización de la IA, y siguiendo las directrices del equipo de tutoría académica, el flujo de trabajo se bifurcó en la gestión y entrenamiento de tres conjuntos de datos diferenciados:
 
 \begin{enumerate}
     \item \textbf{Dataset 1: Original Sanitizado (Línea Base):} Este conjunto mantiene la distribución asimétrica real del entorno hospitalario. Ha sido sometido exclusivamente a la limpieza de registros duplicados, filtrado de nulos y corrección de errores de inscripción manual. Funciona como el grupo de control predictivo para evaluar cómo responden los modelos (XGBoost, Random Forest y BERT) ante el sesgo de la realidad clínica bruta.
     
-    \item \textbf{Dataset 2: Submuestreo Aleatorio (\textit{Random Undersampling - RUS}):} Construido a partir del dataset sanitizado, esta estrategia aplica un recorte agresivo sobre la clase dominante (\texttt{F20}) para aproximar su volumen al tamaño de las clases intermedias. Aunque el submuestreo equilibra las fuerzas del clasificador y reduce el coste computacional, presenta la contrapartida técnica de destruir información potencialmente valiosa del histórico de pacientes de la clase mayoritaria.
+    \item \textbf{Dataset 2: Submuestreo Aleatorio (\textit{Random Undersampling - RUS}):} Construido a partir del dataset sanitizado, esta estrategia aplica un recorte agresivo sobre la clase dominante (\texttt{F20}) para aproximar su volumen al tamaño de las clases intermedias. Aunque el submuestreo equilibra las fuerzas del clasificador y reduce el coste computacional, presenta la contrapartida técnica de destruir información potencialmente valiosa del histórico de pacientes de la clase mayoritaria, por tanto se establecio un umbral máximo de 600 registros por clase.
     
-    \item \textbf{Dataset 3: Enfoque Híbrido Avanzado (RUS + \textit{Variational Autoencoders - VAE}):} Representa la propuesta metodológica más compleja del proyecto. A partir del dataset submuestreado, se diseñó e implementó una red neuronal generativa de tipo Autoencoder Variacional (VAE). Este modelo probabilístico aprende la distribución del espacio latente de las características clínicas de las clases minoritarias (como \texttt{F23}, \texttt{F60.1} o \texttt{F21}) para posteriormente generar vectores de comorbilidades sintéticos pero clínicamente plausibles (\textit{Data Augmentation}). Esta es la mejor forma que tenemos para balancear y expandir nuestro dataset, como se establecio en el estado del arte\cite{saboori2025predictive}.
+    \item \textbf{Dataset 3: Enfoque Híbrido Avanzado (RUS + \textit{Variational Autoencoders - VAE}):} Representa la propuesta metodológica más compleja del proyecto. A partir del dataset submuestreado, se diseñó e implementó una red neuronal generativa de tipo Autoencoder Variacional (VAE). Este modelo probabilístico aprende la distribución del espacio latente de las características clínicas de las clases minoritarias (como \texttt{F23}, \texttt{F60.1} o \texttt{F21}) para posteriormente generar vectores de comorbilidades sintéticos pero clínicamente plausibles. Esta es la mejor forma que tenemos para balancear y expandir nuestro dataset, como se establecio en el estado del arte\cite{saboori2025predictive}. La cantidad de muestras generadas se parametrizó cuidadosamente para evitar la introducción de ruido excesivo, manteniendo la integridad semántica y clínica del conjunto de datos y la predominancia original de algunos diagnósticos, recopilada en la tabla \ref{tab:transicion_datasets}.
 \end{enumerate}
+
+La evolución del tamaño del dataset y cantidad de registros de cada diagnosticos psiquiátrico a traves de las tres estrategias de balanceo de clases (Original, RUS y Híbrido) se detalla en la Tabla~\ref{tab:transicion_datasets}.
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\rowcolor[RGB]{239,239,239}
+\textbf{Código de Diagnóstico (ICD)} & \textbf{Dataset 1} & \textbf{Dataset 2 (RUS)} & \textbf{VAE generadas} & \textbf{Dataset 3 (Híbrido)} \\ \hline
+\textbf{F20} & 2277 & 600 & 0 (Mult. $0.0$) & 600 \\ \hline
+\textbf{F22} & 345 & 345 & 121 (Mult. $0.35$) & 466 \\ \hline
+\textbf{F29} & 177 & 177 & 62 (Mult. $0.35$) & 239 \\ \hline
+\textbf{F25} & 172 & 172 & 60 (Mult. $0.35$) & 232 \\ \hline
+\textbf{F23} & 89 & 89 & 31 (Mult. $0.35$) & 120 \\ \hline
+\textbf{F60.1} & 13 & 13 & 26 (Mult. $2.0$) & 39 \\ \hline
+\textbf{F21} & 5 & 5 & 10 (Mult. $2.0$) & 15 \\ \hline
+\rowcolor[RGB]{245,245,245}
+\textbf{Total} & \textbf{3078} & \textbf{1401} & \textbf{-} & \textbf{1711} \\ \hline
+\end{tabular}%
+}
+\caption{Evolución y transición cuantitativa del número de registros por clase diagnóstica tras la aplicación de algoritmos de submuestreo (RUS) y generación sintética profunda (VAE).}
+\label{tab:transicion_datasets}
+\end{table}
 
 \begin{tcolorbox}[colback=gray!5,colframe=gray!60,title=\textbf{Nota Metodológica: Extracción de Embeddings para VAE}]
 Para garantizar la máxima consistencia semántica en la generación de datos sintéticos, la expansióm del dataset clínico reducido con entradas sinteticas mediante el Autoencoder Variacional (VAE) se realizó utilizando el modelo lingüístico preentrenado \texttt{dccuchile/bert-base-spanish-wwm-cased} (BETO). Este modelo actuó como el codificador de referencia para procesar tanto las descripciones clínicas de texto libre como las agrupaciones de códigos normalizados, proyectando el conocimiento de Castilla y León en el espacio geométrico de 768 dimensiones sobre el cual se entrenó la red probabilística generativa.
@@ -1220,7 +1276,7 @@ El entrenamiento y la optimización hiperparamétrica de arquitecturas basadas e
 La pieza angular de esta estrategia de validación es la estratificación, la cual responde directamente al problema de desbalanceo severo analizado en el capítulo previo. El proceso opera bajo las siguientes directrices técnicas:
 \begin{itemize}
     \item \textbf{Preservación de la distribución de probabilidad}: Al segmentar los datos para la evaluación de los modelos, el algoritmo de división calcula la frecuencia relativa de cada uno de los 7 diagnósticos del espectro esquizofrénico en la muestra global. Posteriormente, fuerza de manera matemática a que tanto el conjunto de validación (utilizado para monitorizar el entrenamiento de BERT) como el conjunto de test (utilizado para la evaluación final de XGBoost y Random Forest) repliquen exactamente esas mismas proporciones.
-    \item \textbf{Garantía de evaluación para clases minoritarias}: Al asegurar que el 15\% de los datos de validación y el 15\% de los datos de test contengan una representación exacta y proporcional de patologías críticas pero poco frecuentes (como el trastorno esquizotípico \texttt{F21}), se evita el riesgo latente de que un modelo sea evaluado sobre un subconjunto donde no existan ejemplos de dicha enfermedad, lo que corrompería el cálculo de las métricas de rendimiento.
+    \item \textbf{Garantía de evaluación para clases minoritarias}: Al asegurar que el 20\% de los datos de validación y el 20\% de los datos de test contengan una representación exacta y proporcional de patologías críticas pero poco frecuentes (como el trastorno esquizotípico \texttt{F21}), se evita el riesgo latente de que un modelo sea evaluado sobre un subconjunto donde no existan ejemplos de dicha enfermedad, lo que corrompería el cálculo de las métricas de rendimiento.
 \end{itemize}
 
 A través de este enfoque de validación indexada y estratificada, se logra un equilibrio óptimo entre el rigor metodológico y la eficiencia computacional. Se garantiza que todos los modelos (tanto los baselines de árboles de decisión como la red neuronal profunda) sean entrenados, calibrados y auditados exactamente bajo las mismas condiciones de distribución de clases, permitiendo una posterior comparación directa y justa de sus capacidades predictivas.
@@ -1234,17 +1290,17 @@ Con el propósito de hallar la arquitectura óptima para la clasificación del e
 Este primer bloque metodológico procesa la matriz de información estructurada correspondiente a las 20 columnas de codificación diagnóstica clínica del historial del paciente. Se han seleccionado seis algoritmos que cubren desde la estructura fundacional hasta las implementaciones de gradiente más modernas del estado del arte:
 
 \begin{itemize}
-\item \textbf{Decision Tree Classifier:} Actúa como la unidad atómica y el modelo base de control. Permite evaluar la capacidad predictiva de un único árbol de decisión mediante particiones binarias del espacio de características, sirviendo como referencia fundamental de complejidad mínima.
+\item \textbf{Decision Tree Classifier \cite{decision_trees}:} Actúa como la unidad atómica y el modelo base de control. Permite evaluar la capacidad predictiva de un único árbol de decisión mediante particiones binarias del espacio de características, sirviendo como referencia fundamental de complejidad mínima.
 
-\item \textbf{Random Forest Classifier:} Implementa una estrategia de ensamble por promediado o \textit{bagging}. Construye una colección de árboles de decisión independientes entrenados sobre subconjuntos aleatorios de los datos y de variables. Su objetivo en este estudio es reducir la varianza intrínseca del clasificador base y evitar el sobreajuste.
+\item \textbf{Random Forest Classifier \cite{random_forest}:} Implementa una estrategia de ensamble por promediado o \textit{bagging}. Construye una colección de árboles de decisión independientes entrenados sobre subconjuntos aleatorios de los datos y de variables. Su objetivo en este estudio es reducir la varianza intrínseca del clasificador base y evitar el sobreajuste.
 
-\item \textbf{Gradient Boosting Classifier:} Representa la transición hacia el aprendizaje secuencial o \textit{boosting}. Construye árboles de forma sucesiva, donde cada nuevo modelo se especializa en minimizar la función de pérdida y corregir los errores cometidos por los árboles predecesores.
+\item \textbf{Gradient Boosting Classifier \cite{gradient_boosting}:} Representa la transición hacia el aprendizaje secuencial o \textit{boosting}. Construye árboles de forma sucesiva, donde cada nuevo modelo se especializa en minimizar la función de pérdida y corregir los errores cometidos por los árboles predecesores.
 
-\item \textbf{XGBoost (Extreme Gradient Boosting):} Optimización avanzada del algoritmo de gradiente que introduce regularización formal L1 y L2 en la función objetivo para controlar la complejidad del modelo. Destaca por su alta velocidad de cómputo y eficiencia en problemas de clasificación multiclase tabulares.
+\item \textbf{XGBoost (Extreme Gradient Boosting) \cite{xgboost}:} Optimización avanzada del algoritmo de gradiente que introduce regularización formal L1 y L2 en la función objetivo para controlar la complejidad del modelo. Destaca por su alta velocidad de cómputo y eficiencia en problemas de clasificación multiclase tabulares.
 
-\item \textbf{LightGBM Classifier:} Variante de \textit{Gradient Boosting} desarrollada por Microsoft que destaca por su estrategia de crecimiento de árboles por hojas (\textit{leaf-wise}) en lugar de por niveles (\textit{level-wise}). Esto permite una convergencia estadística mucho más rápida y un menor consumo de memoria RAM al manejar matrices de alta dimensionalidad.
+\item \textbf{LightGBM Classifier \cite{lightgbm}:} Variante de \textit{Gradient Boosting} desarrollada por Microsoft que destaca por su estrategia de crecimiento de árboles por hojas (\textit{leaf-wise}) en lugar de por niveles (\textit{level-wise}). Esto permite una convergencia estadística mucho más rápida y un menor consumo de memoria RAM al manejar matrices de alta dimensionalidad.
 
-\item \textbf{CatBoost Classifier:} Implementación optimizada de Yandex diseñada específicamente para el tratamiento nativo de variables categóricas mediante la técnica de permutaciones simétricas. Dado que el historial clínico está compuesto exclusivamente por códigos diagnósticos alfanuméricos, este modelo resulta clave por su capacidad para procesar la naturaleza categórica pura de los datos sin requerir mapeos complejos de \textit{one-hot encoding}.
+\item \textbf{CatBoost Classifier \cite{catboost}:} Implementación optimizada de Yandex diseñada específicamente para el tratamiento nativo de variables categóricas mediante la técnica de permutaciones simétricas. Dado que el historial clínico está compuesto exclusivamente por códigos diagnósticos alfanuméricos, este modelo resulta clave por su capacidad para procesar la naturaleza categórica pura de los datos sin requerir mapeos complejos de \textit{one-hot encoding}.
 \end{itemize}
 
 \subsection{Enfoque Semántico: Modelos del Lenguaje Basados en Transformers (BERT)}
@@ -1553,7 +1609,7 @@ Para garantizar la robustez de estas métricas, los resultados expuestos en el s
 
 \section{Evaluación y Comparativa de Modelos de Aprendizaje Profundo}
 
-Las proximas tablas \ref{tab:comparativa_nlp_metricas_original}, \ref{tab:comparativa_nlp_metricas_undersampling} y \ref{tab:comparativa_nlp_metricas_undersampling_vae} sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset despues de un proceso de fine-tuning, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica.
+Las proximas tablas \ref{tab:comparativa_nlp_metricas_original}, \ref{tab:comparativa_nlp_metricas_undersampling} y \ref{tab:comparativa_nlp_metricas_undersampling_vae} sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset despues de un proceso de fine-tuning, evaluado mediante métricas multiclase calculadas usando el promedio ponderado (\textit{weighted average}) para neutralizar el impacto de la dispersión categórica, reflejar el impacto real de la clasificación de acuerdo con la prevalencia epidemiológica de cada patología.
 
 \begin{comment}
 
@@ -1765,17 +1821,16 @@ El estudio de las combinaciones óptimas de hiperparámetros revela patrones rec
 Esta gran cantidad de datos y métricas permite extraer varias conclusiones de interés clínico y metodológico, destacando especialmente qué modelos y estrategias de preprocesamiento ofrecen un rendimiento superior. Estos hallazgos, confirmados exhaustivamente por los resultados del \textit{Grid Search}, se sustentan en patrones de configuración de hiperparámetros muy específicos. Entre las conclusiones más relevantes se encuentran:
 
 \begin{itemize}
-    \item \textbf{Dominio de la información combinada:} La integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (el dataset "combinado") obtiene de forma sistemática los mejores valores de \textit{F1-Score} tanto en la variante Original ($0,7029$) como en la reconstruida con VAE ($0,6857$). Esto evidencia que los códigos de antecedentes ofrecen un contexto estructurado que complementa las sutilezas lingüísticas descritas en el texto narrativo. 
+    \item \textbf{Dominio de la información combinada:} La integración semántica de códigos diagnósticos y descripciones clínicas en texto libre (el dataset "combinado") obtiene de forma sistemática los mejores valores de \textit{F1-Score} tanto en la variante Original ($0,7029$) como en la reconstruida con VAE ($0,3186$). Esto evidencia que los códigos de antecedentes ofrecen un contexto estructurado que complementa las sutilezas lingüísticas descritas en el texto narrativo. 
         
     \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura especializada \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) ha superado de forma consistente a otros modelos multilingües como \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las especificaciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos. El éxito de este proceso (\textit{fine-tuning}) fue posible gracias a la aplicación de tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$), lo cual permitió adaptar la capa de clasificación a la tarea predictiva sin destruir conocimiento lingüístico preentrenado del \textit{Transformer}.
     
-    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score Macro} y su aparición continua como modelo ganador en el \textit{Grid Search}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas. Los modelos pudieron entender estos detalles a la vez por un entrenamiento controlado por decaimento de pesoos de $0,001$ a $0,01$  y una fase de calentamiento del $0,1$, evitando desajustes abruptos al comienzo del entrenamiento
+    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score Macro} y su aparición continua como modelo ganador en el \textit{Grid Search}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas. Los modelos pudieron entender estos detalles a la vez por un entrenamiento controlado por decaimento de pesos de $0,001$ a $0,01$  y una fase de calentamiento del $0,1$, evitando desajustes abruptos al comienzo del entrenamiento
     
-    \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $30\%$ y un \textit{F1-Score} en el rango de $0,2348 - 0,2599$. Sin embargo, la integración de muestras sintéticas (\textbf{RUS + VAE}) permitió estabilizar las fronteras de decisión en las clases minoritarias, dejándonos con métricas competitivas en un espacio de clases completamente balanceado (\textit{F1-Score} de $0,6857$, con precisión y \textit{Recall} equilibrados en torno a $0,6670$ y $0,7285$ respectivamente). Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita , evitando que BERT memorizara en exceso un dataset.
+    \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $30\%$ y un \textit{F1-Score} en el rango de $0,2348 - 0,2599$. Sin embargo, la integración de muestras sintéticas (\textbf{RUS + VAE}) permitió estabilizar las fronteras de decisión en las clases minoritarias, dejándonos con métricas competitivas en un espacio de clases completamente balanceado , dandonos resultados como \textit{F1-Score} alrededor de $0.31$, precisión con picos de $0,49$  y \textit{Recall} equilibrados. Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita , evitando que BERT memorizara en exceso un dataset.
 \end{itemize}
 
 La tabla \ref{fig:comparacion-profundo} compara los resultados de cada uno de los modelos de aprendizaje profundo segun su F1-Score.
-
 
 \begin{figure}
 \centering
@@ -1787,7 +1842,7 @@ La tabla \ref{fig:comparacion-profundo} compara los resultados de cada uno de lo
 
 \section{Evaluación y Comparativa de Modelos de Aprendizaje Tradicional}
 
-Las proximas tablas \ref{tab:comparativa_boost_metricas_original}, \ref{tab:comparativa_boost_metricas_undersampling} y \ref{tab:comparativa_nlp_metricas_undersampling_vae} sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset despues de un proceso de fine-tuning, evaluado mediante métricas multiclase macro para neutralizar el impacto de la dispersión categórica, en el marco de estudio de modelos tradicionales de Maquine Learning.
+Las proximas tablas \ref{tab:comparativa_boost_metricas_original}, \ref{tab:comparativa_boost_metricas_undersampling} y \ref{tab:comparativa_nlp_metricas_undersampling_vae} sintetizan el rendimiento global obtenido por cada modelo según la variante del dataset despues de un proceso de fine-tuning, evaluado mediante métricas multiclase calculadas usando el promedio ponderado (\textit{weighted average}) para neutralizar el impacto de la dispersión categórica, reflejar el impacto real de la clasificación de acuerdo con la prevalencia epidemiológica de cada patología.
 
 \begin{table}[htbp]
 \centering
@@ -2396,7 +2451,7 @@ En el ámbito de la ingeniería de \textit{software} y la ciencia de datos, la a
 
 \section{Metodología de Desarrollo: Scrum Adaptado}
 
-De cara a organizar el proyecto de manera eficiente, se ha seguido una metodología ágil basada en \textbf{Scrum adaptado} al contexto de investigación y desarrollo individual. Seguir esta metodología me permitira afrontar mejor las incertidumbres de un proyecto de investigación mediante ciclos iterativos e incrementales.
+De cara a organizar el proyecto de manera eficiente, se ha seguido una metodología ágil basada en \textbf{Scrum adaptado} al contexto de investigación y desarrollo individual. Seguir esta metodología me permitirá afrontar mejor las incertidumbres de un proyecto de investigación mediante ciclos iterativos e incrementales.
 
 El proyecto se organizó para una duración estimada de \textbf{24 semanas} (6 meses), estructurada en 8 Sprints de 3 semanas de duración cada uno (a excepción del último Sprint dedicado a la memoria final). 
 
