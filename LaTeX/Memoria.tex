@@ -279,31 +279,69 @@
 \markboth{GLOSARIO}{}
 
 \begin{description}
-    \item[AUC-ROC] (\textit{Area Under the Receiver Operating Characteristic curve}): Métrica de rendimiento para evaluar la calidad de un modelo de clasificación a diferentes umbrales.
-    \item[Deep Learning (DL)] Aprendizaje Profundo. Subcampo del \textit{Machine Learning} basado en redes neuronales artificiales de múltiples capas que permiten modelar relaciones complejas en los datos.
-    \item[Recall] Exhaustividad. Métrica de rendimiento que mide la proporción de verdaderos positivos correctamente identificados por un modelo.     
-    \item[ICD/ CIE] (\textit{International Classification of Diseases} / Clasificación Internacional de Enfermedades): Sistema de codificación de trastornos, enfermedades y signos clínicos publicado por la Organización Mundial de la Salud (OMS).
-    \item[Large Language Model (LLM)] Modelo de Lenguaje de Gran Tamaño. Algoritmo de inteligencia artificial basado en arquitecturas de \textit{deep learning} (generalmente \textit{Transformers}) entrenado con textos masivos para procesar y generar lenguaje natural.
-    \item[Machine Learning (ML)] Aprendizaje Automático. Rama de la inteligencia artificial enfocada en el desarrollo de algoritmos que permiten a los ordenadores aprender patrones, tomar decisiones y hacer predicciones a partir de datos sin ser programados explícitamente.
-    \item[Neo4j] Sistema de gestión de bases de datos orientado a grafos, desarrollado en Java, que almacena la información en forma de nodos, relaciones y propiedades.
-    \item[Topología de Grafos] Estudio de la estructura y disposición de los elementos (nodos y aristas) dentro de una red o grafo de conocimiento, analizando métricas de conectividad y centralidad.
-    \item[Deep Learning (DL)] Aprendizaje Profundo. Subcampo del \textit{Machine Learning} basado en redes neuronales artificiales de múltiples capas (ocultas) que permiten extraer y modelar de forma automática características complejas y abstractas a partir de datos en bruto.
-    \item[Comorbilidad] Presencia de uno o más trastornos (o enfermedades) además de la enfermedad o trastorno primario en un mismo paciente.
-    \item[ICD / CIE] (\textit{International Classification of Diseases} / Clasificación Internacional de Enfermedades): Sistema de codificación de trastornos, enfermedades y signos clínicos publicado por la Organización Mundial de la Salud (OMS).
-    \item[Minería de Textos (Text Mining)] Proceso de analizar colecciones de textos en lenguaje natural para extraer patrones, conceptos o información estructurada de alto valor que no es directamente accesible para un algoritmo tradicional. 
-    \item[F1-Score] Métrica de rendimiento que combina la precisión y el recall en un solo valor, calculada como la media armónica de ambas.
-    \item[Clinical Decision Support System (CDSS)] Sistema de Soporte a la Decisión Clínica. Herramienta tecnológica de salud interactiva diseñada para asistir a los profesionales médicos en las tareas de toma de decisiones clínicas, utilizando datos de pacientes y bases de conocimiento para mejorar la calidad asistencial
-    \item[Overfitting] Sobreentrenamiento. Fenómeno en el que un modelo de aprendizaje automático se ajusta demasiado a los datos de entrenamiento, capturando ruido o patrones específicos que no generalizan bien a datos nuevos o no vistos. 
-    \item[Betweenness Centrality] Centralidad de Intermediación. Métrica de teoría de grafos que mide la importancia de un nodo en función del número de veces que actúa como puente o intermediario en el camino más corto entre otros nodos.
-    \item[Embedding] Técnica de representación de datos en un espacio vectorial continuo, donde la proximidad entre vectores refleja la similitud semántica o relacional.
-    \item[PLN] Procesamiento del Lenguaje Natural. Subcampo de la inteligencia artificial que se ocupa de la interacción entre las computadoras y el lenguaje humano, permitiendo a las máquinas entender, interpretar y generar texto en lenguaje natural.
-    \item[Escalabilidad] Capacidad de un sistema de software o base de datos para manejar una cantidad creciente de trabajo o usuarios (por ejemplo, pasar de un entorno local a toda la red hospitalaria regional) sin perder rendimiento.
-    \item[UX / UI] (\textit{User Experience / User Interface}) Conceptos del diseño de software enfocados en la experiencia del usuario (lo intuitivo y fluido que resulta el sistema) y la interfaz de usuario (el diseño visual de las pantallas y controles)
-    \item[Open-Source] Código Abierto. Modelo de desarrollo de software basado en la colaboración abierta, donde el código fuente se pone a disposición del público de forma gratuita, permitiendo que cualquiera lo inspeccione, modifique, reutilice y distribuya bajo ciertas licencias libres.
-    \item[Redes Neuronales de Grafos] (\textit{Graph Neural Networks, GNNs})   Tipo de arquitectura de aprendizaje profundo diseñada para procesar datos estructurados de forma nativa como grafos, permitiendo realizar predicciones a nivel de nodos, relaciones o del grafo completo al capturar las dependencias complejas entre los elementos vecinos.
-    \item[Umbrales de PANSS] Puntos de corte porcentuales en la Escala de los Síndromes Positivo y Negativo (como reducciones del 20\% o 30\%) para definir el éxito terapéutico en psicosis; su falta de estandarización genera heterogeneidad muestral en los modelos predictivos.
-    \item[Black Box] Caja Negra. Término utilizado para describir sistemas o modelos de inteligencia artificial cuya lógica interna es opaca o difícil de interpretar, lo que dificulta la comprensión de cómo se toman las decisiones o se generan las predicciones.
-    \item[EHR] \textbf{Electronic Health Record} (Historia Clínica Electrónica): Registro digitalizado, sistemático y estructurado de la información médica y sociodemográfica de un paciente a lo largo del tiempo.
+    \item[\textbf{API} \textit{(Application Programming Interface):}] Interfaz de programación de aplicaciones que define los protocolos y métodos estándar para permitir la comunicación, intercambio seguro de datos e interoperabilidad entre diferentes componentes de software.
+    
+    \item[\textbf{AUC-ROC} \textit{(Area Under the Receiver Operating Characteristic curve):}] Área bajo la curva de características operativas del receptor. Métrica de rendimiento acumulada que evalúa la capacidad de un clasificador multiclase para discriminar entre las diferentes categorías a lo largo de diversos umbrales de decisión.
+    
+    \item[\textbf{BETO}:] Modelo lingüístico de procesamiento del lenguaje natural basado en la arquitectura Transformer BERT, preentrenado de manera nativa y monolingüe con un cantidad masiva exclusiva en español.
+    
+    \item[\textbf{Betweenness Centrality} \textit{(Centralidad de Intermediación):}] Métrica de la teoría de grafos que cuantifica la importancia de un nodo en función de la frecuencia con la que actúa como puente o intermediario en los caminos más cortos que conectan a todos los demás nodos de la red.
+    
+    \item[\textbf{Black Box} \textit{(Caja Negra):}] Término utilizado para describir sistemas o modelos de inteligencia artificial cuya lógica interna es opaca o difícil de interpretar, lo que dificulta la comprensión de cómo se toman las decisiones o se generan las predicciones.
+    
+    \item[\textbf{CIE / ICD} \textit{(Clasificación Internacional de Enfermedades / International Classification of Diseases):}] Catálogo normativo de codificación diagnóstica estandarizado internacionalmente por la Organización Mundial de la Salud (OMS) para el registro sistemático de enfermedades, trastornos, síntomas y causas externas.
+    
+    \item[\textbf{Clinical Decision Support System (CDSS)} \textit{(Sistema de Soporte a la Decisión Clínica):}] Ecosistema tecnológico interactivo diseñado específicamente para asistir a los profesionales médicos en la consulta en la toma de decisiones complejas, , utilizando datos de pacientes y bases de conocimiento para mejorar la calidad asistencial.
+    
+    \item[\textbf{Comorbilidad:}] Presencia o coexistencia de una o más patologías o trastornos de carácter físico o mental adicionales a la enfermedad primaria dentro de un mismo paciente.
+    
+    \item[\textbf{Cypher:}] Lenguaje declarativo y optimizado de consulta de grafos utilizado nativamente por el motor de bases de datos Neo4j para realizar inserciones, actualizaciones y búsquedas topológicas ágiles sobre la red.
+    
+    \item[\textbf{Dataset:}] Conjunto estructurado de datos u observaciones organizado de forma lógica en formato tabular o de fichero para su posterior procesamiento analítico.
+    
+    \item[\textbf{Deep Learning (DL)} \textit{(Aprendizaje Profundo):}] Subcampo del \textit{Machine Learning} basado en el entrenamiento de redes neuronales artificiales profundas de múltiples capas ocultas, capaces de extraer y modelar representaciones jerárquicas y abstractas de los datos en bruto de forma automatizada.
+    
+    \item[\textbf{EHR} \textit{(Electronic Health Record / Historia Clínica Electrónica):}] Registro digitalizado, sistemático e interoperable de la información médica, clínica y demográfica de un paciente a lo largo de su trayectoria en la red de asistencia sanitaria.
+    
+    \item[\textbf{Embedding} \textit{(Incrustación Vectorial):}] Técnica de representación densa de información de alta dimensionalidad en un espacio vectorial continuo de baja dimensión, donde la proximidad geométrica entre vectores refleja su similitud semántica.
+    
+    \item[\textbf{Escalabilidad:}] Capacidad de un sistema informático o base de datos que determina su capacidad para manejar un volumen creciente de datos, transacciones o consultas concurrentes de forma eficiente sin perder el rendimiento general.
+    
+    \item[\textbf{Fine-tuning} \textit{(Ajuste Fino):}] Técnica de transferencia de aprendizaje en la que un modelo lingüístico masivo preentrenado (como BETO) es sometido a un entrenamiento supervisado adicional con una muestra local para especializar sus capas en una tarea diagnóstica específica.
+    
+    \item[\textbf{Large Language Model (LLM)} \textit{(Modelo de Lenguaje de Gran Tamaño):}] Modelo de Inteligencia Artificial profunda basado en mecanismos de auto-atención (Transformers) y entrenado de forma masiva sobre texto para comprender, resumir y generar lenguaje natural con un alto nivel de abstracción conceptual.
+    
+    \item[\textbf{Machine Learning (ML)} \textit{(Aprendizaje Automático):}] Rama de la Inteligencia Artificial enfocada en el diseño de algoritmos matemáticos que permiten a los ordenadores identificar patrones implícitos, generalizar conocimientos y tomar decisiones predictivas a partir de datos históricos sin ser programados explícitamente para ello.
+    
+    \item[\textbf{Mapeo / Mapear:}] Proceso algorítmico y metodológico orientado a establecer relaciones de equivalencia, correspondencia o traducción semántica entre variables de diferentes esquemas de datos o normativas internacionales.
+    
+    \item[\textbf{Minería de Textos} \textit{(Text Mining):}] Conjunto de técnicas analíticas y computacionales destinadas a procesar colecciones masivas de texto en lenguaje natural con el fin de extraer entidades conceptuales, patrones y relaciones semánticas de alto valor.
+    
+    \item[\textbf{Neo4j:}] Sistema NoSQL de gestión de bases de datos orientado de manera nativa a grafos, desarrollado en Java, que almacena la información estructurada lógicamente en forma de nodos (entidades), relaciones (aristas) y propiedades (clave-valor).
+    
+    \item[\textbf{NoSQL:}] Paradigma de almacenamiento de información que prescinde del esquema clásico de tablas rígidas y uniones pesadas de SQL. Está diseñado específicamente para procesar de manera escalonada grandes volúmenes de datos dispersos, dinámicos o altamente interconectados.
+    
+    \item[\textbf{Open-Source} \textit{(Código Abierto):}] Modelo de licenciamiento y desarrollo de software basado en la colaboración abierta, donde el código fuente se pone a disposición pública de forma gratuita, permitiendo la libre inspección, auditoría, modificación y redistribución por parte de la comunidad científica y técnica.
+    
+    \item[\textbf{Overfitting} \textit{(Sobreajuste o Sobreentrenamiento):}] Error metodológico en el que un algoritmo se ajusta de manera excesiva a la muestra de entrenamiento, memorizando el ruido, los sesgos y las fluctuaciones fortuitas del conjunto, causando que su rendimiento se degrade ante datos nuevos o no vistos.
+    
+    \item[\textbf{Pipeline:}] Cadena secuencial de procesos y utilidades de desarrollo lógicamente organizados, en la cual la salida de un módulo (como el filtrado y anonimización de datos) alimenta de forma automatizada la entrada del paso siguiente (el entrenamiento del clasificador).
+    
+    \item[\textbf{PLN / NLP} \textit{(Procesamiento del Lenguaje Natural / Natural Language Processing):}]  Subcampo de la inteligencia artificial centrado en modelar la interacción lingüística entre los ordenadores y el lenguaje humano, permitiendo a las máquinas entender, interpretar y generar texto en lenguaje natural.
+    
+    \item[\textbf{Proxy / Proxies:}] Variable medible o indicador de bajo coste que se utiliza de manera indirecta para caracterizar o aproximar la magnitud de un fenómeno subyacente que es físicamente difícil de observar directamente (como el uso de desorganizaciones del discurso clínico para cuantificar alteraciones cerebrales).
+    
+    \item[\textbf{RDBMS} \textit{(Relational Database Management System):}] Sistemas tradicionales de gestión de bases de datos relacionales SQL basados en un esquema bidimensional de tablas rígidas interconectadas mediante claves foráneas y uniones estructuradas.
+    
+    \item[\textbf{Redes Neuronales de Grafos} \textit{(Graph Neural Networks, GNNs):}] Tipo de arquitectura de aprendizaje profundo diseñada para procesar nativamente datos estructurados como redes complejas, permitiendo realizar predicciones a nivel de nodos, relaciones o del grafo completo al capturar las dependencias complejas entre los elementos vecinos.
+    
+    \item[\textbf{Scraping / Scrapear:}] Proceso automatizado de extracción de datos, textos, códigos o estructuras documentales desde portales en línea, recursos de red o bases de datos de acceso libre para su almacenamiento y análisis local.
+    
+    \item[\textbf{Token / Tokenización:}] Unidad mínima de texto (como palabras completas, subpalabras, caracteres o códigos numéricos) en la que un procesador divide una cadena de lenguaje natural para que sea compatible con los mecanismos de atención matemática de un modelo Transformer.
+    
+    \item[\textbf{Topología de Grafos:}] Estudio matemático y computacional de la disposición y propiedades estructurales de los elementos de una red (nodos y aristas), analizando sus conexiones relacionales a través de medidas de centralidad, densidad y modularidad.
+    
+    \item[\textbf{UX / UI} \textit{(User Experience / User Interface):}] Disciplinas del diseño de software enfocadas en optimizar la experiencia subjetiva del usuario (la fluidez, accesibilidad e intuición del sistema) y diseñar de manera estructurada los paneles e interfaces de las pantallas (facilidad de lectura y jerarquía visual plana).
 \end{description}
 
 % -----------------------------------------
@@ -339,7 +377,7 @@ La génesis de este proyecto se fundamenta en la oportunidad de explotar un conj
     \textbf{Interoperabilidad latente:} Se sospecha la existencia de una desconexión informática en el histórico de registros debido a la coexistencia de las codificaciones ICD-9 e ICD-10. Se plantea que es posible unificar esta brecha mediante un motor de traducción bidireccional automatizado, resolviendo un problema de compatibilidad sin necesidad de alterar los registros originales.
 
 \subsection{Hipótesis epidemiológicas y de transferencia (El enfoque geográfico y de usuario)}
-    \textbf{Heterogeneidad geográfica:} Se asume que la prevalencia y la frecuencia de los diagnósticos del espectro esquizofrénico presentan variaciones espaciales significativas dentro de la provincia, las cuales pueden ser visibilizadas mediante cartografía digital para apoyar la toma de decisiones en salud pública.
+    \textbf{Heterogeneidad geográfica:} Se asume que la distribución y la frecuencia de los diagnósticos del espectro esquizofrénico presentan variaciones espaciales significativas dentro de la provincia, las cuales pueden ser visibilizadas mediante cartografía digital para apoyar la toma de decisiones en salud pública.
 
     \textbf{Viabilidad de la transferencia tecnológica:} Por último, se hipotetiza que la complejidad de los modelos predictivos de inteligencia artificial y de las consultas de grafos puede ser encapsulada con éxito en una interfaz web minimalista de una sola página, garantizando que una herramienta de alta densidad tecnológica sea adoptada de forma inmediata por el personal médico en su consulta diaria.
 
@@ -1159,7 +1197,7 @@ Para garantizar la máxima consistencia semántica en la generación de datos si
 La comparación sistemática del rendimiento de los modelos sobre estos tres escenarios compositivos permite determinar si el uso de arquitecturas generativas profundas (VAE) penaliza o beneficia la frontera de decisión del clasificador multiclase frente a las aproximaciones estadísticas tradicionales.
 \section{Mapas y Frecuencias Geoespaciales}
 
-Como último eslabón del tratamiento del \textit{dataset}, se diseñó un módulo de geoprocesamiento orientado a la representación espacial de la prevalencia diagnóstica. El objetivo de este apartado es describir la arquitectura de datos y las herramientas de \textit{software} utilizadas para la generación de los mapas epidemiológicos, postergando la interpretación clínica y el análisis de los hallazgos para el capítulo de resultados de esta memoria.
+Como último eslabón del tratamiento del \textit{dataset}, se diseñó un módulo de geoprocesamiento orientado a la representación espacial de la frecuencia de casos diagnosticados. El objetivo de este apartado es describir la arquitectura de datos y las herramientas de \textit{software} utilizadas para la generación de los mapas epidemiológicos, postergando la interpretación clínica y el análisis de los hallazgos para el capítulo de resultados de esta memoria.
 
 Los mapas divididos por Codigo Postal se extrayeron de un repositorio público de GitHub \cite{github_geojson}, que contiene la delimitación vectorial de los códigos postales de España en formato GeoJSON. Estos archivo se utilizaron como base generar mapas interactivos.
 
@@ -1189,7 +1227,7 @@ Gracias a esta arquitectura, el sistema es capaz de inyectar dinámicamente el n
 
 Se crearon 3 mapas coropléticos independientes, para mostrar la presencia de los diagnosticos no solo en la zona central del estudio, León, sino también teniendo en cuenta el resto de España, ya que el dataset incluye pacientes de otras provincias.
 \begin{itemize}    
-    \item Mapa 1: Distribución de la frecuencia de casos diagnosticados con cualquier trastorno del espectro esquizofrénico (F20, F22, F23, F25, F29, etc) encontrados en el dataset por código postal en León. Figura~\ref{fig:mapa_leon} muestra un ejemplo de este mapa, donde se puede observar la distribucion y prevalencia de casos en determinadas zonas de la provincia.
+    \item Mapa 1: Distribución de la frecuencia de casos diagnosticados con cualquier trastorno del espectro esquizofrénico (F20, F22, F23, F25, F29, etc) encontrados en el dataset por código postal en León. Figura~\ref{fig:mapa_leon} muestra un ejemplo de este mapa, donde se puede observar la distribucion y concentración de casos en determinadas zonas de la provincia.
     \item Mapa 2: Distribución de la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal en León. Figura~\ref{fig:mapa_frecuencia_leon} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos diagnosticados con esquizofrenia en determinadas zonas de la provincia.
     \item Mapa 3: Distribución de la frecuencia de casos diagnosticados con Esquizofrenia (cualquier tipo) por código postal en España. Figura~\ref{fig:mapa_frecuencia_espana} muestra un ejemplo de este mapa, donde se puede observar la concentración de casos diagnosticados con esquizofrenia en determinadas zonas de España que se encuentran en el dataset.
 \end{itemize}
@@ -1746,9 +1784,9 @@ Combinado & \texttt{BETO cased} & 0,7285 & 0,6857 & 0,6670 & 0,7285 \\ \hline
 \rowcolor[RGB]{239,239,239}
 \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
-Códigos & \texttt{BETO uncased} & 0,5000 & 0,2348 & 0,2409 & 0,2453 \\
-Descripciones & \texttt{bert-multilingual} & 0,5223 & 0,2599 & 0,2984 & 0,2629 \\
-Combinado & \texttt{BETO cased} & 0,5223 & 0,2489 & 0,2717 & 0,2511 \\ \hline
+Códigos & \texttt{BETO uncased} & 0.5446 & 0.5137 & 0.5096 & 0.5446 \\
+Descripciones & \texttt{bert-multilingual} & 0.5446 & 0.4670 & 0.4179 & 0.5446 \\
+Combinado & \texttt{BETO cased} & 0.5223 & 0.4843 & 0.47795 & 0.5223 \\ \hline
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset undersampling.}
