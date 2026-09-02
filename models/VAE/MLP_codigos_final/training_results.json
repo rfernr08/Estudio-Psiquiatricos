@@ -7,14 +7,14 @@
     128,
     64
   ],
-  "dropout_rate": 0.2,
-  "learning_rate": 2e-05,
-  "batch_size": 16,
-  "epochs": 5,
+  "dropout_rate": 0.4,
+  "learning_rate": 0.0001,
+  "batch_size": 64,
+  "epochs": 100,
   "weight_decay": 0.01,
-  "accuracy": 0.3392857142857143,
-  "f1": 0.3186909733784734,
-  "precision": 0.3585563393656836,
-  "recall": 0.3392857142857143,
-  "seed": 2862320720
+  "accuracy": 0.4419642857142857,
+  "f1": 0.41868284284494955,
+  "precision": 0.4164444186765615,
+  "recall": 0.4419642857142857,
+  "seed": 4002755704
 }

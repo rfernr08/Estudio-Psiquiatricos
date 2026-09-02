@@ -1,0 +1,101 @@
+=== Configuración 1/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128], 'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 60, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.420, F1: 0.386, Precision: 0.386, Recall: 0.420
+
+=== Configuración 2/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.455, F1: 0.441, Precision: 0.435, Recall: 0.455
+
+=== Configuración 3/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128, 64], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.442, F1: 0.425, Precision: 0.435, Recall: 0.442
+
+=== Configuración 4/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128, 64], 'learning_rate': 0.0001, 'batch_size': 64, 'epochs': 100, 'dropout': 0.4, 'weight_decay': 0.01}
+Accuracy: 0.487, F1: 0.447, Precision: 0.423, Recall: 0.487
+
+=== Configuración 5/6 ===
+Evaluating MLP with params={'hidden_dims': [512, 256, 128], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.4, 'weight_decay': 0.001}
+Accuracy: 0.438, F1: 0.425, Precision: 0.417, Recall: 0.438
+
+=== Configuración 6/6 ===
+Evaluating MLP with params={'hidden_dims': [512, 256, 128], 'learning_rate': 0.0001, 'batch_size': 64, 'epochs': 100, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.442, F1: 0.434, Precision: 0.431, Recall: 0.442
+
+
+=== RESUMEN DE RESULTADOS DEL GRID SEARCH ===
+    hidden_dims  learning_rate  batch_size  epochs  dropout  weight_decay  accuracy       f1  precision   recall
+ [256, 128, 64]         0.0001          64     100      0.4         0.010  0.486607 0.447456   0.422963 0.486607
+     [256, 128]         0.0003          64      80      0.3         0.001  0.455357 0.441483   0.435201 0.455357
+[512, 256, 128]         0.0001          64     100      0.3         0.001  0.441964 0.433813   0.431461 0.441964
+[512, 256, 128]         0.0003          64      80      0.4         0.001  0.437500 0.425423   0.417058 0.437500
+ [256, 128, 64]         0.0003          64      80      0.3         0.001  0.441964 0.425403   0.435025 0.441964
+     [256, 128]         0.0005          64      60      0.3         0.001  0.419643 0.385791   0.385810 0.419643
+
+Evaluating MLP with params={'hidden_dims': [256, 128], 'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 60, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.455, F1: 0.433, Precision: 0.423, Recall: 0.455
+
+=== Configuración 2/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.424, F1: 0.406, Precision: 0.397, Recall: 0.424
+
+=== Configuración 3/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128, 64], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.455, F1: 0.422, Precision: 0.410, Recall: 0.455
+
+=== Configuración 4/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128, 64], 'learning_rate': 0.0001, 'batch_size': 64, 'epochs': 100, 'dropout': 0.4, 'weight_decay': 0.01}
+Accuracy: 0.460, F1: 0.406, Precision: 0.394, Recall: 0.460
+
+=== Configuración 5/6 ===
+Evaluating MLP with params={'hidden_dims': [512, 256, 128], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.4, 'weight_decay': 0.001}
+Accuracy: 0.446, F1: 0.429, Precision: 0.432, Recall: 0.446
+
+=== Configuración 6/6 ===
+Evaluating MLP with params={'hidden_dims': [512, 256, 128], 'learning_rate': 0.0001, 'batch_size': 64, 'epochs': 100, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.455, F1: 0.435, Precision: 0.425, Recall: 0.455
+
+
+=== RESUMEN DE RESULTADOS DEL GRID SEARCH ===
+    hidden_dims  learning_rate  batch_size  epochs  dropout  weight_decay  accuracy       f1  precision   recall
+[512, 256, 128]         0.0001          64     100      0.3         0.001  0.455357 0.435017   0.424537 0.455357
+     [256, 128]         0.0005          64      60      0.3         0.001  0.455357 0.433384   0.423312 0.455357
+[512, 256, 128]         0.0003          64      80      0.4         0.001  0.446429 0.428616   0.432299 0.446429
+ [256, 128, 64]         0.0003          64      80      0.3         0.001  0.455357 0.422343   0.410014 0.455357
+     [256, 128]         0.0003          64      80      0.3         0.001  0.424107 0.406145   0.396554 0.424107
+ [256, 128, 64]         0.0001          64     100      0.4         0.010  0.459821 0.405672   0.393680 0.459821
+
+
+=== Configuración 1/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128], 'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 60, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.464, F1: 0.438, Precision: 0.426, Recall: 0.464
+
+=== Configuración 2/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.442, F1: 0.417, Precision: 0.407, Recall: 0.442
+
+=== Configuración 3/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128, 64], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.397, F1: 0.389, Precision: 0.394, Recall: 0.397
+
+=== Configuración 4/6 ===
+Evaluating MLP with params={'hidden_dims': [256, 128, 64], 'learning_rate': 0.0001, 'batch_size': 64, 'epochs': 100, 'dropout': 0.4, 'weight_decay': 0.01}
+Accuracy: 0.455, F1: 0.433, Precision: 0.422, Recall: 0.455
+
+=== Configuración 5/6 ===
+Evaluating MLP with params={'hidden_dims': [512, 256, 128], 'learning_rate': 0.0003, 'batch_size': 64, 'epochs': 80, 'dropout': 0.4, 'weight_decay': 0.001}
+Accuracy: 0.464, F1: 0.453, Precision: 0.449, Recall: 0.464
+
+=== Configuración 6/6 ===
+Evaluating MLP with params={'hidden_dims': [512, 256, 128], 'learning_rate': 0.0001, 'batch_size': 64, 'epochs': 100, 'dropout': 0.3, 'weight_decay': 0.001}
+Accuracy: 0.460, F1: 0.439, Precision: 0.431, Recall: 0.460
+
+
+=== RESUMEN DE RESULTADOS DEL GRID SEARCH ===
+    hidden_dims  learning_rate  batch_size  epochs  dropout  weight_decay  accuracy       f1  precision   recall
+[512, 256, 128]         0.0003          64      80      0.4         0.001  0.464286 0.452870   0.448621 0.464286
+[512, 256, 128]         0.0001          64     100      0.3         0.001  0.459821 0.438975   0.431327 0.459821
+     [256, 128]         0.0005          64      60      0.3         0.001  0.464286 0.438172   0.426421 0.464286
+ [256, 128, 64]         0.0001          64     100      0.4         0.010  0.455357 0.433002   0.422191 0.455357
+     [256, 128]         0.0003          64      80      0.3         0.001  0.441964 0.416919   0.407490 0.441964
+ [256, 128, 64]         0.0003          64      80      0.3         0.001  0.397321 0.389108   0.393830 0.397321

@@ -1,14 +1,12 @@
-- Tablas y figuras: ok en dejar su colocación para el final, pero en la versión definitiva deben quedar correctamente situadas, numeradas y referenciadas en el texto.
-- El mapa de la página 58 del PDF (44 de la memoria) aparece aislado en una página. Habría que corregir su colocación
+- Tablas y figuras: ok en dejar su colocación para el final, pero en la versión definitiva deben quedar correctamente situadas, numeradas y referenciadas en el texto. # Texto y numeracion para las tablas del dataset.
+? El mapa de la página 58 del PDF (44 de la memoria) aparece aislado en una página. Habría que corregir su colocación
 - En resultados, intentaría evitar separar demasiado la tabla/gráfica de su interpretación. En general queda más natural presentar el resultado y explicarlo inmediatamente después.
-
-
-- Por último, revisaría algunas afirmaciones demasiado fuertes en las conclusiones. Por ejemplo, decir que LightGBM + VAE proporciona una solución «libre de sesgos predictivos» no queda demostrado por los experimentos. Es preferible decir que mitiga el efecto del desbalanceo o que presenta ventajas de coste computacional y despliegue.
-- RUS y VAE: deja explícito que la generación de datos sintéticos se realizaron únicamente sobre el conjunto de entrenamiento, después de separar los datos. Validación y test deben mantenerse con datos reales y no participar en la generación de las muestras sintéticas. Si es así como lo has hecho, simplemente explícalo claramente con un flujo tipo: división de datos → RUS/VAE solo sobre train → entrenamiento → evaluación sobre test.
 - Código: no creo que el tribunal vaya a hacer una revisión exhaustiva, pero sí conviene que esté mínimamente limpio y organizado por si necesitan consultarlo.
-- GitHub: en esta ocasión, con mencionar en la memoria que has utilizado GitHub como repositorio y para el control de versiones, siguiendo buenas prácticas de programación, sería suficiente. No veo necesario incluir el enlace al repositorio.
 
 
+X GitHub: en esta ocasión, con mencionar en la memoria que has utilizado GitHub como repositorio y para el control de versiones, siguiendo buenas prácticas de programación, sería suficiente. No veo necesario incluir el enlace al repositorio.
+X Por último, revisaría algunas afirmaciones demasiado fuertes en las conclusiones. Por ejemplo, decir que LightGBM + VAE proporciona una solución «libre de sesgos predictivos» no queda demostrado por los experimentos. Es preferible decir que mitiga el efecto del desbalanceo o que presenta ventajas de coste computacional y despliegue.
+X RUS y VAE: deja explícito que la generación de datos sintéticos se realizaron únicamente sobre el conjunto de entrenamiento, después de separar los datos. Validación y test deben mantenerse con datos reales y no participar en la generación de las muestras sintéticas. Si es así como lo has hecho, simplemente explícalo claramente con un flujo tipo: división de datos → RUS/VAE solo sobre train → entrenamiento → evaluación sobre test.
 X Organiza el glosario alfabéticamente. Aparece DL repetido y convendría añadir algunos términos que utilizas a lo largo de la memoria, como proxy/proxies, pipeline, dataset, mapear, etc.
 X Mapas: ahora mismo lo que estás calculando principalmente es el número/frecuencia de casos por código postal, no la prevalencia. Para hablar estrictamente de prevalencia necesitarías normalizar por la población de cada zona (por ejemplo, casos por 10.000 habitantes). Si no vas a incorporar esos datos, cambia expresiones como «prevalencia» por «frecuencia de casos», «distribución de casos» o «concentración de casos registrados», especialmente cuando compares zonas urbanas y rurales.
 X Registro de tutorías: no es necesario que lo incluyas si no se exige expresamente en la memoria.

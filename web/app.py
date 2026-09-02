@@ -1,68 +1,54 @@
 import streamlit as st
 import polars as pl
 import logica 
-import os # Nueva: Para comprobar si los archivos existen
-import streamlit.components.v1 as components # Nueva: Para renderizar HTML
+import os 
+import streamlit.components.v1 as components 
 
-# 1. Configuración de página y caché de datos
 st.set_page_config(page_title="Conversor ICD", layout="wide")
 
-# Caché para que el CSV de 9MB se cargue solo una vez en la RAM
 @st.cache_data
 def cargar_datos():
-    return logica.cargar_diccionario(r"TFG\dataset\Conversor_Definitivo.csv") # Cambia esto por tu ruta real
+    return logica.cargar_diccionario(r"TFG\dataset\Conversor_Definitivo.csv")
 
 df_maestro = cargar_datos()
 
 st.title("Conversor y Buscador de Diagnósticos (ICD-9 / ICD-10)")
 
-# 2. Creación de las Pestañas
 tab_buscador, tab_lotes, tab_mapas = st.tabs(["Buscador Individual", "Conversor por Lotes", "Mapas de Investigacion"])
 
-# --- PESTAÑA 1: BUSCADOR INDIVIDUAL ---
 with tab_buscador:
     st.header("Búsqueda y Traducción de Diagnósticos")
     
-    # Añadimos "Descripción" a las opciones
     tipo_busqueda = st.radio("Buscar a partir de:", ["ICD10", "ICD9", "Descripción"], horizontal=True)
     
-    # 1. El usuario escribe una parte del código o texto
     termino_input = st.text_input(f"Escribe el {tipo_busqueda} (o una parte) para buscar:")
     
     if termino_input:
-        # Buscamos coincidencias parciales con Polars (¡es rapidísimo!)
+
         sugerencias_df = logica.buscar_codigo(df_maestro, termino_input, tipo_busqueda, exacto=False)
         
         if len(sugerencias_df) == 0:
             st.warning("No se encontraron coincidencias. Prueba con otra palabra o código.")
         else:
-            # Extraemos la lista de opciones para el selector
             columna_real = "Description" if tipo_busqueda == "Descripción" else tipo_busqueda
             opciones = sugerencias_df.get_column(columna_real).to_list()
-            
-            # Si hay demasiadas sugerencias, avisamos para que refine la búsqueda
             if len(opciones) > 100:
                 st.info(f"Se encontraron {len(opciones)} coincidencias. Mostrando las 100 primeras. Sé más específico si no encuentras la tuya.")
                 opciones = opciones[:100]
             
-            # 2. El usuario selecciona la coincidencia exacta de la lista de sugerencias
             seleccion_exacta = st.selectbox("Sugerencias encontradas (Selecciona una):", opciones)
             
             if seleccion_exacta:
                 st.divider()
                 
-                # Buscamos TODAS las filas que coinciden con la selección exacta
                 resultado_final = logica.buscar_codigo(df_maestro, seleccion_exacta, tipo_busqueda, exacto=True)
                 
-                # Extraemos listas de valores ÚNICOS para cada columna
                 icd10_vals = resultado_final.get_column("ICD10").unique().to_list()
                 icd9_vals = resultado_final.get_column("ICD9").unique().to_list()
                 desc_vals = resultado_final.get_column("Description").unique().to_list()
                 
-                # Filtramos los "NN" de la lista de ICD-9
                 icd9_vals_limpios = [val for val in icd9_vals if val != "NN"]
                 
-                # Formateamos las listas como texto con viñetas (Markdown) para la UI
                 str_icd10 = "\n".join([f"• {val}" for val in icd10_vals])
                 str_desc = "\n".join([f"• {val}" for val in desc_vals])
                 
@@ -71,7 +57,6 @@ with tab_buscador:
                 else:
                     str_icd9 = "No disponible en ICD-9"
                 
-                # 3. Presentación visual (UI) en formato "Ficha" para múltiples resultados
                 st.subheader("Datos del Diagnóstico")
                 col1, col2, col3 = st.columns(3)
                 
@@ -82,11 +67,9 @@ with tab_buscador:
                 with col3:
                     st.warning(f"**Descripción (Español):**\n\n{str_desc}")
                 
-                # 4. Botón de la API en inglés
                 st.write("") 
                 if st.button("Obtener descripción en Inglés (API NLM)"):
                     with st.spinner('Consultando base de datos internacional...'):
-                        # Usamos el primer ICD-10 de la lista para buscar en la API
                         texto_ingles = logica.obtener_ingles_api(icd10_vals[0])
                         if texto_ingles not in ["Error de conexión", "No encontrado en API"]:
                             st.success(f"**Inglés:** {texto_ingles}")
@@ -94,7 +77,6 @@ with tab_buscador:
                             st.error(texto_ingles)
                 
 
-# --- PESTAÑA 2: CONVERSOR POR LOTES ---
 with tab_lotes:
     st.header("Procesador de archivos CSV")
     st.markdown("Sube un archivo con tus códigos o descripciones y añade las columnas equivalentes automáticamente.")
@@ -118,7 +100,6 @@ with tab_lotes:
                 tipo_origen = st.selectbox("2. ¿Qué formato tienen los datos de entrada?", formatos_disponibles)
                 
             with col2:
-                # Añadimos la opción del Inglés
                 opciones_destino = [fmt for fmt in formatos_disponibles if fmt != tipo_origen]
                 opciones_destino.append("Inglés (API)")
                 
@@ -131,13 +112,11 @@ with tab_lotes:
                 if "Inglés (API)" in tipos_destino:
                     st.caption("*Nota: Solicitar el inglés requiere conexión externa y aumentará el tiempo de procesamiento.*")
             
-            # Botón de ejecución
             if st.button("Procesar Archivo", type="primary"):
                 if not tipos_destino:
                     st.error("Debes seleccionar al menos un formato de destino.")
                 else:
                     with st.spinner("Preparando archivo..."):
-                        # Creamos la barra de progreso y el callback
                         barra_progreso = st.progress(0.0)
                         texto_progreso = st.empty()
                         
@@ -145,13 +124,10 @@ with tab_lotes:
                             barra_progreso.progress(porcentaje)
                             texto_progreso.text(f"Consultando traducciones en API... {int(porcentaje * 100)}%")
                             
-                        # Si no hay inglés, pasamos None al callback
                         callback = actualizar_progreso if "Inglés (API)" in tipos_destino else None
                         
-                        # Ejecutamos la lógica principal
                         df_final = logica.convertir_lotes(df_maestro, df_usuario, columna_objetivo, tipo_origen, tipos_destino, callback)
                         
-                        # Limpiamos los elementos de progreso
                         barra_progreso.empty()
                         texto_progreso.empty()
                         
@@ -159,7 +135,6 @@ with tab_lotes:
                         st.write("Vista previa del resultado:")
                         st.dataframe(df_final.head(10).to_pandas(), use_container_width=True)
                         
-                        # Descarga
                         st.download_button(
                             label="Descargar Archivo Convertido",
                             data=df_final.write_csv(),
@@ -171,58 +146,44 @@ with tab_mapas:
     st.header("Mapas de Investigacion")
     st.markdown("Selecciona uno de los mapas interactivos generados durante el estudio para explorarlo.")
     
-    # Inicializamos la variable en la "memoria" si no existe
     if 'mapa_seleccionado' not in st.session_state:
         st.session_state.mapa_seleccionado = None
 
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
     carpeta_mapas = os.path.join(directorio_actual, "mapas")
 
-    # 1. Comprobamos si la carpeta existe. Si no, la creamos para evitar errores.
     if not os.path.exists(carpeta_mapas):
         os.makedirs(carpeta_mapas)
         st.warning(f"He creado la carpeta '{carpeta_mapas}/'. Por favor, mete ahí tus archivos .html.")
     else:
-        # 2. Escaneamos la carpeta buscando solo archivos .html
         archivos_html = [f for f in os.listdir(carpeta_mapas) if f.endswith('.html')]
         
         if not archivos_html:
             st.info(f"La carpeta '{carpeta_mapas}' está vacía. Añade archivos .html para verlos aquí.")
         else:
-            # 3. Generamos los botones dinámicamente en filas de 3 columnas
             columnas_por_fila = 3
             
-            # Recorremos la lista de archivos dando "saltos" de 3 en 3
             for i in range(0, len(archivos_html), columnas_por_fila):
                 cols = st.columns(columnas_por_fila) # Creamos 3 columnas vacías
                 
-                # Llenamos las columnas de esta fila
                 for j, col in enumerate(cols):
                     indice_actual = i + j
-                    # Comprobamos que no nos salimos de la lista de archivos
                     if indice_actual < len(archivos_html):
                         archivo_actual = archivos_html[indice_actual]
                         
-                        # Limpiamos el nombre para el botón: quitamos ".html", cambiamos "_" por espacios y ponemos mayúsculas
                         nombre_bonito = archivo_actual.replace(".html", "").replace("_", " ").title()
                         
                         with col:
-                            # Usamos el nombre del archivo como 'key' para que Streamlit no se confunda con botones iguales
                             if st.button(f"{nombre_bonito}", key=archivo_actual, use_container_width=True):
                                 st.session_state.mapa_seleccionado = os.path.join(carpeta_mapas, archivo_actual)
 
     st.divider()
-
-    # 4. Lógica para mostrar el mapa seleccionado (igual que antes)
     if st.session_state.mapa_seleccionado:
         ruta_mapa = st.session_state.mapa_seleccionado
-        
         if os.path.exists(ruta_mapa):
             with st.spinner("Cargando mapa interactivo..."):
                 with open(ruta_mapa, 'r', encoding='utf-8') as archivo:
                     codigo_html = archivo.read()
-                
-                # Renderizamos el HTML
                 components.html(codigo_html, height=750, scrolling=True)
         else:
             st.error("El archivo seleccionado ya no existe.")
