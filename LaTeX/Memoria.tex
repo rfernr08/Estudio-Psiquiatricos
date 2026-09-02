@@ -1177,7 +1177,7 @@ La distribución porcentual de la muestra y la función técnica de cada partici
 \subsection{Prevención de Fuga de Datos (\textit{Data Leakage})}
 Un aspecto crítico en el diseño de esta división fue la garantía de un aislamiento absoluto entre las particiones para evitar la fuga de datos (\textit{data leakage}). Este fenómeno ocurre cuando información del conjunto de test o validación se filtra de manera inadvertida en el conjunto de entrenamiento (por ejemplo, a través de estadísticas globales o transformaciones de texto mal calculadas), invalidando los resultados. 
 
-Para blindar el proceso, todas las operaciones de normalización, vectorización de texto y codificación de variables se ajustaron (\textit{fit}) exclusivamente utilizando los datos del conjunto de entrenamiento, para posteriormente aplicarse (\textit{transform}) de manera ciega sobre los conjuntos de validación y test.
+Para blindar el proceso, todas las operaciones de normalización, vectorización de texto y codificación de variables se ajustaron exclusivamente utilizando los datos del conjunto de entrenamiento, para posteriormente aplicarse (\textit{transform}) de manera ciega sobre los conjuntos de validación y test.
 
 \subsection{Control de Aleatoriedad y Reproducibilidad}
 Debido a que el método de partición utiliza un algoritmo de selección pseudoaleatoria, el proceso se fijó mediante la asignación de una semilla persistente a través del parámetro \texttt{random\_state} en Python. Esto asegura el cumplimiento del principio científico de reproducibilidad: cualquier ejecución posterior del código fuente generará exactamente las mismas particiones, aislando el rendimiento del modelo de posibles fluctuaciones fortuitas en la distribución de la muestra y permitiendo una comparación justa entre los distintos algoritmos evaluados.
@@ -1870,11 +1870,11 @@ Combinado & \texttt{BETO cased} & 0.5223 & 0.4843 & 0.47795 & 0.5223 \\ \hline
 \begin{tabular}{|l|l|l|c|c|c|c|}
 \hline
 \rowcolor[RGB]{239,239,239}
-\textbf{Entrada} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+\textbf{Entrada}  & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
-Códigos & 0.4419 & 0.4186 & 0.4164 & 0.4419 \\
-Descripciones & 0.4375 & 0.4271 & 0.4262 & 0.4375 \\
-Combinado & 0.4508 & 0.4411 & 0.4362 & 0.4508 \\ \hline
+Códigos & \texttt{MLP} & 0.4419 & 0.4186 & 0.4164 & 0.4419 \\
+Descripciones & \texttt{MLP} & 0.4375 & 0.4271 & 0.4262 & 0.4375 \\
+Combinado & \texttt{MLP} & 0.4508 & 0.4411 & 0.4362 & 0.4508 \\ \hline
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos Transformers para el dataset expandido con VAE.}
@@ -1933,7 +1933,7 @@ Esta gran cantidad de datos y métricas permite extraer varias conclusiones de i
         
     \item \textbf{Especialización lingüística frente a modelos multilingües:} La arquitectura especializada \texttt{dccuchile/bert-base-spanish-wwm} (\textbf{BETO}) ha superado de forma consistente a otros modelos multilingües como \texttt{xlm-roberta-base} y \texttt{bert-base-multilingual-cased}. Esto demuestra que el preentrenamiento específico en castellano mediante \textit{Whole Word Masking} (WWM) captura con mayor precisión las sutilezas sintácticas y las especificaciones clínicas de los textos psiquiátricos en comparación con vocabularios multilingües más dispersos. El éxito de este proceso fue posible gracias a la aplicación de tasas de aprendizaje reducidas ($2\cdot 10^{-5}$ a $3\cdot 10^{-5}$), lo cual permitió adaptar la capa de clasificación a la tarea predictiva sin destruir conocimiento lingüístico preentrenado del \textit{Transformer}.
     
-    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score Macro} y su aparición continua como modelo ganador en el \textit{Grid Search}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas. Los modelos pudieron entender estos detalles a la vez por un entrenamiento controlado por decaimento de pesos de $0,001$ a $0,01$  y una fase de calentamiento del $0,1$, evitando desajustes abruptos al comienzo del entrenamiento
+    \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score} y su aparición continua como modelo ganador en el \textit{Grid Search}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas. Los modelos pudieron entender estos detalles a la vez por un entrenamiento controlado por decaimento de pesos de $0,001$ a $0,01$  y una fase de calentamiento del $0,1$, evitando desajustes abruptos al comienzo del entrenamiento
     
     \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $50\%$ y un \textit{F1-Score} en el rango de $0,46 - 0,51$. Esta caida de metricas no fue arreglada por la integración de muestras sintéticas (\textbf{RUS + VAE}), llevando a un aumento de la diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, junto a nuevas entradas que no eran del tanto ciertas como las originales, lo que causo una mayor caida de metricas, dandonos resultados como \textit{F1-Score} alrededor de $0.42$, precisión con picos de $0,43$  y \textit{Recall} equilibrados. Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita , evitando que BERT memorizara en exceso un dataset.
 \end{itemize}
@@ -2001,8 +2001,8 @@ Combinado & \texttt{XGBoost} & 0.5758 & 0.5401 & 0.5370 & 0.5758 \\ \hline
 \textbf{Entrada} & \textbf{Modelo Ganador} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Precisión} & \textbf{Recall} \\ \hline
 
 Códigos & \texttt{LightGBM} & 0.4955 & 0.4400 & 0.4458 & 0.4955 \\
-Descripciones & \texttt{LightGBM} & 0.45535 & 0.3952 & 0.3896 & 0.4553 \\ 
-Combinado & \texttt{LightGBM} & 0.45535 &  0.38210 & 0.4391 & 0.45535 \\ \hline
+Descripciones & \texttt{LightGBM} & 0.4553 & 0.3952 & 0.3896 & 0.4553 \\ 
+Combinado & \texttt{LightGBM} & 0.4553 &  0.3821 & 0.4391 & 0.4553 \\ \hline
 
 \end{tabular}
 \caption{Métricas de rendimiento de los mejores modelos tradicionales para el dataset expandido.}
