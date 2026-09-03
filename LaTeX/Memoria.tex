@@ -278,7 +278,7 @@
     \hline
     \textbf{ABSTRACT}: Schizophrenia is a complex psychiatric disorder characterized by high clinical heterogeneity, which poses a critical challenge for early diagnosis and personalized treatment. This research paper presents the study and development of an experimental system oriented towards relational analysis and the prediction of psychiatric diagnoses, utilizing anonymized clinical data from patients with schizophrenia and its various subtypes in the region of Castilla y León. The main objective of this project is to identify hidden patterns and significant correlations among symptoms, comorbidities, and pathological evolutions to serve as a guide for medical practitioners and expert psychiatrists.
 
-    To address this problem, a hybrid methodology has been implemented, combining data science, machine learning, deep learning techniques, and graph-oriented databases. First, the cleaning and conditioning of the initial clinical dataset—comprising an anonymized list of 3,134 patient records—was performed, ensuring data consistency through missing data imputation and the normalization of diagnoses.
+    To address this problem, a hybrid methodology has been implemented, combining data science, machine learning, deep learning techniques, and graph-oriented databases. First, the cleaning and conditioning of the initial clinical dataset, comprising an anonymized list of 3,134 patient records, was performed ensuring data consistency through missing data imputation and the normalization of diagnoses.
 
     Subsequently, a knowledge graph was constructed using Neo4J, structurally modeling the multivariate relationships between patients and diagnoses. This approach enabled community detection analysis and the evaluation of the topological proximity of the clinical data. In parallel, Large Language Models (LLMs) were integrated for clinical text processing and the identification of semantic relationships between diagnoses. Furthermore, different classifiers were trained to predict the onset of distinct pathologies.
 
@@ -609,7 +609,7 @@ La elección específica de la arquitectura \textbf{BETO} (\texttt{dccuchile/ber
 \subsection{Clasificación en Espacios Latentes Continuos (Perceptrón Multicapa)}
 Un puente metodológico crítico entre ambos paradigmas surge al abordar técnicas de balanceo sintético mediante Autoencoders Variacionales (VAE) \cite{saboori2025predictive}. Dado que la red generativa del VAE proyecta y reconstruye las comorbilidades de los pacientes directamente en un espacio latente continuo y denso de 768 dimensiones, el uso de tokenizadores y modelos lingüísticos BERT estándar resulta físicamente incompatible al no disponer de una secuencia textual lineal de entrada \cite{saboori2025predictive, canete2020beto}. 
 
-Para resolver esta limitación de diseño de software, el estado del arte dicta desacoplar la capa de clasificación textual y delegar el aprendizaje predictivo en una red neuronal \textit{feed-forward} profunda de tipo \textbf{Perceptrón Multicapa (MLP)} \cite{saboori2025predictive, jimenez2023xai}. El clasificador MLP está diseñado para ingestar y procesar vectores numéricos continuos multidimensionales directamente, mapeando de forma óptima las variables latentes sintéticas generadas por el VAE mediante capas lineales densas y regularización de descarte para estimar la probabilidad final del subtipo de esquizofrenia de forma local y libre de sesgos predictivos \cite{saboori2025predictive, jimenez2023xai}.
+Para resolver esta limitación de diseño de software, el estado del arte dicta desacoplar la capa de clasificación textual y delegar el aprendizaje predictivo en una red neuronal \textit{feed-forward} profunda de tipo \textbf{Perceptrón Multicapa (MLP)} \cite{saboori2025predictive, jimenez2023xai}. El clasificador MLP está diseñado para ingestar y procesar vectores numéricos continuos multidimensionales directamente, mapeando de forma óptima las variables latentes sintéticas generadas por el VAE mediante capas lineales densas y regularización de descarte para estimar la probabilidad final del subtipo de esquizofrenia de forma local, mitigando el impacto del desbalance de clases original sin introducir sesgos de memorización en el clasificador. \cite{saboori2025predictive, jimenez2023xai}.
 
 La Tabla~\ref{tab:comparativa_algoritmos} sintetiza las propiedades técnicas de las principales familias algorítmicas evaluadas en la literatura médica.
 
@@ -651,6 +651,7 @@ La Tabla~\ref{tab:comparativa_algoritmos} sintetiza las propiedades técnicas de
 \end{table}
 
 A partir de este marco metodológico de referencia, y dada la naturaleza dual del conjunto de datos del presente estudio (compuesto tanto por códigos diagnósticos normativos como por descripciones en texto libre), se justifican a continuación las decisiones arquitectónicas adoptadas para cada una de las modalidades de datos procesadas.
+\clearpage
 
 \section{La Paradoja Multimodal y la Solución de Ingeniería Propuesta}
 
@@ -676,7 +677,7 @@ Este capítulo aborda el origen, la estructura y el ciclo de transformación té
 
 El conjunto de datos que constituye la base analítica y experimental de este Trabajo de Fin de Grado proviene de una recopilación de registros clínicos en el Complejo Asistencial Universitario de León (CAULE), y después esta recopilación fue entregada al grupo de investigación ALBA de la Universidad de León para su posterior estudio. El \textit{dataset} original se presenta en un formato tabular Excel y consta de un total de 3134 registros independientes, donde cada fila representa una instancia clínica anonimizada asociada al ingreso de un paciente diagnosticado con esquizofrenia o alguna de sus variantes afines entre los años 2007 y 2019.
 
-Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible realizado por un comité de ética del propio CAULE antes de su entrega al equipo de investigación. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real) y se sustituyeron los datos identificativos por el campo ciego de \texttt{Nº Historia}, garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas.
+Con el fin de cumplir estrictamente con los marcos normativos vigentes en materia de protección de datos ,específicamente el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), la fuente de datos fue sometida a un proceso previo de anonimización irreversible realizado por el responsable del tratamiento del propio CAULE y verificado de forma estricta por su comité de ética antes de su entrega al equipo de investigación. De este modo, se eliminó cualquier identificador directo (como nombres, documentos de identidad o números de historia clínica real) y se sustituyeron los datos identificativos por el campo ciego de \texttt{Nº Historia}, garantizando el anonimato absoluto de los sujetos sin alterar la validez estadística de las variables clínicas y epidemiológicas.
 
 Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas que recogen diferentes dimensiones del perfil del paciente, mas unas 7 columnas adicionales que añaden información recopilatoria. Para facilitar su análisis técnico, estas variables o columnas se han categorizado en 5 bloques principales descritos en las siguientes figuras.
 
@@ -732,7 +733,7 @@ Estructuralmente, el \textit{dataset} se compone de un conjunto de 37 columnas q
 \end{comment}
 
 \subsubsection{Información del Paciente}
-Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del paciente, que pueden ser relevantes para el análisis epidemiológico y la identificación de patrones demográficos asociados a la esquizofrenia
+Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del paciente, que pueden ser relevantes para el análisis epidemiológico y la identificación de patrones demográficos asociados a la esquizofrenia.
 
 \vspace{0.3cm}
 \noindent
@@ -743,7 +744,7 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Alfanumérico \\ \hline
 \textbf{Descripción} & Identificador único anonimizado del historial clínico del paciente. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Nº Historia}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Nº Historia}.}
 \label{tab:var_n_historia}
 \vspace{0.4cm}
 
@@ -755,7 +756,7 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Fecha \\ \hline
 \textbf{Descripción} & Fecha de nacimiento del paciente. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Fecha Nacimiento}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Fecha Nacimiento}.}
 \label{tab:var_fecha_nacimiento}
 \vspace{0.4cm}
 
@@ -767,7 +768,7 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Entero \\ \hline
 \textbf{Descripción} & Edad del paciente calculada en años en el momento del registro. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Edad en años}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Edad en años}.}
 \label{tab:var_edad}
 \vspace{0.4cm}
 
@@ -779,7 +780,7 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Descripción textual del sexo biológico del paciente. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Sexo (Desc)}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Sexo (Desc)}.}
 \label{tab:var_sexo}
 \vspace{0.4cm}
 
@@ -791,7 +792,7 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & País de origen o nacimiento del individuo. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{País de Nacimiento}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{País de Nacimiento}.}
 \label{tab:var_pais_nacimiento}
 \vspace{0.4cm}
 
@@ -803,7 +804,7 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Provincia de residencia asociada al registro. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Provincia}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Provincia}.}
 \label{tab:var_provincia}
 \vspace{0.4cm}
 
@@ -815,7 +816,7 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Alfanumérico \\ \hline
 \textbf{Descripción} & Código numérico oficial del municipio de residencia. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Municipio Residencia (Cód)}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Municipio Residencia (Cód)}.}
 \label{tab:var_municipio_residencia_cod}
 \vspace{0.4cm}
 
@@ -839,13 +840,13 @@ Esta categoría engloba datos relacionados con la edad, sexo y nacionalidad del 
 \textbf{Tipo de Dato} & Alfanumérico \\ \hline
 \textbf{Descripción} & Código postal del domicilio del paciente. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Código Postal}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Código Postal}.}
 \label{tab:var_codigo_postal}
 \vspace{0.6cm}
 
 % ---------------------------------------------------------
 \subsubsection{Información del Ingreso}
-Esta categoría junta datos relacionados con la fecha de ingreso, duración de la estancia hospitalaria, motivo de ingreso y tipo de alta, que pueden ser útiles para analizar la evolución clínica y los factores asociados a la hospitalización
+Esta categoría junta datos relacionados con la fecha de ingreso, duración de la estancia hospitalaria, motivo de ingreso y tipo de alta, que pueden ser útiles para analizar la evolución clínica y los factores asociados a la hospitalización.
 
 \vspace{0.3cm}
 \noindent
@@ -856,7 +857,7 @@ Esta categoría junta datos relacionados con la fecha de ingreso, duración de l
 \textbf{Tipo de Dato} & Fecha \\ \hline
 \textbf{Descripción} & Fecha en la que se produce el ingreso hospitalario. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Fecha Ingreso}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Fecha Ingreso}.}
 \label{tab:var_ingreso}
 \vspace{0.4cm}
 
@@ -868,7 +869,7 @@ Esta categoría junta datos relacionados con la fecha de ingreso, duración de l
 \textbf{Tipo de Dato} & Entero \\ \hline
 \textbf{Descripción} & Año de registro del alta o del proceso clínico. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Año}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Año}.}
 \label{tab:var_ano}
 \vspace{0.4cm}
 
@@ -892,7 +893,7 @@ Esta categoría junta datos relacionados con la fecha de ingreso, duración de l
 \textbf{Tipo de Dato} & Alfanumérico \\ \hline
 \textbf{Descripción} & Código del servicio médico que gestiona el alta. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Servicio Alta (Código)}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Servicio Alta (Código)}.}
 \label{tab:var_servicio_alta}
 \vspace{0.4cm}
 
@@ -921,7 +922,7 @@ Bloque central del dataset que recopila todo el historial médico del paciente m
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Código identificador del diagnóstico principal que motivó el ingreso o atención. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Diag 01 Principal (cod)}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Diag 01 Principal (cod)}.}
 \label{tab:var_diag_principal}
 \vspace{0.4cm}
 
@@ -933,7 +934,7 @@ Bloque central del dataset que recopila todo el historial médico del paciente m
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Bloque secuencial de 19 variables opcionales que registran las comorbilidades secundarias del paciente según la complejidad de su caso. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de las columnas \texttt{Diag 02 al Diag 20}}
+\captionof{table}{Tarjeta informativa de las columnas \texttt{Diag 02 al Diag 20}.}
 \label{tab:var_conjunto_secundariop}
 \vspace{0.4cm}
 
@@ -948,7 +949,7 @@ Nuestra metrica mas importante y la pieza central, información sobre el diagnó
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Código del diagnóstico psiquiátrico de control definitivo propuesto por un especialista. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ}.}
 \label{tab:var_diag_psq}
 \vspace{0.4cm}
 
@@ -963,7 +964,7 @@ Categoría dedicada a la recopilaron los datos en distintos formatos para el enr
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Agrupación de diagnósticos asociados al paciente en una única columna. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx}.}
 \label{tab:var_conjunto_dx}
 \vspace{0.4cm}
 
@@ -975,7 +976,7 @@ Categoría dedicada a la recopilaron los datos en distintos formatos para el enr
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Código equivalente en la clasificación ICD-9 para la patología psiquiátrica principal. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ ICD-9}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ ICD-9}.}
 \label{tab:var_icd9}
 \vspace{0.4cm}
 
@@ -987,7 +988,7 @@ Categoría dedicada a la recopilaron los datos en distintos formatos para el enr
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Descripción literal en castellano del diagnóstico psiquiátrico principal. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ Des. Español}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ Des. Español}.}
 \label{tab:var_des_esp}
 \vspace{0.4cm}
 
@@ -999,7 +1000,7 @@ Categoría dedicada a la recopilaron los datos en distintos formatos para el enr
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Descripción literal en inglés del diagnóstico psiquiátrico principal. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ Des. Inglés}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{DIAG PSQ Des. Inglés}.}
 \label{tab:var_des_ing}
 \vspace{0.4cm}
 
@@ -1012,7 +1013,7 @@ Categoría dedicada a la recopilaron los datos en distintos formatos para el enr
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Agrupación de los códigos equivalentes en ICD-9 para el historial clínico. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx ICD-9}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx ICD-9}.}
 \label{tab:var_conjunto_dx_icd9}
 \end{minipage}
 \vspace{0.4cm}
@@ -1025,7 +1026,7 @@ Categoría dedicada a la recopilaron los datos en distintos formatos para el enr
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Agrupación de descripciones en español del historial clínico. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx Des. Español}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx Des. Español}.}
 \label{tab:var_conjunto_dx_des_esp}
 \vspace{0.4cm}
 
@@ -1037,7 +1038,7 @@ Categoría dedicada a la recopilaron los datos en distintos formatos para el enr
 \textbf{Tipo de Dato} & Cadena (String) \\ \hline
 \textbf{Descripción} & Agrupación de descripciones en inglés del historial clínico. \\ \hline
 \end{tabular}
-\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx Des. Inglés}}
+\captionof{table}{Tarjeta informativa de la columna \texttt{Conjunto Dx Des. Inglés}.}
 \label{tab:var_conjunto_dx_des_ing}
 \vspace{0.4cm}
 
@@ -1061,18 +1062,18 @@ El eje central sobre el cual pivota la totalidad del estudio analítico y el ent
 
 Dentro del \textit{dataset}, esta información se consolida principalmente en la variable \texttt{DIAG PSQ} (y sus proyecciones codificadas o semánticas, como \texttt{DIAG PSQ ICD-9} y \texttt{DIAG PSQ Descripción Español}). En el paradigma del aprendizaje automático supervisado, esta columna asume el rol de variable dependiente o \textit{Target}. 
 
-En la práctica, esta variable constituye la verdad fundamentalque los modelos de clasificación (XGBoost, Random Forest y BERT) aprenden a inferir a partir del historial de diagnósticos del paciente. Al representar la confirmación clínica innegable de la patología psiquiátrica (con especial interés en los trastornos del espectro esquizofrénico), su exactitud es el pilar indiscutible que permite calcular, validar y justificar todas las métricas de rendimiento y precisión del proyecto.
+En la práctica, esta variable constituye la verdad fundamental que los modelos de clasificación (XGBoost, Random Forest y BERT) aprenden a inferir a partir del historial de diagnósticos del paciente. Al representar la confirmación clínica innegable de la patología psiquiátrica (con especial interés en los trastornos del espectro esquizofrénico), su exactitud es el pilar indiscutible que permite calcular, validar y justificar todas las métricas de rendimiento y precisión del proyecto.
 
 \subsection{Variables para el análisis estructural y geográfico}
 
-Para el desarrollo del módulo cartográfico y el estudio epidemiológico espacial, la selección de variables se vio condicionada por una fase previa de evaluación de la calidad del dato. Aunque el \textit{dataset} original disponía de múltiples campos de localización geomorfológica —tales como \texttt{País de Nacimiento}, \texttt{Provincia}, \texttt{Municipio Residencia (Cód)} o \texttt{Municipio Residencia (Des)}—, el análisis de completitud reveló que estas variables sufrían de una alta tasa de valores nulos, registros incompletos o codificaciones imprecisas que imposibilitaban su uso directo.
+Para el desarrollo del módulo cartográfico y el estudio epidemiológico espacial, la selección de variables se vio condicionada por una fase previa de evaluación de la calidad del dato. Aunque el \textit{dataset} original disponía de múltiples campos de localización geomorfológica tales como \texttt{País de Nacimiento}, \texttt{Provincia}, \texttt{Municipio Residencia (Cód)} o \texttt{Municipio Residencia (Des)}, el análisis de completitud reveló que estas variables sufrían de una alta tasa de valores nulos, registros incompletos o codificaciones imprecisas que imposibilitaban su uso directo.
 
 Ante esta restricción metodológica, se determinó utilizar la variable \texttt{Código Postal} como el eje conductor exclusivo para el análisis geográfico, fundamentando esta decisión en dos criterios técnicos:
 
 \begin{itemize}
     \item \textbf{Integridad y completitud del registro:} A diferencia de los campos municipales o provinciales, la columna \texttt{Código Postal} se encontraba cumplimentada en la totalidad de los registros del histórico de pacientes, careciendo de ruido informático o fallas de formato. Esto garantizó la robustez de las consultas espaciales sin requerir técnicas artificiales de imputación de datos que pudiesen sesgar los resultados.
     
-    \item \textbf{Resolución y granularidad espacial:} Desde la perspectiva analítica, la escala provincial resulta demasiado amplia y difusa para detectar patrones de prevalencia clínica significativos. El código postal, al actuar como una unidad de división administrativa micro-local, ofrece un nivel de granularidad óptimo. Esto permite mapear la distribución de los trastornos del espectro esquizofrénico a nivel de distritos sanitarios específicos y subzonas de la provincia, facilitando la identificación de posibles focos o clústeres socio-ambientales de forma mucho más precisa.
+    \item \textbf{Resolución y granularidad espacial:} Desde la perspectiva analítica, la escala provincial resulta demasiado amplia y difusa para detectar patrones de concentración geográfica y distribución de casos clínica significativos. El código postal, al actuar como una unidad de división administrativa micro-local, ofrece un nivel de granularidad óptimo. Esto permite mapear la distribución de los trastornos del espectro esquizofrénico a nivel de distritos sanitarios específicos y subzonas de la provincia, facilitando la identificación de posibles focos o clústeres socio-ambientales de forma mucho más precisa.
 \end{itemize}
 
 \subsection{Variables derivadas y de enriquecimiento semántico (\textit{Feature Engineering})}
@@ -1129,10 +1130,10 @@ Por lo tanto, el objetivo de nuestros modelos y clasificadores no es una mera co
 
 Una vez definidas las variables de interés, se procedió a diseñar un pipeline de preprocesamiento y limpieza de datos empleando la librería Pandas en Python. El objetivo de esta fase es transformar un conjunto de registros administrativos crudos en una matriz de información limpia, homogénea y optimizada para los modelos de aprendizaje automático y la base de datos relacional de grafos. 
 
-El flujo de depuración implementado se divide en cuatro bloques secuenciales:
+El flujo de depuración implementado se divide en cinco bloques secuenciales:
 
 \subsection{Anonimización y Seguridad de la Información}
-Dado que se trabaja con datos médicos de alta sensibilidad sujetos al Reglamento General de Protección de Datos (RGPD), el primer paso crítico consistió en verificar y auditar la completa anonimización de la muestra. Al haber sido el conjunto de datos previamente anonimizado de forma irreversible por el comité de ética del CAULE, se comprobó que no existiera ninguna fuga de información nominativa directa, validando que el identificador del paciente se limitara exclusivamente al campo alfanumérico ciego \texttt{Nº Historia}.
+Dado que se trabaja con datos médicos de alta sensibilidad sujetos al Reglamento General de Protección de Datos (RGPD), el primer paso crítico consistió en verificar y auditar la completa anonimización de la muestra. Al haber sido el conjunto de datos previamente anonimizado de forma irreversible por un responsable del tratamiento del CAULE y también verificado por su comité de ética, se comprobó que no existiera ninguna fuga de información nominativa directa, validando que el identificador del paciente se limitara exclusivamente al campo alfanumérico ciego \texttt{Nº Historia}.
 
 \subsection{Filtrado de Registros e Imputación de Valores Nulos}
 En lugar de recurrir a técnicas artificiales de imputación de datos (como la media o modas) que podrían alterar la realidad clínica de la muestra, se optó por una política de filtrado estricto basada en la calidad del dato:
@@ -1169,9 +1170,9 @@ La distribución porcentual de la muestra y la función técnica de cada partici
 \begin{itemize}
     \item \textbf{Conjunto de Entrenamiento (\textit{Train Set} - 80\% de los datos):} Constituye la porción mayoritaria de los datos. Su propósito es alimentar directamente a los algoritmos (XGBoost, Random Forest y BERT) para que el sistema aprenda las relaciones estadísticas y semánticas latentes entre el vector de 20 diagnósticos de entrada y la variable objetivo psiquiátrica. Es el conjunto donde se ajustan los pesos de las redes neuronales y las fronteras de decisión de los árboles.
     
-    \item \textbf{Conjunto de Validación (\textit{Validation Set} - 20\% de los datos):} Esta partición intermedia actúa como un entorno de prueba preliminar durante la fase de desarrollo. Se utiliza exclusivamente para la optimización de hiperparámetros (como la profundidad de los árboles en XGBoost o la tasa de aprendizaje en BERT) y para aplicar técnicas de parada temprana. Su existencia evita el sesgo de optimizar el modelo enfocándose a ciegas en el conjunto de test definitivo. Se obtuvo a partir de una nueva división del conjunto de entrenamiento, reservando un 20\% de sus casos para validación durante el ajuste del modelo.
+    \item \textbf{Conjunto de Validación (\textit{Validation Set} - 10\% de los datos):} Esta partición intermedia actúa como un entorno de prueba preliminar durante la fase de desarrollo. Se utiliza exclusivamente para la optimización de hiperparámetros (como la profundidad de los árboles en XGBoost o la tasa de aprendizaje en BERT) y para aplicar técnicas de parada temprana. Su existencia evita el sesgo de optimizar el modelo enfocándose a ciegas en el conjunto de test definitivo. Se obtuvo a partir de una nueva división del conjunto de entrenamiento, reservando un 10\% de sus casos para validación durante el ajuste del modelo.
     
-    \item \textbf{Conjunto de Test (\textit{Test Set} - 20\% de los datos):} Es un subconjunto completamente aislado que permanece oculto para los modelos durante toda la fase de entrenamiento y calibración. Funciona como una auditoría externa ciega. Las métricas finales de precisión, \textit{F1-Score} y especificidad expuestas en este trabajo se extraen única y exclusivamente de este conjunto, garantizando un reflejo fiel de la eficacia del sistema ante registros hospitalarios nuevos.
+    \item \textbf{Conjunto de Test (\textit{Test Set} - 10\% de los datos):} Es un subconjunto completamente aislado que permanece oculto para los modelos durante toda la fase de entrenamiento y calibración. Funciona como una auditoría externa ciega. Las métricas finales de precisión, \textit{F1-Score} y especificidad expuestas en este trabajo se extraen única y exclusivamente de este conjunto, garantizando un reflejo fiel de la eficacia del sistema ante registros hospitalarios nuevos.
 \end{itemize}
 
 \subsection{Prevención de Fuga de Datos (\textit{Data Leakage})}
@@ -1206,7 +1207,7 @@ El análisis de la distribución real de la variable objetivo (\texttt{DIAG PSQ}
 Entrenar un modelo predictivo bajo esta asimetría estadística provocaría que los algoritmos desarrollaran un sesgo de la clase mayoritaria. El clasificador tendería a optimizar su función de pérdida prediciendo sistemáticamente la clase \texttt{F20}, obteniendo una precisión general falsamente elevada pero una capacidad de detección nula (\textit{F1-Score} de $0$) sobre las patologías minoritarias.
 
 \subsection{El Rol de la Estratificación}
-Para mitigar el riesgo de exclusión de las clases críticas durante las fases de partición, se implementó una división estratificada estricta. La estratificación actúa como una salvaguarda matemática que fuerza al algoritmo de partición a respetar las proporciones relativas de la Tabla~\ref{tab:frecuencias_target} de forma idéntica en los subconjuntos de entrenamiento, validación y test. Esto garantiza que incluso la clase \texttt{F21} (con solo 5 muestras) cuente con representación proporcional supervisada en todas las etapas, permitiendo que el modelo sea evaluado de manera justa. Esta decisión responde directamente al desafío persistente de desbalanceo de clases extremo documentado en la literatura de psiquiatría computacional \cite{lai2021schizophrenia}.
+Para mitigar el riesgo de exclusión de las clases críticas durante las fases de partición, se implementó una división estratificada estricta. La estratificación actúa como una salvaguarda matemática que fuerza al algoritmo de partición a respetar las proporciones relativas de la Tabla~\ref{tab:frecuencias_target} de forma idéntica en los subconjuntos de entrenamiento, validación y test. La aplicación de este mecanismo busca que incluso clases muy pequeñas como la clase F21 (con solo 5 muestras) cuente con una representación lo más cercana a una distribución proporcional supervisada en todas las etapas ,permitiendo que el modelo sea evaluado de manera justa. Esta decisión responde directamente al desafío persistente de desbalanceo de clases extremo documentado en la literatura de psiquiatría computacional \cite{lai2021schizophrenia}.
 
 En casos de gran desbalance como nuestro dataset, las clases minoritarias pueden parecer imposibles de conservar sus proporciones exactas en la división, especialmente cuando se trabaja con muestras muy pequeñas, pero el propio algoritmo de estratificación de \textit{Scikit-Learn} aplica un redondeo entero discreto para garantizar que todas las clases cuenten con al menos una muestra supervisada en cada etapa de validación y test, evitando el colapso del cómputo de métricas, como podemos observar en la Tabla~\ref{tab:distribucion_particiones}.
 
@@ -1347,7 +1348,7 @@ Asimismo, se detallan las salvaguardas estadísticas adoptadas mediante protocol
 
 El diseño del marco experimental se estructura en un enfoque incremental, diseñando y construyendo los modelos de referencia o \textit{baselines}. En la investigación de IA, estos modelos actúan como un punto de control crítico que nos permite cuantificar la ganancia real de rendimiento en precision que aportan las arquitecturas complejas (como BERT) frente a métodos computacionalmente más livianos y económicos.
 
-Para este estudio, el horizonte experimental se ha dividido en dos paradigmas tecnológicos claramente diferenciados, permitiendo una confrontación directa entre el \textit{(Machine Learning)} y el \textit{(Deep Learning)}
+Para este estudio, el horizonte experimental se ha dividido en dos paradigmas tecnológicos claramente diferenciados, permitiendo una confrontación directa entre el \textit{(Machine Learning)} y el \textit{(Deep Learning)}.
 
 \subsection{Paradigma Tabular (ML Tradicional)}
 Como modelos de referencia iniciales, se seleccionaron Random Forest y XGBoost (Extreme Gradient Boosting). La elección de estos dos algoritmos no es cualquiera; ambos representan el estado del arte en el manejo de datos estructurados y tabulares \cite{grinsztajn2022why}.
@@ -1360,7 +1361,7 @@ Como modelos de referencia iniciales, se seleccionaron Random Forest y XGBoost (
 \subsection{El Paradigma Semántico (Deep Learning con BERT)}
 A diferencia del enfoque tabular, este paradigma no ve códigos aislados, sino que intenta capturar la semántica latente y las relaciones contextuales en las descripciones clínicas de los diagnósticos.
 
-La definición de estos dos baselines estructurados fundamenta la posterior introducción de modelos basados en Transformers (BERT). Mientras que Random Forest y XGBoost procesan el problema desde una perspectiva puramente matemática y relacional utilizando los códigos numéricos indexados del dataset, el modelo profundo BERT abordará el problema desde la perspectiva del Procesamiento del Lenguaje Natural (NLP), interpretando la semántica de las descripciones textuales en lenguaje natural
+La definición de estos dos baselines estructurados fundamenta la posterior introducción de modelos basados en Transformers (BERT). Mientras que Random Forest y XGBoost procesan el problema desde una perspectiva puramente matemática y relacional utilizando los códigos numéricos indexados del dataset, el modelo profundo BERT abordará el problema desde la perspectiva del Procesamiento del Lenguaje Natural (NLP), interpretando la semántica de las descripciones textuales en lenguaje natural.
 
 Esta dualidad metodológica permite responder a la pregunta fundamental de este trabajo: ¿es el conocimiento semántico del lenguaje natural más eficaz que el análisis estadístico de códigos médicos tradicionales para predecir patologías psiquiátricas?
 
@@ -1373,7 +1374,7 @@ El entrenamiento y la optimización hiperparamétrica de arquitecturas basadas e
 La pieza angular de esta estrategia de validación es la estratificación, la cual responde directamente al problema de desbalanceo severo analizado en el capítulo previo. El proceso opera bajo las siguientes directrices técnicas:
 \begin{itemize}
     \item \textbf{Preservación de la distribución de probabilidad}: Al segmentar los datos para la evaluación de los modelos, el algoritmo de división calcula la frecuencia relativa de cada uno de los 7 diagnósticos del espectro esquizofrénico en la muestra global. Posteriormente, fuerza de manera matemática a que tanto el conjunto de validación (utilizado para monitorizar el entrenamiento de BERT) como el conjunto de test (utilizado para la evaluación final de XGBoost y Random Forest) repliquen exactamente esas mismas proporciones.
-    \item \textbf{Garantía de evaluación para clases minoritarias}: Al asegurar que el 20\% de los datos de validación y el 20\% de los datos de test contengan una representación exacta y proporcional de patologías críticas pero poco frecuentes (como el trastorno esquizotípico \texttt{F21}), se evita el riesgo latente de que un modelo sea evaluado sobre un subconjunto donde no existan ejemplos de dicha enfermedad, lo que corrompería el cálculo de las métricas de rendimiento.
+    \item \textbf{Garantía de evaluación para clases minoritarias}: Al asegurar que el 10\% de los datos de validación y el 10\% de los datos de test contengan una representación exacta y proporcional de patologías críticas pero poco frecuentes (como el trastorno esquizotípico \texttt{F21}), se evita el riesgo latente de que un modelo sea evaluado sobre un subconjunto donde no existan ejemplos de dicha enfermedad, lo que corrompería el cálculo de las métricas de rendimiento.
 \end{itemize}
 
 A través de este enfoque de validación indexada y estratificada, se logra un equilibrio óptimo entre el rigor metodológico y la eficiencia computacional. Se garantiza que todos los modelos (tanto los baselines de árboles de decisión como la red neuronal profunda) sean entrenados, calibrados y auditados exactamente bajo las mismas condiciones de distribución de clases, permitiendo una posterior comparación directa y justa de sus capacidades predictivas.
@@ -1416,7 +1417,7 @@ El segundo bloque metodológico cambia el paradigma tabular por el Procesamiento
 
 Con el propósito de hallar la arquitectura óptima para la clasificación del espectro esquizofrénico, se ha planteado un diseño experimental que cubre diez algoritmos diferenciados. Esta selección no es arbitraria; busca comparar la eficiencia de los modelos basados en particionamiento del espacio (árboles) frente a la potencia de los modelos basados en atención contextual (BERT).
 
-\subsubsection{Tratamiento del dataset sinteticos mediante Perceptrón Multicapa (MLP)}
+\subsubsection{Tratamiento del dataset con datos sintéticos mediante Perceptrón Multicapa (MLP)}
 Un desafío de diseño crítico surgido durante la fase experimental fue el procesamiento de la variante de datos balanceada sintéticamente mediante el Autoencoder Variacional (VAE), ya que se representaban mediante un espacio latente continuo de 768 dimensiones. El pipeline de clasificación semántica estándar diseñado para las arquitecturas de la familia BERT exige una secuencia textual cruda en lenguaje natural, la cual es procesada dinámicamente por el tokenizador del modelo para generar los índices de atención correspondientes.
 
 Esto nos llevo a que, para evaluar el potencial semántico en la variante VAE, se diseñó un pipeline de clasificación alternativo desacoplado de la capa de atención de BERT. En su lugar, se implementó un clasificador basado en una red neuronal feed-forward de tipo \textbf{Perceptrón Multicapa} (\textit{MLP Classifier}), siguiendo las recomendaciones extraídas de investigaciones previas en sensores de comportamiento continuo \cite{jimenez2023xai}. Este modelo se encarga de ingestar directamente los vectores de embeddings densos de 768 dimensiones generados y mapear sus características a través de una arquitectura profunda de tres capas ocultas de tamaño decreciente ($[4-6]$) con regularización mediante \textit{Dropout} al 20\%, optimizando el gradiente de forma óptima para la inferencia multiclase.
@@ -1501,7 +1502,7 @@ En resumen, los rangos técnicos seleccionados para la optimización y el ajuste
 
 \subsubsection{Reproducibilidad Experimental}
 
-Para asegurar la completa replicabilidad científica de las métricas, se ha ido recopilando las semillas determinista de control para la ejecución de la validación cruzada estratificada y el entrenamiento de los modelos para todos los casos probados, el particionamiento de los subconjuntos del dataset y la inyección de comorbilidades sintéticas por el autoencoder variacional (VAE). Esta en ocasiones era generada de forma aleatoria o era asignada una usual como 42.
+Para asegurar la completa replicabilidad científica de las métricas, se han ido recopilando las semillas deterministas de control para la ejecución de la validación cruzada estratificada y el entrenamiento de los modelos para todos los casos probados, el particionamiento de los subconjuntos del dataset y la inyección de comorbilidades sintéticas por el autoencoder variacional (VAE). Esta en ocasiones era generada de forma aleatoria o era asignada una usual como 42.
 
 \subsubsection{Control del Entorno} 
 
@@ -1700,9 +1701,9 @@ A continuación, se describen y justifican las métricas utilizadas:
     y el valor de AUC corresponde al área bajo esa curva, de modo que un valor cercano a 1 indica una excelente capacidad de discriminación, independientemente de la distribución de las clases.
 \end{itemize}
 
-Para garantizar la robustez de estas métricas, los resultados expuestos en el siguiente capítulo se han obtenido promediando los valores sobre el conjunto de test o conocido como \textit{weighted average}, teniendo en cuenta el peso relativo de cada patología en la población de estudio.
+Para garantizar la robustez de estas métricas, los resultados expuestos en el siguiente capítulo se han obtenido promediando los valores sobre el conjunto de test o conocido como \textit{weighted average}, teniendo en cuenta el distribución empírica y el soporte de cada patología en la población de estudio.
 
-\section{Apoyo de herramientas IA}
+\section{Declaración de uso responsable de Herramientas de Inteligencia Artificial}
 
 Este proyecto se ha llevado a cabo gracias al uso instrumental de herramientas de Inteligencia Artificial Generativa  como soporte transversal durante el desarrollo de la investigación. Estas herramientas han sido empleadas bajo supervisión y con el proposito de asistencia técnica. En concreto, se emplearon las siguientes soluciones tecnológicas de apoyo:
 
@@ -1711,7 +1712,7 @@ Este proyecto se ha llevado a cabo gracias al uso instrumental de herramientas d
     \item \textbf{GitHub Copilot:} Empleado en el entorno de desarrollo como herramienta de asistencia a la programación, facilitando la identificación y corrección de errores en el código, la sugerencia de sintaxis en Python y la asistencia en la maquetación de estructuras complejas en \LaTeX.
 \end{itemize}
 
-Se ha de remarcar que el uso de estas herramientas ha sido de carácter estrictamente consultivo y de asistencia técnica. La totalidad del diseño experimental, el proceso de investigación, el desarrollo del software, así tambien como la interpretación de los resultados y las conclusiones obtenidas, han sido ejecutados, revisados y asumidos exclusivamente por mi y mis tutores.
+Se ha de remarcar que el uso de estas herramientas ha sido de carácter estrictamente consultivo y de asistencia técnica. La totalidad del diseño experimental, el proceso de investigación, el desarrollo del software, así también como la interpretación de los resultados y las conclusiones obtenidas, han sido ejecutados, revisados y asumidos exclusivamente por mi y mis tutores.
 
 \chapter{Resultados}
 
@@ -1935,7 +1936,7 @@ Esta gran cantidad de datos y métricas permite extraer varias conclusiones de i
     
     \item \textbf{Impacto de la sensibilidad a mayúsculas/minúsculas (\textit{Cased} vs. \textit{Uncased}):} Dentro de los modelos especializados, \texttt{BETO cased} ofreció una ligera ventaja competitiva respecto a su variante \texttt{uncased}, demostrada por la prevalencia en el \textit{F1-Score} y su aparición continua como modelo ganador en el \textit{Grid Search}. Esta diferencia radica en la capacidad del tokenizador \textit{cased} para preservar la relevancia semántica de acrónimos médicos, siglas de escalas clínicas y códigos normativos que suelen redactarse en mayúsculas. Los modelos pudieron entender estos detalles a la vez por un entrenamiento controlado por decaimento de pesos de $0,001$ a $0,01$  y una fase de calentamiento del $0,1$, evitando desajustes abruptos al comienzo del entrenamiento
     
-    \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $50\%$ y un \textit{F1-Score} en el rango de $0,46 - 0,51$. Esta caida de metricas no fue arreglada por la integración de muestras sintéticas (\textbf{RUS + VAE}), llevando a un aumento de la diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, junto a nuevas entradas que no eran del tanto ciertas como las originales, lo que causo una mayor caida de metricas, dandonos resultados como \textit{F1-Score} alrededor de $0.42$, precisión con picos de $0,43$  y \textit{Recall} equilibrados. Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita , evitando que BERT memorizara en exceso un dataset.
+    \item \textbf{Efecto de la generación sintética con VAE y control del sobreajuste:} Por un lado, el conjunto de datos reducido con \textit{undersampling} (RUS) sufrió una caída drástica en todas las métricas debido a la pérdida de diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, visible en métricas pobres como una precisión por debajo del $50\%$ y un \textit{F1-Score} en el rango de $0,46 - 0,51$. Esta caida de métricas no fue arreglada por la integración de muestras sintéticas (\textbf{RUS + VAE}), llevando a un aumento de la diversidad textual y patrones sintácticos esenciales para el mecanismo de atención, junto a nuevas entradas que no eran del tanto ciertas como las originales, lo que causo una mayor caida de métricas, dandonos resultados como \textit{F1-Score} alrededor de $0.42$, precisión con picos de $0,43$  y \textit{Recall} equilibrados. Para asegurar que la red aprendiera de esta variabilidad sintética sin llegar a memorizarla, se configuró sistemáticamente un entrenamiento corto de  3 a 5 épocas. Este límite actuó como un mecanismo de parada temprana implícita , evitando que BERT memorizara en exceso un dataset.
 \end{itemize}
 
 La tabla \ref{fig:comparacion-profundo} compara los resultados de cada uno de los modelos de aprendizaje profundo segun su F1-Score.
@@ -1943,7 +1944,7 @@ La tabla \ref{fig:comparacion-profundo} compara los resultados de cada uno de lo
 \begin{figure}
 \centering
     \makebox[\textwidth]{\includegraphics[width=1.1\textwidth]{imagenes/comparacion-f1-profundo.png}}
-    \caption{Gráfico por columnas comparando los resultados de los modelos de aprendizaje profundo segun su F1-Score}
+    \caption{Gráfico por columnas comparando los resultados de los modelos de aprendizaje profundo segun su F1-Score.}
     \label{fig:comparacion-profundo}
 \end{figure}
 
@@ -2057,7 +2058,7 @@ Este colapso es especialmente visible en los modelos de lenguaje, donde las mét
 \subsection{La Reconstrucción con VAE y la Especialización de LightGBM}
 La inyección de muestras sintéticas en las clases minoritarias mediante el uso de redes generativas continuas (\textbf{VAE}) permitió estabilizar las fronteras de decisión y mitigar el sesgo hacia la clase mayoritaria sin incurrir en la pérdida de información que penaliza al submuestreo clásico. Sin embargo, este escenario expuso una clara divergencia en la compatibilidad de los algoritmos con los datos sintéticos:
 \begin{itemize}
-    \item \textbf{La inadaptación de los Transformers al espacio latente continuo:} Los modelos basados en BERT sufrieron una pérdida notable de rendimiento, registrando exactitudes por debajo del $37\%$ \ref{tab:comparativa_nlp_metricas_undersampling_vae}. Esto se debe a que la generación probabilística del VAE actúa a nivel de vectores de características matemáticas continuas, lo que altera las sutilezas morfosintácticas y la coherencia semántica del texto lineal que la capa del tokenizador de BERT necesita para realizar la codificación lingüística .
+    \item \textbf{La inadaptación de los Transformers al espacio latente continuo:} Los modelos basados en BERT sufrieron una pérdida notable de rendimiento, registrando exactitudes por debajo del $37\%$ \ref{tab:comparativa_nlp_metricas_undersampling_vae}. Esto se debe a que la generación probabilística del VAE actúa a nivel de vectores de características matemáticas continuas, lo que altera las sutilezas morfosintácticas y la coherencia semántica del texto lineal que la capa del tokenizador de BERT necesita para realizar la codificación lingüística.
     \item \textbf{La hegemonía matemática de LightGBM frente a variables artificiales:} Por el contrario, la arquitectura tradicional \textbf{LightGBM} se alzó como la ganadora indiscutible para las tres variantes de entrada en este escenario expandido \ref{tab:comparativa_boost_metricas_vae}. Este predominio se atribuye a su estrategia de crecimiento de árboles por hojas (\textit{leaf-wise}), la cual le confiere una flexibilidad excepcional para segmentar el espacio latente continuo e interpolado que genera el VAE, trazando límites de división asimétricos sumamente precisos sin llegar a memorizar el ruido sintético ni incurrir en overfitting.
 \end{itemize}
 
@@ -2076,19 +2077,19 @@ Por lo tanto, la \textbf{Propuesta Final} de este trabajo se decanta por el uso 
 
 En síntesis, las métricas del proyecto confirman que el uso complementario de grafos de conocimiento y clasificadores tabulares tradicionales constituye la opción de ingeniería más solvente, económica y viable para la modernización tecnológica del diagnóstico de la esquizofrenia en entornos hospitalarios reales.
 
-Marcando los modelos que han mostrado el mayor potencial y las mejores metricas, las figuras \ref{fig:curva-beto} y \ref{fig:curva-light} nos muestran la evolucion del entrenamiento de los 2 modelos que mas han destacado por sus resultados mediante una curva ROC, dandonos una perspetiva de su funcionamiento. Los modelos son el BETO-cased en el dataset desbalanceado combinado y el clasificador LightBGM para el dataset sintetico por codigos, respectivamente.
+Marcando los modelos que han mostrado el mayor potencial y las mejores métricas, las figuras \ref{fig:curva-beto} y \ref{fig:curva-light} nos muestran la evolucion del entrenamiento de los 2 modelos que mas han destacado por sus resultados mediante una curva ROC, dandonos una perspetiva de su funcionamiento. Los modelos son el BETO-cased en el dataset desbalanceado combinado y el clasificador LightBGM para el dataset sintetico por codigos, respectivamente.
 
 \begin{figure}
 \centering
     \makebox[\textwidth]{\includegraphics[width=0.9\textwidth]{imagenes/curva-beto.png}}
-    \caption{Curva ROC para el modelo BETO-cased en el dataset desbalanceado combinado}
+    \caption{Curva ROC para el modelo BETO-cased en el dataset desbalanceado combinado.}
     \label{fig:curva-beto}
 \end{figure}
 
 \begin{figure}
 \centering
     \makebox[\textwidth]{\includegraphics[width=0.9\textwidth]{imagenes/curva-light.png}}
-    \caption{Curva ROC para el clasificador LightGBM en el dataset sintetico por codigos}
+    \caption{Curva ROC para el clasificador LightGBM en el dataset sintetico por codigos.}
     \label{fig:curva-light}
 \end{figure}
 \clearpage
@@ -2098,7 +2099,7 @@ A continuación, se presentan los hallazgos derivados de la aplicación de algor
 
 \subsection{Análisis de Comunidades}
 
-La detección de comunidades se ejecutó aplicando el \textbf{algoritmo de Louvain}, un algoritmo heurístico que agrupa de forma iterativa los nodos con una alta densidad de conexión interna. La elección de este método se fundamenta en su consolidación en el estado del arte como el algoritmo de optimización de modularidad óptimo para el modelado relacional en bases de datos de salud orientadas a grafos, permitiendo segregar con total precisión computacional los perfiles de comorbilidades concurrentes sin requerir la inyección de sesgos manuales de agrupamiento previo \cite{yousif2025real, liu2019construction}. El resultado de este análisis se visualiza en la Figura \ref{fig:mapa_comunidades}, donde la red general se divide en clústeres diferenciados por gradientes cromáticos.
+La detección de comunidades se ejecutó aplicando el \textbf{algoritmo de Louvain}, un algoritmo heurístico que agrupa de forma iterativa los nodos con una alta densidad de conexión interna. La elección de este método se fundamenta en su consolidación en el estado del arte como el algoritmo de optimización de modularidad óptimo para el modelado relacional en bases de datos de salud orientadas a grafos, permitiendo segregar de forma consistente y automatizada los perfiles de comorbilidades concurrentes sin requerir la inyección de sesgos manuales de agrupamiento previo \cite{yousif2025real, liu2019construction}. El resultado de este análisis se visualiza en la Figura \ref{fig:mapa_comunidades}, donde la red general se divide en clústeres diferenciados por gradientes cromáticos.
 
 \begin{figure}
 \centering
@@ -2189,7 +2190,7 @@ Para evaluar la "identidad clínica" de cada código postal independientemente d
 \text{Patología Predominante}_i = \arg\max_{j} (\text{Frecuencia}_{i,j})
 \end{equation}
 
-Los resultados muestran una especialización espacial marcada dentro del mapa urbano: ciertos códigos postales presentan una clara hegemonía de diagnósticos del espectro de la esquizofrenia ($F20$), mientras que en barrios contiguos el perfil virante hacia trastornos delirantes ($F22$) o esquizoafectivos ($F25$). Esta segregación diagnóstica sugiere la influencia de determinantes ambientales locales o diferencias en los criterios de derivación asistencial, como podemos observar en la figura\ref{fig:mapa_dominancia}.
+Los resultados muestran una especialización espacial marcada dentro del mapa urbano: ciertos códigos postales presentan una clara hegemonía de diagnósticos del espectro de la esquizofrenia ($F20$), mientras que en barrios contiguos el perfil virante hacia trastornos delirantes ($F22$) o esquizoafectivos ($F25$). Esta segregación diagnóstica sugiere la influencia de determinantes ambientales locales o diferencias en los criterios de derivación asistencial, como podemos observar en la figura \ref{fig:mapa_dominancia}.
 
 \begin{figure}
     \centering
@@ -2229,7 +2230,9 @@ Los resultados cartográficos revelan un patrón estructural claro:
     \item \textbf{Entorno Urbano (Segregación en León Capital):} En el núcleo urbano de la capital convergen la totalidad de los 4 clústeres identificados. Esto demuestra que la densidad poblacional fragmenta el perfil de atención de la salud mental en micro-áreas diferenciadas.
 \end{itemize}
 
+Habria que destacar que no se ha conseguido obtener mapas censales históricos estructurados por código postal para nuestro años estudiados 2007-2019, limitando la capacidad de calcular tasas de prevalencia epidemiológica poblacional real. Por ello, los mapas coropléticos generados reflejan únicamente la concentración espacial de la demanda asistencial capturada por el hospital de referencia (CAULE), y no necesariamente la prevalencia real de los trastornos psiquiátricos en la población.
 
+Eso explica que mapas como \ref{fig:mapa_dominancia} y \ref{fig:mapa_comorbilidad} muestren códigos postales rurales con baja densidad poblacional y un recuento de casos bajo, sin que ello represente necesariamente una tasa de prevalencia menor frente a las áreas metropolitanas de León capital.
 
 \section{Conversión de códigos}
 
@@ -2243,7 +2246,7 @@ Durante la fase de revisión del estado del arte e inspección de recursos dispo
     \item Carecen de una estructura unificada, limpia e interoperable lista para su ingesta en entornos modernos de ciencia de datos.
 \end{itemize}
 
-El recurso público más extenso y prometedor localizado en español fue el dataset alojado en Hugging Face por Martín García \cite{huggingface_cie10}, el cual destacaba por incluir las descripciones diagnósticas nativas en castellano y un volumen amplio de registros. Sin embargo, este archivo presentaba serias limitaciones técnicas para su uso directo: carecía de una estructura tabular limpia, contenía inconsistencias de formato, errores de parseo y vacíos en las equivalencias normativas entre ambas versiones del CIE. Para arreglar estos fallos, se procedió a una depuración y reestructuración inicial del dataset, saneando los errores de codificación de texto y normalizando su formato, combinandolo e integrandolo con el resto de recursos publicos disponibles \cite{nber_icd_crosswalk, cms_icd10_codes, clark_icd9to10, bhanratt_icd9to10, atlas_cumc_conversion, nzhis_mapping}.
+El recurso público más extenso y prometedor localizado en español fue el dataset alojado en Hugging Face por Martín García \cite{huggingface_cie10}, el cual destacaba por incluir las descripciones diagnósticas nativas en castellano y un volumen amplio de registros. Sin embargo, este archivo presentaba serias limitaciones técnicas para su uso directo: carecía de una estructura tabular limpia, contenía inconsistencias de formato, errores de parseo y vacíos en las equivalencias normativas entre ambas versiones del CIE. Para arreglar estos fallos, se procedió a una depuración y reestructuración inicial del dataset, saneando los errores de codificación de texto y normalizando su formato, combinándolo e integrándolo con el resto de recursos publicos disponibles \cite{nber_icd_crosswalk, cms_icd10_codes, clark_icd9to10, bhanratt_icd9to10, atlas_cumc_conversion, nzhis_mapping}.
 
 El dataset resultante, se ha estructurado en un formato tabular de 3 columnas y 108054 filas, donde cada fila representa una correspondencia única entre códigos de ambas normativas. Las columnas incluyen:
 
@@ -2254,6 +2257,7 @@ El dataset resultante, se ha estructurado en un formato tabular de 3 columnas y 
 \end{itemize}
 
 Este dataset universal nos da 2 aplicacions muy importantes:
+Este recurso unificado y estructurado abre la puerta a dos aplicaciones de gran valor para la comunidad científica y médica, más allá del alcance de esta investigación:
 \begin{enumerate}
     \item \textbf{Transferencia tecnológica e integración en \textit{software}:} Este conjunto de datos ha constituido el motor lógico sobre el que se programó el módulo conversor y la principal función de la herramienta web en \textbf{Streamlit}. Esto permite sustituir la búsqueda manual y fragmentada en repositorios web por una consulta automatizada e instantánea, integrable en flujos de trabajo clínico.
     \item \textbf{Recurso reutilizable para la comunidad científica y médica:} El dataset resultante sirve mas alla del proposito de esta investigacion, constituyendo un artefacto independiente e universal listo para ser aprovechado por investigadores y profesionales sanitarios para la migración automatizada de conjuntos de datos históricos sin riesgo de inconsistencias semánticas.
@@ -2326,7 +2330,7 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \textbf{RF-04} & \textbf{Consulta asíncrona internacional:} El sistema debe incorporar un botón para realizar peticiones asíncronas a la API externa de la \textit{National Library of Medicine} y recuperar la descripción oficial en inglés del diagnóstico seleccionado. \\
 \textbf{RF-05} & \textbf{Ingesta de archivos por lotes:} El sistema debe permitir al usuario arrastrar y cargar ficheros estructurados en formato CSV para su traducción masiva. \\
 \textbf{RF-07} & \textbf{Parametrización dinámica del mapeo:} El usuario debe poder seleccionar dinámicamente qué columna del CSV contiene los datos, su formato de origen y qué nuevas columnas de mapeo (CIE-9, CIE-10, inglés o castellano) desea añadir al archivo resultante. \\
-\textbf{RF-08} & \textbf{Exportación persistente de informes:} El sistema debe habilitar un botón de descarga para persistir la tabla resultante del procesamiento masivo en un archivo CSV local codificado en UTF-8 \\
+\textbf{RF-08} & \textbf{Exportación persistente de informes:} El sistema debe habilitar un botón de descarga para persistir la tabla resultante del procesamiento masivo en un archivo CSV local codificado en UTF-8. \\
 \textbf{RF-09} & \textbf{Renderizado interactivo de mapas y redes:} El sistema debe encapsular y renderizar mapas coropléticos (Folium) y grafos de comunidades (Pyvis) interactivos en contenedores web, soportando acciones de zoom, arrastre y burbujas informativas. \\ \hline
 \end{tabular}
 \caption{Catálogo de Requisitos Funcionales del sistema.}
@@ -2366,7 +2370,7 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 \rowcolor[RGB]{239,239,239} 
 \textbf{Código: HU-01} & \textbf{Título: Conversión e Interoperabilidad CIE-9 / CIE-10} \\ \hline
 \textbf{Rol del usuario} & Personal Administrativo / Clínico. \\ \hline
-\textbf{Descripción} & Como usuario del sistema, quiero consultar la equivalencia exacta entre códigos históricos CIE-9 y modernos CIE-10, utilizando autocompletado y traducciones internacionales en inglés, para agilizar el flujo de documentación médica \\ \hline
+\textbf{Descripción} & Como usuario del sistema, quiero consultar la equivalencia exacta entre códigos históricos CIE-9 y modernos CIE-10, utilizando autocompletado y traducciones internacionales en inglés, para agilizar el flujo de documentación médica. \\ \hline
 \textbf{Prioridad} & Alta. \\ \hline
 \textbf{Dependencias} & RF-01, RF-02, RF-03, RF-04, RNF-01, RNF-02, RNF-05, RNF-07. \\ \hline
 \textbf{Criterios de Aceptación} & 
@@ -2422,7 +2426,7 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
     \item \textbf{CA-3.1:} La interfaz debe incorporar un botón visible que permita la descarga directa de la tabla de resultados en formato estandarizado \texttt{.csv}, sin tener que recargar la página web ni exponer datos.
     \item \textbf{CA-3.2:} El usuario debe poder mapear dinámicamente qué columnas desea traducir, el formato de entrada, y qué atributos adicionales desea inyectar al archivo final procesado.
     \item \textbf{CA-3.3:} El archivo descargado debe incluir correctamente las columnas mapeadas que se han seleccionado, respetando la codificación UTF-8 para evitar errores en caracteres especiales.
-    \item \textbf{CA-3.4:} La interfaz debe habilitar un área de arrastre que valide de forma asíncrona la estructura del CSV, renderizando una vista previa estricta de las primeras 5 filas para verificación del usuario
+    \item \textbf{CA-3.4:} La interfaz debe habilitar un área de arrastre que valide de forma asíncrona la estructura del CSV, renderizando una vista previa estricta de las primeras 5 filas para verificación del usuario.
 \end{itemize} \\ \hline
 \end{tabular}
 \caption{Especificación de la Historia de Usuario HU-03: Exportación de Códigos Convertidos por Lotes.}
@@ -2433,7 +2437,7 @@ Para garantizar un desarrollo de software riguroso y alineado con las metodolog�
 
 Mi aplicación web centra su potencial visual en la estructuración limpia de formularios de texto, tablas de datos dinámicas y paneles interactivos. Dado que el objetivo primordial del sistema es la conversión ágil de códigos ICD y la clasificación semántica en tiempo real, el diseño da prioridad absoluta al texto y a la legibilidad de los diagnósticos frente a las representaciones gráficas convencionales. \ref{fig:captura_app}
 
-Coomo ejemplo de la sencillez y facilidad de uso de la web, la interfaz de usuario en la pestalla de Buscador Individual se articula en torno a tres bloques visuales fundamentales que constan de un campo de texto libre optimizado donde el facultativo introduce la descripción clínica o el diagnóstico en lenguaje natural. Visualmente, el sistema responde de forma síncrona, eliminando elementos distractores y presentando el resultado del conversor ICD-9 a ICD-10 de manera jerárquica mediante cajas de texto contrastadas, permitiendo una validación visual inmediata.
+Como ejemplo de la sencillez y facilidad de uso de la web, la interfaz de usuario en la pestalla de Buscador Individual se articula en torno a tres bloques visuales fundamentales que constan de un campo de texto libre optimizado donde el facultativo introduce la descripción clínica o el diagnóstico en lenguaje natural. Visualmente, el sistema responde de forma síncrona, eliminando elementos distractores y presentando el resultado del conversor ICD-9 a ICD-10 de manera jerárquica mediante cajas de texto contrastadas, permitiendo una validación visual inmediata.
 
 \begin{figure}[htbp]
     \centering
@@ -2458,7 +2462,7 @@ El recorrido del profesional médico a través de la herramienta sigue una secue
 
 Este diseño de un solo nivel garantiza que cualquier miembro del personal sanitario, independientemente de su grado de alfabetización digital, pueda asimilar el manejo de la herramienta en apenas unos minutos, manteniendo su atención focalizada en el diagnóstico del paciente y no en el uso del \textit{software}.
 
-Por otro lado, cuando el usuario conmuta la interfaz hacia la pestaña de \textit{Conversor por Lotes}, la arquitectura de la aplicación cambia hacia un modelo de flujo de trabajo guiado por estados secuenciales. Este diseño impide que el usuario cometa errores de configuración al bloquear las opciones avanzadas hasta que se verifiquen con éxito los pasos previos. \ref{fig:flujo_app}
+Por otro lado, cuando el usuario conmuta la interfaz hacia la pestaña de \textit{Conversor por Lotes}, la arquitectura de la aplicación cambia hacia un modelo de flujo de trabajo guiado por estados secuenciales. Este diseño impide que el usuario cometa errores de configuración al bloquear las opciones avanzadas hasta que se verifiquen con éxito los pasos previos. La navegación de la aplicación se puede ver ilustrada en la Figura \ref{fig:flujo_app}.
 
 \begin{figure}
     \centering
@@ -2478,7 +2482,7 @@ Este enfoque se consolida a través de tres pilares fundamentales de diseño:
     
     \item \textbf{Accesibilidad semántica mediante estándares clínicos:} La mayor barrera de accesibilidad en el software médico suele ser la falta de familiaridad con la interfaz. Esta aplicación mitiga dicho problema integrando de forma nativa los estándares de codificación (ICD-9 e ICD-10). Al estructurar la entrada y salida de datos bajo la misma nomenclatura internacional que los psiquiatras utilizan diariamente en sus informes, el sistema resulta inmediatamente comprensible y accesible desde el primer uso, eliminando la necesidad de formación técnica previa.
     
-    \item \textbf{Eficiencia y ligereza tecnológica:} Al estar construida sobre un marco de trabajo web ágil, la aplicación prescinde de animaciones pesadas o elementos flotantes que dificulten la navegación a usuarios con habilidades digitales básicas. Esta ligereza técnica asegura también que la plataforma sea accesible desde ordenadores antiguos o clientes ligeros integrados en la red hospitalaria local, garantizando un tiempo de respuesta rápido e independiente de las capacidades del \textit{hardware} del puesto de trabajo.
+    \item \textbf{Eficiencia y ligereza tecnológica:} Al estar construida sobre un marco de trabajo web ágil, la aplicación prescinde de animaciones pesadas o elementos flotantes que dificulten la navegación a usuarios con habilidades digitales básicas. Esta ligereza técnica asegura también que la plataforma sea accesible desde ordenadores antiguos o clientes ligeros integrados en la red hospitalaria local, favoreciendo un tiempo de respuesta rapida y minimizando la dependencia de las capacidades de cómputo del hardware del puesto de trabajo.
 \end{itemize}
 
 \section{Conversor de ICD}
@@ -2522,7 +2526,7 @@ Las características arquitectónicas y funcionamiento que definen este panel se
 \begin{figure}[htbp]
     \centering
     \makebox[\textwidth]{\includegraphics[width=0.8\textwidth]{imagenes/Web_lotes_1.png}}
-    \caption{Módulo del Conversor por Lotes: interfaz de carga de archivos}
+    \caption{Módulo del Conversor por Lotes: interfaz de carga de archivos.}
     \label{fig:conversor_lotes_1}
 \end{figure}
 
@@ -2588,8 +2592,8 @@ A continuación, se detalla el alcance funcional y técnico desarrollado en cada
         \item \textit{Tareas realizadas:} Mapeo bidireccional ICD-9 $\rightarrow$ ICD-10, estructuración de descripciones clínicas en español e inglés y generación de equivalencias en el dataset.
     \end{itemize}
 
-    \item[Sprint 3: Creación y Estudio de Mapas de Prevalencia] \hfill \\
-    Elaboración de mapas de prevalencia para visualizar la distribución geográfica de los casos del espectro esquizofrénico en la provincia.
+    \item[Sprint 3: Estudio de Mapas y Distribución de Casos] \hfill \\
+    Elaboración de mapas de distribución geográfica para visualizar la dfrecuencia y concentración de los casos del espectro esquizofrénico en la provincia.
     \begin{itemize}
         \item \textit{Tareas realizadas:} Agregación de frecuencias por código postal, integración de cartografía vectorial en formato GeoJSON de España y generación de visores coropléticos mediante la librería \textit{Folium}.
     \end{itemize}
@@ -2676,7 +2680,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \textbf{Mitigación} & Uso del gestor de paquetes \textbf{Mamba} para la resolución determinista y creación de entornos aislados mediante archivos \texttt{environment.yml}. Desarrollado la decision en el proximo apartado. \\ \hline
 \end{tabular}
 \label{tab:R1}
-\caption{Mitigación del riesgo R1: Incompatibilidad de dependencias del entorno}
+\caption{Mitigación del riesgo R1: Incompatibilidad de dependencias del entorno.}
 \end{table}
 
 % Ficha Riesgo 02
@@ -2693,7 +2697,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \textbf{Mitigación} & Optimización mediante \textit{gradient accumulation}, precisión mixta y reducción del \textit{batch size} a 16 muestras. \\ \hline
 \end{tabular}
 \label{tab:R2}
-\caption{Mitigación del riesgo R2: Insuficiencia de recursos hardware (GPU/RAM)}
+\caption{Mitigación del riesgo R2: Insuficiencia de recursos hardware (GPU/RAM).}
 \end{table}
 
 % Ficha Riesgo 03
@@ -2710,7 +2714,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \textbf{Mitigación} & Estrategia experimental tripartita: uso del dataset original desbalanceado, uso de submuestreo (\textbf{RUS}) y generación de datos sintéticos mediante \textbf{VAE}. \\ \hline
 \end{tabular}
 \label{tab:R3}
-\caption{Mitigación del riesgo R3: Sesgo extremo por desbalanceo de clases}
+\caption{Mitigación del riesgo R3: Sesgo extremo por desbalanceo de clases.}
 \end{table}
 
 % Ficha Riesgo 04
@@ -2727,7 +2731,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \textbf{Mitigación} & Indexación de propiedades críticas en Neo4j y uso de almacenamiento en caché (\texttt{@st.cache\_resource}) en Streamlit. \\ \hline
 \end{tabular}
 \label{tab:R4}
-\caption{Mitigación del riesgo R4: Cuellos de botella en la analítica de grafos}
+\caption{Mitigación del riesgo R4: Cuellos de botella en la analítica de grafos.}
 \end{table}
 
 % Ficha Riesgo 05
@@ -2744,7 +2748,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \textbf{Mitigación} & Protocolo de anonimización irreversible previo al análisis y descarte de 12 variables demográficas/administrativas en el Sprint 1. \\ \hline
 \end{tabular}
 \label{tab:R5}
-\caption{Mitigación del riesgo R5: Incumplimiento normativo de privacidad clínica}
+\caption{Mitigación del riesgo R5: Incumplimiento normativo de privacidad clínica.}
 \end{table}
 
 \begin{table}[htbp]
@@ -2760,7 +2764,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \textbf{Mitigación} & Diseño del sistema exclusivamente como herramienta de apoyo (\textbf{CDSS}), integrando una capa visual de grafos para aportar interpretabilidad y varias advertencias. \\ \hline
 \end{tabular}
 \label{tab:R6}
-\caption{Mitigación del riesgo R6: Sesgo de automatización y error diagnóstico}
+\caption{Mitigación del riesgo R6: Sesgo de automatización y error diagnóstico.}
 \end{table}
 
 \begin{table}[htbp]
@@ -2776,7 +2780,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 \textbf{Mitigación} & Adopción de la metodología ágil Scrum adaptada con la definición clara de 8 Sprints y el mantenimiento de un canal de comunicación continuo con el tutor para validar las tareas técnicas y ajustar el rumbo de la investigación. \\ \hline
 \end{tabular}
 \label{tab:R7}
-\caption{Mitigación del riesgo R7: Desviación de plazos y presupuesto por mala definición inicial}
+\caption{Mitigación del riesgo R7: Desviación de plazos y presupuesto por mala definición inicial.}
 \end{table}
 
 \begin{table}[htbp]
@@ -2810,7 +2814,7 @@ A continuación, se desglosan los riesgos mediante fichas técnicas que definen 
 2. Desacoplamiento total del código de los pesos binarios: los modelos BERT se configuran para descargarse dinámicamente de forma asíncrona en tiempo de ejecución desde el repositorio oficial de Hugging Face mediante la función \texttt{from\_pretrained()}, haciendo uso de la caché local del sistema operativo y garantizando que el código subido a GitHub sea ligero, portable e independiente de los pesos físicos entrenados. \\ \hline
 \end{tabular}
 \label{tab:R9}
-\caption{Mitigación del riesgo R9: Límite de tamaño de archivos en GitHub}
+\caption{Mitigación del riesgo R9: Límite de tamaño de archivos en GitHub.}
 \end{table}
 \clearpage
 
@@ -2979,7 +2983,7 @@ Scrum Master Junior & 45 & 16,00 & 720,00 \\ \hline
 
 \subsection{Costes indirectos y gastos generales}
 
-Los costes indirectos estaran compuestos por aquellos gastos que, sin estar ligados directamente a la programación o análisis, son indispensables para el desarrollo de la actividad física. Esto incluye el consumo de energía eléctrica de la estación de trabajo, la conexión a internet de banda ancha para la descarga de librerías o subida de modelos o codigo a Github, y el gasto logístico del espacio de oficina. Para simplificar y generalizar el modelo contable, se aplica un estándar industrial del 15\% sobre el coste total de la mano de obra directa:
+Los costes indirectos estarán compuestos por aquellos gastos que, sin estar ligados directamente a la programación o análisis, son indispensables para el desarrollo de la actividad física. Esto incluye el consumo de energía eléctrica de la estación de trabajo, la conexión a internet de banda ancha para la descarga de librerías o subida de modelos o codigo a Github, y el gasto logístico del espacio de oficina. Para simplificar y generalizar el modelo contable, se aplica un estándar industrial del 15\% sobre el coste total de la mano de obra directa:
 
 \begin{equation}
 \text{Costes Indirectos} = 4.290,00 \times 0,15 = 643,50 \text{ €}
@@ -3029,11 +3033,11 @@ Finalmente, la viabilidad económica representa una de las mayores fortalezas de
 El presente Trabajo de Fin de Grado ha permitido abordar de manera integral el análisis relacional y predictivo de comorbilidades en pacientes diagnosticados con trastornos del espectro esquizofrénico. Mediante un enfoque interdisciplinar que combina la ciencia de datos, los sistemas NoSQL y el desarrollo de software, se han consolidado hitos que aportan valor tanto al ámbito técnico como al clínico. A continuación, se detallan las principales aportaciones generadas en este proyecto:
 
 \begin{itemize}
-    \item \textbf{Construcción de un recurso relacional estandarizado:} Se ha diseñado y unificado un conjunto de datos en formato tabular (CSV) que mapea de forma bidireccional los diagnósticos, descripciones clínicas en español y equivalencias entre las codificaciones ICD-9 e ICD-10. Esta aportación resuelve un problema crítico de intercambio de información de forma segura en la documentación psiquiátrica actual, que faltaba en el campo, facilitando la traducción ágil de términos médicos libres a códigos normativos. A la vez, se ha buscado una opción con la que obetner las descripciones clínicas en ingles
+    \item \textbf{Construcción de un recurso relacional estandarizado:} Se ha diseñado y unificado un conjunto de datos en formato tabular (CSV) que mapea de forma bidireccional los diagnósticos, descripciones clínicas en español y equivalencias entre las codificaciones ICD-9 e ICD-10. Esta aportación propone una alternativa viable de interoperabilidad para mitigar las dificultades de intercambio de información en la documentación psiquiátrica actua, facilitando la traducción ágil de términos médicos libres a códigos normativos. A la vez, se ha buscado una opción con la que obetner las descripciones clínicas en ingles.
     
     \item \textbf{Modelado avanzado del entorno clínico mediante grafos:} La migración del paradigma tabular tradicional hacia una base de datos orientada a grafos en \textbf{Neo4j} representa una aportación metodológica clave. Este enfoque ha permitido estructurar las complejas redes de interconexión entre pacientes, sintomatologías y comorbilidades psiquiátricas, optimizando la eficiencia computacional en la exploración de caminos clínicos y vecindades diagnósticas.
     
-    \item \textbf{Evaluación y validación de arquitecturas de aprendizaje automático:} Se ha implementado y comparado un flujo experimental multicapa que contrasta clasificadores tradicionales frente a modelos de lenguaje profundo. En el escenario original sin balancear, el modelo \textbf{BETO (modalidad Combinada)} demostró el mayor potencial teórico de clasificación, alcanzando un \textbf{F1-Score de 0,6857} y una exactitud del \textbf{72,85\%}. Sin embargo, atendiendo a los requisitos no funcionales de latencia y viabilidad de despliegue local en la infraestructura de CPU del SACYL, en busca de una solución mas ligera y sencilla, el clasificador \textbf{LightGBM} entrenado sobre el espacio balanceado sintéticamente mediante un Autoencoder Variacional (\textbf{VAE}) se consolida como la solución final de soporte más robusta, registrando un \textbf{F1-Score de 0,4400} en la entrada de código, desmotrando una adaptación al desbalance extremo original y destacando en su eficiencia computacional, bajo coste de inferencia y facilidad de despliegue asistencial.
+    \item \textbf{Evaluación y validación de arquitecturas de aprendizaje automático:} Se ha implementado y comparado un flujo experimental multicapa que contrasta clasificadores tradicionales frente a modelos de lenguaje profundo. En el escenario original sin balancear, el modelo \textbf{BETO (modalidad Combinada)} demostró el mayor potencial teórico de clasificación, alcanzando un \textbf{F1-Score de 0,6857} y una exactitud del \textbf{72,85\%}. Sin embargo, atendiendo a los requisitos no funcionales de latencia y viabilidad de despliegue local en la infraestructura de CPU del SACYL, en busca de una solución mas ligera y sencilla, el clasificador \textbf{LightGBM} entrenado sobre el espacio balanceado sintéticamente mediante un Autoencoder Variacional (\textbf{VAE}) se consolida como la solución final de soporte más robusta, registrando un \textbf{F1-Score de 0,4400} en la entrada de código, demostrando que la generación de datos sintéticos mediante VAE constituye un efecto mitigador del desbalanceo de clases original. A la vez, LightBGM destaca por sus ventajas de bajo coste computacional, rapidez de inferencia y viabilidad para operar localmente sin necesidad de infraestructuras GPU dedicadas.
     
     \item \textbf{Desarrollo de una herramienta de transferencia tecnológica:} Como elemento diferenciador y complementario, se ha diseñado y desplegado una aplicación web interactiva basada en \textbf{Streamlit}. Esta interfaz traduce las conversiones de codigos y las consultas de grafos en una herramienta visual, intuitiva y accesible para los profesionales de la psiquiatría, acercando los resultados de la investigación a la práctica clínica real en la consulta.
 \end{itemize}
@@ -3099,7 +3103,7 @@ A partir de las conclusiones obtenidas y las limitaciones identificadas en este 
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=\linewidth, keepaspectratio]{imagenes/Gantt.png}
-        \caption{Cronograma del Proyecto - Diagrama de Gantt}
+        \caption{Cronograma del Proyecto - Diagrama de Gantt.}
         \label{fig:diagrama_gantt}
     \end{figure}
 \end{landscape}
